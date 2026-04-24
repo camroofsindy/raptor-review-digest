@@ -1,0 +1,45 @@
+name: Weekly Digest
+
+on:
+  schedule:
+    # Friday 8:00 AM Eastern. 13:00 UTC during EDT, 13:00 runs at 9am during EST.
+    # Acceptable tradeoff for v1. Upgrade to dual cron if strict 8am year-round is needed.
+    - cron: "0 12 * * 5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install deps
+        run: |
+          pip install -r requirements.txt
+          playwright install --with-deps chromium
+
+      - name: Run digest
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python main.py
+
+      - name: Commit updated history
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/history.json
+          if ! git diff --staged --quiet; then
+            git commit -m "Update digest history $(date -u +%Y-%m-%d)"
+            git push
+          fi

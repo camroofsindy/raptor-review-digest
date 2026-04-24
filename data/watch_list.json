@@ -1,0 +1,18 @@
+{
+  "query": "roofing Indianapolis",
+  "discover_top_n": 20,
+  "pinned_competitors": [
+    {"name": "Amos Exteriors", "note": "Top volume, 3,027 reviews as of 2026-04-23"},
+    {"name": "Bone Dry Roofing", "note": "Multi-location strategy, ~3,556 aggregate"},
+    {"name": "Indy Roof and Restoration", "note": "2,145 reviews"},
+    {"name": "Big Boy's Construction", "note": "844 reviews"},
+    {"name": "Trojan Roofing", "note": "643 reviews"},
+    {"name": "Raptor Roofing", "note": "Us. 650+ reviews at 5.0 stars"},
+    {"name": "Rees Restoration", "note": "Greenwood direct competitor, 579 reviews"},
+    {"name": "Cox Roofing", "note": "Zionsville, 503 reviews"},
+    {"name": "Indy Rooftops", "note": "471 reviews, also 5.0 stars"},
+    {"name": "Stay Dry Roofing", "note": "~620 aggregate across multiple GBPs"},
+    {"name": "Erie Home", "note": "National franchise, 273 reviews"},
+    {"name": "AmeriPro Roofing", "note": "Carmel, 255 reviews"}
+  ]
+}

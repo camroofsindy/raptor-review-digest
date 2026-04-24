@@ -1,0 +1,191 @@
+{
+  "snapshots": [
+    {
+      "timestamp": "2026-04-24T14:45:16.686174+00:00",
+      "businesses": [
+        {
+          "name": "Amos Exteriors",
+          "rating": 4.9,
+          "review_count": 3032,
+          "delta_reviews": null,
+          "prev_rating": null
+        },
+        {
+          "name": "Indy Roof & Restoration",
+          "rating": 4.9,
+          "review_count": 2147,
+          "delta_reviews": null,
+          "prev_rating": null
+        },
+        {
+          "name": "Bone Dry Roofing",
+          "rating": 4.9,
+          "review_count": 942,
+          "delta_reviews": null,
+          "prev_rating": null
+        },
+        {
+          "name": "Big Boy's Construction",
+          "rating": 4.9,
+          "review_count": 844,
+          "delta_reviews": null,
+          "prev_rating": null
+        },
+        {
+          "name": "Raptor Roofing",
+          "rating": 5.0,
+          "review_count": 663,
+          "delta_reviews": null,
+          "prev_rating": null
+        },
+        {
+          "name": "Trojan Roofing",
+          "rating": 4.9,
+          "review_count": 643,
+          "delta_reviews": null,
+          "prev_rating": null
+        },
+        {
+          "name": "Richmond Exteriors",
+          "rating": 4.5,
+          "review_count": 607,
+          "delta_reviews": null,
+          "prev_rating": null
+        },
+        {
+          "name": "Rees Restoration",
+          "rating": 4.7,
+          "review_count": 579,
+          "delta_reviews": null,
+          "prev_rating": null
+        },
+        {
+          "name": "Cox Roofing",
+          "rating": 4.8,
+          "review_count": 503,
+          "delta_reviews": null,
+          "prev_rating": null
+        },
+        {
+          "name": "Indy Rooftops",
+          "rating": 5.0,
+          "review_count": 474,
+          "delta_reviews": null,
+          "prev_rating": null
+        },
+        {
+          "name": "Stay Dry Roofing",
+          "rating": 4.9,
+          "review_count": 421,
+          "delta_reviews": null,
+          "prev_rating": null
+        },
+        {
+          "name": "Erie Home",
+          "rating": 4.6,
+          "review_count": 274,
+          "delta_reviews": null,
+          "prev_rating": null
+        },
+        {
+          "name": "JOHN PETERS ROOFING",
+          "rating": 4.8,
+          "review_count": 147,
+          "delta_reviews": null,
+          "prev_rating": null
+        },
+        {
+          "name": "Indianapolis Roofing LLC",
+          "rating": 4.9,
+          "review_count": 142,
+          "delta_reviews": null,
+          "prev_rating": null
+        },
+        {
+          "name": "VIP Home Solutions",
+          "rating": 4.8,
+          "review_count": 128,
+          "delta_reviews": null,
+          "prev_rating": null
+        },
+        {
+          "name": "TAG Exteriors - Exterior Home Remodeling",
+          "rating": 4.8,
+          "review_count": 123,
+          "delta_reviews": null,
+          "prev_rating": null
+        },
+        {
+          "name": "Coomer Roofing Company",
+          "rating": 4.8,
+          "review_count": 105,
+          "delta_reviews": null,
+          "prev_rating": null
+        },
+        {
+          "name": "GRC Roofing & Restoration",
+          "rating": 5.0,
+          "review_count": 97,
+          "delta_reviews": null,
+          "prev_rating": null
+        },
+        {
+          "name": "Beeson Construction, Inc.",
+          "rating": 4.9,
+          "review_count": 80,
+          "delta_reviews": null,
+          "prev_rating": null
+        },
+        {
+          "name": "AmeriPro Roofing",
+          "rating": 4.9,
+          "review_count": 58,
+          "delta_reviews": null,
+          "prev_rating": null
+        },
+        {
+          "name": "Commercial Roofing Indianapolis",
+          "rating": 4.9,
+          "review_count": 44,
+          "delta_reviews": null,
+          "prev_rating": null
+        },
+        {
+          "name": "Residential Roofing Indianapolis",
+          "rating": 4.9,
+          "review_count": 38,
+          "delta_reviews": null,
+          "prev_rating": null
+        },
+        {
+          "name": "MARTINEZROOFING&MORE",
+          "rating": 5.0,
+          "review_count": 30,
+          "delta_reviews": null,
+          "prev_rating": null
+        },
+        {
+          "name": "Jackson Contracting",
+          "rating": 5.0,
+          "review_count": 27,
+          "delta_reviews": null,
+          "prev_rating": null
+        },
+        {
+          "name": "Blue Sky Restoration",
+          "rating": 5.0,
+          "review_count": 15,
+          "delta_reviews": null,
+          "prev_rating": null
+        },
+        {
+          "name": "Indy Roof Company",
+          "rating": 4.7,
+          "review_count": 13,
+          "delta_reviews": null,
+          "prev_rating": null
+        }
+      ]
+    }
+  ]
+}
