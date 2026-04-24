@@ -98,25 +98,21 @@ def scrape_google_maps(query, top_n=20):
             print(f"  [{i}/{len(items)}] {item['name']}: {data['rating']} stars, {data['review_count']} reviews")
             results.append({"name": item["name"], **data})
 
-        # Second pass: scrape pinned competitors that auto-discovery missed.
+        # Second pass: scrape every pinned competitor, even if also auto-discovered.
+        # For multi-location businesses like Bone Dry, the pinned search finds the HQ
+        # (most reviews) while auto-discovery may only surface a branch. After both
+        # passes we dedup by name and keep whichever result has the higher review count.
         watch = load_watch_list()
         pinned = watch.get("pinned_competitors", [])
-        def norm(s):
-            return re.sub(r"[^a-z0-9]", "", s.lower().replace("&", "and"))
-        found_norms = {norm(r["name"]) for r in results}
         for pin in pinned:
             pname = pin["name"]
-            pnorm = norm(pname)
-            if any(pnorm in f or f in pnorm for f in found_norms):
-                continue
-            search_url = f"https://www.google.com/maps/search/{pname.replace(' ', '+')}"
+            search_url = f"https://www.google.com/maps/search/{pname.replace(' ', '+')}+Indianapolis"
             try:
                 page.goto(search_url, wait_until="domcontentloaded", timeout=30000)
                 page.wait_for_timeout(2000)
-                # Take first result anchor.
-                first_link = page.locator('a.hfpxzc').first
-                if first_link.count() == 0:
-                    # Sometimes a single-place result loads directly.
+                # Sometimes a single-place result loads directly.
+                top_links = page.locator('a.hfpxzc').all()
+                if not top_links:
                     text = page.locator("body").inner_text(timeout=5000)
                     combo = re.search(r"(\d\.\d)\s*\n?\s*\((\d[\d,]*)\)", text)
                     if combo:
@@ -127,19 +123,38 @@ def scrape_google_maps(query, top_n=20):
                         })
                         print(f"  pinned {pname}: {combo.group(1)} stars, {combo.group(2)} reviews (direct)")
                     continue
-                href = first_link.get_attribute("href") or ""
-                if not href:
+                # Collect top 3 hrefs, visit each, pick the one with most reviews. This catches
+                # multi-location businesses like Bone Dry where the HQ has far more reviews than a branch.
+                hrefs = []
+                for link in top_links[:3]:
+                    href = link.get_attribute("href") or ""
+                    if href:
+                        hrefs.append(href)
+                best = None
+                for href in hrefs:
+                    data = _extract_detail(page, href)
+                    if data is None:
+                        continue
+                    if best is None or data["review_count"] > best["review_count"]:
+                        best = data
+                if best is None:
                     continue
-                data = _extract_detail(page, href)
-                if data is None:
-                    continue
-                results.append({"name": pname, **data})
-                print(f"  pinned {pname}: {data['rating']} stars, {data['review_count']} reviews")
+                results.append({"name": pname, **best})
+                print(f"  pinned {pname}: {best['rating']} stars, {best['review_count']} reviews")
             except Exception as e:
                 print(f"  pinned {pname}: {e}", file=sys.stderr)
 
         browser.close()
-    return results
+
+    # Dedup by normalized name, keeping the entry with the highest review count.
+    def norm(s):
+        return re.sub(r"[^a-z0-9]", "", s.lower().replace("&", "and"))
+    merged = {}
+    for biz in results:
+        key = norm(biz["name"])
+        if key not in merged or biz["review_count"] > merged[key]["review_count"]:
+            merged[key] = biz
+    return list(merged.values())
 
 
 def _extract_detail(page, href):
@@ -226,15 +241,48 @@ def generate_recommendations(snapshot, velocity_leaders, new_entrants):
     return recs
 
 
+def compute_rank_changes(current_sorted, prev_snapshot):
+    """Annotate each biz with rank_change (positive = moved up in ranking)."""
+    if prev_snapshot is None:
+        for biz in current_sorted:
+            biz["rank_change"] = None
+        return
+    prev_sorted = sorted(
+        prev_snapshot["businesses"], key=lambda b: b["review_count"], reverse=True
+    )
+    prev_rank = {b["name"].lower(): i + 1 for i, b in enumerate(prev_sorted)}
+    for i, biz in enumerate(current_sorted):
+        new_rank = i + 1
+        old_rank = prev_rank.get(biz["name"].lower())
+        biz["rank_change"] = (old_rank - new_rank) if old_rank else None
+
+
 def render_email(snapshot, prev_snapshot, new_entrants, velocity_leaders, recommendations):
     env = Environment(loader=FileSystemLoader(str(ROOT)))
     template = env.get_template("email_template.html")
+    is_baseline = prev_snapshot is None
+    top15 = snapshot["businesses"][:15]
+    total_reviews_gained = sum(
+        (b.get("delta_reviews") or 0) for b in top15
+    ) if not is_baseline else 0
+    raptor = next(
+        (b for b in snapshot["businesses"] if "raptor" in b["name"].lower()), None
+    )
+    raptor_gain = (raptor.get("delta_reviews") or 0) if (raptor and not is_baseline) else 0
+    raptor_rank = next(
+        (i + 1 for i, b in enumerate(snapshot["businesses"]) if "raptor" in b["name"].lower()),
+        None,
+    )
     return template.render(
         snapshot=snapshot,
         prev_snapshot=prev_snapshot,
+        is_baseline=is_baseline,
         new_entrants=new_entrants,
         velocity_leaders=velocity_leaders,
         recommendations=recommendations,
+        total_reviews_gained=total_reviews_gained,
+        raptor_gain=raptor_gain,
+        raptor_rank=raptor_rank,
         run_date=datetime.now(timezone.utc).strftime("%B %d, %Y"),
     )
 
@@ -272,12 +320,13 @@ def main():
     velocity_leaders = rank_velocity(businesses)
     new_entrants = find_new_entrants(businesses, history)
     businesses.sort(key=lambda b: b["review_count"], reverse=True)
+    prev_snapshot = history["snapshots"][-1] if history["snapshots"] else None
+    compute_rank_changes(businesses, prev_snapshot)
 
     snapshot = {
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "businesses": businesses,
     }
-    prev_snapshot = history["snapshots"][-1] if history["snapshots"] else None
     recommendations = generate_recommendations(snapshot, velocity_leaders, new_entrants)
 
     html = render_email(snapshot, prev_snapshot, new_entrants, velocity_leaders, recommendations)

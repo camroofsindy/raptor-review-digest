@@ -33,50 +33,18 @@
 <body>
 
 <div class="hero">
-  <div class="label">{% if is_baseline %}Starting Point{% else %}Weekly Digest{% endif %}</div>
+  <div class="label">Starting Point</div>
   <h1>Raptor Review Digest</h1>
-  <p>{{ run_date }}</p>
-  {% if is_baseline %}
+  <p>April 24, 2026</p>
+  
   <p><strong>This is your baseline.</strong> There is no week-over-week data yet because this is the first snapshot. Starting next Friday, you will see exactly how many reviews each competitor gained this week, who is accelerating fastest, and where Raptor should focus.</p>
-  {% else %}
-  <div class="stat-grid">
-    <div class="stat">
-      <div class="num">+{{ total_reviews_gained }}</div>
-      <div class="label">Total Reviews Gained (top 15)</div>
-    </div>
-    <div class="stat">
-      <div class="num">+{{ raptor_gain }}</div>
-      <div class="label">Raptor This Week</div>
-    </div>
-    <div class="stat">
-      <div class="num">#{{ raptor_rank }}</div>
-      <div class="label">Raptor's Rank by Volume</div>
-    </div>
-  </div>
-  {% endif %}
+  
 </div>
 
-{% if not is_baseline and velocity_leaders %}
-<div class="card">
-  <h2>Biggest Gainers This Week</h2>
-  <p class="sub">Review count growth over the last 7 days. This is where rising threats show up before they hit the leaderboard.</p>
-  <table>
-    <tr><th>#</th><th>Company</th><th>Reviews Gained</th><th>New Total</th><th>Rating</th></tr>
-    {% for biz in velocity_leaders[:10] %}
-    <tr class="{% if 'raptor' in biz.name.lower() %}raptor-row{% else %}gainer-row{% endif %}">
-      <td>{{ loop.index }}</td>
-      <td>{{ biz.name }}</td>
-      <td><span class="up">+{{ biz.delta_reviews }}</span></td>
-      <td>{{ '{:,}'.format(biz.review_count) }}</td>
-      <td>{{ biz.rating if biz.rating is not none else 'n/a' }}</td>
-    </tr>
-    {% endfor %}
-  </table>
-</div>
-{% endif %}
+
 
 <div class="card">
-  <h2>{% if is_baseline %}Leaderboard (Starting Point){% else %}Leaderboard{% endif %}</h2>
+  <h2>Leaderboard (Starting Point)</h2>
   <p class="sub">Indianapolis roofing companies by total Google review count.</p>
   <table>
     <tr>
@@ -84,61 +52,144 @@
       <th>Company</th>
       <th>Total Reviews</th>
       <th>Rating</th>
-      {% if not is_baseline %}<th>Rank Change</th>{% endif %}
+      
     </tr>
-    {% for biz in snapshot.businesses[:15] %}
-    <tr class="{% if 'raptor' in biz.name.lower() %}raptor-row{% endif %}">
-      <td>{{ loop.index }}</td>
-      <td>{{ biz.name }}</td>
-      <td>{{ '{:,}'.format(biz.review_count) }}</td>
-      <td>{{ biz.rating if biz.rating is not none else 'n/a' }}</td>
-      {% if not is_baseline %}
-      <td>
-        {% if biz.rank_change is not none and biz.rank_change > 0 %}
-          <span class="up">&uarr;{{ biz.rank_change }}</span>
-        {% elif biz.rank_change is not none and biz.rank_change < 0 %}
-          <span class="down">&darr;{{ biz.rank_change|abs }}</span>
-        {% else %}
-          <span class="flat">=</span>
-        {% endif %}
-      </td>
-      {% endif %}
+    
+    <tr class="">
+      <td>1</td>
+      <td>Amos Exteriors</td>
+      <td>3,032</td>
+      <td>4.9</td>
+      
     </tr>
-    {% endfor %}
+    
+    <tr class="">
+      <td>2</td>
+      <td>Bone Dry Roofing</td>
+      <td>2,409</td>
+      <td>4.8</td>
+      
+    </tr>
+    
+    <tr class="">
+      <td>3</td>
+      <td>Indy Roof & Restoration</td>
+      <td>2,147</td>
+      <td>4.9</td>
+      
+    </tr>
+    
+    <tr class="">
+      <td>4</td>
+      <td>Big Boy's Construction</td>
+      <td>844</td>
+      <td>4.9</td>
+      
+    </tr>
+    
+    <tr class="raptor-row">
+      <td>5</td>
+      <td>Raptor Roofing</td>
+      <td>663</td>
+      <td>5.0</td>
+      
+    </tr>
+    
+    <tr class="">
+      <td>6</td>
+      <td>Trojan Roofing</td>
+      <td>643</td>
+      <td>4.9</td>
+      
+    </tr>
+    
+    <tr class="">
+      <td>7</td>
+      <td>Richmond Exteriors</td>
+      <td>607</td>
+      <td>4.5</td>
+      
+    </tr>
+    
+    <tr class="">
+      <td>8</td>
+      <td>Rees Restoration</td>
+      <td>579</td>
+      <td>4.7</td>
+      
+    </tr>
+    
+    <tr class="">
+      <td>9</td>
+      <td>Cox Roofing</td>
+      <td>503</td>
+      <td>4.8</td>
+      
+    </tr>
+    
+    <tr class="">
+      <td>10</td>
+      <td>Indy Rooftops</td>
+      <td>474</td>
+      <td>5.0</td>
+      
+    </tr>
+    
+    <tr class="">
+      <td>11</td>
+      <td>Stay Dry Roofing</td>
+      <td>421</td>
+      <td>4.9</td>
+      
+    </tr>
+    
+    <tr class="">
+      <td>12</td>
+      <td>Erie Home</td>
+      <td>274</td>
+      <td>4.6</td>
+      
+    </tr>
+    
+    <tr class="">
+      <td>13</td>
+      <td>AmeriPro Roofing</td>
+      <td>257</td>
+      <td>4.5</td>
+      
+    </tr>
+    
+    <tr class="">
+      <td>14</td>
+      <td>JOHN PETERS ROOFING</td>
+      <td>147</td>
+      <td>4.8</td>
+      
+    </tr>
+    
+    <tr class="">
+      <td>15</td>
+      <td>Indianapolis Roofing LLC</td>
+      <td>142</td>
+      <td>4.9</td>
+      
+    </tr>
+    
   </table>
 </div>
 
-{% if not is_baseline and new_entrants %}
-<div class="card">
-  <h2>New Entrants</h2>
-  <p class="sub">Companies appearing in top results that were not here last week.</p>
-  <ul>
-    {% for biz in new_entrants %}
-    <li><strong>{{ biz.name }}</strong>: {{ '{:,}'.format(biz.review_count) }} reviews at {{ biz.rating if biz.rating is not none else 'no rating' }}</li>
-    {% endfor %}
-  </ul>
-</div>
-{% endif %}
 
-{% if recommendations %}
-<div class="card">
-  <h2>Recommendations</h2>
-  <ul class="recs">
-    {% for rec in recommendations %}
-    <li>{{ rec }}</li>
-    {% endfor %}
-  </ul>
-</div>
-{% endif %}
 
-{% if is_baseline %}
+
+
+
 <div class="card">
   <h2>What You Will See Next Friday</h2>
   <div class="callout">
     Next Friday at 8am, this email will lead with <strong>Biggest Gainers This Week</strong>: which companies added the most reviews in the last 7 days, and where Raptor ranked on that list. The leaderboard will show rank movement. Recommendations will be tied to the specific movement we saw.
   </div>
 </div>
-{% endif %}
+
 
 <div class="sig">
   Thank you,<br>
