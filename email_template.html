@@ -3,171 +3,161 @@
 <head>
 <meta charset="UTF-8">
 <style>
-  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #1a1a1a; max-width: 680px; margin: 0 auto; padding: 20px; background: #f5f5f5; line-height: 1.55; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #1a1a1a; max-width: 720px; margin: 0 auto; padding: 20px; background: #f5f5f5; line-height: 1.6; }
   .card { background: white; border-radius: 8px; padding: 24px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
   h1 { color: #b91c1c; font-size: 24px; margin: 0 0 8px 0; }
-  h2 { color: #1a1a1a; font-size: 18px; margin: 0 0 12px 0; border-bottom: 2px solid #b91c1c; padding-bottom: 6px; }
+  h2 { color: #1a1a1a; font-size: 18px; margin: 0 0 14px 0; border-bottom: 2px solid #b91c1c; padding-bottom: 6px; }
   .sub { color: #666; font-size: 13px; margin-bottom: 16px; }
-  table { width: 100%; border-collapse: collapse; font-size: 14px; }
-  th { text-align: left; padding: 8px; background: #f9fafb; border-bottom: 1px solid #e5e7eb; font-weight: 600; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; padding: 8px; background: #f9fafb; border-bottom: 1px solid #e5e7eb; font-weight: 600; font-size: 12px; letter-spacing: 0.03em; }
   td { padding: 8px; border-bottom: 1px solid #f3f4f6; vertical-align: top; }
   .raptor-row { background: #fef2f2; font-weight: 600; }
   .up { color: #059669; font-weight: 600; }
-  .down { color: #dc2626; font-weight: 600; }
-  .flat { color: #6b7280; }
+  .flat { color: #9ca3af; }
   .hero { background: linear-gradient(135deg, #b91c1c 0%, #7f1d1d 100%); color: white; padding: 28px; border-radius: 8px; margin-bottom: 16px; }
   .hero h1 { color: white; font-size: 26px; margin: 0 0 6px 0; }
   .hero .label { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.85; }
   .hero p { margin: 10px 0 0 0; font-size: 14px; opacity: 0.95; }
   .stat-grid { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
-  .stat { flex: 1; min-width: 140px; background: rgba(255,255,255,0.15); padding: 12px; border-radius: 6px; }
+  .stat { flex: 1; min-width: 130px; background: rgba(255,255,255,0.15); padding: 12px; border-radius: 6px; }
   .stat .num { font-size: 22px; font-weight: 700; }
-  .stat .label { font-size: 11px; opacity: 0.9; margin-top: 2px; letter-spacing: 0.05em; }
-  .read-item { padding: 12px 0; border-bottom: 1px solid #f3f4f6; }
-  .read-item:last-child { border-bottom: none; }
-  .read-name { font-weight: 700; color: #b91c1c; margin-bottom: 4px; }
-  ul.recs { margin: 0; padding-left: 20px; }
-  ul.recs li { margin-bottom: 12px; }
+  .stat .label { font-size: 11px; opacity: 0.9; margin-top: 2px; letter-spacing: 0.05em; text-transform: uppercase; }
+  .news-item { padding: 14px 0; border-bottom: 1px solid #f3f4f6; }
+  .news-item:last-child { border-bottom: none; }
+  .news-item .company { font-weight: 700; color: #b91c1c; font-size: 15px; }
+  .news-item .event { margin-top: 4px; font-size: 14px; }
+  .news-item .relevance { margin-top: 6px; font-size: 13px; color: #4b5563; padding: 8px 12px; background: #fef3c7; border-left: 3px solid #f59e0b; border-radius: 3px; }
+  .news-item .source { margin-top: 6px; font-size: 12px; color: #6b7280; }
+  .news-item .source a { color: #b91c1c; text-decoration: none; }
+  .riser { padding: 14px 0; border-bottom: 1px solid #f3f4f6; }
+  .riser:last-child { border-bottom: none; }
+  .riser .heading { font-weight: 700; color: #b91c1c; font-size: 15px; }
+  .riser .stats { color: #4b5563; font-size: 12px; margin-top: 2px; }
+  .riser .profile { margin-top: 10px; font-size: 14px; white-space: pre-wrap; }
+  ul.actions { margin: 0; padding-left: 20px; }
+  ul.actions li { margin-bottom: 12px; font-size: 14px; }
+  .action-block { white-space: pre-wrap; font-size: 14px; }
   .sig { font-size: 12px; color: #666; margin-top: 24px; padding-top: 16px; border-top: 1px solid #e5e7eb; }
   .callout { background: #fff7ed; border-left: 4px solid #f59e0b; padding: 12px 16px; border-radius: 4px; font-size: 14px; }
-  .entrant { padding: 10px 0; border-bottom: 1px solid #f3f4f6; }
-  .entrant:last-child { border-bottom: none; }
+  pre.raw { white-space: pre-wrap; font-family: inherit; margin: 0; font-size: 14px; }
 </style>
 </head>
 <body>
 
 <div class="hero">
-  <div class="label">{% if is_baseline %}Starting Point{% else %}Weekly Digest{% endif %}</div>
+  <div class="label">{% if is_baseline %}Starting Point{% else %}Weekly Intelligence{% endif %}</div>
   <h1>Raptor Review Digest</h1>
   <p>{{ run_date }}</p>
   {% if is_baseline %}
-  <p><strong>This is your baseline.</strong> Starting next Friday, you will see how many reviews each competitor gained over the prior 7 days, who is accelerating, and a read on what is working for them.</p>
+  <p>This is the baseline snapshot. Starting next Friday, you will see the week's news, rising players, and specific actions based on market movement.</p>
   {% else %}
   <div class="stat-grid">
     <div class="stat">
-      <div class="num">+{{ total_reviews_gained }}</div>
-      <div class="label">Total Reviews Gained (top 15)</div>
+      <div class="num">+{{ raptor.reviews_7d if raptor else 0 }}</div>
+      <div class="label">Raptor last 7 days</div>
     </div>
     <div class="stat">
-      <div class="num">+{{ raptor_gain }}</div>
-      <div class="label">Raptor This Week</div>
+      <div class="num">+{{ raptor.reviews_30d if raptor else 0 }}</div>
+      <div class="label">Raptor last 30 days</div>
     </div>
     <div class="stat">
       <div class="num">#{{ raptor_rank or 'n/a' }}</div>
-      <div class="label">Raptor's Volume Rank</div>
+      <div class="label">Volume rank</div>
+    </div>
+    <div class="stat">
+      <div class="num">{{ (raptor.response_rate * 100)|int if raptor and raptor.response_rate else 'n/a' }}{% if raptor and raptor.response_rate %}%{% endif %}</div>
+      <div class="label">Your response rate</div>
     </div>
   </div>
   {% endif %}
 </div>
 
-{% if not is_baseline %}
+{% if raptor_actions %}
 <div class="card">
-  <h2>Focus Actions This Week</h2>
-  <p class="sub">Specific moves based on what moved in the data.</p>
-  {% if recommendations %}
-  <ul class="recs">
-    {% for rec in recommendations %}
-    <li>{{ rec }}</li>
-    {% endfor %}
-  </ul>
-  {% else %}
-  <p>No meaningful movement this week to act on. Keep closeout discipline humming.</p>
-  {% endif %}
+  <h2>Raptor's Moves This Week</h2>
+  <p class="sub">Specific actions based on what the data and news show. Claude Opus synthesized from the full week's intel.</p>
+  <div class="action-block">{{ raptor_actions }}</div>
 </div>
 {% endif %}
 
-{% if not is_baseline and velocity_display %}
+{% if market_news %}
 <div class="card">
-  <h2>Biggest Gainers This Week</h2>
-  <p class="sub">Reviews added over the last 7 days. Raptor is shown for comparison even if not in the top 5.</p>
-  <table>
-    <tr><th>Company</th><th>Gained</th><th>Total Reviews</th><th>Rating</th></tr>
-    {% for biz in velocity_display %}
-    <tr class="{% if 'raptor' in biz.name.lower() %}raptor-row{% endif %}">
-      <td>{{ biz.name }}</td>
-      <td><span class="up">+{{ biz.delta_reviews }}</span></td>
-      <td>{{ '{:,}'.format(biz.review_count) }}</td>
-      <td>{{ biz.rating if biz.rating is not none else 'n/a' }}</td>
-    </tr>
-    {% endfor %}
-  </table>
+  <h2>This Week in Indy Roofing</h2>
+  <p class="sub">News, press, community events, and marketing moves from the last 7 days. Researched via web search.</p>
+  <pre class="raw">{{ market_news }}</pre>
 </div>
 {% endif %}
 
-{% if competitive_reads %}
+{% if rising_profiles %}
 <div class="card">
-  <h2>Competitive Read: Top 5 by Volume</h2>
-  <p class="sub">What each top competitor's numbers suggest about their positioning relative to Raptor.</p>
-  {% for item in competitive_reads %}
-  <div class="read-item">
-    <div class="read-name">{{ item.name }}</div>
-    <div>{{ item.read }}</div>
+  <h2>Rising Players</h2>
+  <p class="sub">Small-base accounts with high recent velocity. Worth watching.</p>
+  {% for rp in rising_profiles %}
+  <div class="riser">
+    <div class="heading">{{ rp.competitor.name }}</div>
+    <div class="stats">
+      {{ rp.competitor.review_count }} total reviews at {{ rp.competitor.rating }} stars
+      &middot; +{{ rp.competitor.reviews_30d or 0 }} in last 30 days
+      &middot; +{{ rp.competitor.reviews_7d or 0 }} this week
+    </div>
+    <div class="profile">{{ rp.profile }}</div>
   </div>
   {% endfor %}
 </div>
 {% endif %}
 
+{% if by_gain_7d %}
 <div class="card">
-  <h2>{% if is_baseline %}Leaderboard (Starting Point){% else %}Full Leaderboard{% endif %}</h2>
-  <p class="sub">Indianapolis roofing companies by total Google review count.</p>
+  <h2>Biggest Review Gainers This Week</h2>
+  <p class="sub">All tracked competitors sorted by reviews added in the last 7 days. Response rate shown because Google weights engagement when ranking businesses.</p>
   <table>
     <tr>
       <th>#</th>
       <th>Company</th>
-      <th>Total Reviews</th>
+      <th>Total</th>
       <th>Rating</th>
-      {% if not is_baseline %}<th>Rank Δ</th>{% endif %}
+      <th>Last 7d</th>
+      <th>Last 30d</th>
+      <th>Last 90d</th>
+      <th>Resp %</th>
     </tr>
-    {% for biz in snapshot.businesses[:15] %}
+    {% for biz in by_gain_7d[:25] %}
     <tr class="{% if 'raptor' in biz.name.lower() %}raptor-row{% endif %}">
       <td>{{ loop.index }}</td>
       <td>{{ biz.name }}</td>
       <td>{{ '{:,}'.format(biz.review_count) }}</td>
       <td>{{ biz.rating if biz.rating is not none else 'n/a' }}</td>
-      {% if not is_baseline %}
-      <td>
-        {% if biz.rank_change is not none and biz.rank_change > 0 %}
-          <span class="up">&uarr;{{ biz.rank_change }}</span>
-        {% elif biz.rank_change is not none and biz.rank_change < 0 %}
-          <span class="down">&darr;{{ biz.rank_change|abs }}</span>
-        {% else %}
-          <span class="flat">=</span>
-        {% endif %}
-      </td>
-      {% endif %}
+      <td><span class="{% if biz.reviews_7d and biz.reviews_7d > 0 %}up{% else %}flat{% endif %}">+{{ biz.reviews_7d or 0 }}</span></td>
+      <td>+{{ biz.reviews_30d or 0 }}</td>
+      <td>+{{ biz.reviews_90d or 0 }}</td>
+      <td>{% if biz.response_rate is not none %}{{ (biz.response_rate * 100)|int }}%{% else %}&mdash;{% endif %}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endif %}
+
+<div class="card">
+  <h2>Leaderboard by Volume (Reference)</h2>
+  <p class="sub">Total review count snapshot. This does not change much week-to-week, so it is secondary to the movement data above.</p>
+  <table>
+    <tr><th>#</th><th>Company</th><th>Total Reviews</th><th>Rating</th></tr>
+    {% for biz in by_volume[:15] %}
+    <tr class="{% if 'raptor' in biz.name.lower() %}raptor-row{% endif %}">
+      <td>{{ loop.index }}</td>
+      <td>{{ biz.name }}</td>
+      <td>{{ '{:,}'.format(biz.review_count) }}</td>
+      <td>{{ biz.rating if biz.rating is not none else 'n/a' }}</td>
     </tr>
     {% endfor %}
   </table>
 </div>
 
-{% if not is_baseline and new_entrants %}
-<div class="card">
-  <h2>New in the Indy Top 20</h2>
-  <p class="sub">Companies that surfaced in Google's "roofing Indianapolis" results this week but were not there last week. Something changed in their visibility.</p>
-  {% for biz in new_entrants %}
-  <div class="entrant">
-    <strong>{{ biz.name }}</strong> &middot; {{ '{:,}'.format(biz.review_count) }} reviews at {{ biz.rating if biz.rating is not none else 'no rating' }}
-    <div style="font-size: 13px; color: #4b5563; margin-top: 4px;">
-      {% if biz.review_count >= 300 and biz.rating and biz.rating >= 4.8 %}
-      Established volume plus strong rating. Worth a 10-minute look at their website and GBP to understand what put them in Google's top 20 this week.
-      {% elif biz.review_count >= 300 %}
-      Sizeable review base but rating under 4.8. Likely a volume play, possibly with insurance-heavy work. Opportunity to contrast on quality.
-      {% elif biz.rating and biz.rating >= 4.9 %}
-      Small shop with excellent rating. Probably a referral-driven or niche specialist. Not a volume threat yet.
-      {% else %}
-      Newer or smaller listing. Their sudden appearance in top 20 is the signal; check what they launched or bid on recently.
-      {% endif %}
-    </div>
-  </div>
-  {% endfor %}
-</div>
-{% endif %}
-
 {% if is_baseline %}
 <div class="card">
-  <h2>What You Will See Next Friday</h2>
+  <h2>What Next Friday Will Look Like</h2>
   <div class="callout">
-    Next Friday's email will lead with <strong>Focus Actions This Week</strong> (specific moves based on movement), then <strong>Biggest Gainers</strong>, then a <strong>Competitive Read</strong> on each top-5 competitor explaining what their numbers suggest about positioning. The leaderboard and new entrants drop to the bottom as reference.
+    Starting next Friday, this email leads with the week's news in Indy roofing (awards, community events, PR, ad launches), then <strong>Raptor's Moves This Week</strong> (3 Claude-synthesized actions), then <strong>Rising Players</strong> (researched profiles of accelerating accounts), then the full weekly gainers table.
   </div>
 </div>
 {% endif %}
