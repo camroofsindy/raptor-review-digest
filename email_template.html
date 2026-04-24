@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <style>
-  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #1a1a1a; max-width: 680px; margin: 0 auto; padding: 20px; background: #f5f5f5; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #1a1a1a; max-width: 680px; margin: 0 auto; padding: 20px; background: #f5f5f5; line-height: 1.55; }
   .card { background: white; border-radius: 8px; padding: 24px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
   h1 { color: #b91c1c; font-size: 24px; margin: 0 0 8px 0; }
   h2 { color: #1a1a1a; font-size: 18px; margin: 0 0 12px 0; border-bottom: 2px solid #b91c1c; padding-bottom: 6px; }
-  .sub { color: #666; font-size: 13px; margin-bottom: 20px; }
+  .sub { color: #666; font-size: 13px; margin-bottom: 16px; }
   table { width: 100%; border-collapse: collapse; font-size: 14px; }
-  th { text-align: left; padding: 8px; background: #f9fafb; border-bottom: 1px solid #e5e7eb; }
-  td { padding: 8px; border-bottom: 1px solid #f3f4f6; }
+  th { text-align: left; padding: 8px; background: #f9fafb; border-bottom: 1px solid #e5e7eb; font-weight: 600; }
+  td { padding: 8px; border-bottom: 1px solid #f3f4f6; vertical-align: top; }
   .raptor-row { background: #fef2f2; font-weight: 600; }
   .up { color: #059669; font-weight: 600; }
   .down { color: #dc2626; font-weight: 600; }
@@ -19,15 +19,19 @@
   .hero h1 { color: white; font-size: 26px; margin: 0 0 6px 0; }
   .hero .label { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.85; }
   .hero p { margin: 10px 0 0 0; font-size: 14px; opacity: 0.95; }
-  .stat-grid { display: flex; gap: 16px; margin-top: 16px; }
-  .stat { flex: 1; background: rgba(255,255,255,0.15); padding: 12px; border-radius: 6px; }
+  .stat-grid { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+  .stat { flex: 1; min-width: 140px; background: rgba(255,255,255,0.15); padding: 12px; border-radius: 6px; }
   .stat .num { font-size: 22px; font-weight: 700; }
   .stat .label { font-size: 11px; opacity: 0.9; margin-top: 2px; letter-spacing: 0.05em; }
-  .gainer-row { background: #ecfdf5; }
+  .read-item { padding: 12px 0; border-bottom: 1px solid #f3f4f6; }
+  .read-item:last-child { border-bottom: none; }
+  .read-name { font-weight: 700; color: #b91c1c; margin-bottom: 4px; }
   ul.recs { margin: 0; padding-left: 20px; }
-  ul.recs li { margin-bottom: 10px; }
+  ul.recs li { margin-bottom: 12px; }
   .sig { font-size: 12px; color: #666; margin-top: 24px; padding-top: 16px; border-top: 1px solid #e5e7eb; }
   .callout { background: #fff7ed; border-left: 4px solid #f59e0b; padding: 12px 16px; border-radius: 4px; font-size: 14px; }
+  .entrant { padding: 10px 0; border-bottom: 1px solid #f3f4f6; }
+  .entrant:last-child { border-bottom: none; }
 </style>
 </head>
 <body>
@@ -37,7 +41,7 @@
   <h1>Raptor Review Digest</h1>
   <p>{{ run_date }}</p>
   {% if is_baseline %}
-  <p><strong>This is your baseline.</strong> There is no week-over-week data yet because this is the first snapshot. Starting next Friday, you will see exactly how many reviews each competitor gained this week, who is accelerating fastest, and where Raptor should focus.</p>
+  <p><strong>This is your baseline.</strong> Starting next Friday, you will see how many reviews each competitor gained over the prior 7 days, who is accelerating, and a read on what is working for them.</p>
   {% else %}
   <div class="stat-grid">
     <div class="stat">
@@ -49,22 +53,37 @@
       <div class="label">Raptor This Week</div>
     </div>
     <div class="stat">
-      <div class="num">#{{ raptor_rank }}</div>
-      <div class="label">Raptor's Rank by Volume</div>
+      <div class="num">#{{ raptor_rank or 'n/a' }}</div>
+      <div class="label">Raptor's Volume Rank</div>
     </div>
   </div>
   {% endif %}
 </div>
 
-{% if not is_baseline and velocity_leaders %}
+{% if not is_baseline %}
+<div class="card">
+  <h2>Focus Actions This Week</h2>
+  <p class="sub">Specific moves based on what moved in the data.</p>
+  {% if recommendations %}
+  <ul class="recs">
+    {% for rec in recommendations %}
+    <li>{{ rec }}</li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p>No meaningful movement this week to act on. Keep closeout discipline humming.</p>
+  {% endif %}
+</div>
+{% endif %}
+
+{% if not is_baseline and velocity_display %}
 <div class="card">
   <h2>Biggest Gainers This Week</h2>
-  <p class="sub">Review count growth over the last 7 days. This is where rising threats show up before they hit the leaderboard.</p>
+  <p class="sub">Reviews added over the last 7 days. Raptor is shown for comparison even if not in the top 5.</p>
   <table>
-    <tr><th>#</th><th>Company</th><th>Reviews Gained</th><th>New Total</th><th>Rating</th></tr>
-    {% for biz in velocity_leaders[:10] %}
-    <tr class="{% if 'raptor' in biz.name.lower() %}raptor-row{% else %}gainer-row{% endif %}">
-      <td>{{ loop.index }}</td>
+    <tr><th>Company</th><th>Gained</th><th>Total Reviews</th><th>Rating</th></tr>
+    {% for biz in velocity_display %}
+    <tr class="{% if 'raptor' in biz.name.lower() %}raptor-row{% endif %}">
       <td>{{ biz.name }}</td>
       <td><span class="up">+{{ biz.delta_reviews }}</span></td>
       <td>{{ '{:,}'.format(biz.review_count) }}</td>
@@ -75,8 +94,21 @@
 </div>
 {% endif %}
 
+{% if competitive_reads %}
 <div class="card">
-  <h2>{% if is_baseline %}Leaderboard (Starting Point){% else %}Leaderboard{% endif %}</h2>
+  <h2>Competitive Read: Top 5 by Volume</h2>
+  <p class="sub">What each top competitor's numbers suggest about their positioning relative to Raptor.</p>
+  {% for item in competitive_reads %}
+  <div class="read-item">
+    <div class="read-name">{{ item.name }}</div>
+    <div>{{ item.read }}</div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<div class="card">
+  <h2>{% if is_baseline %}Leaderboard (Starting Point){% else %}Full Leaderboard{% endif %}</h2>
   <p class="sub">Indianapolis roofing companies by total Google review count.</p>
   <table>
     <tr>
@@ -84,7 +116,7 @@
       <th>Company</th>
       <th>Total Reviews</th>
       <th>Rating</th>
-      {% if not is_baseline %}<th>Rank Change</th>{% endif %}
+      {% if not is_baseline %}<th>Rank Δ</th>{% endif %}
     </tr>
     {% for biz in snapshot.businesses[:15] %}
     <tr class="{% if 'raptor' in biz.name.lower() %}raptor-row{% endif %}">
@@ -110,24 +142,24 @@
 
 {% if not is_baseline and new_entrants %}
 <div class="card">
-  <h2>New Entrants</h2>
-  <p class="sub">Companies appearing in top results that were not here last week.</p>
-  <ul>
-    {% for biz in new_entrants %}
-    <li><strong>{{ biz.name }}</strong>: {{ '{:,}'.format(biz.review_count) }} reviews at {{ biz.rating if biz.rating is not none else 'no rating' }}</li>
-    {% endfor %}
-  </ul>
-</div>
-{% endif %}
-
-{% if recommendations %}
-<div class="card">
-  <h2>Recommendations</h2>
-  <ul class="recs">
-    {% for rec in recommendations %}
-    <li>{{ rec }}</li>
-    {% endfor %}
-  </ul>
+  <h2>New in the Indy Top 20</h2>
+  <p class="sub">Companies that surfaced in Google's "roofing Indianapolis" results this week but were not there last week. Something changed in their visibility.</p>
+  {% for biz in new_entrants %}
+  <div class="entrant">
+    <strong>{{ biz.name }}</strong> &middot; {{ '{:,}'.format(biz.review_count) }} reviews at {{ biz.rating if biz.rating is not none else 'no rating' }}
+    <div style="font-size: 13px; color: #4b5563; margin-top: 4px;">
+      {% if biz.review_count >= 300 and biz.rating and biz.rating >= 4.8 %}
+      Established volume plus strong rating. Worth a 10-minute look at their website and GBP to understand what put them in Google's top 20 this week.
+      {% elif biz.review_count >= 300 %}
+      Sizeable review base but rating under 4.8. Likely a volume play, possibly with insurance-heavy work. Opportunity to contrast on quality.
+      {% elif biz.rating and biz.rating >= 4.9 %}
+      Small shop with excellent rating. Probably a referral-driven or niche specialist. Not a volume threat yet.
+      {% else %}
+      Newer or smaller listing. Their sudden appearance in top 20 is the signal; check what they launched or bid on recently.
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
 </div>
 {% endif %}
 
@@ -135,7 +167,7 @@
 <div class="card">
   <h2>What You Will See Next Friday</h2>
   <div class="callout">
-    Next Friday at 8am, this email will lead with <strong>Biggest Gainers This Week</strong>: which companies added the most reviews in the last 7 days, and where Raptor ranked on that list. The leaderboard will show rank movement. Recommendations will be tied to the specific movement we saw.
+    Next Friday's email will lead with <strong>Focus Actions This Week</strong> (specific moves based on movement), then <strong>Biggest Gainers</strong>, then a <strong>Competitive Read</strong> on each top-5 competitor explaining what their numbers suggest about positioning. The leaderboard and new entrants drop to the bottom as reference.
   </div>
 </div>
 {% endif %}

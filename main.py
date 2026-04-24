@@ -122,10 +122,13 @@ def scrape_google_maps(query, top_n=20):
                     text = page.locator("body").inner_text(timeout=5000)
                     combo = re.search(r"(\d\.\d)\s*\n?\s*\((\d[\d,]*)\)", text)
                     if combo:
+                        place_id = _extract_place_id(page.url)
                         results.append({
                             "name": pname,
                             "rating": float(combo.group(1)),
                             "review_count": int(combo.group(2).replace(",", "")),
+                            "place_id": place_id,
+                            "address": None,
                         })
                         print(f"  pinned {pname}: {combo.group(1)} stars, {combo.group(2)} reviews (direct)")
                     continue
@@ -152,20 +155,40 @@ def scrape_google_maps(query, top_n=20):
 
         browser.close()
 
-    # Dedup by normalized name, keeping the entry with the highest review count.
+    # Pinned direct-redirect results often lack a place_id because Google's place page
+    # URL format sometimes drops the !1s parameter. Back-fill missing place_ids by
+    # matching on normalized name against records that DID capture one.
+    name_to_pid = {}
+    for biz in results:
+        if biz.get("place_id"):
+            name_to_pid.setdefault(_norm(biz["name"]), biz["place_id"])
+    for biz in results:
+        if not biz.get("place_id"):
+            biz["place_id"] = name_to_pid.get(_norm(biz["name"]))
+
+    # Dedup by place_id (stable) when available, falling back to normalized name.
+    # Keep whichever record has the higher review count (pinned searches often find HQ).
     merged = {}
     for biz in results:
-        key = _norm(biz["name"])
+        key = biz.get("place_id") or f"name:{_norm(biz['name'])}"
         if key not in merged or biz["review_count"] > merged[key]["review_count"]:
             merged[key] = biz
     return list(merged.values())
 
 
+def _extract_place_id(url):
+    """Pull Google's stable place identifier from a Maps URL (the !1s... parameter)."""
+    m = re.search(r"!1s([^!?]+)", url or "")
+    return m.group(1) if m else None
+
+
 def _extract_detail(page, href):
-    """Navigate to a place detail URL and extract rating, review count, address."""
+    """Navigate to a place detail URL and extract rating, review count, address, place_id."""
     try:
         page.goto(href, wait_until="domcontentloaded", timeout=30000)
         page.wait_for_timeout(1500)
+        current_url = page.url
+        place_id = _extract_place_id(current_url) or _extract_place_id(href)
         text = page.locator("body").inner_text(timeout=5000)
         combo = re.search(r"(\d\.\d)\s*\n?\s*\((\d[\d,]*)\)", text)
         rating, review_count = None, 0
@@ -176,29 +199,42 @@ def _extract_detail(page, href):
             pass
         else:
             return None
-        # Attempt to extract a street address with Indianapolis or nearby Indy metro city.
         addr_match = re.search(
-            r"\n(\d+\s+[A-Z][^\n]+?,\s*(?:Indianapolis|Greenwood|Carmel|Fishers|Zionsville|Avon|Plainfield|Noblesville|Westfield|Brownsburg)[^\n]*)",
+            r"\n(\d+\s+[A-Z][^\n]+?,\s*(?:Indianapolis|Greenwood|Carmel|Fishers|Zionsville|Avon|Plainfield|Noblesville|Westfield|Brownsburg|Beech Grove|Southport|Speedway|Lawrence)[^\n]*)",
             text,
         )
         address = addr_match.group(1).strip() if addr_match else None
-        return {"rating": rating, "review_count": review_count, "address": address}
+        return {
+            "rating": rating,
+            "review_count": review_count,
+            "address": address,
+            "place_id": place_id,
+        }
     except Exception as e:
         print(f"  detail extract error: {e}", file=sys.stderr)
     return None
 
 
 def compute_weekly_deltas(current, history):
-    """Add week-over-week deltas by name-matching against the last snapshot."""
+    """Match current businesses to last week's. STRICT pid matching when available:
+    if this week's record has a place_id, only match to a prior record with the same
+    place_id. This prevents the geolocation-variance bug where 'Bone Dry Roofing' in
+    auto-discovery meant different physical locations across runs. Only fall back to
+    name matching when the current record has no place_id."""
     if not history["snapshots"]:
         for biz in current:
             biz["delta_reviews"] = None
             biz["prev_rating"] = None
         return current
     last = history["snapshots"][-1]
-    last_map = {b["name"].lower(): b for b in last["businesses"]}
+    by_pid = {b["place_id"]: b for b in last["businesses"] if b.get("place_id")}
+    by_name = {b["name"].lower(): b for b in last["businesses"]}
     for biz in current:
-        prev = last_map.get(biz["name"].lower())
+        pid = biz.get("place_id")
+        if pid:
+            prev = by_pid.get(pid)
+        else:
+            prev = by_name.get(biz["name"].lower())
         if prev:
             biz["delta_reviews"] = biz["review_count"] - prev["review_count"]
             biz["prev_rating"] = prev["rating"]
@@ -211,8 +247,18 @@ def compute_weekly_deltas(current, history):
 def find_new_entrants(current, history):
     if not history["snapshots"]:
         return []
-    last_names = {b["name"].lower() for b in history["snapshots"][-1]["businesses"]}
-    return [b for b in current if b["name"].lower() not in last_names]
+    last = history["snapshots"][-1]["businesses"]
+    last_pids = {b["place_id"] for b in last if b.get("place_id")}
+    last_names = {b["name"].lower() for b in last}
+    out = []
+    for biz in current:
+        pid = biz.get("place_id")
+        if pid and pid in last_pids:
+            continue
+        if biz["name"].lower() in last_names:
+            continue
+        out.append(biz)
+    return out
 
 
 def rank_velocity(current):
@@ -220,37 +266,92 @@ def rank_velocity(current):
     return sorted(with_delta, key=lambda b: b["delta_reviews"] or 0, reverse=True)
 
 
-def generate_recommendations(snapshot, velocity_leaders, new_entrants):
-    """Heuristic recommendations. Upgrade to Claude-generated in v2."""
-    recs = []
-    top = [b for b in velocity_leaders if "raptor" not in b["name"].lower()][:3]
-    if top:
-        names = ", ".join(b["name"] for b in top)
-        recs.append(
-            f"Top accelerators this week: {names}. "
-            "Pull 3 of their most recent reviews and look for themes Raptor can match or counter."
+def generate_competitive_reads(snapshot, raptor):
+    """Produce a 2-3 sentence 'read' per top-5 competitor. Data-driven observations
+    about their positioning relative to Raptor."""
+    reads = []
+    top = snapshot["businesses"][:5]
+    raptor_count = raptor["review_count"] if raptor else 663
+    raptor_rating = raptor["rating"] if raptor else 5.0
+    for biz in top:
+        if "raptor" in biz["name"].lower():
+            continue
+        name = biz["name"]
+        count = biz["review_count"]
+        rating = biz["rating"] or 0
+        delta = biz.get("delta_reviews")
+        gap = count - raptor_count
+        parts = []
+        # Scale context
+        if count > 3 * raptor_count:
+            parts.append(f"Sits {gap:,} reviews ahead of Raptor. That volume almost certainly reflects a mature lead-gen machine (LSA max, aggressive canvassing, or multi-location branding).")
+        elif count > 1.5 * raptor_count:
+            parts.append(f"Leads Raptor by {gap:,} reviews. Within reach over 12 to 18 months of consistent closeout discipline.")
+        else:
+            parts.append(f"Only {gap:,} reviews ahead of Raptor. This is the nearest rank target.")
+        # Rating context
+        if rating < raptor_rating - 0.2:
+            parts.append(f"Their {rating} rating sits below Raptor's {raptor_rating}, which is a real opening. Use the rating gap in LSA copy and sales-call intros.")
+        elif rating < raptor_rating:
+            parts.append(f"Slightly behind Raptor's {raptor_rating} at {rating}. Not a strong differentiator unless you hammer it.")
+        else:
+            parts.append(f"Matches Raptor on quality ({rating} stars). Differentiation has to come from systems, communication, or warranty.")
+        # Velocity context if available
+        if delta is not None and delta > 0:
+            weekly_pace = delta
+            annual = weekly_pace * 52
+            parts.append(f"Gained +{delta} reviews this week (~{annual:,}/year at that pace).")
+        reads.append({"name": name, "read": " ".join(parts)})
+    return reads
+
+
+def generate_focus_actions(snapshot, velocity_leaders, new_entrants, raptor):
+    """Three concrete actions for the week, grounded in the data we have."""
+    actions = []
+    # Action 1: Raptor's velocity
+    if raptor and raptor.get("delta_reviews") is not None:
+        delta = raptor["delta_reviews"]
+        top3_delta = sum((b.get("delta_reviews") or 0) for b in velocity_leaders[:3] if "raptor" not in b["name"].lower())
+        top3_avg = top3_delta / 3 if top3_delta else 0
+        if delta < top3_avg - 2:
+            actions.append(
+                f"Raptor gained {delta} reviews this week; the top 3 non-Raptor gainers averaged {top3_avg:.0f}. "
+                "That gap is the single biggest factor holding Raptor at #6. Tighten closeout ask discipline: Dylan and Taylor ask at handoff, rep verifies landed, PM form captures confirmation."
+            )
+        elif delta == 0 and len([b for b in snapshot["businesses"] if (b.get("delta_reviews") or 0) > 0]) > 3:
+            actions.append(
+                "Raptor added zero reviews this week while 4+ competitors gained ground. "
+                "Check Podium review-request flow; if it's firing but customers aren't clicking, the issue is timing or messaging, not the tool."
+            )
+        else:
+            actions.append(
+                f"Raptor added {delta} reviews this week, keeping pace with the top gainers. Keep the closeout cadence humming."
+            )
+    # Action 2: Top accelerator intel
+    non_raptor_gainers = [b for b in velocity_leaders if "raptor" not in b["name"].lower()][:1]
+    if non_raptor_gainers:
+        top = non_raptor_gainers[0]
+        actions.append(
+            f"Biggest accelerator this week: {top['name']} at +{top['delta_reviews']}. "
+            "Pull 5 of their most recent reviews (5 minutes on Google Maps). If a theme repeats (speed, cleanup, insurance help), that is what customers are responding to in market right now. Have Curtis work the theme into next week's RAPTOR WINS objection handling."
         )
+    # Action 3: New entrants or unusual movement
     if new_entrants:
-        names = ", ".join(b["name"] for b in new_entrants[:3])
-        recs.append(
-            f"New competitor(s) surfaced in top results: {names}. "
-            "Worth a closer look to see what is driving their visibility."
+        n = new_entrants[0]
+        rating_txt = f"at {n['rating']} stars" if n.get("rating") else ""
+        actions.append(
+            f"New in top results this week: {n['name']} ({n['review_count']:,} reviews {rating_txt}). "
+            "Check if they are running LSA, Google Ads, or recent PR. If they just showed up, something changed in their marketing posture worth understanding."
         )
+    return actions
+
+
+def generate_recommendations(snapshot, velocity_leaders, new_entrants):
+    """Kept for backward compatibility; delegates to focus_actions."""
     raptor = next(
         (b for b in snapshot["businesses"] if "raptor" in b["name"].lower()), None
     )
-    if raptor and raptor.get("delta_reviews") is not None:
-        delta = raptor["delta_reviews"]
-        if delta < 5:
-            recs.append(
-                f"Raptor added {delta} reviews this week. Low velocity relative to the leaderboard. "
-                "Tighten the closeout ask (Dylan and Taylor) and confirm the PM form captures review confirmation."
-            )
-        else:
-            recs.append(
-                f"Raptor gained {delta} reviews this week. Keep the closeout cadence humming."
-            )
-    return recs
+    return generate_focus_actions(snapshot, velocity_leaders, new_entrants, raptor)
 
 
 def compute_rank_changes(current_sorted, prev_snapshot):
@@ -285,12 +386,29 @@ def render_email(snapshot, prev_snapshot, new_entrants, velocity_leaders, recomm
         (i + 1 for i, b in enumerate(snapshot["businesses"]) if "raptor" in b["name"].lower()),
         None,
     )
+    # Velocity section: show top 5 by delta, but always include Raptor even if not in top 5
+    velocity_display = velocity_leaders[:5]
+    if raptor and raptor not in velocity_display and raptor.get("delta_reviews") is not None:
+        velocity_display = list(velocity_display) + [raptor]
+    # Competitive reads on top 5
+    competitive_reads = generate_competitive_reads(snapshot, raptor) if not is_baseline or True else []
+    # Sanity check: suspiciously large deltas (>50% of total reviews) suggest a data match bug.
+    # Flag any and suppress them from velocity to avoid the 1,467 Bone Dry phantom.
+    for biz in snapshot["businesses"]:
+        dr = biz.get("delta_reviews")
+        if dr is not None and biz.get("review_count", 0) > 0 and dr > biz["review_count"] * 0.5 and dr > 20:
+            biz["delta_reviews"] = None
+            biz["suspect_delta"] = True
+    velocity_leaders = [b for b in velocity_leaders if b.get("delta_reviews") is not None]
+    velocity_display = [b for b in velocity_display if b.get("delta_reviews") is not None]
     return template.render(
         snapshot=snapshot,
         prev_snapshot=prev_snapshot,
         is_baseline=is_baseline,
         new_entrants=new_entrants,
         velocity_leaders=velocity_leaders,
+        velocity_display=velocity_display,
+        competitive_reads=competitive_reads,
         recommendations=recommendations,
         total_reviews_gained=total_reviews_gained,
         raptor_gain=raptor_gain,

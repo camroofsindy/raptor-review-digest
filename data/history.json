@@ -1,12 +1,14 @@
 {
   "snapshots": [
     {
-      "timestamp": "2026-04-24T15:06:27.998111+00:00",
+      "timestamp": "2026-04-24T15:26:24.606322+00:00",
       "businesses": [
         {
           "name": "Amos Exteriors",
           "rating": 4.9,
           "review_count": 3032,
+          "place_id": null,
+          "address": null,
           "delta_reviews": null,
           "prev_rating": null,
           "rank_change": null
@@ -15,6 +17,8 @@
           "name": "Bone Dry Roofing (HQ)",
           "rating": 4.8,
           "review_count": 2409,
+          "place_id": null,
+          "address": null,
           "delta_reviews": null,
           "prev_rating": null,
           "rank_change": null
@@ -24,6 +28,7 @@
           "rating": 4.9,
           "review_count": 2147,
           "address": "5240 Elmwood Ave suite 200, Indianapolis, IN 46203",
+          "place_id": "0x886b45b563945af7:0x71c85ab9d208a48d",
           "delta_reviews": null,
           "prev_rating": null,
           "rank_change": null
@@ -33,6 +38,7 @@
           "rating": 4.9,
           "review_count": 942,
           "address": null,
+          "place_id": "0x8814aaabd3aabc67:0x3359009ec6fb6226",
           "delta_reviews": null,
           "prev_rating": null,
           "rank_change": null
@@ -42,6 +48,7 @@
           "rating": 4.9,
           "review_count": 844,
           "address": "241 S State Ave Suite B, Indianapolis, IN 46201",
+          "place_id": "0x886b584d3607ea1f:0xd4b2dd5bd26f4245",
           "delta_reviews": null,
           "prev_rating": null,
           "rank_change": null
@@ -51,6 +58,7 @@
           "rating": 5.0,
           "review_count": 663,
           "address": "5145 S Meridian St, Indianapolis, IN 46217",
+          "place_id": "0x886b5df0ce91a5c3:0xb65f8c8f9e8f7bd1",
           "delta_reviews": null,
           "prev_rating": null,
           "rank_change": null
@@ -60,6 +68,7 @@
           "rating": 4.9,
           "review_count": 643,
           "address": "333 Alabama St Ste#350, Indianapolis, IN 46204",
+          "place_id": "0x886b517008b82beb:0x22d6256e0ea4595b",
           "delta_reviews": null,
           "prev_rating": null,
           "rank_change": null
@@ -69,6 +78,7 @@
           "rating": 4.5,
           "review_count": 607,
           "address": "3510 S Keystone Ave, Indianapolis, IN 46227",
+          "place_id": "0x886b5ae3688cd33b:0xe7eeecee9adf2ed0",
           "delta_reviews": null,
           "prev_rating": null,
           "rank_change": null
@@ -77,6 +87,8 @@
           "name": "Rees Restoration",
           "rating": 4.7,
           "review_count": 579,
+          "place_id": null,
+          "address": null,
           "delta_reviews": null,
           "prev_rating": null,
           "rank_change": null
@@ -85,6 +97,8 @@
           "name": "Cox Roofing",
           "rating": 4.8,
           "review_count": 503,
+          "place_id": null,
+          "address": null,
           "delta_reviews": null,
           "prev_rating": null,
           "rank_change": null
@@ -93,6 +107,8 @@
           "name": "Indy Rooftops",
           "rating": 5.0,
           "review_count": 474,
+          "place_id": null,
+          "address": null,
           "delta_reviews": null,
           "prev_rating": null,
           "rank_change": null
@@ -102,6 +118,7 @@
           "rating": 4.9,
           "review_count": 421,
           "address": "5060 E 62nd St #130, Indianapolis, IN 46220",
+          "place_id": "0x886b4d9cdd74f0af:0x9d507e2cd850d20",
           "delta_reviews": null,
           "prev_rating": null,
           "rank_change": null
@@ -110,6 +127,8 @@
           "name": "Erie Home",
           "rating": 4.6,
           "review_count": 274,
+          "place_id": null,
+          "address": null,
           "delta_reviews": null,
           "prev_rating": null,
           "rank_change": null
@@ -118,6 +137,8 @@
           "name": "AmeriPro Roofing",
           "rating": 4.5,
           "review_count": 257,
+          "place_id": null,
+          "address": null,
           "delta_reviews": null,
           "prev_rating": null,
           "rank_change": null
@@ -127,6 +148,7 @@
           "rating": 4.8,
           "review_count": 147,
           "address": "7800 Shelby St #6, Indianapolis, IN 46227",
+          "place_id": "0x886b603dc1972381:0xb4f36975ae443f71",
           "delta_reviews": null,
           "prev_rating": null,
           "rank_change": null
@@ -136,6 +158,7 @@
           "rating": 4.9,
           "review_count": 142,
           "address": "450 E 96th St, Indianapolis, IN 46240",
+          "place_id": "0x8814ad8e0cd6b8d1:0xc3beca2bd312bb89",
           "delta_reviews": null,
           "prev_rating": null,
           "rank_change": null
@@ -145,6 +168,7 @@
           "rating": 4.8,
           "review_count": 128,
           "address": "5602 Madison Ave, Indianapolis, IN 46227",
+          "place_id": "0x886b5dad266c6f87:0xc2e475b53b46f3a1",
           "delta_reviews": null,
           "prev_rating": null,
           "rank_change": null
@@ -154,6 +178,7 @@
           "rating": 4.8,
           "review_count": 123,
           "address": "5555 S East St, Indianapolis, IN 46227",
+          "place_id": "0x886b5b89a20a80af:0x95477a307f54e66",
           "delta_reviews": null,
           "prev_rating": null,
           "rank_change": null
@@ -163,6 +188,7 @@
           "rating": 4.8,
           "review_count": 105,
           "address": "6204 S Harding St, Indianapolis, IN 46217",
+          "place_id": "0x886b594c36f129d5:0x4578accecf3ffb86",
           "delta_reviews": null,
           "prev_rating": null,
           "rank_change": null
@@ -170,8 +196,9 @@
         {
           "name": "GRC Roofing & Restoration",
           "rating": 5.0,
-          "review_count": 97,
+          "review_count": 99,
           "address": "2457 Madison Ave, Indianapolis, IN 46225",
+          "place_id": "0x886b5bd4466d0675:0x5fa670442a83aca9",
           "delta_reviews": null,
           "prev_rating": null,
           "rank_change": null
@@ -181,6 +208,7 @@
           "rating": 4.9,
           "review_count": 80,
           "address": "5401 S East St Ste 204B, Indianapolis, IN 46227",
+          "place_id": "0x886b4f09ca13aff3:0x88022d1ad8ee6ebb",
           "delta_reviews": null,
           "prev_rating": null,
           "rank_change": null
@@ -190,6 +218,7 @@
           "rating": 4.9,
           "review_count": 44,
           "address": "101 S Parker Ave, Indianapolis, IN 46201",
+          "place_id": "0x886b50375c3ac53d:0xd5565c6fcebabb8d",
           "delta_reviews": null,
           "prev_rating": null,
           "rank_change": null
@@ -199,6 +228,7 @@
           "rating": 4.9,
           "review_count": 38,
           "address": "6925 S Harding St, Indianapolis, IN 46217",
+          "place_id": "0x886b5ef417389f19:0x994fc2e4aa91a58e",
           "delta_reviews": null,
           "prev_rating": null,
           "rank_change": null
@@ -208,15 +238,7 @@
           "rating": 5.0,
           "review_count": 30,
           "address": null,
-          "delta_reviews": null,
-          "prev_rating": null,
-          "rank_change": null
-        },
-        {
-          "name": "Jackson Contracting",
-          "rating": 5.0,
-          "review_count": 27,
-          "address": "333 Alabama St Ste#350, Indianapolis, IN 46204",
+          "place_id": "0x886b5d7519e45e51:0x268ad979aa5807e2",
           "delta_reviews": null,
           "prev_rating": null,
           "rank_change": null
@@ -226,6 +248,7 @@
           "rating": 5.0,
           "review_count": 15,
           "address": "4846 Camden St, Indianapolis, IN 46227",
+          "place_id": "0x406dd15d2564bcb7:0x2006c1ec5ad1880e",
           "delta_reviews": null,
           "prev_rating": null,
           "rank_change": null
@@ -235,6 +258,17 @@
           "rating": 4.7,
           "review_count": 13,
           "address": "5460 Shelbyville Rd, Indianapolis, IN 46237",
+          "place_id": "0x886b44be27540001:0x71b028d55da85099",
+          "delta_reviews": null,
+          "prev_rating": null,
+          "rank_change": null
+        },
+        {
+          "name": "Circle City Skylights",
+          "rating": 4.7,
+          "review_count": 13,
+          "address": "8070 Castleton Rd, Indianapolis, IN 46250",
+          "place_id": "0x886b511a3b2c2081:0x53c72c37cd1130df",
           "delta_reviews": null,
           "prev_rating": null,
           "rank_change": null
