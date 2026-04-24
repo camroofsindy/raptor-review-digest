@@ -240,6 +240,248 @@
           "rank_change": null
         }
       ]
+    },
+    {
+      "timestamp": "2026-04-24T15:12:14.849424+00:00",
+      "businesses": [
+        {
+          "name": "Amos Exteriors",
+          "rating": 4.9,
+          "review_count": 3032,
+          "delta_reviews": 0,
+          "prev_rating": 4.9,
+          "rank_change": 0
+        },
+        {
+          "name": "Bone Dry Roofing",
+          "rating": 4.8,
+          "review_count": 2409,
+          "address": "7735 Winton Dr, Indianapolis, IN 46268",
+          "delta_reviews": 1467,
+          "prev_rating": 4.9,
+          "rank_change": 2
+        },
+        {
+          "name": "Bone Dry Roofing (HQ)",
+          "rating": 4.8,
+          "review_count": 2409,
+          "delta_reviews": 0,
+          "prev_rating": 4.8,
+          "rank_change": -1
+        },
+        {
+          "name": "Indy Roof & Restoration",
+          "rating": 4.9,
+          "review_count": 2147,
+          "address": "5240 Elmwood Ave suite 200, Indianapolis, IN 46203",
+          "delta_reviews": 0,
+          "prev_rating": 4.9,
+          "rank_change": -1
+        },
+        {
+          "name": "Big Boy's Construction",
+          "rating": 4.9,
+          "review_count": 844,
+          "address": "241 S State Ave Suite B, Indianapolis, IN 46201",
+          "delta_reviews": 0,
+          "prev_rating": 4.9,
+          "rank_change": 0
+        },
+        {
+          "name": "Raptor Roofing",
+          "rating": 5.0,
+          "review_count": 663,
+          "address": "5145 S Meridian St, Indianapolis, IN 46217",
+          "delta_reviews": 0,
+          "prev_rating": 5.0,
+          "rank_change": 0
+        },
+        {
+          "name": "Trojan Roofing",
+          "rating": 4.9,
+          "review_count": 643,
+          "address": "333 Alabama St Ste#350, Indianapolis, IN 46204",
+          "delta_reviews": 0,
+          "prev_rating": 4.9,
+          "rank_change": 0
+        },
+        {
+          "name": "Rees Restoration",
+          "rating": 4.7,
+          "review_count": 579,
+          "delta_reviews": 0,
+          "prev_rating": 4.7,
+          "rank_change": 1
+        },
+        {
+          "name": "Cox Roofing",
+          "rating": 4.8,
+          "review_count": 503,
+          "delta_reviews": 0,
+          "prev_rating": 4.8,
+          "rank_change": 1
+        },
+        {
+          "name": "Indy Rooftops - Roofing Replacement Contractor",
+          "rating": 5.0,
+          "review_count": 474,
+          "address": "4254 N Raceway Rd, Indianapolis, IN 46234",
+          "delta_reviews": null,
+          "prev_rating": null,
+          "rank_change": null
+        },
+        {
+          "name": "Indy Rooftops",
+          "rating": 5.0,
+          "review_count": 474,
+          "delta_reviews": 0,
+          "prev_rating": 5.0,
+          "rank_change": 0
+        },
+        {
+          "name": "Stay Dry Roofing",
+          "rating": 4.9,
+          "review_count": 421,
+          "address": "5060 E 62nd St #130, Indianapolis, IN 46220",
+          "delta_reviews": 0,
+          "prev_rating": 4.9,
+          "rank_change": 0
+        },
+        {
+          "name": "Erie Home",
+          "rating": 4.6,
+          "review_count": 274,
+          "delta_reviews": 0,
+          "prev_rating": 4.6,
+          "rank_change": 0
+        },
+        {
+          "name": "AmeriPro Roofing",
+          "rating": 4.5,
+          "review_count": 257,
+          "address": "11711 N Pennsylvania St Suite 105, Carmel, IN 46032",
+          "delta_reviews": 0,
+          "prev_rating": 4.5,
+          "rank_change": 0
+        },
+        {
+          "name": "Moss Roofing",
+          "rating": 4.8,
+          "review_count": 251,
+          "address": "7828 E 88th St, Indianapolis, IN 46256",
+          "delta_reviews": null,
+          "prev_rating": null,
+          "rank_change": null
+        },
+        {
+          "name": "Universal Roofing & Exteriors",
+          "rating": 4.6,
+          "review_count": 222,
+          "address": "5530 W 84th St, Indianapolis, IN 46268",
+          "delta_reviews": null,
+          "prev_rating": null,
+          "rank_change": null
+        },
+        {
+          "name": "Indianapolis Roofing LLC",
+          "rating": 4.9,
+          "review_count": 142,
+          "address": "450 E 96th St, Indianapolis, IN 46240",
+          "delta_reviews": 0,
+          "prev_rating": 4.9,
+          "rank_change": -1
+        },
+        {
+          "name": "Eads Roofing & Exteriors",
+          "rating": 4.9,
+          "review_count": 137,
+          "address": "10890 Bennett Pkwy Ext Ste 300, Zionsville, IN 46077",
+          "delta_reviews": null,
+          "prev_rating": null,
+          "rank_change": null
+        },
+        {
+          "name": "Honest Abe Roofing Indianapolis",
+          "rating": 4.9,
+          "review_count": 132,
+          "address": "9957 Crosspoint Blvd, Indianapolis, IN 46256",
+          "delta_reviews": null,
+          "prev_rating": null,
+          "rank_change": null
+        },
+        {
+          "name": "Coomer Roofing Company",
+          "rating": 4.8,
+          "review_count": 105,
+          "address": "6204 S Harding St, Indianapolis, IN 46217",
+          "delta_reviews": 0,
+          "prev_rating": 4.8,
+          "rank_change": -1
+        },
+        {
+          "name": "Two Brothers Roofing Inc",
+          "rating": 4.8,
+          "review_count": 92,
+          "address": "2376 E 54th St, Indianapolis, IN 46220",
+          "delta_reviews": null,
+          "prev_rating": null,
+          "rank_change": null
+        },
+        {
+          "name": "Roof Masters And Exterior LLC",
+          "rating": 5.0,
+          "review_count": 86,
+          "address": "7962 Oaklandon Rd, Indianapolis, IN 46236",
+          "delta_reviews": null,
+          "prev_rating": null,
+          "rank_change": null
+        },
+        {
+          "name": "MSRC - Indianapolis",
+          "rating": 4.9,
+          "review_count": 77,
+          "address": "1159 Country Club Rd, Indianapolis, IN 46234",
+          "delta_reviews": null,
+          "prev_rating": null,
+          "rank_change": null
+        },
+        {
+          "name": "Metal Roofing Indianapolis",
+          "rating": 5.0,
+          "review_count": 65,
+          "address": "4826 W 34th St, Indianapolis, IN 46224",
+          "delta_reviews": null,
+          "prev_rating": null,
+          "rank_change": null
+        },
+        {
+          "name": "A1 Roofing Indiana",
+          "rating": 4.8,
+          "review_count": 44,
+          "address": "11428 Woods Bay Ln, Indianapolis, IN 46236",
+          "delta_reviews": null,
+          "prev_rating": null,
+          "rank_change": null
+        },
+        {
+          "name": "Commercial Roofing Indianapolis",
+          "rating": 4.9,
+          "review_count": 44,
+          "address": "101 S Parker Ave, Indianapolis, IN 46201",
+          "delta_reviews": 0,
+          "prev_rating": 4.9,
+          "rank_change": -4
+        },
+        {
+          "name": "Residential Roofing Indianapolis",
+          "rating": 4.9,
+          "review_count": 38,
+          "address": "6925 S Harding St, Indianapolis, IN 46217",
+          "delta_reviews": 0,
+          "prev_rating": 4.9,
+          "rank_change": -4
+        }
+      ]
     }
   ]
 }
