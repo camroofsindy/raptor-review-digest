@@ -42,6 +42,10 @@ def save_history(history):
         json.dump(history, f, indent=2)
 
 
+def _norm(s):
+    return re.sub(r"[^a-z0-9]", "", s.lower().replace("&", "and"))
+
+
 def scrape_google_maps(query, top_n=20):
     """Scrape Google Maps for the query. Visits each result's detail page to get
     review count, which is no longer present on the list-view cards."""
@@ -106,7 +110,9 @@ def scrape_google_maps(query, top_n=20):
         pinned = watch.get("pinned_competitors", [])
         for pin in pinned:
             pname = pin["name"]
-            search_url = f"https://www.google.com/maps/search/{pname.replace(' ', '+')}+Indianapolis"
+            # Use custom search_query if given; otherwise default to name + Indianapolis.
+            query_text = pin.get("search_query") or f"{pname} Indianapolis"
+            search_url = f"https://www.google.com/maps/search/{query_text.replace(' ', '+')}"
             try:
                 page.goto(search_url, wait_until="domcontentloaded", timeout=30000)
                 page.wait_for_timeout(2000)
@@ -130,15 +136,15 @@ def scrape_google_maps(query, top_n=20):
                     href = link.get_attribute("href") or ""
                     if href:
                         hrefs.append(href)
-                best = None
+                detail_results = []
                 for href in hrefs:
                     data = _extract_detail(page, href)
                     if data is None:
                         continue
-                    if best is None or data["review_count"] > best["review_count"]:
-                        best = data
-                if best is None:
+                    detail_results.append(data)
+                if not detail_results:
                     continue
+                best = max(detail_results, key=lambda d: d["review_count"])
                 results.append({"name": pname, **best})
                 print(f"  pinned {pname}: {best['rating']} stars, {best['review_count']} reviews")
             except Exception as e:
@@ -147,30 +153,36 @@ def scrape_google_maps(query, top_n=20):
         browser.close()
 
     # Dedup by normalized name, keeping the entry with the highest review count.
-    def norm(s):
-        return re.sub(r"[^a-z0-9]", "", s.lower().replace("&", "and"))
     merged = {}
     for biz in results:
-        key = norm(biz["name"])
+        key = _norm(biz["name"])
         if key not in merged or biz["review_count"] > merged[key]["review_count"]:
             merged[key] = biz
     return list(merged.values())
 
 
 def _extract_detail(page, href):
-    """Navigate to a place detail URL and extract rating + review count."""
+    """Navigate to a place detail URL and extract rating, review count, address."""
     try:
         page.goto(href, wait_until="domcontentloaded", timeout=30000)
         page.wait_for_timeout(1500)
         text = page.locator("body").inner_text(timeout=5000)
         combo = re.search(r"(\d\.\d)\s*\n?\s*\((\d[\d,]*)\)", text)
+        rating, review_count = None, 0
         if combo:
-            return {
-                "rating": float(combo.group(1)),
-                "review_count": int(combo.group(2).replace(",", "")),
-            }
-        if re.search(r"No reviews", text, re.IGNORECASE):
-            return {"rating": None, "review_count": 0}
+            rating = float(combo.group(1))
+            review_count = int(combo.group(2).replace(",", ""))
+        elif re.search(r"No reviews", text, re.IGNORECASE):
+            pass
+        else:
+            return None
+        # Attempt to extract a street address with Indianapolis or nearby Indy metro city.
+        addr_match = re.search(
+            r"\n(\d+\s+[A-Z][^\n]+?,\s*(?:Indianapolis|Greenwood|Carmel|Fishers|Zionsville|Avon|Plainfield|Noblesville|Westfield|Brownsburg)[^\n]*)",
+            text,
+        )
+        address = addr_match.group(1).strip() if addr_match else None
+        return {"rating": rating, "review_count": review_count, "address": address}
     except Exception as e:
         print(f"  detail extract error: {e}", file=sys.stderr)
     return None

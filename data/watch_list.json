@@ -3,7 +3,7 @@
   "discover_top_n": 20,
   "pinned_competitors": [
     {"name": "Amos Exteriors", "note": "Top volume, 3,027 reviews as of 2026-04-23"},
-    {"name": "Bone Dry Roofing", "note": "Multi-location strategy, ~3,556 aggregate"},
+    {"name": "Bone Dry Roofing (HQ)", "search_query": "Bone Dry Roofing Indianapolis", "note": "Main HQ, ~2,409 reviews. South-side branch is auto-discovered separately at ~942."},
     {"name": "Indy Roof and Restoration", "note": "2,145 reviews"},
     {"name": "Big Boy's Construction", "note": "844 reviews"},
     {"name": "Trojan Roofing", "note": "643 reviews"},
