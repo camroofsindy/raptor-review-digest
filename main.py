@@ -630,13 +630,78 @@ def _is_blocked_non_roofer(name):
 
 
 def extract_action_headlines(actions_md):
-    """Pull just the bold numbered headlines from a Claude-generated actions block.
-    Used to show 3 bullets on the Overview tab while the Moves tab keeps the full
-    multi-paragraph version."""
+    """Pull just the bold numbered headlines from a Claude-generated actions block."""
     if not actions_md:
         return []
     headlines = re.findall(r"\*\*\s*(\d+\.\s+[^*]+?)\*\*", actions_md)
     return [h.strip().rstrip(".") for h in headlines[:5]]
+
+
+def parse_actions_into_cards(actions_md):
+    """Split a Claude-generated actions block into structured cards. Each card has
+    {number, headline, body_md}. Used so the Moves tab can render visual cards
+    with icon + headline + collapsible body instead of one wall of prose."""
+    if not actions_md:
+        return []
+    # Split on numbered bold headlines: **N. Headline.**
+    parts = re.split(r"\*\*\s*(\d+)\.\s+([^*]+?)\*\*", actions_md)
+    # parts looks like: [intro, num1, headline1, body1, num2, headline2, body2, ...]
+    cards = []
+    for i in range(1, len(parts) - 2, 3):
+        try:
+            num = int(parts[i])
+            headline = parts[i + 1].strip().rstrip(".")
+            body = parts[i + 2].strip()
+            # Trim trailing markdown headings or separators
+            body = re.sub(r"^---+\s*$", "", body, flags=re.MULTILINE).strip()
+            cards.append({"number": num, "headline": headline, "body": body})
+        except (ValueError, IndexError):
+            continue
+    return cards
+
+
+def parse_markdown_sections(md_text):
+    """Split markdown text into sections by ## or # headings. Returns a list of
+    {heading, body_md} for each section. Used so SEO/AEO and Rising can render
+    section-by-section visual cards instead of one long prose block."""
+    if not md_text:
+        return []
+    # Match ## or # headings (level 1-2 only — sub-headings stay in body)
+    parts = re.split(r"^(#{1,2})\s+(.+?)$", md_text, flags=re.MULTILINE)
+    sections = []
+    # parts: [pre, level, heading, body, level, heading, body, ...]
+    for i in range(1, len(parts) - 2, 3):
+        level = parts[i]
+        heading = parts[i + 1].strip()
+        body = parts[i + 2].strip()
+        # Drop any trailing horizontal rule artifacts
+        body = re.sub(r"\n+---+\s*$", "", body).strip()
+        sections.append({"level": len(level), "heading": heading, "body": body})
+    if not sections and md_text.strip():
+        # No markdown headings found — return whole thing as one section
+        sections.append({"level": 0, "heading": "", "body": md_text.strip()})
+    return sections
+
+
+def parse_rising_profile(profile_md):
+    """Split a rising-player profile into structured fields. The prompt asks for
+    four sections (Who/Driving/Steal/Weakness). Parse into a dict so the template
+    can render visual cards instead of one prose blob."""
+    if not profile_md:
+        return None
+    fields = {"who": "", "driving": "", "steal": "", "weakness": "", "raw": profile_md}
+    # Look for the 4-section structure with bold or markdown sub-headings.
+    patterns = [
+        ("who", r"(?:^|\n)\*?\*?\s*(?:1\.\s*|##\s*)?\*?\*?\s*Who (?:they|they are|theyre)\*?\*?[:.]?\s*(.+?)(?=\n\s*\*?\*?\s*(?:2\.|##|\*\*[2-9])|\Z)"),
+        ("driving", r"(?:^|\n)\*?\*?\s*(?:2\.\s*|##\s*)?\*?\*?\s*What.+?driving.+?velocity\*?\*?[:.]?\s*(.+?)(?=\n\s*\*?\*?\s*(?:3\.|##|\*\*[3-9])|\Z)"),
+        ("steal", r"(?:^|\n)\*?\*?\s*(?:3\.\s*|##\s*)?\*?\*?\s*One tactic.+?steal\*?\*?[:.]?\s*(.+?)(?=\n\s*\*?\*?\s*(?:4\.|##|\*\*[4-9])|\Z)"),
+        ("weakness", r"(?:^|\n)\*?\*?\s*(?:4\.\s*|##\s*)?\*?\*?\s*One weakness.+?exploit\*?\*?[:.]?\s*(.+?)(?=\n\s*---+|\Z)"),
+    ]
+    for key, pattern in patterns:
+        m = re.search(pattern, profile_md, re.IGNORECASE | re.DOTALL)
+        if m:
+            fields[key] = m.group(1).strip()
+    return fields
 
 
 _EMOJI_RE = re.compile(
@@ -1223,6 +1288,14 @@ def render_dashboard(snapshot, prev_snapshot, raptor, businesses, market_news,
     by_volume_leaderboard = [b for b in by_volume if (b.get("review_count") or 0) >= 50][:50]
     by_gain_for_table = [b for b in by_gain_7d if (b.get("review_count") or 0) >= 50][:50]
     action_headlines = extract_action_headlines(raptor_actions)
+    action_cards = parse_actions_into_cards(raptor_actions)
+    seo_sections = parse_markdown_sections(seo_aeo_brief or "")
+    # Annotate each rising profile with structured fields for card layout.
+    rising_with_fields = []
+    for rp in rising_profiles or []:
+        rp_struct = dict(rp)
+        rp_struct["fields"] = parse_rising_profile(rp.get("profile", ""))
+        rising_with_fields.append(rp_struct)
 
     # Compute hero-line numbers for the dynamic position+threat headline.
     raptor_count = raptor["review_count"] if raptor else 0
@@ -1247,10 +1320,12 @@ def render_dashboard(snapshot, prev_snapshot, raptor, businesses, market_news,
         by_gain_7d=by_gain_for_table,
         market_news=market_news,
         news_cards=news_cards,
-        rising_profiles=rising_profiles,
+        rising_profiles=rising_with_fields,
         raptor_actions=raptor_actions,
         action_headlines=action_headlines,
+        action_cards=action_cards,
         seo_aeo_brief=seo_aeo_brief,
+        seo_sections=seo_sections,
         overview_summary=overview_summary,
         red_team=red_team,
         chart_data=chart_data,

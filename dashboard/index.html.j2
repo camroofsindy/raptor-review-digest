@@ -230,18 +230,44 @@ tailwind.config = {
     </div>
   </section>
 
-  <!-- RAPTOR'S MOVES TAB — full breakdown structured as cards -->
+  <!-- RAPTOR'S MOVES — three numbered visual cards, click to expand body -->
   <section data-panel="moves" class="hidden space-y-6">
-    <div class="panel-hero p-6 sm:p-8">
+    <div class="panel p-6">
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <div>
           <h2 class="text-xl sm:text-2xl font-bold text-white">Raptor's Moves This Week</h2>
-          <p class="text-ink-soft text-sm mt-1">Specific actions and reasoning, written by AI as a $500K/yr CMO.</p>
+          <p class="text-ink-soft text-sm mt-1">Three concrete actions plus reasoning. Click any card to read the full breakdown.</p>
         </div>
         <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-white/5 px-2 py-1 rounded border border-white/10">Live AI</span>
       </div>
-      <div class="ai-prose text-sm sm:text-base mt-4">{{ raptor_actions | md if raptor_actions else 'No actions synthesized this cycle.' }}</div>
     </div>
+
+    {% if action_cards %}
+    <div class="space-y-4">
+      {% for card in action_cards %}
+      <details class="panel overflow-hidden group" {% if loop.first %}open{% endif %}>
+        <summary class="p-5 sm:p-6 hover:bg-white/5 transition-colors">
+          <div class="flex items-start gap-4">
+            <span class="flex-shrink-0 w-9 h-9 rounded-lg bg-white/5 border border-white/15 text-white flex items-center justify-center font-bold">{{ card.number }}</span>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-base sm:text-lg font-bold text-white leading-snug">{{ card.headline }}</h3>
+              <p class="text-xs text-accent-green mt-2 inline-flex items-center gap-1 font-semibold">
+                <span class="chev inline-block">
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </span>
+                <span class="when-closed">Show reasoning</span>
+                <span class="when-open" style="display:none">Hide reasoning</span>
+              </p>
+            </div>
+          </div>
+        </summary>
+        <div class="px-5 sm:px-6 pb-6 ai-prose text-sm border-t border-white/5 pt-4 ml-13">{{ card.body | md }}</div>
+      </details>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="panel p-6 ai-prose text-sm">{{ raptor_actions | md if raptor_actions else 'No actions synthesized this cycle.' }}</div>
+    {% endif %}
   </section>
 
   <!-- MOVEMENT TAB — sortable table + charts -->
@@ -361,26 +387,56 @@ tailwind.config = {
     {% endif %}
   </section>
 
-  <!-- RISING -->
+  <!-- RISING — structured 4-block layout per profile -->
   <section data-panel="rising" class="hidden space-y-6">
     {% if rising_profiles %}
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="space-y-6">
       {% for rp in rising_profiles %}
-      <details class="scroll-fade panel overflow-hidden group" {% if loop.first %}open{% endif %}>
-        <summary class="p-5 sm:p-6 hover:bg-white/5 transition-colors">
-          <div class="flex items-start justify-between gap-3">
-            <div class="flex-1 min-w-0">
-              <h3 class="text-base sm:text-lg font-bold text-white">{{ rp.competitor.name }}</h3>
-              <div class="flex items-center gap-3 mt-2 flex-wrap">
-                <span class="text-[10px] px-2 py-0.5 bg-accent-green/10 text-accent-green rounded font-bold uppercase tracking-wide border border-accent-green/30">+{{ rp.competitor.reviews_7d or 0 }} this week</span>
-                <span class="text-xs text-ink-soft">{{ rp.competitor.review_count }} total · {{ rp.competitor.rating }}★</span>
+      <div class="scroll-fade panel overflow-hidden">
+        <div class="p-5 sm:p-6 border-b border-white/5">
+          <div class="flex items-start justify-between flex-wrap gap-3">
+            <div>
+              <h3 class="text-lg sm:text-xl font-bold text-white">{{ rp.competitor.name }}</h3>
+              <div class="flex items-center gap-2 mt-2 flex-wrap text-xs text-ink-soft">
+                <span class="px-2 py-0.5 bg-accent-green/10 text-accent-green rounded font-bold uppercase tracking-wide border border-accent-green/30">+{{ rp.competitor.reviews_7d or 0 }} 7d</span>
+                <span>·</span><span>{{ rp.competitor.review_count }} total reviews</span>
+                <span>·</span><span>{{ rp.competitor.rating }}★</span>
+                <span>·</span><span>+{{ rp.competitor.reviews_30d or 0 }} in 30d</span>
               </div>
             </div>
-            <svg class="chev w-5 h-5 text-ink-soft flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
           </div>
-        </summary>
-        <div class="px-5 sm:px-6 pb-6 ai-prose text-sm border-t border-white/5 pt-5">{{ rp.profile | md }}</div>
-      </details>
+        </div>
+        {% if rp.fields and (rp.fields.who or rp.fields.driving or rp.fields.steal or rp.fields.weakness) %}
+        <div class="grid grid-cols-1 md:grid-cols-2 divide-x divide-white/5 divide-y divide-white/5">
+          {% if rp.fields.who %}
+          <div class="p-5 sm:p-6">
+            <div class="text-[10px] uppercase tracking-wider text-ink-mute mb-2">Who they are</div>
+            <div class="ai-prose text-sm">{{ rp.fields.who | md }}</div>
+          </div>
+          {% endif %}
+          {% if rp.fields.driving %}
+          <div class="p-5 sm:p-6">
+            <div class="text-[10px] uppercase tracking-wider text-accent-green mb-2">What's driving them</div>
+            <div class="ai-prose text-sm">{{ rp.fields.driving | md }}</div>
+          </div>
+          {% endif %}
+          {% if rp.fields.steal %}
+          <div class="p-5 sm:p-6">
+            <div class="text-[10px] uppercase tracking-wider text-accent-blue mb-2">Tactic to steal</div>
+            <div class="ai-prose text-sm">{{ rp.fields.steal | md }}</div>
+          </div>
+          {% endif %}
+          {% if rp.fields.weakness %}
+          <div class="p-5 sm:p-6">
+            <div class="text-[10px] uppercase tracking-wider text-amber-400 mb-2">Their weakness</div>
+            <div class="ai-prose text-sm">{{ rp.fields.weakness | md }}</div>
+          </div>
+          {% endif %}
+        </div>
+        {% else %}
+        <div class="p-5 sm:p-6 ai-prose text-sm">{{ rp.profile | md }}</div>
+        {% endif %}
+      </div>
       {% endfor %}
     </div>
     {% else %}
@@ -399,7 +455,7 @@ tailwind.config = {
     {% endif %}
   </section>
 
-  <!-- SEO + AEO -->
+  <!-- SEO + AEO — section-by-section visual cards -->
   <section data-panel="seo" class="hidden space-y-6">
     <div class="flex items-center justify-between flex-wrap gap-2">
       <div>
@@ -407,9 +463,27 @@ tailwind.config = {
         <p class="text-sm text-ink-soft mt-1">Where competitors win on search and generative AI engines, what tactic Raptor should run this week, where Raptor stands when ChatGPT, Claude, and Gemini are asked about Indy roofing.</p>
       </div>
     </div>
-    <div class="panel-hero p-6 sm:p-8">
-      <div class="ai-prose text-sm sm:text-base">{{ seo_aeo_brief | md if seo_aeo_brief else 'SEO + AEO brief will populate on the next refresh cycle.' }}</div>
+
+    {% if seo_sections %}
+    <div class="space-y-4">
+      {% for sec in seo_sections %}
+      <details class="panel overflow-hidden group" {% if loop.first %}open{% endif %}>
+        <summary class="p-5 sm:p-6 hover:bg-white/5 transition-colors">
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex-1 min-w-0">
+              <div class="text-[10px] uppercase tracking-wider text-ink-mute mb-1">Section {{ loop.index }}</div>
+              <h3 class="text-base sm:text-lg font-bold text-white leading-snug">{{ sec.heading }}</h3>
+            </div>
+            <svg class="chev w-5 h-5 text-ink-soft flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </div>
+        </summary>
+        <div class="px-5 sm:px-6 pb-6 ai-prose text-sm border-t border-white/5 pt-4">{{ sec.body | md }}</div>
+      </details>
+      {% endfor %}
     </div>
+    {% else %}
+    <div class="panel p-8 text-center text-ink-soft">SEO + AEO brief will populate on the next refresh cycle.</div>
+    {% endif %}
   </section>
 
   <!-- ALL COMPETITORS — sortable -->
