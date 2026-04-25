@@ -38,7 +38,9 @@ tailwind.config = {
   .stat-num { font-variant-numeric: tabular-nums; }
   .scroll-fade { opacity: 0; transform: translateY(20px); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
   .scroll-fade.visible { opacity: 1; transform: translateY(0); }
-  .tab-active { border-color: #3ae20a; color: #172e55; }
+  .tab-active { background: linear-gradient(135deg, #3ae20a 0%, #1ac6ff 100%); color: #0d1d3a !important; box-shadow: 0 4px 14px rgba(58,226,10,0.35); }
+  .tab-active span { color: #0d1d3a; }
+  .tab-active svg { opacity: 1 !important; color: #0d1d3a; }
   details > summary { list-style: none; cursor: pointer; }
   details > summary::-webkit-details-marker { display: none; }
   details[open] > summary .chev { transform: rotate(90deg); }
@@ -57,6 +59,15 @@ tailwind.config = {
   .ai-prose li { margin: 0.3em 0; }
   .ai-prose hr { border: none; border-top: 1px solid #e3e7ee; margin: 1em 0; }
   .gradient-text { background: linear-gradient(135deg, #3ae20a 0%, #1ac6ff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .ai-prose-dark h1, .ai-prose-dark h2, .ai-prose-dark h3, .ai-prose-dark h4 { color: #ffffff; }
+  .ai-prose-dark strong { color: #3ae20a; }
+  .ai-prose-dark em { color: rgba(255,255,255,0.7); }
+  .ai-prose-dark a { color: #1ac6ff; border-bottom-color: rgba(26,198,255,0.4); }
+  .ai-prose-dark p, .ai-prose-dark li { color: rgba(255,255,255,0.85); }
+  .ai-prose-dark hr { border-top-color: rgba(255,255,255,0.15); }
+  .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 </style>
 </head>
 <body class="bg-slate-50 text-ink antialiased min-h-screen">
@@ -103,21 +114,39 @@ tailwind.config = {
 </section>
 
 <!-- Sticky Tab Nav -->
-<nav class="sticky top-0 z-30 bg-white/90 backdrop-blur-lg border-b border-slate-200 shadow-sm">
-  <div class="max-w-6xl mx-auto px-5 sm:px-8">
-    <div class="flex gap-1 sm:gap-4 overflow-x-auto no-scrollbar -mx-2 sm:mx-0">
+<nav class="sticky top-0 z-30 bg-navy-deep/95 backdrop-blur-xl border-b border-accent-green/15 shadow-lg">
+  <div class="max-w-6xl mx-auto px-3 sm:px-6">
+    <div class="flex gap-1 sm:gap-2 overflow-x-auto no-scrollbar py-2">
       
-      <button data-tab="overview" class="tab-btn whitespace-nowrap px-3 sm:px-4 py-3 text-sm font-medium border-b-2 border-transparent text-ink-soft hover:text-navy transition-colors">Overview</button>
+      <button data-tab="overview" class="tab-btn group whitespace-nowrap inline-flex items-center gap-2 px-3 sm:px-4 py-2.5 text-xs sm:text-sm font-semibold rounded-full text-white/60 hover:text-white hover:bg-white/5 transition-all">
+        <svg class="w-4 h-4 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <span>Overview</span>
+      </button>
       
-      <button data-tab="moves" class="tab-btn whitespace-nowrap px-3 sm:px-4 py-3 text-sm font-medium border-b-2 border-transparent text-ink-soft hover:text-navy transition-colors">Raptor's Moves</button>
+      <button data-tab="moves" class="tab-btn group whitespace-nowrap inline-flex items-center gap-2 px-3 sm:px-4 py-2.5 text-xs sm:text-sm font-semibold rounded-full text-white/60 hover:text-white hover:bg-white/5 transition-all">
+        <svg class="w-4 h-4 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        <span>Raptor's Moves</span>
+      </button>
       
-      <button data-tab="movement" class="tab-btn whitespace-nowrap px-3 sm:px-4 py-3 text-sm font-medium border-b-2 border-transparent text-ink-soft hover:text-navy transition-colors">Movement</button>
+      <button data-tab="movement" class="tab-btn group whitespace-nowrap inline-flex items-center gap-2 px-3 sm:px-4 py-2.5 text-xs sm:text-sm font-semibold rounded-full text-white/60 hover:text-white hover:bg-white/5 transition-all">
+        <svg class="w-4 h-4 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+        <span>Movement</span>
+      </button>
       
-      <button data-tab="news" class="tab-btn whitespace-nowrap px-3 sm:px-4 py-3 text-sm font-medium border-b-2 border-transparent text-ink-soft hover:text-navy transition-colors">News</button>
+      <button data-tab="news" class="tab-btn group whitespace-nowrap inline-flex items-center gap-2 px-3 sm:px-4 py-2.5 text-xs sm:text-sm font-semibold rounded-full text-white/60 hover:text-white hover:bg-white/5 transition-all">
+        <svg class="w-4 h-4 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+        <span>News</span>
+      </button>
       
-      <button data-tab="rising" class="tab-btn whitespace-nowrap px-3 sm:px-4 py-3 text-sm font-medium border-b-2 border-transparent text-ink-soft hover:text-navy transition-colors">Rising Players</button>
+      <button data-tab="rising" class="tab-btn group whitespace-nowrap inline-flex items-center gap-2 px-3 sm:px-4 py-2.5 text-xs sm:text-sm font-semibold rounded-full text-white/60 hover:text-white hover:bg-white/5 transition-all">
+        <svg class="w-4 h-4 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+        <span>Rising Players</span>
+      </button>
       
-      <button data-tab="all" class="tab-btn whitespace-nowrap px-3 sm:px-4 py-3 text-sm font-medium border-b-2 border-transparent text-ink-soft hover:text-navy transition-colors">All Competitors</button>
+      <button data-tab="all" class="tab-btn group whitespace-nowrap inline-flex items-center gap-2 px-3 sm:px-4 py-2.5 text-xs sm:text-sm font-semibold rounded-full text-white/60 hover:text-white hover:bg-white/5 transition-all">
+        <svg class="w-4 h-4 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+        <span>All Competitors</span>
+      </button>
       
     </div>
   </div>
@@ -125,21 +154,24 @@ tailwind.config = {
 
 <main class="max-w-6xl mx-auto px-5 sm:px-8 py-8 space-y-6">
 
-  <!-- OVERVIEW TAB -->
+  <!-- OVERVIEW TAB — high-level summary, click into other tabs for depth -->
   <section data-panel="overview" class="space-y-6">
     
-    <div class="scroll-fade bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
-      <div class="flex items-center justify-between mb-4">
-        <h2 class="text-lg sm:text-xl font-bold text-navy">Raptor's Moves This Week</h2>
-        <span class="text-xs uppercase tracking-wider text-ink-soft bg-slate-100 px-2 py-1 rounded">Synthesized by Claude</span>
+    <div class="scroll-fade bg-gradient-to-br from-navy to-navy-deep rounded-2xl shadow-xl p-6 sm:p-8 text-white relative overflow-hidden">
+      <div class="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-accent-green/10 blur-3xl"></div>
+      <div class="absolute -bottom-20 -left-20 w-64 h-64 rounded-full bg-accent-blue/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex items-center justify-between mb-5">
+          <h2 class="text-base sm:text-lg font-bold text-white uppercase tracking-wider">This Week's Three Moves</h2>
+          <span class="text-[10px] uppercase tracking-wider text-accent-green bg-accent-green/15 border border-accent-green/30 px-2 py-1 rounded-full">Live AI</span>
+        </div>
+        <div class="ai-prose ai-prose-dark text-sm sm:text-base"><h2>Test</h2>
+<p><strong>1. Action.</strong> Detail.</p></div>
+        <button data-tab-link="moves" class="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-accent-green hover:text-accent-blue transition-colors">
+          See full breakdown
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </button>
       </div>
-      <div class="ai-prose text-sm sm:text-base"><h1>Three Actions for This Week</h1>
-<p><strong>1. Launch a Greenwood/Johnson County free spring inspection counter-offer by Friday to defend against Nationwide Roofing's April 18 campaign.</strong><br />
-Nationwide explicitly named Greenwood in their press release targeting Raptor's home turf during peak storm season — this is a direct territorial attack that needs a same-week response. Push a promoted offer across Google Local Service Ads, Meta, and at minimum 500 door hangers in Center Grove, Bargersville, and Old Town Greenwood, with a booking link tracked separately so you can measure conversion against Nationwide's claim volume.</p>
-<p><strong>2. Commission a third-party "Best Indianapolis Roofers 2026" placement or earned-media article this week that features Raptor's 5.0-star rating.</strong><br />
-Indy Roof &amp; Restoration and Stay Dry are both running self-authored ranking articles that exclude Raptor and dominate the SERP — every week this goes uncontested compounds their SEO moat. Pitch IBJ, Expertise.com, and Indianapolis Monthly with a data-backed angle ("Only 5.0-star roofer in Indy's top 10 by volume, 663 reviews, 97% response rate"); budget $2-5K for a paid placement if no earned hit lands by Friday.</p>
-<p><strong>3. Apply for GAF Master Elite or Owens Corning Platinum certification this week and audit current manufacturer credentials displayed on the site.</strong><br />
-Stay Dry is leading their homepage with the 2026 GAF President's Club Award as a top-of-funnel trust signal, and Raptor has no comparable manufacturer badge visible to counter that credibility claim heading into storm season. Submit the application this week, and in parallel add any existing certifications above the fold on the homepage and on every estimate PDF — even mid-tier badges close the perception gap while the top-tier application processes.</p></div>
     </div>
     
 
@@ -151,25 +183,26 @@ Stay Dry is leading their homepage with the 2026 GAF President's Club Award as a
       <div class="scroll-fade bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
         <h3 class="text-sm font-bold text-navy uppercase tracking-wider mb-4">Velocity vs Volume</h3>
         <div class="relative h-64 sm:h-72"><canvas id="scatter-chart"></canvas></div>
-        <p class="text-xs text-ink-soft mt-2">Top-right quadrant = high volume, high velocity. Bottom-right = small base punching above weight.</p>
+        <p class="text-xs text-ink-soft mt-2">Top-right = high volume + high velocity. Bottom-right small dots = small base punching above weight.</p>
       </div>
     </div>
   </section>
 
-  <!-- RAPTOR'S MOVES TAB -->
+  <!-- RAPTOR'S MOVES TAB — same actions, but here each one is expandable with deeper detail -->
   <section data-panel="moves" class="hidden space-y-6">
-    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
-      <div class="flex items-center justify-between mb-4">
-        <h2 class="text-lg sm:text-xl font-bold text-navy">Raptor's Moves This Week</h2>
-        <span class="text-xs uppercase tracking-wider text-ink-soft bg-slate-100 px-2 py-1 rounded">Synthesized by Claude</span>
+    <div class="bg-gradient-to-br from-navy to-navy-deep rounded-2xl shadow-xl p-6 sm:p-8 text-white relative overflow-hidden">
+      <div class="absolute -top-32 right-0 w-72 h-72 rounded-full bg-accent-green/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex items-center justify-between mb-2">
+          <div>
+            <h2 class="text-xl sm:text-2xl font-bold text-white">Raptor's Moves This Week</h2>
+            <p class="text-white/60 text-sm mt-1">Specific actions Claude Opus synthesized from this cycle's data plus market news.</p>
+          </div>
+          <span class="text-[10px] uppercase tracking-wider text-accent-green bg-accent-green/15 border border-accent-green/30 px-2 py-1 rounded-full">Live AI</span>
+        </div>
+        <div class="ai-prose ai-prose-dark text-sm sm:text-base mt-4"><h2>Test</h2>
+<p><strong>1. Action.</strong> Detail.</p></div>
       </div>
-      <div class="ai-prose text-sm sm:text-base"><h1>Three Actions for This Week</h1>
-<p><strong>1. Launch a Greenwood/Johnson County free spring inspection counter-offer by Friday to defend against Nationwide Roofing's April 18 campaign.</strong><br />
-Nationwide explicitly named Greenwood in their press release targeting Raptor's home turf during peak storm season — this is a direct territorial attack that needs a same-week response. Push a promoted offer across Google Local Service Ads, Meta, and at minimum 500 door hangers in Center Grove, Bargersville, and Old Town Greenwood, with a booking link tracked separately so you can measure conversion against Nationwide's claim volume.</p>
-<p><strong>2. Commission a third-party "Best Indianapolis Roofers 2026" placement or earned-media article this week that features Raptor's 5.0-star rating.</strong><br />
-Indy Roof &amp; Restoration and Stay Dry are both running self-authored ranking articles that exclude Raptor and dominate the SERP — every week this goes uncontested compounds their SEO moat. Pitch IBJ, Expertise.com, and Indianapolis Monthly with a data-backed angle ("Only 5.0-star roofer in Indy's top 10 by volume, 663 reviews, 97% response rate"); budget $2-5K for a paid placement if no earned hit lands by Friday.</p>
-<p><strong>3. Apply for GAF Master Elite or Owens Corning Platinum certification this week and audit current manufacturer credentials displayed on the site.</strong><br />
-Stay Dry is leading their homepage with the 2026 GAF President's Club Award as a top-of-funnel trust signal, and Raptor has no comparable manufacturer badge visible to counter that credibility claim heading into storm season. Submit the application this week, and in parallel add any existing certifications above the fold on the homepage and on every estimate PDF — even mid-tier badges close the perception gap while the top-tier application processes.</p></div>
     </div>
   </section>
 
@@ -217,7 +250,7 @@ Stay Dry is leading their homepage with the 2026 GAF President's Club Award as a
               <td class="px-4 py-3 text-right font-bold text-emerald-600">+23</td>
               <td class="px-4 py-3 text-right text-ink-soft">+75</td>
               <td class="px-4 py-3 text-right text-ink-soft">+75</td>
-              <td class="px-4 py-3 text-right text-ink-soft">93%</td>
+              <td class="px-4 py-3 text-right text-ink-soft">94%</td>
             </tr>
             
             <tr class=" hover:bg-slate-50 transition-colors">
@@ -225,25 +258,36 @@ Stay Dry is leading their homepage with the 2026 GAF President's Club Award as a
               <td class="px-4 py-3 font-medium text-navy">Indy Rooftops</td>
               <td class="px-4 py-3 text-right stat-num">481</td>
               <td class="px-4 py-3 text-right">5.0</td>
-              <td class="px-4 py-3 text-right font-bold text-emerald-600">+15</td>
-              <td class="px-4 py-3 text-right text-ink-soft">+48</td>
-              <td class="px-4 py-3 text-right text-ink-soft">+73</td>
+              <td class="px-4 py-3 text-right font-bold text-emerald-600">+14</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+47</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+72</td>
               <td class="px-4 py-3 text-right text-ink-soft">38%</td>
             </tr>
             
             <tr class=" hover:bg-slate-50 transition-colors">
               <td class="px-4 py-3 text-ink-soft">3</td>
               <td class="px-4 py-3 font-medium text-navy">Bone Dry Roofing</td>
-              <td class="px-4 py-3 text-right stat-num">2,410</td>
+              <td class="px-4 py-3 text-right stat-num">2,409</td>
               <td class="px-4 py-3 text-right">4.8</td>
               <td class="px-4 py-3 text-right font-bold text-emerald-600">+10</td>
               <td class="px-4 py-3 text-right text-ink-soft">+42</td>
               <td class="px-4 py-3 text-right text-ink-soft">+61</td>
-              <td class="px-4 py-3 text-right text-ink-soft">97%</td>
+              <td class="px-4 py-3 text-right text-ink-soft">99%</td>
             </tr>
             
             <tr class=" hover:bg-slate-50 transition-colors">
               <td class="px-4 py-3 text-ink-soft">4</td>
+              <td class="px-4 py-3 font-medium text-navy">JOHN PETERS ROOFING</td>
+              <td class="px-4 py-3 text-right stat-num">147</td>
+              <td class="px-4 py-3 text-right">4.8</td>
+              <td class="px-4 py-3 text-right font-bold text-emerald-600">+10</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+10</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+10</td>
+              <td class="px-4 py-3 text-right text-ink-soft">99%</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">5</td>
               <td class="px-4 py-3 font-medium text-navy">Cochran Exteriors</td>
               <td class="px-4 py-3 text-right stat-num">1,171</td>
               <td class="px-4 py-3 text-right">4.7</td>
@@ -254,7 +298,7 @@ Stay Dry is leading their homepage with the 2026 GAF President's Club Award as a
             </tr>
             
             <tr class=" hover:bg-slate-50 transition-colors">
-              <td class="px-4 py-3 text-ink-soft">5</td>
+              <td class="px-4 py-3 text-ink-soft">6</td>
               <td class="px-4 py-3 font-medium text-navy">Erie Home</td>
               <td class="px-4 py-3 text-right stat-num">274</td>
               <td class="px-4 py-3 text-right">4.6</td>
@@ -265,7 +309,7 @@ Stay Dry is leading their homepage with the 2026 GAF President's Club Award as a
             </tr>
             
             <tr class="bg-accent-green/5 border-l-4 border-l-accent-green hover:bg-slate-50 transition-colors">
-              <td class="px-4 py-3 text-ink-soft">6</td>
+              <td class="px-4 py-3 text-ink-soft">7</td>
               <td class="px-4 py-3 font-medium text-navy">Raptor Roofing</td>
               <td class="px-4 py-3 text-right stat-num">664</td>
               <td class="px-4 py-3 text-right">5.0</td>
@@ -276,7 +320,7 @@ Stay Dry is leading their homepage with the 2026 GAF President's Club Award as a
             </tr>
             
             <tr class=" hover:bg-slate-50 transition-colors">
-              <td class="px-4 py-3 text-ink-soft">7</td>
+              <td class="px-4 py-3 text-ink-soft">8</td>
               <td class="px-4 py-3 font-medium text-navy">Rees Restoration</td>
               <td class="px-4 py-3 text-right stat-num">579</td>
               <td class="px-4 py-3 text-right">4.7</td>
@@ -287,7 +331,7 @@ Stay Dry is leading their homepage with the 2026 GAF President's Club Award as a
             </tr>
             
             <tr class=" hover:bg-slate-50 transition-colors">
-              <td class="px-4 py-3 text-ink-soft">8</td>
+              <td class="px-4 py-3 text-ink-soft">9</td>
               <td class="px-4 py-3 font-medium text-navy">MSRC - Indianapolis</td>
               <td class="px-4 py-3 text-right stat-num">77</td>
               <td class="px-4 py-3 text-right">4.9</td>
@@ -298,7 +342,7 @@ Stay Dry is leading their homepage with the 2026 GAF President's Club Award as a
             </tr>
             
             <tr class=" hover:bg-slate-50 transition-colors">
-              <td class="px-4 py-3 text-ink-soft">9</td>
+              <td class="px-4 py-3 text-ink-soft">10</td>
               <td class="px-4 py-3 font-medium text-navy">AmeriPro Roofing</td>
               <td class="px-4 py-3 text-right stat-num">257</td>
               <td class="px-4 py-3 text-right">4.5</td>
@@ -309,7 +353,7 @@ Stay Dry is leading their homepage with the 2026 GAF President's Club Award as a
             </tr>
             
             <tr class=" hover:bg-slate-50 transition-colors">
-              <td class="px-4 py-3 text-ink-soft">10</td>
+              <td class="px-4 py-3 text-ink-soft">11</td>
               <td class="px-4 py-3 font-medium text-navy">Two Brothers Roofing Inc</td>
               <td class="px-4 py-3 text-right stat-num">92</td>
               <td class="px-4 py-3 text-right">4.8</td>
@@ -320,7 +364,7 @@ Stay Dry is leading their homepage with the 2026 GAF President's Club Award as a
             </tr>
             
             <tr class=" hover:bg-slate-50 transition-colors">
-              <td class="px-4 py-3 text-ink-soft">11</td>
+              <td class="px-4 py-3 text-ink-soft">12</td>
               <td class="px-4 py-3 font-medium text-navy">Cox Roofing</td>
               <td class="px-4 py-3 text-right stat-num">503</td>
               <td class="px-4 py-3 text-right">4.8</td>
@@ -331,7 +375,7 @@ Stay Dry is leading their homepage with the 2026 GAF President's Club Award as a
             </tr>
             
             <tr class=" hover:bg-slate-50 transition-colors">
-              <td class="px-4 py-3 text-ink-soft">12</td>
+              <td class="px-4 py-3 text-ink-soft">13</td>
               <td class="px-4 py-3 font-medium text-navy">Honest Abe Roofing Indianapolis</td>
               <td class="px-4 py-3 text-right stat-num">132</td>
               <td class="px-4 py-3 text-right">4.9</td>
@@ -342,24 +386,13 @@ Stay Dry is leading their homepage with the 2026 GAF President's Club Award as a
             </tr>
             
             <tr class=" hover:bg-slate-50 transition-colors">
-              <td class="px-4 py-3 text-ink-soft">13</td>
+              <td class="px-4 py-3 text-ink-soft">14</td>
               <td class="px-4 py-3 font-medium text-navy">Big Boy's Construction</td>
               <td class="px-4 py-3 text-right stat-num">844</td>
               <td class="px-4 py-3 text-right">4.9</td>
               <td class="px-4 py-3 text-right font-bold text-ink-light">+0</td>
               <td class="px-4 py-3 text-right text-ink-soft">+24</td>
               <td class="px-4 py-3 text-right text-ink-soft">+46</td>
-              <td class="px-4 py-3 text-right text-ink-soft">100%</td>
-            </tr>
-            
-            <tr class=" hover:bg-slate-50 transition-colors">
-              <td class="px-4 py-3 text-ink-soft">14</td>
-              <td class="px-4 py-3 font-medium text-navy">Metal Roofing Indianapolis</td>
-              <td class="px-4 py-3 text-right stat-num">65</td>
-              <td class="px-4 py-3 text-right">5.0</td>
-              <td class="px-4 py-3 text-right font-bold text-ink-light">+0</td>
-              <td class="px-4 py-3 text-right text-ink-soft">+12</td>
-              <td class="px-4 py-3 text-right text-ink-soft">+26</td>
               <td class="px-4 py-3 text-right text-ink-soft">100%</td>
             </tr>
             
@@ -413,53 +446,64 @@ Stay Dry is leading their homepage with the 2026 GAF President's Club Award as a
     </div>
   </section>
 
-  <!-- NEWS TAB -->
+  <!-- NEWS TAB — grid of cards, click to open modal with full detail -->
   <section data-panel="news" class="hidden space-y-6">
-    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
-      <div class="flex items-center justify-between mb-4">
+    <div class="flex items-center justify-between">
+      <div>
         <h2 class="text-lg sm:text-xl font-bold text-navy">This Week in Indy Roofing</h2>
-        <span class="text-xs uppercase tracking-wider text-ink-soft bg-slate-100 px-2 py-1 rounded">Web research</span>
+        <p class="text-sm text-ink-soft mt-1">Awards, press, expansions, hires, and marketing moves from the past 7 days. Click any card for the full story.</p>
       </div>
+      <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-slate-100 px-2 py-1 rounded">Web Researched</span>
+    </div>
+
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       
-      <div class="ai-prose text-sm sm:text-base"><p>Based on all searches conducted, here are the verified, substantive newsworthy events from approximately the last 7 days (April 18–25, 2026) and the closest recent window for Indianapolis-area roofing competitors. Note: several items below are from the past 2–3 weeks, as truly last-7-days coverage for hyperlocal roofing news is sparse. Events clearly older than ~3 weeks or generic/non-newsworthy have been excluded.</p>
-<hr />
-<p>COMPANY: Stay Dry Roofing (Indianapolis)<br />
-EVENT: Stay Dry Roofing announced it has been recognized as a 2026 GAF President's Club Award winner, one of the highest honors GAF bestows on Master Elite contractors for quality, reliability, and service.<br />
-WHEN: Actively promoted on their homepage as of mid-April 2026 (award is 2026-year designation)<br />
-WHY IT MATTERS: Stay Dry is actively using this award as a top-of-funnel trust signal across their website and marketing — Cameron should pursue and prominently display any comparable manufacturer certifications or awards (e.g., GAF Master Elite, Owens Corning Platinum) to counter this credibility claim before storm season peaks.<br />
-SOURCE: https://staydryroofing.com/</p>
-<hr />
-<p>COMPANY: Bone Dry Roofing (Zionsville/Indianapolis)<br />
-EVENT: Bone Dry Roofing issued a press release announcing that solar installation and consultation services are now formally available through its Zionsville office location, expanding its residential service offerings in the northwest Indianapolis metro.<br />
-WHEN: April 9, 2026<br />
-WHY IT MATTERS: Bone Dry is positioning itself as a one-stop-shop (roofing + solar) to capture homeowners evaluating both needs simultaneously — Cameron should consider whether adding or partnering on solar services, or at minimum addressing solar panel roofing compatibility in marketing, would protect Raptor's customer base in Greenwood/South Indy.<br />
-SOURCE: https://pressadvantage.com/pdf/91955-bone-dry-roofing-notes-availability-of-solar-services-through-zionsville-office/</p>
-<hr />
-<p>COMPANY: Bone Dry Roofing (East Indianapolis)<br />
-EVENT: Bone Dry Roofing published a press release actively promoting roof inspection services specifically targeted at homeowners on Indianapolis's east side, reinforcing geographic brand presence there ahead of spring storm season.<br />
-WHEN: April 6, 2026<br />
-WHY IT MATTERS: Bone Dry is running a coordinated local PR campaign (multiple press releases in one week) to own neighborhood-level mindshare — Cameron should evaluate whether Raptor has a comparable spring storm inspection push targeting Greenwood, Franklin, and the south suburbs before competitors lock up those leads.<br />
-SOURCE: https://pressadvantage.com/story/91677-bone-dry-roofing-provides-roof-inspection-services-to-homeowners-on-indianapolis-east-side</p>
-<hr />
-<p>COMPANY: Nationwide Roofing &amp; Contracting (Shelbyville, IN — Indianapolis-area adjacent)<br />
-EVENT: Nationwide Roofing &amp; Contracting issued a press release on April 18, 2026 launching a complimentary spring storm damage inspection campaign targeting Shelbyville, Franklin, Greenfield, Greenwood, and greater Indianapolis communities.<br />
-WHEN: April 18, 2026<br />
-WHY IT MATTERS: This Shelbyville-based competitor is explicitly targeting Greenwood — Raptor's home turf — with a free inspection offer right now during peak spring storm season, so Cameron should immediately counter with a visible, promoted free inspection offer of his own across social media, Google Ads, and door hangers in the Greenwood/Johnson County market.<br />
-SOURCE: https://www.mycarrollcountynews.com/online_features/press_releases/article_5125e6c4-a811-5ac2-848b-ca7ed6aff5fa.html</p>
-<hr />
-<p>COMPANY: Indy Roof &amp; Restoration (Indianapolis)<br />
-EVENT: Indy Roof &amp; Restoration published a self-produced "Top 10 Roofing Companies in Indianapolis for 2026" rankings article placing themselves #1, citing their 4.9-star rating, 2,000+ Google reviews, A+ BBB rating, 24/7 emergency response, and insurance advocacy as differentiators.<br />
-WHEN: Active as of early April 2026 (most recent blog posts dated March 24, 2026)<br />
-WHY IT MATTERS: Indy Roof &amp; Restoration is aggressively producing SEO content that positions them as the market leader — Cameron should invest in a comparable "best of" content strategy or seek third-party rankings placements (IBJ, IndyStar, Expertise.com) that validate Raptor's 5.0-star rating and volume rank before this competitor's content dominates search results.<br />
-SOURCE: https://indyroofandrestoration.com/the-10-best-roofing-companies-in-indianapolis-for-2026/</p>
-<hr />
-<p>COMPANY: Stay Dry Roofing (Indianapolis)<br />
-EVENT: Stay Dry Roofing published a self-authored "Updated 2026 Top 10 Roofing Companies in Indianapolis" article ranking themselves #1, citing their Inc. 5000 recognition, BBB A+ rating, and 9 Indy-area locations as justification.<br />
-WHEN: January 14, 2026 (actively ranking in search as of April 2026)<br />
-WHY IT MATTERS: Two direct competitors — Stay Dry and Indy Roof &amp; Restoration — are both running self-authored "best of Indianapolis" ranking articles that dominate search and exclude Raptor; Cameron should create or commission a credible third-party ranking article that highlights Raptor's perfect 5.0-star rating and #6-by-volume standing as a counternarrative.<br />
-SOURCE: https://staydryroofing.com/updated-2026-top-10-roofing-companies-in-indianapolis/</p></div>
+      <button onclick="openNews(0)" class="news-card text-left bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg hover:border-accent-green/30 hover:-translate-y-0.5 transition-all p-5 group">
+        <div class="flex items-start justify-between mb-3">
+          <span class="text-2xl">🚀</span>
+          <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-slate-100 px-2 py-1 rounded">April 9, 2026</span>
+        </div>
+        <div class="font-bold text-navy text-base mb-1">Bone Dry Roofing</div>
+        <div class="text-sm text-ink-soft line-clamp-3">Opened Columbus IN location April 9</div>
+        <div class="mt-3 flex items-center gap-1 text-xs font-semibold text-accent-blue group-hover:text-navy">
+          Read more
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </div>
+      </button>
       
     </div>
+
+    <!-- Hidden modal -->
+    <div id="news-modal" class="fixed inset-0 z-50 hidden">
+      <div class="absolute inset-0 bg-navy-deep/70 backdrop-blur-sm" onclick="closeNews()"></div>
+      <div class="relative max-w-2xl mx-auto mt-12 mb-12 bg-white rounded-2xl shadow-2xl overflow-hidden animate-fade-up">
+        <div class="bg-gradient-to-br from-navy to-navy-deep text-white p-6 relative">
+          <button onclick="closeNews()" class="absolute top-4 right-4 text-white/70 hover:text-white">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+          <div id="news-modal-icon" class="text-3xl mb-2"></div>
+          <h3 id="news-modal-company" class="text-xl font-bold"></h3>
+          <p id="news-modal-when" class="text-white/70 text-xs mt-1 uppercase tracking-wider"></p>
+        </div>
+        <div class="p-6 space-y-4">
+          <div>
+            <div class="text-[10px] uppercase tracking-wider text-ink-soft mb-1">What happened</div>
+            <p id="news-modal-event" class="text-sm"></p>
+          </div>
+          <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded">
+            <div class="text-[10px] uppercase tracking-wider text-yellow-800 mb-1">Why it matters for Raptor</div>
+            <p id="news-modal-why" class="text-sm"></p>
+          </div>
+          <a id="news-modal-source" href="#" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-sm font-semibold text-accent-blue hover:text-navy">
+            View source
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <script>window.NEWS_CARDS = [{"company": "Bone Dry Roofing", "event": "Opened Columbus IN location April 9", "icon": "\ud83d\ude80", "source": "https://example.com", "when": "April 9, 2026", "why_matters": "Threatens Greenwood territory"}];</script>
+    
   </section>
 
   <!-- RISING PLAYERS TAB -->
@@ -470,286 +514,303 @@ SOURCE: https://staydryroofing.com/updated-2026-top-10-roofing-companies-in-indi
       <summary class="p-5 sm:p-6 flex items-center justify-between hover:bg-slate-50 transition-colors">
         <div class="flex-1 min-w-0">
           <div class="flex items-center gap-3 flex-wrap">
-            <h3 class="text-base sm:text-lg font-bold text-navy">Indy Rooftops</h3>
-            <span class="text-xs px-2 py-0.5 bg-accent-green/15 text-emerald-700 rounded-full font-semibold uppercase tracking-wide">+15 this week</span>
+            <h3 class="text-base sm:text-lg font-bold text-navy">Stay Dry Roofing</h3>
+            <span class="text-xs px-2 py-0.5 bg-accent-green/15 text-emerald-700 rounded-full font-semibold uppercase tracking-wide">+0 this week</span>
           </div>
-          <div class="text-xs text-ink-soft mt-1">481 reviews · 5.0 stars · +48 in 30 days</div>
+          <div class="text-xs text-ink-soft mt-1">421 reviews · 4.9 stars · +2 in 30 days</div>
         </div>
         <svg class="chev w-5 h-5 text-ink-soft flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </summary>
-      <div class="px-5 sm:px-6 pb-6 ai-prose text-sm border-t border-slate-100 pt-5"><p>Hey Cameron — here's the fast-facts brief on <strong>Indy Rooftops</strong> (indyrooftops.com, 317-617-3928):</p>
-<hr />
-<p><strong>1. Who They Are</strong></p>
-<p>Indy Rooftops was founded in 2022 by Mitchel Dotson and Cheryl Edens — they originally started the business for Mitch's dad, Kevin Dotson, who had been a roofing salesman at another local company for years.</p>
-<p>It is a woman-owned business</p>
-<p>, with </p>
-<p>Mitchel Dotson listed as Owner and Cheryl Edens as CEO on the BBB profile.</p>
-<p>They are a family-owned and operated roofing company based in Brownsburg, Indiana.</p>
-<p>Their service footprint spans </p>
-<p>Noblesville, Westfield, Carmel, Plainfield, Zionsville, Greenwood, Fishers, and Avon</p>
-<p>— essentially the full Indianapolis metro ring.</p>
-<hr />
-<p><strong>2. What's Driving the Review Acceleration</strong></p>
-<p>There are three clear engines. First, <strong>active door-knocking after storms</strong>: </p>
-<p>"so glad they knocked on our door after a hail storm, would never have known about the work needing done and now we will have a safe home for another 20+ years"</p>
-<p>— this tactic is showing up repeatedly across review platforms. Second, a <strong>named referral program</strong>: </p>
-<p>customers explicitly call out that "their referral program is topnotch" and that "it's easy to tell others about having such a great experience."</p>
-<p>Third, a <strong>multi-platform review push</strong>: </p>
-<p>the company actively encourages customers to check ratings on Google, Yelp, Angie's List, and BBB</p>
-<p>, which compresses word-of-mouth into measurable review volume. The combination of storm-triggered door-knocking + a structured referral program + deliberate multi-platform prompting is what's compounding the velocity.</p>
-<hr />
-<p><strong>3. One Thing Raptor Could Copy</strong></p>
-<p>The referral program combined with post-job texting is the single highest-leverage move here. </p>
-<p>Multiple reviewers explicitly mention they're recommending Indy Rooftops to realtors and neighbors</p>
-<p>, and the company's response strategy amplifies every testimonial. </p>
-<p>Customers note they "communicate easily and clearly via text, which is a millennial's dream for project management"</p>
-<p>— a simple post-job text with a direct Google review link and a referral incentive would replicate exactly what Indy Rooftops appears to be running.</p>
-<hr />
-<p><strong>4. One Weakness Raptor Could Exploit</strong></p>
-<p>Indy Rooftops is a <strong>very young company with shallow institutional roots and documented subcontractor risk</strong>. </p>
-<p>All full-time employees go through background checks, but the company works with subcontracted roofing crews, with only an in-house manager on-site per job.</p>
-<p>They offer only a three-year workmanship warranty</p>
-<p>— a meaningful gap if Raptor can offer longer. Additionally, the BBB file already shows a complaint involving a field rep who allegedly forged a customer's signature and was later terminated. That's a serious credibility risk for a two-year-old brand sitting on 481 Google reviews. Cameron, if Raptor can lean into longer warranty terms, employee-only crews, and verifiable licensing, that narrative gap is real and exploitable right now.</p></div>
+      <div class="px-5 sm:px-6 pb-6 ai-prose text-sm border-t border-slate-100 pt-5"><p>Test</p></div>
     </details>
     
     
   </section>
 
-  <!-- ALL COMPETITORS TAB -->
+  <!-- ALL COMPETITORS TAB — top 50, click any row to open competitor profile -->
   <section data-panel="all" class="hidden space-y-6">
     <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-      <div class="p-6 border-b border-slate-100">
-        <h3 class="text-sm font-bold text-navy uppercase tracking-wider">Leaderboard by Volume</h3>
-        <p class="text-xs text-ink-soft mt-1">Total review count snapshot. Movement is the more useful signal.</p>
+      <div class="p-6 border-b border-slate-100 flex items-center justify-between flex-wrap gap-2">
+        <div>
+          <h3 class="text-sm font-bold text-navy uppercase tracking-wider">All Tracked Competitors</h3>
+          <p class="text-xs text-ink-soft mt-1">Top 50 by review volume. Click any name for a deeper profile (coming soon).</p>
+        </div>
+        <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-slate-100 px-2 py-1 rounded">20 tracked</span>
       </div>
       <div class="overflow-x-auto">
         <table class="w-full text-sm">
-          <thead class="bg-slate-50 text-xs uppercase tracking-wider text-ink-soft">
+          <thead class="bg-slate-50 text-xs uppercase tracking-wider text-ink-soft sticky top-0">
             <tr>
               <th class="text-left px-4 py-3 font-semibold">#</th>
               <th class="text-left px-4 py-3 font-semibold">Company</th>
-              <th class="text-right px-4 py-3 font-semibold">Total Reviews</th>
-              <th class="text-right px-4 py-3 font-semibold">Rating</th>
+              <th class="text-right px-4 py-3 font-semibold">Total</th>
+              <th class="text-right px-4 py-3 font-semibold">★</th>
               <th class="text-right px-4 py-3 font-semibold">7d</th>
               <th class="text-right px-4 py-3 font-semibold">30d</th>
+              <th class="text-right px-4 py-3 font-semibold">90d</th>
+              <th class="text-right px-4 py-3 font-semibold">Resp</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-100">
             
-            <tr class=" hover:bg-slate-50 transition-colors">
+            <tr class=" hover:bg-slate-50 cursor-pointer transition-colors">
               <td class="px-4 py-3 text-ink-soft">1</td>
-              <td class="px-4 py-3 font-medium text-navy">Amos Exteriors</td>
+              <td class="px-4 py-3 font-medium text-navy">
+                <span class="hover:text-accent-blue transition-colors">Amos Exteriors</span>
+              </td>
               <td class="px-4 py-3 text-right stat-num">3,038</td>
               <td class="px-4 py-3 text-right">4.9</td>
+              <td class="px-4 py-3 text-right font-bold text-ink-light">+0</td>
               <td class="px-4 py-3 text-right text-ink-soft">+0</td>
               <td class="px-4 py-3 text-right text-ink-soft">+0</td>
+              <td class="px-4 py-3 text-right text-ink-soft">–</td>
             </tr>
             
-            <tr class=" hover:bg-slate-50 transition-colors">
+            <tr class=" hover:bg-slate-50 cursor-pointer transition-colors">
               <td class="px-4 py-3 text-ink-soft">2</td>
-              <td class="px-4 py-3 font-medium text-navy">Bone Dry Roofing</td>
-              <td class="px-4 py-3 text-right stat-num">2,410</td>
+              <td class="px-4 py-3 font-medium text-navy">
+                <span class="hover:text-accent-blue transition-colors">Bone Dry Roofing</span>
+              </td>
+              <td class="px-4 py-3 text-right stat-num">2,409</td>
               <td class="px-4 py-3 text-right">4.8</td>
-              <td class="px-4 py-3 text-right text-ink-soft">+10</td>
+              <td class="px-4 py-3 text-right font-bold text-emerald-600">+10</td>
               <td class="px-4 py-3 text-right text-ink-soft">+42</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+61</td>
+              <td class="px-4 py-3 text-right text-ink-soft">99%</td>
             </tr>
             
-            <tr class=" hover:bg-slate-50 transition-colors">
+            <tr class=" hover:bg-slate-50 cursor-pointer transition-colors">
               <td class="px-4 py-3 text-ink-soft">3</td>
-              <td class="px-4 py-3 font-medium text-navy">Indy Roof & Restoration</td>
+              <td class="px-4 py-3 font-medium text-navy">
+                <span class="hover:text-accent-blue transition-colors">Indy Roof & Restoration</span>
+              </td>
               <td class="px-4 py-3 text-right stat-num">2,152</td>
               <td class="px-4 py-3 text-right">4.9</td>
-              <td class="px-4 py-3 text-right text-ink-soft">+23</td>
+              <td class="px-4 py-3 text-right font-bold text-emerald-600">+23</td>
               <td class="px-4 py-3 text-right text-ink-soft">+75</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+75</td>
+              <td class="px-4 py-3 text-right text-ink-soft">94%</td>
             </tr>
             
-            <tr class=" hover:bg-slate-50 transition-colors">
+            <tr class=" hover:bg-slate-50 cursor-pointer transition-colors">
               <td class="px-4 py-3 text-ink-soft">4</td>
-              <td class="px-4 py-3 font-medium text-navy">Cochran Exteriors</td>
+              <td class="px-4 py-3 font-medium text-navy">
+                <span class="hover:text-accent-blue transition-colors">Cochran Exteriors</span>
+              </td>
               <td class="px-4 py-3 text-right stat-num">1,171</td>
               <td class="px-4 py-3 text-right">4.7</td>
-              <td class="px-4 py-3 text-right text-ink-soft">+7</td>
+              <td class="px-4 py-3 text-right font-bold text-emerald-600">+7</td>
               <td class="px-4 py-3 text-right text-ink-soft">+19</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+36</td>
+              <td class="px-4 py-3 text-right text-ink-soft">96%</td>
             </tr>
             
-            <tr class=" hover:bg-slate-50 transition-colors">
+            <tr class=" hover:bg-slate-50 cursor-pointer transition-colors">
               <td class="px-4 py-3 text-ink-soft">5</td>
-              <td class="px-4 py-3 font-medium text-navy">Big Boy's Construction</td>
+              <td class="px-4 py-3 font-medium text-navy">
+                <span class="hover:text-accent-blue transition-colors">Big Boy's Construction</span>
+              </td>
               <td class="px-4 py-3 text-right stat-num">844</td>
               <td class="px-4 py-3 text-right">4.9</td>
-              <td class="px-4 py-3 text-right text-ink-soft">+0</td>
+              <td class="px-4 py-3 text-right font-bold text-ink-light">+0</td>
               <td class="px-4 py-3 text-right text-ink-soft">+24</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+46</td>
+              <td class="px-4 py-3 text-right text-ink-soft">100%</td>
             </tr>
             
-            <tr class="bg-accent-green/5 border-l-4 border-l-accent-green hover:bg-slate-50 transition-colors">
+            <tr class="bg-accent-green/5 border-l-4 border-l-accent-green hover:bg-slate-50 cursor-pointer transition-colors">
               <td class="px-4 py-3 text-ink-soft">6</td>
-              <td class="px-4 py-3 font-medium text-navy">Raptor Roofing</td>
+              <td class="px-4 py-3 font-medium text-navy">
+                <span class="hover:text-accent-blue transition-colors">Raptor Roofing</span>
+              </td>
               <td class="px-4 py-3 text-right stat-num">664</td>
               <td class="px-4 py-3 text-right">5.0</td>
-              <td class="px-4 py-3 text-right text-ink-soft">+2</td>
+              <td class="px-4 py-3 text-right font-bold text-emerald-600">+2</td>
               <td class="px-4 py-3 text-right text-ink-soft">+12</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+69</td>
+              <td class="px-4 py-3 text-right text-ink-soft">97%</td>
             </tr>
             
-            <tr class=" hover:bg-slate-50 transition-colors">
+            <tr class=" hover:bg-slate-50 cursor-pointer transition-colors">
               <td class="px-4 py-3 text-ink-soft">7</td>
-              <td class="px-4 py-3 font-medium text-navy">Trojan Roofing</td>
+              <td class="px-4 py-3 font-medium text-navy">
+                <span class="hover:text-accent-blue transition-colors">Trojan Roofing</span>
+              </td>
               <td class="px-4 py-3 text-right stat-num">643</td>
               <td class="px-4 py-3 text-right">4.9</td>
-              <td class="px-4 py-3 text-right text-ink-soft">+0</td>
+              <td class="px-4 py-3 text-right font-bold text-ink-light">+0</td>
               <td class="px-4 py-3 text-right text-ink-soft">+2</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+6</td>
+              <td class="px-4 py-3 text-right text-ink-soft">6%</td>
             </tr>
             
-            <tr class=" hover:bg-slate-50 transition-colors">
+            <tr class=" hover:bg-slate-50 cursor-pointer transition-colors">
               <td class="px-4 py-3 text-ink-soft">8</td>
-              <td class="px-4 py-3 font-medium text-navy">Rees Restoration</td>
+              <td class="px-4 py-3 font-medium text-navy">
+                <span class="hover:text-accent-blue transition-colors">Rees Restoration</span>
+              </td>
               <td class="px-4 py-3 text-right stat-num">579</td>
               <td class="px-4 py-3 text-right">4.7</td>
-              <td class="px-4 py-3 text-right text-ink-soft">+2</td>
+              <td class="px-4 py-3 text-right font-bold text-emerald-600">+2</td>
               <td class="px-4 py-3 text-right text-ink-soft">+6</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+8</td>
+              <td class="px-4 py-3 text-right text-ink-soft">46%</td>
             </tr>
             
-            <tr class=" hover:bg-slate-50 transition-colors">
+            <tr class=" hover:bg-slate-50 cursor-pointer transition-colors">
               <td class="px-4 py-3 text-ink-soft">9</td>
-              <td class="px-4 py-3 font-medium text-navy">Cox Roofing</td>
+              <td class="px-4 py-3 font-medium text-navy">
+                <span class="hover:text-accent-blue transition-colors">Cox Roofing</span>
+              </td>
               <td class="px-4 py-3 text-right stat-num">503</td>
               <td class="px-4 py-3 text-right">4.8</td>
-              <td class="px-4 py-3 text-right text-ink-soft">+1</td>
+              <td class="px-4 py-3 text-right font-bold text-emerald-600">+1</td>
               <td class="px-4 py-3 text-right text-ink-soft">+7</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+14</td>
+              <td class="px-4 py-3 text-right text-ink-soft">91%</td>
             </tr>
             
-            <tr class=" hover:bg-slate-50 transition-colors">
+            <tr class=" hover:bg-slate-50 cursor-pointer transition-colors">
               <td class="px-4 py-3 text-ink-soft">10</td>
-              <td class="px-4 py-3 font-medium text-navy">Indy Rooftops</td>
+              <td class="px-4 py-3 font-medium text-navy">
+                <span class="hover:text-accent-blue transition-colors">Indy Rooftops</span>
+              </td>
               <td class="px-4 py-3 text-right stat-num">481</td>
               <td class="px-4 py-3 text-right">5.0</td>
-              <td class="px-4 py-3 text-right text-ink-soft">+15</td>
-              <td class="px-4 py-3 text-right text-ink-soft">+48</td>
+              <td class="px-4 py-3 text-right font-bold text-emerald-600">+14</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+47</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+72</td>
+              <td class="px-4 py-3 text-right text-ink-soft">38%</td>
             </tr>
             
-            <tr class=" hover:bg-slate-50 transition-colors">
+            <tr class=" hover:bg-slate-50 cursor-pointer transition-colors">
               <td class="px-4 py-3 text-ink-soft">11</td>
-              <td class="px-4 py-3 font-medium text-navy">Stay Dry Roofing</td>
+              <td class="px-4 py-3 font-medium text-navy">
+                <span class="hover:text-accent-blue transition-colors">Stay Dry Roofing</span>
+              </td>
               <td class="px-4 py-3 text-right stat-num">421</td>
               <td class="px-4 py-3 text-right">4.9</td>
-              <td class="px-4 py-3 text-right text-ink-soft">+0</td>
+              <td class="px-4 py-3 text-right font-bold text-ink-light">+0</td>
               <td class="px-4 py-3 text-right text-ink-soft">+2</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+8</td>
+              <td class="px-4 py-3 text-right text-ink-soft">81%</td>
             </tr>
             
-            <tr class=" hover:bg-slate-50 transition-colors">
+            <tr class=" hover:bg-slate-50 cursor-pointer transition-colors">
               <td class="px-4 py-3 text-ink-soft">12</td>
-              <td class="px-4 py-3 font-medium text-navy">Erie Home</td>
+              <td class="px-4 py-3 font-medium text-navy">
+                <span class="hover:text-accent-blue transition-colors">Erie Home</span>
+              </td>
               <td class="px-4 py-3 text-right stat-num">274</td>
               <td class="px-4 py-3 text-right">4.6</td>
-              <td class="px-4 py-3 text-right text-ink-soft">+3</td>
+              <td class="px-4 py-3 text-right font-bold text-emerald-600">+3</td>
               <td class="px-4 py-3 text-right text-ink-soft">+7</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+9</td>
+              <td class="px-4 py-3 text-right text-ink-soft">97%</td>
             </tr>
             
-            <tr class=" hover:bg-slate-50 transition-colors">
+            <tr class=" hover:bg-slate-50 cursor-pointer transition-colors">
               <td class="px-4 py-3 text-ink-soft">13</td>
-              <td class="px-4 py-3 font-medium text-navy">AmeriPro Roofing</td>
+              <td class="px-4 py-3 font-medium text-navy">
+                <span class="hover:text-accent-blue transition-colors">AmeriPro Roofing</span>
+              </td>
               <td class="px-4 py-3 text-right stat-num">257</td>
               <td class="px-4 py-3 text-right">4.5</td>
-              <td class="px-4 py-3 text-right text-ink-soft">+2</td>
+              <td class="px-4 py-3 text-right font-bold text-emerald-600">+2</td>
               <td class="px-4 py-3 text-right text-ink-soft">+3</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+5</td>
+              <td class="px-4 py-3 text-right text-ink-soft">44%</td>
             </tr>
             
-            <tr class=" hover:bg-slate-50 transition-colors">
+            <tr class=" hover:bg-slate-50 cursor-pointer transition-colors">
               <td class="px-4 py-3 text-ink-soft">14</td>
-              <td class="px-4 py-3 font-medium text-navy">Indianapolis Roofing LLC</td>
+              <td class="px-4 py-3 font-medium text-navy">
+                <span class="hover:text-accent-blue transition-colors">JOHN PETERS ROOFING</span>
+              </td>
+              <td class="px-4 py-3 text-right stat-num">147</td>
+              <td class="px-4 py-3 text-right">4.8</td>
+              <td class="px-4 py-3 text-right font-bold text-emerald-600">+10</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+10</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+10</td>
+              <td class="px-4 py-3 text-right text-ink-soft">99%</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 cursor-pointer transition-colors">
+              <td class="px-4 py-3 text-ink-soft">15</td>
+              <td class="px-4 py-3 font-medium text-navy">
+                <span class="hover:text-accent-blue transition-colors">Indianapolis Roofing LLC</span>
+              </td>
               <td class="px-4 py-3 text-right stat-num">142</td>
               <td class="px-4 py-3 text-right">4.9</td>
-              <td class="px-4 py-3 text-right text-ink-soft">+0</td>
+              <td class="px-4 py-3 text-right font-bold text-ink-light">+0</td>
               <td class="px-4 py-3 text-right text-ink-soft">+1</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+1</td>
+              <td class="px-4 py-3 text-right text-ink-soft">100%</td>
             </tr>
             
-            <tr class=" hover:bg-slate-50 transition-colors">
-              <td class="px-4 py-3 text-ink-soft">15</td>
-              <td class="px-4 py-3 font-medium text-navy">Honest Abe Roofing Indianapolis</td>
+            <tr class=" hover:bg-slate-50 cursor-pointer transition-colors">
+              <td class="px-4 py-3 text-ink-soft">16</td>
+              <td class="px-4 py-3 font-medium text-navy">
+                <span class="hover:text-accent-blue transition-colors">Honest Abe Roofing Indianapolis</span>
+              </td>
               <td class="px-4 py-3 text-right stat-num">132</td>
               <td class="px-4 py-3 text-right">4.9</td>
-              <td class="px-4 py-3 text-right text-ink-soft">+1</td>
+              <td class="px-4 py-3 text-right font-bold text-emerald-600">+1</td>
               <td class="px-4 py-3 text-right text-ink-soft">+6</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+7</td>
+              <td class="px-4 py-3 text-right text-ink-soft">90%</td>
             </tr>
             
-            <tr class=" hover:bg-slate-50 transition-colors">
-              <td class="px-4 py-3 text-ink-soft">16</td>
-              <td class="px-4 py-3 font-medium text-navy">Two Brothers Roofing Inc</td>
+            <tr class=" hover:bg-slate-50 cursor-pointer transition-colors">
+              <td class="px-4 py-3 text-ink-soft">17</td>
+              <td class="px-4 py-3 font-medium text-navy">
+                <span class="hover:text-accent-blue transition-colors">Two Brothers Roofing Inc</span>
+              </td>
               <td class="px-4 py-3 text-right stat-num">92</td>
               <td class="px-4 py-3 text-right">4.8</td>
-              <td class="px-4 py-3 text-right text-ink-soft">+1</td>
+              <td class="px-4 py-3 text-right font-bold text-emerald-600">+1</td>
               <td class="px-4 py-3 text-right text-ink-soft">+9</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+12</td>
+              <td class="px-4 py-3 text-right text-ink-soft">100%</td>
             </tr>
             
-            <tr class=" hover:bg-slate-50 transition-colors">
-              <td class="px-4 py-3 text-ink-soft">17</td>
-              <td class="px-4 py-3 font-medium text-navy">MSRC - Indianapolis</td>
+            <tr class=" hover:bg-slate-50 cursor-pointer transition-colors">
+              <td class="px-4 py-3 text-ink-soft">18</td>
+              <td class="px-4 py-3 font-medium text-navy">
+                <span class="hover:text-accent-blue transition-colors">MSRC - Indianapolis</span>
+              </td>
               <td class="px-4 py-3 text-right stat-num">77</td>
               <td class="px-4 py-3 text-right">4.9</td>
-              <td class="px-4 py-3 text-right text-ink-soft">+2</td>
+              <td class="px-4 py-3 text-right font-bold text-emerald-600">+2</td>
               <td class="px-4 py-3 text-right text-ink-soft">+6</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+6</td>
+              <td class="px-4 py-3 text-right text-ink-soft">9%</td>
             </tr>
             
-            <tr class=" hover:bg-slate-50 transition-colors">
-              <td class="px-4 py-3 text-ink-soft">18</td>
-              <td class="px-4 py-3 font-medium text-navy">Metal Roofing Indianapolis</td>
+            <tr class=" hover:bg-slate-50 cursor-pointer transition-colors">
+              <td class="px-4 py-3 text-ink-soft">19</td>
+              <td class="px-4 py-3 font-medium text-navy">
+                <span class="hover:text-accent-blue transition-colors">Metal Roofing Indianapolis</span>
+              </td>
               <td class="px-4 py-3 text-right stat-num">65</td>
               <td class="px-4 py-3 text-right">5.0</td>
+              <td class="px-4 py-3 text-right font-bold text-ink-light">+0</td>
               <td class="px-4 py-3 text-right text-ink-soft">+0</td>
-              <td class="px-4 py-3 text-right text-ink-soft">+12</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+0</td>
+              <td class="px-4 py-3 text-right text-ink-soft">–</td>
             </tr>
             
-            <tr class=" hover:bg-slate-50 transition-colors">
-              <td class="px-4 py-3 text-ink-soft">19</td>
-              <td class="px-4 py-3 font-medium text-navy">Mighty Dog Roofing Indianapolis</td>
+            <tr class=" hover:bg-slate-50 cursor-pointer transition-colors">
+              <td class="px-4 py-3 text-ink-soft">20</td>
+              <td class="px-4 py-3 font-medium text-navy">
+                <span class="hover:text-accent-blue transition-colors">Mighty Dog Roofing Indianapolis</span>
+              </td>
               <td class="px-4 py-3 text-right stat-num">62</td>
               <td class="px-4 py-3 text-right">4.9</td>
+              <td class="px-4 py-3 text-right font-bold text-ink-light">+0</td>
               <td class="px-4 py-3 text-right text-ink-soft">+0</td>
               <td class="px-4 py-3 text-right text-ink-soft">+0</td>
-            </tr>
-            
-            <tr class=" hover:bg-slate-50 transition-colors">
-              <td class="px-4 py-3 text-ink-soft">20</td>
-              <td class="px-4 py-3 font-medium text-navy">A1 Roofing Indiana</td>
-              <td class="px-4 py-3 text-right stat-num">44</td>
-              <td class="px-4 py-3 text-right">4.8</td>
-              <td class="px-4 py-3 text-right text-ink-soft">+0</td>
-              <td class="px-4 py-3 text-right text-ink-soft">+0</td>
-            </tr>
-            
-            <tr class=" hover:bg-slate-50 transition-colors">
-              <td class="px-4 py-3 text-ink-soft">21</td>
-              <td class="px-4 py-3 font-medium text-navy">Commercial Roofing Indianapolis</td>
-              <td class="px-4 py-3 text-right stat-num">44</td>
-              <td class="px-4 py-3 text-right">4.9</td>
-              <td class="px-4 py-3 text-right text-ink-soft">+0</td>
-              <td class="px-4 py-3 text-right text-ink-soft">+0</td>
-            </tr>
-            
-            <tr class=" hover:bg-slate-50 transition-colors">
-              <td class="px-4 py-3 text-ink-soft">22</td>
-              <td class="px-4 py-3 font-medium text-navy">Indy Elite Exteriors</td>
-              <td class="px-4 py-3 text-right stat-num">39</td>
-              <td class="px-4 py-3 text-right">5.0</td>
-              <td class="px-4 py-3 text-right text-ink-soft">+0</td>
-              <td class="px-4 py-3 text-right text-ink-soft">+0</td>
-            </tr>
-            
-            <tr class=" hover:bg-slate-50 transition-colors">
-              <td class="px-4 py-3 text-ink-soft">23</td>
-              <td class="px-4 py-3 font-medium text-navy">Residential Roofing Indianapolis</td>
-              <td class="px-4 py-3 text-right stat-num">38</td>
-              <td class="px-4 py-3 text-right">4.9</td>
-              <td class="px-4 py-3 text-right text-ink-soft">+0</td>
-              <td class="px-4 py-3 text-right text-ink-soft">+0</td>
-            </tr>
-            
-            <tr class=" hover:bg-slate-50 transition-colors">
-              <td class="px-4 py-3 text-ink-soft">24</td>
-              <td class="px-4 py-3 font-medium text-navy">Roof Replacement Indianapolis</td>
-              <td class="px-4 py-3 text-right stat-num">35</td>
-              <td class="px-4 py-3 text-right">4.9</td>
-              <td class="px-4 py-3 text-right text-ink-soft">+0</td>
-              <td class="px-4 py-3 text-right text-ink-soft">+0</td>
+              <td class="px-4 py-3 text-right text-ink-soft">–</td>
             </tr>
             
           </tbody>
@@ -778,16 +839,38 @@ SOURCE: https://staydryroofing.com/updated-2026-top-10-roofing-companies-in-indi
 const tabs = document.querySelectorAll('.tab-btn');
 const panels = document.querySelectorAll('[data-panel]');
 function showTab(name) {
-  tabs.forEach(t => {
-    if (t.dataset.tab === name) { t.classList.add('tab-active', 'border-accent-green', 'text-navy'); t.classList.remove('text-ink-soft'); }
-    else { t.classList.remove('tab-active', 'border-accent-green', 'text-navy'); t.classList.add('text-ink-soft'); }
-  });
-  panels.forEach(p => {
-    p.classList.toggle('hidden', p.dataset.panel !== name);
-  });
+  tabs.forEach(t => t.classList.toggle('tab-active', t.dataset.tab === name));
+  panels.forEach(p => p.classList.toggle('hidden', p.dataset.panel !== name));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 tabs.forEach(t => t.addEventListener('click', () => showTab(t.dataset.tab)));
+document.querySelectorAll('[data-tab-link]').forEach(b => b.addEventListener('click', () => showTab(b.dataset.tabLink)));
 showTab('overview');
+
+// === News modal ===
+function openNews(idx) {
+  const card = (window.NEWS_CARDS || [])[idx];
+  if (!card) return;
+  document.getElementById('news-modal-icon').textContent = card.icon || '📌';
+  document.getElementById('news-modal-company').textContent = card.company || '';
+  document.getElementById('news-modal-when').textContent = card.when || '';
+  document.getElementById('news-modal-event').textContent = card.event || '';
+  document.getElementById('news-modal-why').textContent = card.why_matters || card.why || '';
+  const src = document.getElementById('news-modal-source');
+  if (card.source && card.source.startsWith('http')) {
+    src.href = card.source;
+    src.style.display = 'inline-flex';
+  } else {
+    src.style.display = 'none';
+  }
+  document.getElementById('news-modal').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+function closeNews() {
+  document.getElementById('news-modal').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNews(); });
 
 // === Scroll-fade animation ===
 const observer = new IntersectionObserver((entries) => {
@@ -813,7 +896,7 @@ function countUp(el) {
 document.querySelectorAll('[data-count]').forEach(countUp);
 
 // === Charts ===
-const DATA = {"gainers": [{"gain_7d": 23, "is_raptor": false, "name": "Indy Roof \u0026 Restoration"}, {"gain_7d": 15, "is_raptor": false, "name": "Indy Rooftops"}, {"gain_7d": 10, "is_raptor": false, "name": "Bone Dry Roofing"}, {"gain_7d": 7, "is_raptor": false, "name": "Cochran Exteriors"}, {"gain_7d": 3, "is_raptor": false, "name": "Erie Home"}, {"gain_7d": 2, "is_raptor": true, "name": "Raptor Roofing"}, {"gain_7d": 2, "is_raptor": false, "name": "Rees Restoration"}, {"gain_7d": 2, "is_raptor": false, "name": "AmeriPro Roofing"}, {"gain_7d": 2, "is_raptor": false, "name": "MSRC - Indianapolis"}, {"gain_7d": 1, "is_raptor": false, "name": "Cox Roofing"}, {"gain_7d": 1, "is_raptor": false, "name": "Honest Abe Roofing Indianapolis"}, {"gain_7d": 1, "is_raptor": false, "name": "Two Brothers Roofing Inc"}], "response": [{"is_raptor": false, "name": "Bone Dry Roofing", "rate": 97}, {"is_raptor": false, "name": "Indy Roof \u0026 Restoration", "rate": 93}, {"is_raptor": false, "name": "Cochran Exteriors", "rate": 96}, {"is_raptor": false, "name": "Big Boy\u0027s Construction", "rate": 100}, {"is_raptor": true, "name": "Raptor Roofing", "rate": 97}, {"is_raptor": false, "name": "Trojan Roofing", "rate": 6}, {"is_raptor": false, "name": "Rees Restoration", "rate": 46}, {"is_raptor": false, "name": "Cox Roofing", "rate": 91}, {"is_raptor": false, "name": "Indy Rooftops", "rate": 38}, {"is_raptor": false, "name": "Stay Dry Roofing", "rate": 81}, {"is_raptor": false, "name": "Erie Home", "rate": 97}, {"is_raptor": false, "name": "AmeriPro Roofing", "rate": 44}], "scatter": [{"gain_7d": 0, "is_raptor": false, "name": "Amos Exteriors", "total": 3038}, {"gain_7d": 10, "is_raptor": false, "name": "Bone Dry Roofing", "total": 2410}, {"gain_7d": 23, "is_raptor": false, "name": "Indy Roof \u0026 Restoration", "total": 2152}, {"gain_7d": 7, "is_raptor": false, "name": "Cochran Exteriors", "total": 1171}, {"gain_7d": 0, "is_raptor": false, "name": "Big Boy\u0027s Construction", "total": 844}, {"gain_7d": 2, "is_raptor": true, "name": "Raptor Roofing", "total": 664}, {"gain_7d": 0, "is_raptor": false, "name": "Trojan Roofing", "total": 643}, {"gain_7d": 2, "is_raptor": false, "name": "Rees Restoration", "total": 579}, {"gain_7d": 1, "is_raptor": false, "name": "Cox Roofing", "total": 503}, {"gain_7d": 15, "is_raptor": false, "name": "Indy Rooftops", "total": 481}, {"gain_7d": 0, "is_raptor": false, "name": "Stay Dry Roofing", "total": 421}, {"gain_7d": 3, "is_raptor": false, "name": "Erie Home", "total": 274}, {"gain_7d": 2, "is_raptor": false, "name": "AmeriPro Roofing", "total": 257}, {"gain_7d": 0, "is_raptor": false, "name": "Indianapolis Roofing LLC", "total": 142}, {"gain_7d": 1, "is_raptor": false, "name": "Honest Abe Roofing Indianapolis", "total": 132}, {"gain_7d": 1, "is_raptor": false, "name": "Two Brothers Roofing Inc", "total": 92}, {"gain_7d": 2, "is_raptor": false, "name": "MSRC - Indianapolis", "total": 77}, {"gain_7d": 0, "is_raptor": false, "name": "Metal Roofing Indianapolis", "total": 65}], "share": [{"gain": 23, "is_raptor": false, "name": "Indy Roof \u0026 Restoration"}, {"gain": 15, "is_raptor": false, "name": "Indy Rooftops"}, {"gain": 10, "is_raptor": false, "name": "Bone Dry Roofing"}, {"gain": 7, "is_raptor": false, "name": "Cochran Exteriors"}, {"gain": 3, "is_raptor": false, "name": "Erie Home"}, {"gain": 2, "is_raptor": true, "name": "Raptor Roofing"}, {"gain": 2, "is_raptor": false, "name": "Rees Restoration"}, {"gain": 7, "is_raptor": false, "name": "Others"}]};
+const DATA = {"gainers": [{"gain_7d": 23, "is_raptor": false, "name": "Indy Roof \u0026 Restoration"}, {"gain_7d": 14, "is_raptor": false, "name": "Indy Rooftops"}, {"gain_7d": 10, "is_raptor": false, "name": "Bone Dry Roofing"}, {"gain_7d": 10, "is_raptor": false, "name": "JOHN PETERS ROOFING"}, {"gain_7d": 7, "is_raptor": false, "name": "Cochran Exteriors"}, {"gain_7d": 3, "is_raptor": false, "name": "Erie Home"}, {"gain_7d": 2, "is_raptor": true, "name": "Raptor Roofing"}, {"gain_7d": 2, "is_raptor": false, "name": "Rees Restoration"}, {"gain_7d": 2, "is_raptor": false, "name": "AmeriPro Roofing"}, {"gain_7d": 2, "is_raptor": false, "name": "MSRC - Indianapolis"}, {"gain_7d": 1, "is_raptor": false, "name": "Cox Roofing"}, {"gain_7d": 1, "is_raptor": false, "name": "Honest Abe Roofing Indianapolis"}], "response": [{"is_raptor": false, "name": "Bone Dry Roofing", "rate": 99}, {"is_raptor": false, "name": "Indy Roof \u0026 Restoration", "rate": 94}, {"is_raptor": false, "name": "Cochran Exteriors", "rate": 96}, {"is_raptor": false, "name": "Big Boy\u0027s Construction", "rate": 100}, {"is_raptor": true, "name": "Raptor Roofing", "rate": 97}, {"is_raptor": false, "name": "Trojan Roofing", "rate": 6}, {"is_raptor": false, "name": "Rees Restoration", "rate": 46}, {"is_raptor": false, "name": "Cox Roofing", "rate": 91}, {"is_raptor": false, "name": "Indy Rooftops", "rate": 38}, {"is_raptor": false, "name": "Stay Dry Roofing", "rate": 81}, {"is_raptor": false, "name": "Erie Home", "rate": 97}, {"is_raptor": false, "name": "AmeriPro Roofing", "rate": 44}], "scatter": [{"gain_7d": 0, "is_raptor": false, "name": "Amos Exteriors", "total": 3038}, {"gain_7d": 10, "is_raptor": false, "name": "Bone Dry Roofing", "total": 2409}, {"gain_7d": 23, "is_raptor": false, "name": "Indy Roof \u0026 Restoration", "total": 2152}, {"gain_7d": 7, "is_raptor": false, "name": "Cochran Exteriors", "total": 1171}, {"gain_7d": 0, "is_raptor": false, "name": "Big Boy\u0027s Construction", "total": 844}, {"gain_7d": 2, "is_raptor": true, "name": "Raptor Roofing", "total": 664}, {"gain_7d": 0, "is_raptor": false, "name": "Trojan Roofing", "total": 643}, {"gain_7d": 2, "is_raptor": false, "name": "Rees Restoration", "total": 579}, {"gain_7d": 1, "is_raptor": false, "name": "Cox Roofing", "total": 503}, {"gain_7d": 14, "is_raptor": false, "name": "Indy Rooftops", "total": 481}, {"gain_7d": 0, "is_raptor": false, "name": "Stay Dry Roofing", "total": 421}, {"gain_7d": 3, "is_raptor": false, "name": "Erie Home", "total": 274}, {"gain_7d": 2, "is_raptor": false, "name": "AmeriPro Roofing", "total": 257}, {"gain_7d": 10, "is_raptor": false, "name": "JOHN PETERS ROOFING", "total": 147}, {"gain_7d": 0, "is_raptor": false, "name": "Indianapolis Roofing LLC", "total": 142}, {"gain_7d": 1, "is_raptor": false, "name": "Honest Abe Roofing Indianapolis", "total": 132}, {"gain_7d": 1, "is_raptor": false, "name": "Two Brothers Roofing Inc", "total": 92}, {"gain_7d": 2, "is_raptor": false, "name": "MSRC - Indianapolis", "total": 77}], "share": [{"gain": 23, "is_raptor": false, "name": "Indy Roof \u0026 Restoration"}, {"gain": 14, "is_raptor": false, "name": "Indy Rooftops"}, {"gain": 10, "is_raptor": false, "name": "Bone Dry Roofing"}, {"gain": 10, "is_raptor": false, "name": "JOHN PETERS ROOFING"}, {"gain": 7, "is_raptor": false, "name": "Cochran Exteriors"}, {"gain": 3, "is_raptor": false, "name": "Erie Home"}, {"gain": 2, "is_raptor": true, "name": "Raptor Roofing"}, {"gain": 9, "is_raptor": false, "name": "Others"}]};
 const NAVY = '#172e55';
 const GREEN = '#3ae20a';
 const BLUE = '#1ac6ff';

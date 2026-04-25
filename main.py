@@ -188,12 +188,19 @@ CRITICAL: do NOT name specific Raptor team members (no "Patrick", "Dylan", "Curt
 
 
 def detect_rising_players(competitors, min_velocity_ratio=0.08, min_30d=15,
-                           max_total=700, exclude_recent=None):
+                           max_total=700, exclude_recent=None, fallback_rotation=0):
     """Flag small-base high-velocity accounts worth researching.
-    exclude_recent: a set of company names that were profiled in recent digests;
-    skip them so weekly digests rotate to new profiles."""
+
+    Primary rule: gained min_30d+ reviews and ratio of 30d gain to total >= min_velocity_ratio.
+    Fallback (if no riser meets the bar): rotate through alternative criteria so the
+    section is never empty:
+      0 -> lowest response rate in top 15 (vulnerability target)
+      1 -> highest absolute weekly gain regardless of base size
+      2 -> smallest player still gaining 1+ this week
+      3 -> highest 90d gain from a player not in top 5 by volume
+    """
     exclude = {n.lower() for n in (exclude_recent or [])}
-    risers = []
+    primary = []
     for c in competitors:
         if c["name"].lower() in exclude:
             continue
@@ -206,9 +213,79 @@ def detect_rising_players(competitors, min_velocity_ratio=0.08, min_30d=15,
         ratio = r30 / total
         if ratio >= min_velocity_ratio:
             c["_velocity_ratio"] = ratio
-            risers.append(c)
-    risers.sort(key=lambda c: c["_velocity_ratio"], reverse=True)
-    return risers
+            c["_rising_reason"] = f"+{r30} reviews in 30 days on a base of {total} ({ratio*100:.0f}% velocity)"
+            primary.append(c)
+    primary.sort(key=lambda c: c["_velocity_ratio"], reverse=True)
+    if primary:
+        return primary
+
+    # Fallback rotation
+    candidates = [c for c in competitors if c["name"].lower() not in exclude
+                   and c.get("review_count", 0) >= 50]
+    by_volume = sorted(candidates, key=lambda c: c["review_count"], reverse=True)
+    if fallback_rotation == 0:
+        # Lowest response rate in top 15 — vulnerability target
+        pool = [c for c in by_volume[:15] if c.get("response_rate") is not None]
+        pool.sort(key=lambda c: c["response_rate"])
+        for c in pool[:2]:
+            c["_rising_reason"] = f"low {int(c['response_rate']*100)}% response rate, vulnerability worth probing"
+        return pool[:2]
+    if fallback_rotation == 1:
+        # Highest absolute weekly gain
+        pool = sorted([c for c in candidates if (c.get("reviews_7d") or 0) > 0],
+                       key=lambda c: c.get("reviews_7d") or 0, reverse=True)
+        for c in pool[:2]:
+            c["_rising_reason"] = f"+{c['reviews_7d']} reviews this week, market leader on momentum"
+        return pool[:2]
+    if fallback_rotation == 2:
+        # Smallest player still gaining 1+ this week
+        pool = sorted([c for c in candidates if (c.get("reviews_7d") or 0) >= 1],
+                       key=lambda c: c["review_count"])
+        for c in pool[:2]:
+            c["_rising_reason"] = f"smaller shop ({c['review_count']} total) gaining traction"
+        return pool[:2]
+    # rotation == 3
+    top5_pids = {c.get("place_id") for c in by_volume[:5]}
+    pool = sorted([c for c in candidates
+                    if c.get("place_id") not in top5_pids and (c.get("reviews_90d") or 0) > 0],
+                   key=lambda c: c.get("reviews_90d") or 0, reverse=True)
+    for c in pool[:2]:
+        c["_rising_reason"] = f"+{c['reviews_90d']} reviews in 90 days outside the top 5 by volume"
+    return pool[:2]
+
+
+def parse_news_blocks(text):
+    """Convert the AI-generated market news markdown into structured cards."""
+    if not text or "no significant news" in text.lower():
+        return []
+    # Split by --- separators (with surrounding whitespace tolerance).
+    blocks = re.split(r"\n\s*---+\s*\n", text)
+    cards = []
+    for block in blocks:
+        card = {}
+        for line in block.strip().split("\n"):
+            m = re.match(r"\*?\*?(COMPANY|EVENT|WHEN|WHY IT MATTERS|SOURCE)\*?\*?:\s*(.+)",
+                          line.strip(), re.IGNORECASE)
+            if m:
+                key = m.group(1).lower().replace(" ", "_").replace("it_", "")
+                card[key] = m.group(2).strip()
+        if card.get("company") and card.get("event"):
+            # Auto-classify event type for icon
+            event_text = (card.get("event") or "").lower() + " " + (card.get("why_matters") or "").lower()
+            if any(w in event_text for w in ["award", "best of", "named", "ranked"]):
+                card["icon"] = "🏆"
+            elif any(w in event_text for w in ["press release", "announced", "press"]):
+                card["icon"] = "📰"
+            elif any(w in event_text for w in ["expand", "open", "office", "location"]):
+                card["icon"] = "🚀"
+            elif any(w in event_text for w in ["hire", "hired", "joined", "appoint"]):
+                card["icon"] = "👥"
+            elif any(w in event_text for w in ["launch", "campaign", "ad", "rebrand"]):
+                card["icon"] = "📣"
+            else:
+                card["icon"] = "📌"
+            cards.append(card)
+    return cards
 
 
 def merge_identical_places(businesses):
@@ -371,7 +448,17 @@ def scrape_google_maps(query, top_n=20):
         key = biz.get("place_id") or f"name:{_norm(biz['name'])}"
         if key not in merged or biz["review_count"] > merged[key]["review_count"]:
             merged[key] = biz
-    return list(merged.values())
+
+    # Filter out generic Google category listings that are not real businesses.
+    # These show up as "Roofing Indianapolis", "Commercial Roofing Indianapolis", etc.
+    # and pollute the leaderboard. Match patterns like "<Service> Indianapolis" with
+    # no other distinguishing words.
+    GENERIC_PATTERN = re.compile(
+        r"^(roofing|commercial roofing|residential roofing|roof repair|"
+        r"roof replacement|metal roofing|flat roofing)\s+indianapolis$",
+        re.IGNORECASE,
+    )
+    return [b for b in merged.values() if not GENERIC_PATTERN.match(b["name"].strip())]
 
 
 def _extract_place_id(url):
@@ -736,6 +823,15 @@ def render_dashboard(snapshot, prev_snapshot, raptor, businesses, market_news,
     env.filters["md"] = _md_to_html
     template = env.get_template("index.html.j2")
 
+    # Normalize: ensure timeline fields exist for every business so template doesn't crash
+    # on competitors that didn't get timeline-scraped this run.
+    for b in businesses:
+        b.setdefault("reviews_7d", None)
+        b.setdefault("reviews_30d", None)
+        b.setdefault("reviews_90d", None)
+        b.setdefault("response_rate", None)
+        b.setdefault("address", None)
+
     by_volume = sorted(businesses, key=lambda b: b["review_count"], reverse=True)
     by_gain_7d = sorted(
         [b for b in businesses if b.get("reviews_7d") is not None],
@@ -747,15 +843,20 @@ def render_dashboard(snapshot, prev_snapshot, raptor, businesses, market_news,
         None,
     )
     chart_data = _build_chart_data(businesses, raptor)
+    news_cards = parse_news_blocks(market_news)
+    # Filter leaderboard tables to businesses with >=50 reviews per Cameron's rule.
+    by_volume_leaderboard = [b for b in by_volume if (b.get("review_count") or 0) >= 50][:50]
+    by_gain_for_table = [b for b in by_gain_7d if (b.get("review_count") or 0) >= 50][:50]
 
     html = template.render(
         snapshot=snapshot,
         is_baseline=prev_snapshot is None,
         raptor=raptor,
         raptor_rank=raptor_rank,
-        by_volume=by_volume,
-        by_gain_7d=by_gain_7d,
+        by_volume=by_volume_leaderboard,
+        by_gain_7d=by_gain_for_table,
         market_news=market_news,
+        news_cards=news_cards,
         rising_profiles=rising_profiles,
         raptor_actions=raptor_actions,
         chart_data=chart_data,
@@ -835,16 +936,44 @@ def main():
     watch = load_watch_list()
     scrape_only = os.getenv("SCRAPE_ONLY") == "1"
 
-    print(f"Scraping '{watch['query']}'...")
-    businesses = scrape_google_maps(watch["query"], top_n=watch.get("discover_top_n", 40))
-    print(f"scraped {len(businesses)} businesses")
+    # Multi-query discovery: cast a wider net across categories and Indy-metro cities
+    # so we catch competitors whose primary GBP category isn't "Roofing" and accounts
+    # in higher-income suburbs (Carmel, Noblesville, Zionsville, Fishers, Greenwood).
+    discovery_queries = watch.get("discovery_queries", [
+        watch.get("query", "roofing Indianapolis"),
+        "exterior remodeling Indianapolis",
+        "roof replacement Indianapolis",
+        "roofing Carmel Indiana",
+        "roofing Fishers Indiana",
+        "roofing Noblesville Indiana",
+        "roofing Zionsville Indiana",
+        "roofing Greenwood Indiana",
+    ])
+    all_results = []
+    for q in discovery_queries:
+        print(f"Scraping '{q}'...")
+        try:
+            chunk = scrape_google_maps(q, top_n=watch.get("discover_top_n", 25))
+            print(f"  +{len(chunk)} from '{q}'")
+            all_results.extend(chunk)
+        except Exception as e:
+            print(f"  query '{q}' failed: {e}", file=sys.stderr)
+    # Re-dedup the combined results by place_id and name.
+    deduped = {}
+    for b in all_results:
+        key = b.get("place_id") or f"name:{_norm(b['name'])}"
+        if key not in deduped or b["review_count"] > deduped[key]["review_count"]:
+            deduped[key] = b
+    businesses = list(deduped.values())
+    print(f"merged across queries: {len(businesses)} unique businesses")
     if not businesses:
         print("no businesses scraped; aborting", file=sys.stderr)
         sys.exit(1)
 
-    # Timeline scraping: for top 20 by volume, load reviews tab and parse timestamps.
+    # Timeline scraping: for top 30 by volume, load reviews tab and parse timestamps.
     businesses.sort(key=lambda b: b["review_count"], reverse=True)
-    print(f"Scraping review timelines for top {min(20, len(businesses))}...")
+    timeline_n = min(30, len(businesses))
+    print(f"Scraping review timelines for top {timeline_n}...")
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
         context = browser.new_context(
@@ -856,13 +985,13 @@ def main():
             viewport={"width": 1400, "height": 900},
         )
         page = context.new_page()
-        for i, biz in enumerate(businesses[:20], 1):
+        for i, biz in enumerate(businesses[:timeline_n], 1):
             href = biz.get("href")
             if not href:
                 continue
             t = scrape_review_timeline(page, href)
             biz.update(t)
-            print(f"  [{i}] {biz['name']}: 7d={t['reviews_7d']} 30d={t['reviews_30d']} 90d={t['reviews_90d']} resp={t['response_rate']} loaded={t['reviews_loaded']}")
+            print(f"  [{i}/{timeline_n}] {biz['name']}: 7d={t['reviews_7d']} 30d={t['reviews_30d']} 90d={t['reviews_90d']} resp={t['response_rate']} loaded={t['reviews_loaded']}")
         browser.close()
 
     # Post-timeline merge of identical-data duplicates. These slip past place_id
@@ -913,7 +1042,10 @@ def main():
                 if ts <= cutoff:
                     recent_profiled = snap.get("profiled_this_week", [])
                     break
-            risers = detect_rising_players(businesses, exclude_recent=recent_profiled)
+            # Rotate fallback criteria across runs based on snapshot count.
+            rotation = len(history.get("snapshots", [])) % 4
+            risers = detect_rising_players(businesses, exclude_recent=recent_profiled,
+                                            fallback_rotation=rotation)
             for r in risers[:2]:
                 try:
                     print(f"AI: profiling riser {r['name']}...")
