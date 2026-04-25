@@ -2,185 +2,97 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<style>
-  :root {
-    --navy: #172e55;
-    --navy-deep: #0d1d3a;
-    --green: #3ae20a;
-    --blue: #1ac6ff;
-    --bg: #f3f5f9;
-    --card: #ffffff;
-    --ink: #172e55;
-    --ink-soft: #4a5568;
-    --line: #e3e7ee;
-    --shade: #f7f9fc;
-  }
-  body { font-family: 'Ouma Latin VF', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: var(--ink); max-width: 720px; margin: 0 auto; padding: 20px; background: var(--bg); line-height: 1.55; }
-  .card { background: var(--card); border-radius: 10px; padding: 26px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(23, 46, 85, 0.06); border: 1px solid var(--line); }
-  h1 { color: var(--navy); font-size: 24px; margin: 0 0 8px 0; letter-spacing: -0.01em; }
-  h2 { color: var(--navy); font-size: 17px; margin: 0 0 14px 0; padding-bottom: 8px; border-bottom: 2px solid var(--green); letter-spacing: 0.01em; text-transform: uppercase; font-weight: 700; }
-  h3, h4 { color: var(--navy); margin: 14px 0 6px 0; font-size: 15px; }
-  p { margin: 8px 0; }
-  .sub { color: var(--ink-soft); font-size: 12px; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.05em; }
-  table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  th { text-align: left; padding: 10px 8px; background: var(--shade); border-bottom: 2px solid var(--navy); font-weight: 700; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--navy); }
-  td { padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
-  tr:last-child td { border-bottom: none; }
-  .raptor-row { background: rgba(58, 226, 10, 0.08); font-weight: 600; }
-  .raptor-row td:first-child { border-left: 3px solid var(--green); }
-  .up { color: #1a7d1a; font-weight: 700; }
-  .flat { color: #9ca3af; }
-  .hero { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-deep) 100%); color: white; padding: 30px; border-radius: 10px; margin-bottom: 16px; }
-  .hero h1 { color: white; font-size: 28px; margin: 0 0 6px 0; letter-spacing: -0.02em; }
-  .hero .label { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--green); font-weight: 700; }
-  .hero p { margin: 8px 0 0 0; font-size: 13px; opacity: 0.9; }
-  .stat-grid { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
-  .stat { flex: 1; min-width: 130px; background: rgba(255,255,255,0.10); padding: 14px; border-radius: 6px; border: 1px solid rgba(58, 226, 10, 0.2); }
-  .stat .num { font-size: 24px; font-weight: 700; color: var(--green); line-height: 1; }
-  .stat .label { font-size: 10px; opacity: 0.85; margin-top: 6px; letter-spacing: 0.08em; text-transform: uppercase; }
-  .ai-content { font-size: 14px; }
-  .ai-content h1, .ai-content h2, .ai-content h3, .ai-content h4 { color: var(--navy); margin: 16px 0 6px 0; padding: 0; border: none; text-transform: none; letter-spacing: 0; }
-  .ai-content h1 { font-size: 17px; }
-  .ai-content h2 { font-size: 16px; }
-  .ai-content h3 { font-size: 14px; }
-  .ai-content h4 { font-size: 13px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.04em; }
-  .ai-content strong { color: var(--navy); font-weight: 700; }
-  .ai-content em { color: var(--ink-soft); }
-  .ai-content ul, .ai-content ol { padding-left: 22px; margin: 8px 0; }
-  .ai-content li { margin-bottom: 5px; }
-  .ai-content a { color: var(--blue); text-decoration: none; border-bottom: 1px solid rgba(26, 198, 255, 0.3); }
-  .ai-content hr { border: none; border-top: 1px solid var(--line); margin: 16px 0; }
-  .ai-content p { margin: 8px 0; }
-  .news-block { padding: 16px 18px; background: var(--shade); border-left: 3px solid var(--green); border-radius: 0 6px 6px 0; margin: 10px 0; }
-  .riser { padding: 16px 0; border-bottom: 1px solid var(--line); }
-  .riser:last-child { border-bottom: none; }
-  .riser .heading { font-weight: 700; color: var(--navy); font-size: 16px; }
-  .riser .stats { color: var(--ink-soft); font-size: 12px; margin-top: 4px; padding: 6px 10px; background: var(--shade); border-radius: 4px; display: inline-block; }
-  .sig { font-size: 11px; color: var(--ink-soft); margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--line); line-height: 1.6; }
-  .sig strong { color: var(--navy); }
-  .callout { background: rgba(26, 198, 255, 0.08); border-left: 3px solid var(--blue); padding: 12px 16px; border-radius: 0 6px 6px 0; font-size: 14px; }
-</style>
+<title>Raptor Review Digest</title>
 </head>
-<body>
+<body style="margin:0;padding:0;background-color:#f3f5f9;font-family:Helvetica,Arial,sans-serif;color:#172e55;">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color:#f3f5f9;padding:24px 12px;">
+<tr><td align="center">
 
-<div class="hero">
-  <div class="label">{% if is_baseline %}Starting Point{% else %}Weekly Intelligence{% endif %}</div>
-  <h1>Raptor Review Digest</h1>
-  <p>{{ run_date }}</p>
-  {% if is_baseline %}
-  <p style="margin-top: 14px;">This is the baseline snapshot. Starting next Friday you will see the week's news, rising players, and Raptor's specific moves based on real market movement.</p>
-  {% else %}
-  <div class="stat-grid">
-    <div class="stat">
-      <div class="num">+{{ raptor.reviews_7d if raptor else 0 }}</div>
-      <div class="label">Raptor 7 Days</div>
-    </div>
-    <div class="stat">
-      <div class="num">+{{ raptor.reviews_30d if raptor else 0 }}</div>
-      <div class="label">Raptor 30 Days</div>
-    </div>
-    <div class="stat">
-      <div class="num">#{{ raptor_rank or 'n/a' }}</div>
-      <div class="label">Volume Rank</div>
-    </div>
-    <div class="stat">
-      <div class="num">{% if raptor and raptor.response_rate %}{{ (raptor.response_rate * 100)|int }}%{% else %}n/a{% endif %}</div>
-      <div class="label">Response Rate</div>
-    </div>
-  </div>
-  {% endif %}
-</div>
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:600px;background-color:#ffffff;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(23,46,85,0.08);">
 
-{% if raptor_actions %}
-<div class="card">
-  <h2>Raptor's Moves This Week</h2>
-  <div class="ai-content">{{ raptor_actions | md }}</div>
-</div>
-{% endif %}
-
-{% if market_news %}
-<div class="card">
-  <h2>This Week in Indy Roofing</h2>
-  <div class="ai-content">{{ market_news | md }}</div>
-</div>
-{% endif %}
-
-{% if rising_profiles %}
-<div class="card">
-  <h2>Rising Players</h2>
-  <p class="sub">Small base, fast growth. New names this week (rotated weekly).</p>
-  {% for rp in rising_profiles %}
-  <div class="riser">
-    <div class="heading">{{ rp.competitor.name }}</div>
-    <div class="stats">
-      {{ rp.competitor.review_count }} reviews &middot; {{ rp.competitor.rating }} stars &middot; +{{ rp.competitor.reviews_30d or 0 }} in 30d &middot; +{{ rp.competitor.reviews_7d or 0 }} this week
-    </div>
-    <div class="ai-content" style="margin-top: 12px;">{{ rp.profile | md }}</div>
-  </div>
-  {% endfor %}
-</div>
-{% endif %}
-
-{% if by_gain_7d %}
-<div class="card">
-  <h2>Biggest Gainers This Week</h2>
-  <p class="sub">All tracked competitors, sorted by 7-day gain. Resp = % of reviews replied to (Google ranks engagement).</p>
-  <table>
+<!-- Hero -->
+<tr><td style="background-color:#172e55;padding:32px 28px 28px 28px;color:#ffffff;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
     <tr>
-      <th>#</th>
-      <th>Company</th>
-      <th>Total</th>
-      <th>★</th>
-      <th>7d</th>
-      <th>30d</th>
-      <th>90d</th>
-      <th>Resp</th>
+      <td style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#3ae20a;font-weight:bold;padding-bottom:6px;">Raptor Roofing</td>
+      <td align="right" style="font-size:11px;color:rgba(255,255,255,0.65);">{{ run_date }}</td>
     </tr>
-    {% for biz in by_gain_7d[:25] %}
-    <tr class="{% if 'raptor' in biz.name.lower() %}raptor-row{% endif %}">
-      <td>{{ loop.index }}</td>
-      <td>{{ biz.name }}</td>
-      <td>{{ '{:,}'.format(biz.review_count) }}</td>
-      <td>{{ biz.rating if biz.rating is not none else '–' }}</td>
-      <td><span class="{% if biz.reviews_7d and biz.reviews_7d > 0 %}up{% else %}flat{% endif %}">+{{ biz.reviews_7d or 0 }}</span></td>
-      <td>+{{ biz.reviews_30d or 0 }}</td>
-      <td>+{{ biz.reviews_90d or 0 }}</td>
-      <td>{% if biz.response_rate is not none %}{{ (biz.response_rate * 100)|int }}%{% else %}–{% endif %}</td>
+  </table>
+  <h1 style="margin:6px 0 12px 0;font-size:22px;font-weight:bold;color:#ffffff;line-height:1.2;">Your weekly Indy roofing intel is live.</h1>
+  <p style="margin:0;font-size:13px;color:rgba(255,255,255,0.85);line-height:1.5;">Full charts, Raptor's moves, market news, and rising-player profiles are on the dashboard. Quick preview below.</p>
+
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-top:22px;">
+    <tr>
+      <td width="25%" align="center" style="padding:10px;background-color:rgba(58,226,10,0.12);border:1px solid rgba(58,226,10,0.25);border-radius:8px;">
+        <div style="font-size:22px;font-weight:bold;color:#3ae20a;">+{{ raptor.reviews_7d if raptor else 0 }}</div>
+        <div style="font-size:9px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.75);margin-top:4px;">Raptor 7d</div>
+      </td>
+      <td width="2%"></td>
+      <td width="25%" align="center" style="padding:10px;background-color:rgba(58,226,10,0.12);border:1px solid rgba(58,226,10,0.25);border-radius:8px;">
+        <div style="font-size:22px;font-weight:bold;color:#3ae20a;">+{{ raptor.reviews_30d if raptor else 0 }}</div>
+        <div style="font-size:9px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.75);margin-top:4px;">Raptor 30d</div>
+      </td>
+      <td width="2%"></td>
+      <td width="22%" align="center" style="padding:10px;background-color:rgba(26,198,255,0.15);border:1px solid rgba(26,198,255,0.3);border-radius:8px;">
+        <div style="font-size:22px;font-weight:bold;color:#1ac6ff;">#{{ raptor_rank or 'n/a' }}</div>
+        <div style="font-size:9px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.75);margin-top:4px;">Volume Rank</div>
+      </td>
+      <td width="2%"></td>
+      <td width="22%" align="center" style="padding:10px;background-color:rgba(26,198,255,0.15);border:1px solid rgba(26,198,255,0.3);border-radius:8px;">
+        <div style="font-size:22px;font-weight:bold;color:#1ac6ff;">{% if raptor and raptor.response_rate %}{{ (raptor.response_rate * 100)|int }}%{% else %}—{% endif %}</div>
+        <div style="font-size:9px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.75);margin-top:4px;">Response</div>
+      </td>
+    </tr>
+  </table>
+</td></tr>
+
+<!-- CTA -->
+<tr><td style="padding:24px 28px 0 28px;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+    <tr><td align="center">
+      <a href="{{ dashboard_url }}" style="display:inline-block;background-color:#3ae20a;color:#0d1d3a;font-weight:bold;font-size:15px;padding:14px 36px;border-radius:8px;text-decoration:none;letter-spacing:0.02em;">Open Dashboard &rarr;</a>
+    </td></tr>
+  </table>
+</td></tr>
+
+<!-- Top Gainers preview -->
+{% if top_gainers %}
+<tr><td style="padding:32px 28px 0 28px;">
+  <h2 style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#172e55;margin:0 0 14px 0;border-bottom:2px solid #3ae20a;padding-bottom:8px;">Biggest Gainers This Week</h2>
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+    {% for biz in top_gainers %}
+    <tr {% if 'raptor' in biz.name.lower() %}style="background-color:rgba(58,226,10,0.08);"{% endif %}>
+      <td style="padding:8px 4px;font-size:13px;color:#172e55;font-weight:{% if 'raptor' in biz.name.lower() %}bold{% else %}500{% endif %};border-bottom:1px solid #e3e7ee;">{{ biz.name }}</td>
+      <td align="right" style="padding:8px 4px;font-size:13px;color:#1a7d1a;font-weight:bold;border-bottom:1px solid #e3e7ee;">+{{ biz.reviews_7d or 0 }}</td>
+      <td align="right" style="padding:8px 4px;font-size:11px;color:#4a5568;border-bottom:1px solid #e3e7ee;width:90px;">{{ '{:,}'.format(biz.review_count) }} total</td>
     </tr>
     {% endfor %}
   </table>
-</div>
+</td></tr>
 {% endif %}
 
-<div class="card">
-  <h2>Leaderboard by Volume</h2>
-  <p class="sub">Reference. Volume rank changes slowly; movement above is what to watch.</p>
-  <table>
-    <tr><th>#</th><th>Company</th><th>Total Reviews</th><th>Rating</th></tr>
-    {% for biz in by_volume[:15] %}
-    <tr class="{% if 'raptor' in biz.name.lower() %}raptor-row{% endif %}">
-      <td>{{ loop.index }}</td>
-      <td>{{ biz.name }}</td>
-      <td>{{ '{:,}'.format(biz.review_count) }}</td>
-      <td>{{ biz.rating if biz.rating is not none else '–' }}</td>
-    </tr>
-    {% endfor %}
-  </table>
-</div>
-
-{% if is_baseline %}
-<div class="card">
-  <h2>What Next Friday Will Look Like</h2>
-  <div class="callout">
-    Starting next Friday, this email leads with the week's news in Indy roofing (awards, community events, PR, ad launches), then Raptor's three moves for the week (Opus-synthesized), then rotating rising-player profiles, then the full weekly gainers table.
+<!-- Raptor's Moves preview -->
+{% if actions_preview %}
+<tr><td style="padding:28px 28px 0 28px;">
+  <h2 style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#172e55;margin:0 0 14px 0;border-bottom:2px solid #3ae20a;padding-bottom:8px;">Raptor's Moves This Week</h2>
+  <div style="font-size:13px;line-height:1.6;color:#4a5568;white-space:pre-wrap;">{{ actions_preview }}</div>
+  <div style="margin-top:12px;">
+    <a href="{{ dashboard_url }}#moves" style="font-size:13px;color:#1ac6ff;text-decoration:none;font-weight:bold;">Read full breakdown on dashboard &rarr;</a>
   </div>
-</div>
+</td></tr>
 {% endif %}
 
-<div class="sig">
-  Thank you,<br>
-  <strong>Cameron Blakely</strong> | President | a: 5145 S. Meridian St., Suite B | Indianapolis, IN 46217 | e: Cameron@RaptorRoofing.com | w: RaptorRoofing.com | p: 317.886.0696
-</div>
+<!-- Footer -->
+<tr><td style="padding:32px 28px 24px 28px;border-top:1px solid #e3e7ee;margin-top:24px;">
+  <p style="font-size:11px;color:#9aa5b8;line-height:1.6;margin:0 0 12px 0;">Refreshed Tuesdays and Thursdays at 7:30am Eastern. Data from Google Maps. Web research and synthesis by Claude.</p>
+  <p style="font-size:11px;color:#9aa5b8;margin:0;">
+    <strong style="color:#172e55;">Cameron Blakely</strong> | President | <a href="mailto:Cameron@RaptorRoofing.com" style="color:#1ac6ff;text-decoration:none;">Cameron@RaptorRoofing.com</a> | <a href="https://RaptorRoofing.com" style="color:#1ac6ff;text-decoration:none;">RaptorRoofing.com</a> | 317.886.0696
+  </p>
+</td></tr>
 
+</table>
+
+</td></tr>
+</table>
 </body>
 </html>

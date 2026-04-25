@@ -9,3 +9,4 @@ playwright-report/
 preview.html
 debug_*.png
 debug_scrape.py
+.claude/

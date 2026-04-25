@@ -24,8 +24,14 @@ from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).parent
 DATA_DIR = ROOT / "data"
+DOCS_DIR = ROOT / "docs"
+DASHBOARD_TEMPLATE_DIR = ROOT / "dashboard"
 WATCH_LIST_PATH = DATA_DIR / "watch_list.json"
 HISTORY_PATH = DATA_DIR / "history.json"
+DASHBOARD_PUBLIC_URL = os.getenv(
+    "DASHBOARD_URL",
+    "https://camroofsindy.github.io/raptor-review-digest/",
+)
 
 
 def _parse_relative_days(text):
@@ -666,16 +672,71 @@ def _md_to_html(text):
     return Markup(html)
 
 
-def render_email(snapshot, prev_snapshot, raptor, businesses, market_news,
-                  rising_profiles, raptor_actions, new_entrants):
-    """Render the v3 insights-first HTML email."""
-    env = Environment(loader=FileSystemLoader(str(ROOT)))
+def _build_chart_data(businesses, raptor):
+    """Construct JSON-serializable chart datasets for the dashboard."""
+    raptor_name = raptor["name"] if raptor else None
+
+    # Gainers: top 12 by 7d gain (include Raptor even if not in top 12).
+    by_gain = sorted(
+        [b for b in businesses if (b.get("reviews_7d") or 0) > 0],
+        key=lambda b: b.get("reviews_7d") or 0, reverse=True
+    )[:12]
+    if raptor and raptor not in by_gain and raptor.get("reviews_7d"):
+        by_gain.append(raptor)
+    gainers = [
+        {"name": b["name"], "gain_7d": b.get("reviews_7d") or 0,
+         "is_raptor": b["name"] == raptor_name}
+        for b in by_gain
+    ]
+
+    # Scatter: every competitor with reviews_7d data plotted as total vs 7d gain.
+    scatter = [
+        {"name": b["name"], "total": b["review_count"],
+         "gain_7d": b.get("reviews_7d") or 0,
+         "is_raptor": b["name"] == raptor_name}
+        for b in businesses if b.get("reviews_7d") is not None and b["review_count"] > 0
+    ]
+
+    # Response rate: top 12 by total volume that have a response_rate measured.
+    by_volume_with_resp = sorted(
+        [b for b in businesses if b.get("response_rate") is not None],
+        key=lambda b: b["review_count"], reverse=True
+    )[:12]
+    response = [
+        {"name": b["name"], "rate": int((b["response_rate"] or 0) * 100),
+         "is_raptor": b["name"] == raptor_name}
+        for b in by_volume_with_resp
+    ]
+
+    # Share donut: who got what slice of THIS WEEK's reviews across tracked competitors.
+    total_week_gains = sum((b.get("reviews_7d") or 0) for b in businesses)
+    share = []
+    if total_week_gains > 0:
+        sorted_share = sorted(
+            [b for b in businesses if (b.get("reviews_7d") or 0) > 0],
+            key=lambda b: b.get("reviews_7d") or 0, reverse=True
+        )
+        # Top 7 by share, rest grouped as "Others".
+        top_share = sorted_share[:7]
+        rest_share = sum((b.get("reviews_7d") or 0) for b in sorted_share[7:])
+        for b in top_share:
+            share.append({
+                "name": b["name"], "gain": b.get("reviews_7d") or 0,
+                "is_raptor": b["name"] == raptor_name,
+            })
+        if rest_share > 0:
+            share.append({"name": "Others", "gain": rest_share, "is_raptor": False})
+
+    return {"gainers": gainers, "scatter": scatter, "response": response, "share": share}
+
+
+def render_dashboard(snapshot, prev_snapshot, raptor, businesses, market_news,
+                      rising_profiles, raptor_actions):
+    """Render the static dashboard HTML to docs/index.html."""
+    env = Environment(loader=FileSystemLoader(str(DASHBOARD_TEMPLATE_DIR)))
     env.filters["md"] = _md_to_html
-    template = env.get_template("email_template.html")
-    is_baseline = prev_snapshot is None
-    # Sort businesses for different sections:
-    # - by_volume: for the reference leaderboard
-    # - by_gain_7d: for the "Biggest gainers this week" table
+    template = env.get_template("index.html.j2")
+
     by_volume = sorted(businesses, key=lambda b: b["review_count"], reverse=True)
     by_gain_7d = sorted(
         [b for b in businesses if b.get("reviews_7d") is not None],
@@ -686,10 +747,11 @@ def render_email(snapshot, prev_snapshot, raptor, businesses, market_news,
         (i + 1 for i, b in enumerate(by_volume) if "raptor" in b["name"].lower()),
         None,
     )
-    return template.render(
+    chart_data = _build_chart_data(businesses, raptor)
+
+    html = template.render(
         snapshot=snapshot,
-        prev_snapshot=prev_snapshot,
-        is_baseline=is_baseline,
+        is_baseline=prev_snapshot is None,
         raptor=raptor,
         raptor_rank=raptor_rank,
         by_volume=by_volume,
@@ -697,7 +759,57 @@ def render_email(snapshot, prev_snapshot, raptor, businesses, market_news,
         market_news=market_news,
         rising_profiles=rising_profiles,
         raptor_actions=raptor_actions,
-        new_entrants=new_entrants,
+        chart_data=chart_data,
+        run_date=datetime.now(timezone.utc).strftime("%B %d, %Y"),
+    )
+    DOCS_DIR.mkdir(exist_ok=True)
+    (DOCS_DIR / "index.html").write_text(html)
+    # Also drop a no-build marker so GH Pages does not try to run Jekyll.
+    (DOCS_DIR / ".nojekyll").write_text("")
+    return html
+
+
+def _truncate_actions_preview(raptor_actions, max_chars=600):
+    """Pull a short preview from the actions text for the email notification.
+    Strips markdown markers and grabs the first ~max_chars."""
+    if not raptor_actions:
+        return ""
+    text = re.sub(r"#+\s*", "", raptor_actions)
+    text = re.sub(r"\*\*", "", text)
+    text = re.sub(r"\n{3,}", "\n\n", text)
+    if len(text) > max_chars:
+        text = text[:max_chars].rsplit(". ", 1)[0] + "..."
+    return text
+
+
+def render_email(snapshot, prev_snapshot, raptor, businesses, market_news,
+                  rising_profiles, raptor_actions, new_entrants):
+    """Render the notification email — link to the dashboard, plus a preview
+    of Raptor's Moves and a couple of headline stats. The full content lives
+    on the dashboard."""
+    env = Environment(loader=FileSystemLoader(str(ROOT)))
+    env.filters["md"] = _md_to_html
+    template = env.get_template("email_template.html")
+
+    by_gain_7d = sorted(
+        [b for b in businesses if b.get("reviews_7d") is not None],
+        key=lambda b: (b.get("reviews_7d") or 0), reverse=True
+    )
+    by_volume = sorted(businesses, key=lambda b: b["review_count"], reverse=True)
+    raptor_rank = next(
+        (i + 1 for i, b in enumerate(by_volume) if "raptor" in b["name"].lower()),
+        None,
+    )
+    actions_preview = _truncate_actions_preview(raptor_actions, max_chars=900)
+    top_gainers = by_gain_7d[:5]
+
+    return template.render(
+        is_baseline=prev_snapshot is None,
+        raptor=raptor,
+        raptor_rank=raptor_rank,
+        actions_preview=actions_preview,
+        top_gainers=top_gainers,
+        dashboard_url=DASHBOARD_PUBLIC_URL,
         run_date=datetime.now(timezone.utc).strftime("%B %d, %Y"),
     )
 
@@ -815,6 +927,17 @@ def main():
 
     raptor = next(
         (b for b in businesses if "raptor" in b["name"].lower()), None
+    )
+    # Render the static dashboard FIRST. The email points to it.
+    print("Rendering dashboard to docs/index.html...")
+    render_dashboard(
+        snapshot=snapshot,
+        prev_snapshot=prev_snapshot,
+        raptor=raptor,
+        businesses=businesses,
+        market_news=market_news,
+        rising_profiles=rising_profiles,
+        raptor_actions=raptor_actions,
     )
     html = render_email(
         snapshot=snapshot,

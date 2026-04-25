@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raptor Review Digest | April 25, 2026</title>
+<meta name="description" content="Weekly competitive intelligence for Raptor Roofing in Indianapolis.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23172e55'/%3E%3Ctext x='50' y='62' font-size='40' text-anchor='middle' fill='%233ae20a' font-family='sans-serif' font-weight='700'%3ER%3C/text%3E%3C/svg%3E">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        navy: { DEFAULT: '#172e55', deep: '#0d1d3a', light: '#2a4880' },
+        accent: { green: '#3ae20a', blue: '#1ac6ff' },
+        ink: { DEFAULT: '#172e55', soft: '#4a5568', light: '#9aa5b8' },
+      },
+      fontFamily: { sans: ['Ouma Latin VF', 'Inter', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'] },
+      animation: {
+        'fade-up': 'fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        'fade-in': 'fadeIn 0.5s ease-out forwards',
+        'count-up': 'countUp 1s ease-out',
+      },
+      keyframes: {
+        fadeUp: { '0%': { opacity: 0, transform: 'translateY(16px)' }, '100%': { opacity: 1, transform: 'translateY(0)' } },
+        fadeIn: { '0%': { opacity: 0 }, '100%': { opacity: 1 } },
+      },
+    },
+  },
+};
+</script>
+<style>
+  body { font-feature-settings: "ss01", "ss02"; }
+  .stat-num { font-variant-numeric: tabular-nums; }
+  .scroll-fade { opacity: 0; transform: translateY(20px); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+  .scroll-fade.visible { opacity: 1; transform: translateY(0); }
+  .tab-active { border-color: #3ae20a; color: #172e55; }
+  details > summary { list-style: none; cursor: pointer; }
+  details > summary::-webkit-details-marker { display: none; }
+  details[open] > summary .chev { transform: rotate(90deg); }
+  .chev { transition: transform 0.2s ease; }
+  .ai-prose h1, .ai-prose h2, .ai-prose h3, .ai-prose h4 { color: #172e55; font-weight: 700; margin: 1em 0 0.4em; line-height: 1.2; }
+  .ai-prose h1 { font-size: 1.25rem; }
+  .ai-prose h2 { font-size: 1.125rem; }
+  .ai-prose h3 { font-size: 1rem; }
+  .ai-prose h4 { font-size: 0.95rem; color: #4a5568; text-transform: uppercase; letter-spacing: 0.04em; }
+  .ai-prose p { margin: 0.6em 0; }
+  .ai-prose strong { color: #172e55; font-weight: 700; }
+  .ai-prose em { color: #4a5568; }
+  .ai-prose a { color: #1ac6ff; border-bottom: 1px solid rgba(26, 198, 255, 0.3); transition: border-color 0.15s; }
+  .ai-prose a:hover { border-color: #1ac6ff; }
+  .ai-prose ul, .ai-prose ol { margin: 0.6em 0; padding-left: 1.4em; }
+  .ai-prose li { margin: 0.3em 0; }
+  .ai-prose hr { border: none; border-top: 1px solid #e3e7ee; margin: 1em 0; }
+  .gradient-text { background: linear-gradient(135deg, #3ae20a 0%, #1ac6ff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+</style>
+</head>
+<body class="bg-slate-50 text-ink antialiased min-h-screen">
+
+<!-- Hero -->
+<section class="bg-gradient-to-br from-navy via-navy-deep to-navy text-white relative overflow-hidden">
+  <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 20% 50%, #3ae20a 0%, transparent 40%), radial-gradient(circle at 80% 30%, #1ac6ff 0%, transparent 35%);"></div>
+  <div class="max-w-6xl mx-auto px-5 sm:px-8 pt-10 pb-12 relative z-10">
+    <div class="flex items-center justify-between mb-8">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-navy-deep border-2 border-accent-green flex items-center justify-center font-bold text-accent-green">R</div>
+        <div>
+          <div class="text-xs tracking-[0.2em] uppercase text-accent-green font-bold">Raptor Roofing</div>
+          <div class="text-sm text-white/70">Review Digest</div>
+        </div>
+      </div>
+      <div class="text-right">
+        <div class="text-xs tracking-widest uppercase text-white/60">Last Updated</div>
+        <div class="text-sm font-semibold">April 25, 2026</div>
+      </div>
+    </div>
+    <h1 class="text-3xl sm:text-5xl font-bold tracking-tight mb-3">Indianapolis roofing,<br><span class="gradient-text">moved this week.</span></h1>
+    <p class="text-white/70 text-sm sm:text-base max-w-2xl">Live competitive intel scraped from Google Maps, paired with web research from Claude. Refreshed Tuesday and Thursday at 7:30am Eastern.</p>
+
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8">
+      <div class="bg-white/10 backdrop-blur border border-accent-green/20 rounded-xl p-4">
+        <div class="text-3xl sm:text-4xl font-bold text-accent-green stat-num" data-count="2">+2</div>
+        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">Raptor 7 Days</div>
+      </div>
+      <div class="bg-white/10 backdrop-blur border border-accent-green/20 rounded-xl p-4">
+        <div class="text-3xl sm:text-4xl font-bold text-accent-green stat-num" data-count="12">+12</div>
+        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">Raptor 30 Days</div>
+      </div>
+      <div class="bg-white/10 backdrop-blur border border-accent-blue/30 rounded-xl p-4">
+        <div class="text-3xl sm:text-4xl font-bold text-accent-blue stat-num">#6</div>
+        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">Volume Rank</div>
+      </div>
+      <div class="bg-white/10 backdrop-blur border border-accent-blue/30 rounded-xl p-4">
+        <div class="text-3xl sm:text-4xl font-bold text-accent-blue stat-num">97%</div>
+        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">Response Rate</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sticky Tab Nav -->
+<nav class="sticky top-0 z-30 bg-white/90 backdrop-blur-lg border-b border-slate-200 shadow-sm">
+  <div class="max-w-6xl mx-auto px-5 sm:px-8">
+    <div class="flex gap-1 sm:gap-4 overflow-x-auto no-scrollbar -mx-2 sm:mx-0">
+      
+      <button data-tab="overview" class="tab-btn whitespace-nowrap px-3 sm:px-4 py-3 text-sm font-medium border-b-2 border-transparent text-ink-soft hover:text-navy transition-colors">Overview</button>
+      
+      <button data-tab="moves" class="tab-btn whitespace-nowrap px-3 sm:px-4 py-3 text-sm font-medium border-b-2 border-transparent text-ink-soft hover:text-navy transition-colors">Raptor's Moves</button>
+      
+      <button data-tab="movement" class="tab-btn whitespace-nowrap px-3 sm:px-4 py-3 text-sm font-medium border-b-2 border-transparent text-ink-soft hover:text-navy transition-colors">Movement</button>
+      
+      <button data-tab="news" class="tab-btn whitespace-nowrap px-3 sm:px-4 py-3 text-sm font-medium border-b-2 border-transparent text-ink-soft hover:text-navy transition-colors">News</button>
+      
+      <button data-tab="rising" class="tab-btn whitespace-nowrap px-3 sm:px-4 py-3 text-sm font-medium border-b-2 border-transparent text-ink-soft hover:text-navy transition-colors">Rising Players</button>
+      
+      <button data-tab="all" class="tab-btn whitespace-nowrap px-3 sm:px-4 py-3 text-sm font-medium border-b-2 border-transparent text-ink-soft hover:text-navy transition-colors">All Competitors</button>
+      
+    </div>
+  </div>
+</nav>
+
+<main class="max-w-6xl mx-auto px-5 sm:px-8 py-8 space-y-6">
+
+  <!-- OVERVIEW TAB -->
+  <section data-panel="overview" class="space-y-6">
+    
+    <div class="scroll-fade bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-lg sm:text-xl font-bold text-navy">Raptor's Moves This Week</h2>
+        <span class="text-xs uppercase tracking-wider text-ink-soft bg-slate-100 px-2 py-1 rounded">Synthesized by Claude</span>
+      </div>
+      <div class="ai-prose text-sm sm:text-base"><h2>3 Actions This Week</h2>
+<p><strong>1. Verify GAF status.</strong> Stay Dry just earned President's Club. Confirm Raptor Master Elite tier this week.</p>
+<p><strong>2. Press release for Greenwood.</strong> Bone Dry ran east-side PR; counter with south-side coverage.</p>
+<p><strong>3. Tighten review-ask cadence.</strong> Indy Roof gained 22 this week vs Raptor 2.</p></div>
+    </div>
+    
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="scroll-fade bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+        <h3 class="text-sm font-bold text-navy uppercase tracking-wider mb-4">Biggest Gainers This Week</h3>
+        <canvas id="gainers-chart" height="200"></canvas>
+      </div>
+      <div class="scroll-fade bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+        <h3 class="text-sm font-bold text-navy uppercase tracking-wider mb-4">Velocity vs Volume</h3>
+        <canvas id="scatter-chart" height="200"></canvas>
+        <p class="text-xs text-ink-soft mt-2">Top-right quadrant = high volume, high velocity. Bottom-right = small base punching above weight.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- RAPTOR'S MOVES TAB -->
+  <section data-panel="moves" class="hidden space-y-6">
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-lg sm:text-xl font-bold text-navy">Raptor's Moves This Week</h2>
+        <span class="text-xs uppercase tracking-wider text-ink-soft bg-slate-100 px-2 py-1 rounded">Synthesized by Claude</span>
+      </div>
+      <div class="ai-prose text-sm sm:text-base"><h2>3 Actions This Week</h2>
+<p><strong>1. Verify GAF status.</strong> Stay Dry just earned President's Club. Confirm Raptor Master Elite tier this week.</p>
+<p><strong>2. Press release for Greenwood.</strong> Bone Dry ran east-side PR; counter with south-side coverage.</p>
+<p><strong>3. Tighten review-ask cadence.</strong> Indy Roof gained 22 this week vs Raptor 2.</p></div>
+    </div>
+  </section>
+
+  <!-- MOVEMENT TAB -->
+  <section data-panel="movement" class="hidden space-y-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+        <h3 class="text-sm font-bold text-navy uppercase tracking-wider mb-4">Response Rate Comparison</h3>
+        <canvas id="response-chart" height="220"></canvas>
+        <p class="text-xs text-ink-soft mt-2">% of reviews each competitor has replied to. Google factors engagement into local rankings.</p>
+      </div>
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+        <h3 class="text-sm font-bold text-navy uppercase tracking-wider mb-4">Share of This Week's Reviews</h3>
+        <canvas id="share-chart" height="220"></canvas>
+        <p class="text-xs text-ink-soft mt-2">Of all new reviews captured by tracked competitors this week, who got what slice.</p>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+      <div class="p-6 border-b border-slate-100">
+        <h3 class="text-sm font-bold text-navy uppercase tracking-wider">Full Weekly Gains</h3>
+        <p class="text-xs text-ink-soft mt-1">Sortable. Click any company name to open its profile.</p>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="bg-slate-50 text-xs uppercase tracking-wider text-ink-soft">
+            <tr>
+              <th class="text-left px-4 py-3 font-semibold">#</th>
+              <th class="text-left px-4 py-3 font-semibold">Company</th>
+              <th class="text-right px-4 py-3 font-semibold">Total</th>
+              <th class="text-right px-4 py-3 font-semibold">★</th>
+              <th class="text-right px-4 py-3 font-semibold">7d</th>
+              <th class="text-right px-4 py-3 font-semibold">30d</th>
+              <th class="text-right px-4 py-3 font-semibold">90d</th>
+              <th class="text-right px-4 py-3 font-semibold">Resp</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">1</td>
+              <td class="px-4 py-3 font-medium text-navy">Indy Roof & Restoration</td>
+              <td class="px-4 py-3 text-right stat-num">2,149</td>
+              <td class="px-4 py-3 text-right">4.9</td>
+              <td class="px-4 py-3 text-right font-bold text-emerald-600">+22</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+77</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+77</td>
+              <td class="px-4 py-3 text-right text-ink-soft">94%</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">2</td>
+              <td class="px-4 py-3 font-medium text-navy">Indy Rooftops - Roofing Replacement Contractor</td>
+              <td class="px-4 py-3 text-right stat-num">481</td>
+              <td class="px-4 py-3 text-right">5.0</td>
+              <td class="px-4 py-3 text-right font-bold text-emerald-600">+14</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+47</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+72</td>
+              <td class="px-4 py-3 text-right text-ink-soft">38%</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">3</td>
+              <td class="px-4 py-3 font-medium text-navy">Indy Rooftops</td>
+              <td class="px-4 py-3 text-right stat-num">481</td>
+              <td class="px-4 py-3 text-right">5.0</td>
+              <td class="px-4 py-3 text-right font-bold text-emerald-600">+14</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+47</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+72</td>
+              <td class="px-4 py-3 text-right text-ink-soft">38%</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">4</td>
+              <td class="px-4 py-3 font-medium text-navy">Bone Dry Roofing</td>
+              <td class="px-4 py-3 text-right stat-num">2,409</td>
+              <td class="px-4 py-3 text-right">4.8</td>
+              <td class="px-4 py-3 text-right font-bold text-emerald-600">+9</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+41</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+60</td>
+              <td class="px-4 py-3 text-right text-ink-soft">97%</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">5</td>
+              <td class="px-4 py-3 font-medium text-navy">Bone Dry Roofing (HQ)</td>
+              <td class="px-4 py-3 text-right stat-num">2,409</td>
+              <td class="px-4 py-3 text-right">4.8</td>
+              <td class="px-4 py-3 text-right font-bold text-emerald-600">+9</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+41</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+60</td>
+              <td class="px-4 py-3 text-right text-ink-soft">97%</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">6</td>
+              <td class="px-4 py-3 font-medium text-navy">Erie Home</td>
+              <td class="px-4 py-3 text-right stat-num">274</td>
+              <td class="px-4 py-3 text-right">4.6</td>
+              <td class="px-4 py-3 text-right font-bold text-emerald-600">+3</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+7</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+9</td>
+              <td class="px-4 py-3 text-right text-ink-soft">97%</td>
+            </tr>
+            
+            <tr class="bg-accent-green/5 border-l-4 border-l-accent-green hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">7</td>
+              <td class="px-4 py-3 font-medium text-navy">Raptor Roofing</td>
+              <td class="px-4 py-3 text-right stat-num">664</td>
+              <td class="px-4 py-3 text-right">5.0</td>
+              <td class="px-4 py-3 text-right font-bold text-emerald-600">+2</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+12</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+69</td>
+              <td class="px-4 py-3 text-right text-ink-soft">97%</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">8</td>
+              <td class="px-4 py-3 font-medium text-navy">Cox Roofing</td>
+              <td class="px-4 py-3 text-right stat-num">503</td>
+              <td class="px-4 py-3 text-right">4.8</td>
+              <td class="px-4 py-3 text-right font-bold text-emerald-600">+2</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+7</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+14</td>
+              <td class="px-4 py-3 text-right text-ink-soft">91%</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">9</td>
+              <td class="px-4 py-3 font-medium text-navy">Rees Restoration</td>
+              <td class="px-4 py-3 text-right stat-num">579</td>
+              <td class="px-4 py-3 text-right">4.7</td>
+              <td class="px-4 py-3 text-right font-bold text-emerald-600">+2</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+6</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+8</td>
+              <td class="px-4 py-3 text-right text-ink-soft">46%</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">10</td>
+              <td class="px-4 py-3 font-medium text-navy">MSRC - Indianapolis</td>
+              <td class="px-4 py-3 text-right stat-num">77</td>
+              <td class="px-4 py-3 text-right">4.9</td>
+              <td class="px-4 py-3 text-right font-bold text-emerald-600">+2</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+6</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+6</td>
+              <td class="px-4 py-3 text-right text-ink-soft">12%</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">11</td>
+              <td class="px-4 py-3 font-medium text-navy">Two Brothers Roofing Inc</td>
+              <td class="px-4 py-3 text-right stat-num">92</td>
+              <td class="px-4 py-3 text-right">4.8</td>
+              <td class="px-4 py-3 text-right font-bold text-emerald-600">+1</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+9</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+12</td>
+              <td class="px-4 py-3 text-right text-ink-soft">100%</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">12</td>
+              <td class="px-4 py-3 font-medium text-navy">OpenBox Roofing</td>
+              <td class="px-4 py-3 text-right stat-num">232</td>
+              <td class="px-4 py-3 text-right">5.0</td>
+              <td class="px-4 py-3 text-right font-bold text-emerald-600">+1</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+7</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+8</td>
+              <td class="px-4 py-3 text-right text-ink-soft">100%</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">13</td>
+              <td class="px-4 py-3 font-medium text-navy">Honest Abe Roofing Indianapolis</td>
+              <td class="px-4 py-3 text-right stat-num">132</td>
+              <td class="px-4 py-3 text-right">4.9</td>
+              <td class="px-4 py-3 text-right font-bold text-emerald-600">+1</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+6</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+7</td>
+              <td class="px-4 py-3 text-right text-ink-soft">90%</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">14</td>
+              <td class="px-4 py-3 font-medium text-navy">AmeriPro Roofing</td>
+              <td class="px-4 py-3 text-right stat-num">257</td>
+              <td class="px-4 py-3 text-right">4.5</td>
+              <td class="px-4 py-3 text-right font-bold text-emerald-600">+1</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+2</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+4</td>
+              <td class="px-4 py-3 text-right text-ink-soft">44%</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">15</td>
+              <td class="px-4 py-3 font-medium text-navy">Big Boy's Construction</td>
+              <td class="px-4 py-3 text-right stat-num">844</td>
+              <td class="px-4 py-3 text-right">4.9</td>
+              <td class="px-4 py-3 text-right font-bold text-ink-light">+0</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+25</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+46</td>
+              <td class="px-4 py-3 text-right text-ink-soft">100%</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">16</td>
+              <td class="px-4 py-3 font-medium text-navy">Trojan Roofing</td>
+              <td class="px-4 py-3 text-right stat-num">643</td>
+              <td class="px-4 py-3 text-right">4.9</td>
+              <td class="px-4 py-3 text-right font-bold text-ink-light">+0</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+2</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+6</td>
+              <td class="px-4 py-3 text-right text-ink-soft">6%</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">17</td>
+              <td class="px-4 py-3 font-medium text-navy">Stay Dry Roofing</td>
+              <td class="px-4 py-3 text-right stat-num">421</td>
+              <td class="px-4 py-3 text-right">4.9</td>
+              <td class="px-4 py-3 text-right font-bold text-ink-light">+0</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+2</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+8</td>
+              <td class="px-4 py-3 text-right text-ink-soft">81%</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">18</td>
+              <td class="px-4 py-3 font-medium text-navy">Indianapolis Roofing LLC</td>
+              <td class="px-4 py-3 text-right stat-num">142</td>
+              <td class="px-4 py-3 text-right">4.9</td>
+              <td class="px-4 py-3 text-right font-bold text-ink-light">+0</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+1</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+1</td>
+              <td class="px-4 py-3 text-right text-ink-soft">100%</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">19</td>
+              <td class="px-4 py-3 font-medium text-navy">Amos Exteriors</td>
+              <td class="px-4 py-3 text-right stat-num">3,037</td>
+              <td class="px-4 py-3 text-right">4.9</td>
+              <td class="px-4 py-3 text-right font-bold text-ink-light">+0</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+0</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+0</td>
+              <td class="px-4 py-3 text-right text-ink-soft">–</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">20</td>
+              <td class="px-4 py-3 font-medium text-navy">Universal Roofing & Exteriors</td>
+              <td class="px-4 py-3 text-right stat-num">222</td>
+              <td class="px-4 py-3 text-right">4.6</td>
+              <td class="px-4 py-3 text-right font-bold text-ink-light">+0</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+0</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+1</td>
+              <td class="px-4 py-3 text-right text-ink-soft">97%</td>
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWS TAB -->
+  <section data-panel="news" class="hidden space-y-6">
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-lg sm:text-xl font-bold text-navy">This Week in Indy Roofing</h2>
+        <span class="text-xs uppercase tracking-wider text-ink-soft bg-slate-100 px-2 py-1 rounded">Web research</span>
+      </div>
+      
+      <div class="ai-prose text-sm sm:text-base"><h2>Market News</h2>
+<p><strong>Bone Dry Roofing</strong>: Press release April 6 about east-side roof inspections. <strong>Stay Dry Roofing</strong>: GAF President's Club 2026 award announced.</p></div>
+      
+    </div>
+  </section>
+
+  <!-- RISING PLAYERS TAB -->
+  <section data-panel="rising" class="hidden space-y-6">
+    
+    
+    <details class="scroll-fade bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden group" open>
+      <summary class="p-5 sm:p-6 flex items-center justify-between hover:bg-slate-50 transition-colors">
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-3 flex-wrap">
+            <h3 class="text-base sm:text-lg font-bold text-navy">Indy Rooftops</h3>
+            <span class="text-xs px-2 py-0.5 bg-accent-green/15 text-emerald-700 rounded-full font-semibold uppercase tracking-wide">+14 this week</span>
+          </div>
+          <div class="text-xs text-ink-soft mt-1">481 reviews · 5.0 stars · +47 in 30 days</div>
+        </div>
+        <svg class="chev w-5 h-5 text-ink-soft flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </summary>
+      <div class="px-5 sm:px-6 pb-6 ai-prose text-sm border-t border-slate-100 pt-5"><p>Test profile content with <strong>bold</strong> text and a <a href="https://example.com">link</a>.</p></div>
+    </details>
+    
+    
+  </section>
+
+  <!-- ALL COMPETITORS TAB -->
+  <section data-panel="all" class="hidden space-y-6">
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+      <div class="p-6 border-b border-slate-100">
+        <h3 class="text-sm font-bold text-navy uppercase tracking-wider">Leaderboard by Volume</h3>
+        <p class="text-xs text-ink-soft mt-1">Total review count snapshot. Movement is the more useful signal.</p>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="bg-slate-50 text-xs uppercase tracking-wider text-ink-soft">
+            <tr>
+              <th class="text-left px-4 py-3 font-semibold">#</th>
+              <th class="text-left px-4 py-3 font-semibold">Company</th>
+              <th class="text-right px-4 py-3 font-semibold">Total Reviews</th>
+              <th class="text-right px-4 py-3 font-semibold">Rating</th>
+              <th class="text-right px-4 py-3 font-semibold">7d</th>
+              <th class="text-right px-4 py-3 font-semibold">30d</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">1</td>
+              <td class="px-4 py-3 font-medium text-navy">Amos Exteriors</td>
+              <td class="px-4 py-3 text-right stat-num">3,037</td>
+              <td class="px-4 py-3 text-right">4.9</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+0</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+0</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">2</td>
+              <td class="px-4 py-3 font-medium text-navy">Bone Dry Roofing</td>
+              <td class="px-4 py-3 text-right stat-num">2,409</td>
+              <td class="px-4 py-3 text-right">4.8</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+9</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+41</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">3</td>
+              <td class="px-4 py-3 font-medium text-navy">Bone Dry Roofing (HQ)</td>
+              <td class="px-4 py-3 text-right stat-num">2,409</td>
+              <td class="px-4 py-3 text-right">4.8</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+9</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+41</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">4</td>
+              <td class="px-4 py-3 font-medium text-navy">Indy Roof & Restoration</td>
+              <td class="px-4 py-3 text-right stat-num">2,149</td>
+              <td class="px-4 py-3 text-right">4.9</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+22</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+77</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">5</td>
+              <td class="px-4 py-3 font-medium text-navy">Big Boy's Construction</td>
+              <td class="px-4 py-3 text-right stat-num">844</td>
+              <td class="px-4 py-3 text-right">4.9</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+0</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+25</td>
+            </tr>
+            
+            <tr class="bg-accent-green/5 border-l-4 border-l-accent-green hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">6</td>
+              <td class="px-4 py-3 font-medium text-navy">Raptor Roofing</td>
+              <td class="px-4 py-3 text-right stat-num">664</td>
+              <td class="px-4 py-3 text-right">5.0</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+2</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+12</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">7</td>
+              <td class="px-4 py-3 font-medium text-navy">Trojan Roofing</td>
+              <td class="px-4 py-3 text-right stat-num">643</td>
+              <td class="px-4 py-3 text-right">4.9</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+0</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+2</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">8</td>
+              <td class="px-4 py-3 font-medium text-navy">Rees Restoration</td>
+              <td class="px-4 py-3 text-right stat-num">579</td>
+              <td class="px-4 py-3 text-right">4.7</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+2</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+6</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">9</td>
+              <td class="px-4 py-3 font-medium text-navy">Cox Roofing</td>
+              <td class="px-4 py-3 text-right stat-num">503</td>
+              <td class="px-4 py-3 text-right">4.8</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+2</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+7</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">10</td>
+              <td class="px-4 py-3 font-medium text-navy">Indy Rooftops - Roofing Replacement Contractor</td>
+              <td class="px-4 py-3 text-right stat-num">481</td>
+              <td class="px-4 py-3 text-right">5.0</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+14</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+47</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">11</td>
+              <td class="px-4 py-3 font-medium text-navy">Indy Rooftops</td>
+              <td class="px-4 py-3 text-right stat-num">481</td>
+              <td class="px-4 py-3 text-right">5.0</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+14</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+47</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">12</td>
+              <td class="px-4 py-3 font-medium text-navy">Stay Dry Roofing</td>
+              <td class="px-4 py-3 text-right stat-num">421</td>
+              <td class="px-4 py-3 text-right">4.9</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+0</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+2</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">13</td>
+              <td class="px-4 py-3 font-medium text-navy">Erie Home</td>
+              <td class="px-4 py-3 text-right stat-num">274</td>
+              <td class="px-4 py-3 text-right">4.6</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+3</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+7</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">14</td>
+              <td class="px-4 py-3 font-medium text-navy">AmeriPro Roofing</td>
+              <td class="px-4 py-3 text-right stat-num">257</td>
+              <td class="px-4 py-3 text-right">4.5</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+1</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+2</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">15</td>
+              <td class="px-4 py-3 font-medium text-navy">OpenBox Roofing</td>
+              <td class="px-4 py-3 text-right stat-num">232</td>
+              <td class="px-4 py-3 text-right">5.0</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+1</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+7</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">16</td>
+              <td class="px-4 py-3 font-medium text-navy">Universal Roofing & Exteriors</td>
+              <td class="px-4 py-3 text-right stat-num">222</td>
+              <td class="px-4 py-3 text-right">4.6</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+0</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+0</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">17</td>
+              <td class="px-4 py-3 font-medium text-navy">Indianapolis Roofing LLC</td>
+              <td class="px-4 py-3 text-right stat-num">142</td>
+              <td class="px-4 py-3 text-right">4.9</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+0</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+1</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">18</td>
+              <td class="px-4 py-3 font-medium text-navy">Honest Abe Roofing Indianapolis</td>
+              <td class="px-4 py-3 text-right stat-num">132</td>
+              <td class="px-4 py-3 text-right">4.9</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+1</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+6</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">19</td>
+              <td class="px-4 py-3 font-medium text-navy">Two Brothers Roofing Inc</td>
+              <td class="px-4 py-3 text-right stat-num">92</td>
+              <td class="px-4 py-3 text-right">4.8</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+1</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+9</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">20</td>
+              <td class="px-4 py-3 font-medium text-navy">MSRC - Indianapolis</td>
+              <td class="px-4 py-3 text-right stat-num">77</td>
+              <td class="px-4 py-3 text-right">4.9</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+2</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+6</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">21</td>
+              <td class="px-4 py-3 font-medium text-navy">Metal Roofing Indianapolis</td>
+              <td class="px-4 py-3 text-right stat-num">65</td>
+              <td class="px-4 py-3 text-right">5.0</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+0</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+0</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">22</td>
+              <td class="px-4 py-3 font-medium text-navy">Mighty Dog Roofing Indianapolis</td>
+              <td class="px-4 py-3 text-right stat-num">62</td>
+              <td class="px-4 py-3 text-right">4.9</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+0</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+0</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">23</td>
+              <td class="px-4 py-3 font-medium text-navy">A1 Roofing Indiana</td>
+              <td class="px-4 py-3 text-right stat-num">44</td>
+              <td class="px-4 py-3 text-right">4.8</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+0</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+0</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">24</td>
+              <td class="px-4 py-3 font-medium text-navy">Commercial Roofing Indianapolis</td>
+              <td class="px-4 py-3 text-right stat-num">44</td>
+              <td class="px-4 py-3 text-right">4.9</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+0</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+0</td>
+            </tr>
+            
+            <tr class=" hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-ink-soft">25</td>
+              <td class="px-4 py-3 font-medium text-navy">Residential Roofing Indianapolis</td>
+              <td class="px-4 py-3 text-right stat-num">38</td>
+              <td class="px-4 py-3 text-right">4.9</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+0</td>
+              <td class="px-4 py-3 text-right text-ink-soft">+0</td>
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="max-w-6xl mx-auto px-5 sm:px-8 py-10 mt-8 border-t border-slate-200 text-xs text-ink-soft">
+  <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <div>
+      <div class="font-semibold text-navy">Raptor Roofing | Review Digest</div>
+      <div>5145 S. Meridian St., Suite B · Indianapolis, IN 46217 · 317.886.0696</div>
+    </div>
+    <div class="text-right">
+      <div>Generated April 25, 2026</div>
+      <div>Refreshed Tuesdays and Thursdays at 7:30am Eastern</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// === Tab switching ===
+const tabs = document.querySelectorAll('.tab-btn');
+const panels = document.querySelectorAll('[data-panel]');
+function showTab(name) {
+  tabs.forEach(t => {
+    if (t.dataset.tab === name) { t.classList.add('tab-active', 'border-accent-green', 'text-navy'); t.classList.remove('text-ink-soft'); }
+    else { t.classList.remove('tab-active', 'border-accent-green', 'text-navy'); t.classList.add('text-ink-soft'); }
+  });
+  panels.forEach(p => {
+    p.classList.toggle('hidden', p.dataset.panel !== name);
+  });
+}
+tabs.forEach(t => t.addEventListener('click', () => showTab(t.dataset.tab)));
+showTab('overview');
+
+// === Scroll-fade animation ===
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.scroll-fade').forEach(el => observer.observe(el));
+
+// === Count-up hero stats ===
+function countUp(el) {
+  const target = parseInt(el.dataset.count, 10);
+  if (!Number.isFinite(target)) return;
+  const duration = 900;
+  const start = performance.now();
+  const prefix = el.textContent.startsWith('+') ? '+' : '';
+  function step(now) {
+    const t = Math.min(1, (now - start) / duration);
+    const eased = 1 - Math.pow(1 - t, 3);
+    el.textContent = prefix + Math.round(target * eased).toLocaleString();
+    if (t < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+document.querySelectorAll('[data-count]').forEach(countUp);
+
+// === Charts ===
+const DATA = {"gainers": [{"gain_7d": 22, "is_raptor": false, "name": "Indy Roof \u0026 Restoration"}, {"gain_7d": 14, "is_raptor": false, "name": "Indy Rooftops - Roofing Replacement Contractor"}, {"gain_7d": 14, "is_raptor": false, "name": "Indy Rooftops"}, {"gain_7d": 9, "is_raptor": false, "name": "Bone Dry Roofing"}, {"gain_7d": 9, "is_raptor": false, "name": "Bone Dry Roofing (HQ)"}, {"gain_7d": 3, "is_raptor": false, "name": "Erie Home"}, {"gain_7d": 2, "is_raptor": true, "name": "Raptor Roofing"}, {"gain_7d": 2, "is_raptor": false, "name": "Rees Restoration"}, {"gain_7d": 2, "is_raptor": false, "name": "Cox Roofing"}, {"gain_7d": 2, "is_raptor": false, "name": "MSRC - Indianapolis"}, {"gain_7d": 1, "is_raptor": false, "name": "AmeriPro Roofing"}, {"gain_7d": 1, "is_raptor": false, "name": "OpenBox Roofing"}], "response": [{"is_raptor": false, "name": "Bone Dry Roofing", "rate": 97}, {"is_raptor": false, "name": "Bone Dry Roofing (HQ)", "rate": 97}, {"is_raptor": false, "name": "Indy Roof \u0026 Restoration", "rate": 94}, {"is_raptor": false, "name": "Big Boy\u0027s Construction", "rate": 100}, {"is_raptor": true, "name": "Raptor Roofing", "rate": 97}, {"is_raptor": false, "name": "Trojan Roofing", "rate": 6}, {"is_raptor": false, "name": "Rees Restoration", "rate": 46}, {"is_raptor": false, "name": "Cox Roofing", "rate": 91}, {"is_raptor": false, "name": "Indy Rooftops - Roofing Replacement Contractor", "rate": 38}, {"is_raptor": false, "name": "Indy Rooftops", "rate": 38}, {"is_raptor": false, "name": "Stay Dry Roofing", "rate": 81}, {"is_raptor": false, "name": "Erie Home", "rate": 97}], "scatter": [{"gain_7d": 0, "is_raptor": false, "name": "Amos Exteriors", "total": 3037}, {"gain_7d": 9, "is_raptor": false, "name": "Bone Dry Roofing", "total": 2409}, {"gain_7d": 9, "is_raptor": false, "name": "Bone Dry Roofing (HQ)", "total": 2409}, {"gain_7d": 22, "is_raptor": false, "name": "Indy Roof \u0026 Restoration", "total": 2149}, {"gain_7d": 0, "is_raptor": false, "name": "Big Boy\u0027s Construction", "total": 844}, {"gain_7d": 2, "is_raptor": true, "name": "Raptor Roofing", "total": 664}, {"gain_7d": 0, "is_raptor": false, "name": "Trojan Roofing", "total": 643}, {"gain_7d": 2, "is_raptor": false, "name": "Rees Restoration", "total": 579}, {"gain_7d": 2, "is_raptor": false, "name": "Cox Roofing", "total": 503}, {"gain_7d": 14, "is_raptor": false, "name": "Indy Rooftops - Roofing Replacement Contractor", "total": 481}, {"gain_7d": 14, "is_raptor": false, "name": "Indy Rooftops", "total": 481}, {"gain_7d": 0, "is_raptor": false, "name": "Stay Dry Roofing", "total": 421}, {"gain_7d": 3, "is_raptor": false, "name": "Erie Home", "total": 274}, {"gain_7d": 1, "is_raptor": false, "name": "AmeriPro Roofing", "total": 257}, {"gain_7d": 1, "is_raptor": false, "name": "OpenBox Roofing", "total": 232}, {"gain_7d": 0, "is_raptor": false, "name": "Universal Roofing \u0026 Exteriors", "total": 222}, {"gain_7d": 0, "is_raptor": false, "name": "Indianapolis Roofing LLC", "total": 142}, {"gain_7d": 1, "is_raptor": false, "name": "Honest Abe Roofing Indianapolis", "total": 132}, {"gain_7d": 1, "is_raptor": false, "name": "Two Brothers Roofing Inc", "total": 92}, {"gain_7d": 2, "is_raptor": false, "name": "MSRC - Indianapolis", "total": 77}], "share": [{"gain": 22, "is_raptor": false, "name": "Indy Roof \u0026 Restoration"}, {"gain": 14, "is_raptor": false, "name": "Indy Rooftops - Roofing Replacement Contractor"}, {"gain": 14, "is_raptor": false, "name": "Indy Rooftops"}, {"gain": 9, "is_raptor": false, "name": "Bone Dry Roofing"}, {"gain": 9, "is_raptor": false, "name": "Bone Dry Roofing (HQ)"}, {"gain": 3, "is_raptor": false, "name": "Erie Home"}, {"gain": 2, "is_raptor": true, "name": "Raptor Roofing"}, {"gain": 10, "is_raptor": false, "name": "Others"}]};
+const NAVY = '#172e55';
+const GREEN = '#3ae20a';
+const BLUE = '#1ac6ff';
+const SOFT = '#e3e7ee';
+
+Chart.defaults.font.family = "'Ouma Latin VF', 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif";
+Chart.defaults.color = '#4a5568';
+Chart.defaults.borderColor = SOFT;
+
+// Gainers bar
+new Chart(document.getElementById('gainers-chart'), {
+  type: 'bar',
+  data: {
+    labels: DATA.gainers.map(g => g.name),
+    datasets: [{
+      data: DATA.gainers.map(g => g.gain_7d),
+      backgroundColor: DATA.gainers.map(g => g.is_raptor ? GREEN : NAVY),
+      borderRadius: 6,
+    }],
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { display: false } },
+      y: { beginAtZero: true, grid: { color: SOFT }, ticks: { precision: 0 } },
+    },
+  },
+});
+
+// Velocity-vs-volume scatter
+new Chart(document.getElementById('scatter-chart'), {
+  type: 'scatter',
+  data: {
+    datasets: DATA.scatter.map(p => ({
+      label: p.name,
+      data: [{ x: p.total, y: p.gain_7d, r: 6 + (p.is_raptor ? 4 : 0) }],
+      backgroundColor: p.is_raptor ? GREEN : (p.gain_7d > 5 ? BLUE : NAVY),
+      pointRadius: 6 + (p.is_raptor ? 4 : 0),
+      pointHoverRadius: 10,
+    })),
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.parsed.x.toLocaleString()} total, +${ctx.parsed.y} this week` },
+      },
+    },
+    scales: {
+      x: { type: 'logarithmic', title: { display: true, text: 'Total Reviews (log)' }, grid: { color: SOFT } },
+      y: { beginAtZero: true, title: { display: true, text: 'Reviews this week' }, grid: { color: SOFT } },
+    },
+  },
+});
+
+// Response rate horizontal bar
+new Chart(document.getElementById('response-chart'), {
+  type: 'bar',
+  data: {
+    labels: DATA.response.map(r => r.name),
+    datasets: [{
+      data: DATA.response.map(r => r.rate),
+      backgroundColor: DATA.response.map(r => r.is_raptor ? GREEN : NAVY),
+      borderRadius: 4,
+    }],
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: (ctx) => `${ctx.parsed.x}%` } } },
+    scales: {
+      x: { beginAtZero: true, max: 100, grid: { color: SOFT }, ticks: { callback: (v) => v + '%' } },
+      y: { grid: { display: false } },
+    },
+  },
+});
+
+// Share donut
+new Chart(document.getElementById('share-chart'), {
+  type: 'doughnut',
+  data: {
+    labels: DATA.share.map(s => s.name),
+    datasets: [{
+      data: DATA.share.map(s => s.gain),
+      backgroundColor: DATA.share.map((s, i) => s.is_raptor ? GREEN : [NAVY, BLUE, '#2a4880', '#6b7d99', '#a3b1c7', '#d4dbe6'][i % 6]),
+      borderWidth: 2,
+      borderColor: '#fff',
+    }],
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { position: 'right', labels: { boxWidth: 12, font: { size: 11 } } } },
+    cutout: '65%',
+  },
+});
+</script>
+</body>
+</html>

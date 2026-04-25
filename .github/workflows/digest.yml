@@ -2,16 +2,24 @@ name: Weekly Digest
 
 on:
   schedule:
-    # Friday 8:00 AM Eastern. 13:00 UTC during EDT, 13:00 runs at 9am during EST.
-    # Acceptable tradeoff for v1. Upgrade to dual cron if strict 8am year-round is needed.
-    - cron: "0 12 * * 5"
+    # Tuesday and Thursday at 7:30am Eastern (11:30 UTC during EDT, 12:30 UTC during EST).
+    # Single cron at 11:30 UTC: fires at 7:30am EDT (Mar-Nov), 6:30am EST (Nov-Mar).
+    # Dual cron handles both windows so the inbox-arrival time stays at 7:30am year round.
+    - cron: "30 11 * * 2,4"  # EDT window (Mar-Nov): 7:30am Eastern
+    - cron: "30 12 * * 2,4"  # EST window (Nov-Mar): 7:30am Eastern
   workflow_dispatch:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
-  run:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -32,14 +40,31 @@ jobs:
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          DASHBOARD_URL: "https://camroofsindy.github.io/raptor-review-digest/"
         run: python main.py
 
-      - name: Commit updated history
+      - name: Commit updated history and dashboard
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/history.json
+          git add data/history.json docs/
           if ! git diff --staged --quiet; then
-            git commit -m "Update digest history $(date -u +%Y-%m-%d)"
+            git commit -m "Refresh digest $(date -u +%Y-%m-%d) [skip ci]"
             git push
           fi
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
