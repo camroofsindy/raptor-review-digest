@@ -394,6 +394,53 @@ NO EMOJIS. NO eagle imagery. Plain professional memo. Bold the most important se
     return _extract_text(response)
 
 
+def ai_review_themes(client, biz):
+    """Extract praise + complaint themes from a competitor's recent review samples.
+    Returns a dict {praise: [{theme, weight}, ...], complaints: [{theme, weight}, ...]}.
+    Used for the keyword cloud on the competitor sub-page."""
+    samples = biz.get("review_samples") or []
+    if not samples or len(samples) < 3:
+        return None
+    joined = "\n\n".join(f"- {s}" for s in samples[:15])
+    prompt = f"""You are extracting customer-language themes from real Google reviews of "{biz['name']}", an Indianapolis roofing competitor. Cameron uses these themes to find sales-call wedges and copy ideas.
+
+Recent reviews (verbatim, customer voice):
+
+{joined}
+
+Output ONLY valid JSON in this exact shape (no other prose, no markdown fences):
+
+{{
+  "praise": [
+    {{"theme": "short 1-3 word phrase customers actually used", "weight": 1-10}},
+    ...up to 8 items
+  ],
+  "complaints": [
+    {{"theme": "short 1-3 word phrase customers actually used", "weight": 1-10}},
+    ...up to 5 items
+  ]
+}}
+
+Rules:
+- Themes should be short (1-3 words), in customer voice (e.g. "fast cleanup", "insurance help", "missed appointments")
+- Weight 10 = appears in many reviews; weight 1 = appears once
+- If reviews are uniformly positive, complaints array can be empty []
+- NO emojis, NO eagle imagery, JSON only"""
+    try:
+        response = client.messages.create(
+            model=ANTHROPIC_MODEL_RESEARCH,
+            max_tokens=1500,
+            messages=[{"role": "user", "content": prompt}],
+        )
+        text = _extract_text(response)
+        # Strip code fences if present
+        text = re.sub(r"^```(?:json)?\s*|\s*```$", "", text.strip(), flags=re.MULTILINE)
+        return json.loads(text)
+    except Exception as e:
+        print(f"  themes error: {e}", file=sys.stderr)
+        return None
+
+
 def _slug(name):
     """URL-safe slug from a competitor name."""
     s = re.sub(r"[^a-z0-9]+", "-", name.lower())
@@ -408,14 +455,30 @@ def render_competitor_pages(businesses, raptor, market_news, run_date_str):
     by_volume = sorted(businesses, key=lambda b: b["review_count"], reverse=True)
     pages_dir = DOCS_DIR / "competitor"
     pages_dir.mkdir(parents=True, exist_ok=True)
+    # Normalize to avoid template errors on competitors that didn't get timeline-scraped.
+    for biz in by_volume:
+        biz.setdefault("reviews_7d", None)
+        biz.setdefault("reviews_30d", None)
+        biz.setdefault("reviews_90d", None)
+        biz.setdefault("response_rate", None)
+        biz.setdefault("address", None)
+    raptor_norm = raptor or {}
+    if raptor_norm:
+        raptor_norm.setdefault("reviews_7d", None)
+        raptor_norm.setdefault("reviews_30d", None)
+        raptor_norm.setdefault("reviews_90d", None)
+        raptor_norm.setdefault("response_rate", None)
+        raptor_norm.setdefault("rating", None)
+
     for i, biz in enumerate(by_volume[:50], 1):
         slug = _slug(biz["name"])
         biz["_slug"] = slug
         page_dir = pages_dir / slug
         page_dir.mkdir(parents=True, exist_ok=True)
         profile = biz.get("_deep_profile")
-        html = template.render(biz=biz, raptor=raptor or {}, rank=i, profile=profile,
-                                run_date=run_date_str)
+        themes = biz.get("_review_themes")
+        html = template.render(biz=biz, raptor=raptor_norm, rank=i, profile=profile,
+                                themes=themes, run_date=run_date_str)
         (page_dir / "index.html").write_text(html)
 
 
@@ -959,8 +1022,8 @@ def scrape_review_timeline(page, href):
         for _ in range(22):
             page.evaluate(scroll_target_js)
             page.wait_for_timeout(450)
-        # Extract review cards via JS. Use data-review-id as the canonical wrapper to
-        # avoid double-counting when a review has nested divs matching other selectors.
+        # Extract review cards. Capture date, owner-response flag, and review text
+        # (truncated). Review text feeds the keyword-cloud / theme-mining pipeline.
         cards_data = page.evaluate("""() => {
             const cards = Array.from(document.querySelectorAll('[data-review-id]'));
             const seen = new Set();
@@ -971,15 +1034,22 @@ def scrape_review_timeline(page, href):
                 seen.add(id);
                 const dateEl = c.querySelector('.rsqaWe, .xRkPPb, [class*="rsqaWe"]');
                 const dateText = dateEl ? dateEl.innerText.trim() : '';
-                const txt = c.innerText || '';
-                const hasResponse = /Response from the owner/i.test(txt);
-                if (dateText) out.push({date: dateText, hasResponse});
+                // Review body text element classes Google uses
+                const textEl = c.querySelector('.wiI7pd, .MyEned, [class*="wiI7pd"]');
+                let reviewText = textEl ? textEl.innerText.trim() : '';
+                // Strip any "(Translated by Google)" / response section
+                const respIdx = c.innerText.indexOf('Response from the owner');
+                const fullText = c.innerText || '';
+                const hasResponse = /Response from the owner/i.test(fullText);
+                if (reviewText.length > 280) reviewText = reviewText.slice(0, 280) + '...';
+                if (dateText) out.push({date: dateText, hasResponse, text: reviewText});
             }
             return out;
         }""")
         if not cards_data:
             return timeline
         timeline["reviews_loaded"] = len(cards_data)
+        timeline["review_samples"] = []
         responses = 0
         for c in cards_data:
             days = _parse_relative_days(c["date"])
@@ -993,6 +1063,10 @@ def scrape_review_timeline(page, href):
                 timeline["reviews_30d"] += 1
             if days <= 90:
                 timeline["reviews_90d"] += 1
+            # Save first 15 review text snippets for theme mining (only ones with text).
+            txt = (c.get("text") or "").strip()
+            if txt and len(timeline["review_samples"]) < 15:
+                timeline["review_samples"].append(txt)
         timeline["response_rate"] = round(responses / len(cards_data), 2)
     except Exception as e:
         print(f"    timeline error: {e}", file=sys.stderr)
@@ -1597,6 +1671,16 @@ def main():
                     new_profile_dates[key] = now_iso
                 except Exception as e:
                     print(f"  profile for {biz['name']} failed: {e}", file=sys.stderr)
+                # Themes: only if we have review_samples and either no cached themes
+                # or themes are stale (refresh on the same 14-day cycle).
+                if biz.get("review_samples"):
+                    try:
+                        print(f"AI: review themes for {biz['name']}...")
+                        themes = ai_review_themes(client, biz)
+                        if themes:
+                            biz["_review_themes"] = themes
+                    except Exception as e:
+                        print(f"  themes for {biz['name']} failed: {e}", file=sys.stderr)
             snapshot["profile_dates"] = new_profile_dates
 
             # Overview summary — one paragraph per tab. Done LAST so it can reference
