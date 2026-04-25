@@ -942,6 +942,30 @@ def scrape_google_maps(query, top_n=20):
         if not biz.get("place_id"):
             biz["place_id"] = name_to_pid.get(_norm(biz["name"]))
 
+    # Multi-location label disambiguation: when the same brand appears in multiple
+    # entries (different place_ids but same name), append a city/area label derived
+    # from each one's scraped address. Bone Dry HQ vs Bone Dry Greenwood, etc.
+    by_name = {}
+    for biz in results:
+        n = _norm(biz["name"])
+        by_name.setdefault(n, []).append(biz)
+    for n, group in by_name.items():
+        if len(group) <= 1:
+            continue
+        # Sort so the entry with the highest review count gets "(HQ)" if no city.
+        group.sort(key=lambda b: b["review_count"], reverse=True)
+        for i, biz in enumerate(group):
+            label = None
+            addr = biz.get("address") or ""
+            city_match = re.search(r",\s*([A-Z][a-zA-Z]+)", addr)
+            if city_match:
+                label = city_match.group(1)
+            if not label:
+                label = "HQ" if i == 0 else f"Loc {i + 1}"
+            # Avoid double-tagging if name already contains a parenthetical
+            if "(" not in biz["name"]:
+                biz["name"] = f"{biz['name']} ({label})"
+
     # Dedup by place_id (stable) when available, falling back to normalized name.
     # Keep whichever record has the higher review count (pinned searches often find HQ).
     merged = {}
@@ -1577,6 +1601,17 @@ def main():
     seo_aeo_brief = None
     overview_summary = None
     red_team = None
+    # Day-of-week aware AI scope to control credit burn.
+    # Tuesdays: lean run (news, risers, actions, profiles, themes). Skip SEO/AEO and red-team.
+    # Thursdays: full run (everything). Manual triggers default to Thursday-style unless
+    # AI_LEAN=1 is passed. This roughly halves Tuesday cost.
+    is_thursday = datetime.now(timezone.utc).weekday() == 3
+    is_lean = (os.getenv("AI_LEAN") == "1") or (
+        not is_thursday and os.getenv("AI_FULL") != "1"
+        and os.getenv("GITHUB_EVENT_NAME") == "schedule"
+    )
+    if is_lean:
+        print("AI scope: LEAN (skipping SEO/AEO + red-team to conserve credits)")
     if not scrape_only:
         client = _anthropic_client()
         if client is None:
@@ -1616,26 +1651,32 @@ def main():
             for rp in rising_profiles:
                 snapshot["profiled_this_week"].append(rp["competitor"]["name"])
 
-            # SEO/AEO brief
-            try:
-                print("AI: generating SEO/AEO brief...")
-                raptor_for_seo = next((b for b in businesses if "raptor" in b["name"].lower()), None)
-                seo_aeo_brief = ai_seo_aeo_brief(client, businesses, raptor_for_seo)
-            except Exception as e:
-                print(f"  SEO/AEO brief failed: {e}", file=sys.stderr)
+            # SEO/AEO brief — Thursday-only on lean cycles
+            if not is_lean:
+                try:
+                    print("AI: generating SEO/AEO brief...")
+                    raptor_for_seo = next((b for b in businesses if "raptor" in b["name"].lower()), None)
+                    seo_aeo_brief = ai_seo_aeo_brief(client, businesses, raptor_for_seo)
+                except Exception as e:
+                    print(f"  SEO/AEO brief failed: {e}", file=sys.stderr)
+            else:
+                print("AI: skipping SEO/AEO brief (lean cycle)")
 
-            # Red-team analysis (rotate through top competitors over time, one per run).
-            try:
-                top_non_raptor = [b for b in sorted(businesses, key=lambda b: b["review_count"], reverse=True)
-                                   if "raptor" not in b["name"].lower()]
-                rotation_idx = len(history.get("snapshots", [])) % min(5, len(top_non_raptor))
-                target = top_non_raptor[rotation_idx] if top_non_raptor else None
-                if target:
-                    print(f"AI: red-team analysis as {target['name']}'s CMO...")
-                    raptor_for_rt = next((b for b in businesses if "raptor" in b["name"].lower()), None)
-                    red_team = {"competitor": target, "memo": ai_red_team(client, target, raptor_for_rt)}
-            except Exception as e:
-                print(f"  red-team failed: {e}", file=sys.stderr)
+            # Red-team analysis — Thursday-only on lean cycles
+            if not is_lean:
+                try:
+                    top_non_raptor = [b for b in sorted(businesses, key=lambda b: b["review_count"], reverse=True)
+                                       if "raptor" not in b["name"].lower()]
+                    rotation_idx = len(history.get("snapshots", [])) % min(5, len(top_non_raptor))
+                    target = top_non_raptor[rotation_idx] if top_non_raptor else None
+                    if target:
+                        print(f"AI: red-team analysis as {target['name']}'s CMO...")
+                        raptor_for_rt = next((b for b in businesses if "raptor" in b["name"].lower()), None)
+                        red_team = {"competitor": target, "memo": ai_red_team(client, target, raptor_for_rt)}
+                except Exception as e:
+                    print(f"  red-team failed: {e}", file=sys.stderr)
+            else:
+                print("AI: skipping red-team (lean cycle)")
 
             # Synthesis
             try:
@@ -1659,7 +1700,9 @@ def main():
                     break
             now_iso = datetime.now(timezone.utc).date().isoformat()
             new_profile_dates = dict(prev_profile_dates)
-            stale_cutoff = (datetime.now(timezone.utc) - timedelta(days=14)).date().isoformat()
+            # 21-day cache window for deep profiles (was 14). Reduces credit burn ~33%
+            # on this category of calls without losing meaningful freshness.
+            stale_cutoff = (datetime.now(timezone.utc) - timedelta(days=21)).date().isoformat()
             for biz in top_for_profile:
                 key = biz.get("place_id") or _norm(biz["name"])
                 last_done = prev_profile_dates.get(key)
