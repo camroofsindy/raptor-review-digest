@@ -12,287 +12,185 @@
 tailwind.config = {
   theme: { extend: {
     colors: {
-      navy: { DEFAULT: '#172e55', deep: '#0d1d3a', light: '#2a4880' },
+      navy: { DEFAULT: '#172e55', deep: '#0d1d3a', darker: '#08142a', light: '#2a4880' },
       accent: { green: '#3ae20a', blue: '#1ac6ff' },
-      ink: { DEFAULT: '#172e55', soft: '#4a5568', light: '#9aa5b8' },
+      ink: { soft: '#a3b1c7', mute: '#6b7d99' },
     },
     fontFamily: { sans: ['Ouma Latin VF', 'Inter', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'] },
   }},
 };
 </script>
 <style>
-  body { font-feature-settings: "ss01"; }
+  body { font-feature-settings: "ss01"; background-color: #08142a; color: #ffffff; }
   .stat-num { font-variant-numeric: tabular-nums; }
-  .ai-prose h1, .ai-prose h2, .ai-prose h3, .ai-prose h4 { color: #172e55; font-weight: 700; margin: 1em 0 0.4em; line-height: 1.2; }
-  .ai-prose h1 { font-size: 1.25rem; } .ai-prose h2 { font-size: 1.125rem; } .ai-prose h3 { font-size: 1rem; }
-  .ai-prose h4 { font-size: 0.95rem; color: #4a5568; text-transform: uppercase; letter-spacing: 0.04em; }
-  .ai-prose p { margin: 0.6em 0; } .ai-prose strong { color: #172e55; font-weight: 700; }
-  .ai-prose em { color: #4a5568; }
-  .ai-prose a { color: #1ac6ff; border-bottom: 1px solid rgba(26, 198, 255, 0.3); }
-  .ai-prose ul, .ai-prose ol { margin: 0.6em 0; padding-left: 1.4em; }
-  .ai-prose li { margin: 0.3em 0; }
-  .ai-prose hr { border: none; border-top: 1px solid #e3e7ee; margin: 1em 0; }
-  .gradient-text { background: linear-gradient(135deg, #3ae20a 0%, #1ac6ff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-  .delta-up { color: #059669; font-weight: 700; }
   .scroll-fade { opacity: 0; transform: translateY(20px); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
   .scroll-fade.visible { opacity: 1; transform: translateY(0); }
+  .panel {
+    background: linear-gradient(180deg, rgba(22, 46, 85, 0.65) 0%, rgba(13, 29, 58, 0.85) 100%);
+    border: 1px solid rgba(58, 226, 10, 0.08);
+    border-radius: 16px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    position: relative;
+    overflow: hidden;
+  }
+  .panel::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(58, 226, 10, 0.3), transparent);
+  }
+  .panel-hero {
+    background: linear-gradient(135deg, rgba(22, 46, 85, 0.95) 0%, rgba(13, 29, 58, 0.95) 100%);
+    border: 1px solid rgba(58, 226, 10, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 8px 40px rgba(58, 226, 10, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+  .ai-prose { color: rgba(255, 255, 255, 0.92); }
+  .ai-prose h1, .ai-prose h2, .ai-prose h3, .ai-prose h4 { color: #ffffff; font-weight: 700; margin: 1.2em 0 0.5em; line-height: 1.25; }
+  .ai-prose h1 { font-size: 1.4rem; color: #3ae20a; }
+  .ai-prose h2 { font-size: 1.15rem; color: #3ae20a; padding-top: 0.6em; border-top: 1px solid rgba(58, 226, 10, 0.2); }
+  .ai-prose h2:first-child { border-top: none; padding-top: 0; }
+  .ai-prose h3 { font-size: 1rem; color: #1ac6ff; }
+  .ai-prose h4 { font-size: 0.85rem; color: #a3b1c7; text-transform: uppercase; letter-spacing: 0.05em; }
+  .ai-prose p { margin: 0.7em 0; line-height: 1.65; }
+  .ai-prose strong { color: #ffffff; font-weight: 700; }
+  .ai-prose em { color: #a3b1c7; }
+  .ai-prose a { color: #1ac6ff; border-bottom: 1px solid rgba(26, 198, 255, 0.4); }
+  .ai-prose a:hover { color: #ffffff; }
+  .ai-prose ul, .ai-prose ol { padding-left: 1.4em; margin: 0.6em 0; }
+  .ai-prose li { margin: 0.4em 0; line-height: 1.6; }
+  .ai-prose hr { border: none; border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 1.5em 0; }
+  .gradient-text { background: linear-gradient(135deg, #3ae20a 0%, #1ac6ff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 </style>
 </head>
-<body class="bg-slate-50 text-ink antialiased min-h-screen">
+<body class="antialiased min-h-screen">
 
-<!-- Hero -->
-<section class="bg-gradient-to-br from-navy via-navy-deep to-navy text-white relative overflow-hidden">
-  <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 20% 50%, #3ae20a 0%, transparent 40%), radial-gradient(circle at 80% 30%, #1ac6ff 0%, transparent 35%);"></div>
-  <div class="max-w-5xl mx-auto px-5 sm:px-8 py-8 relative z-10">
-    <a href="../../" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-accent-green hover:text-accent-blue mb-6 transition-colors">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-      Back to dashboard
-    </a>
+<div class="fixed inset-0 pointer-events-none" style="background-image: radial-gradient(circle at 15% 0%, rgba(58, 226, 10, 0.06) 0%, transparent 40%), radial-gradient(circle at 85% 50%, rgba(26, 198, 255, 0.05) 0%, transparent 35%);"></div>
+
+<section class="relative z-10">
+  <div class="max-w-5xl mx-auto px-5 sm:px-8 pt-8 pb-10">
+    <div class="flex items-center justify-between mb-6 flex-wrap gap-4">
+      <a href="../../" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-accent-green hover:text-accent-blue transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        Back to dashboard
+      </a>
+      <img src="../../assets/logo.webp" alt="Raptor Roofing" class="h-10 w-auto" onerror="this.style.display='none'">
+    </div>
     <div class="flex items-start justify-between flex-wrap gap-4 mb-4">
       <div>
         <div class="text-xs uppercase tracking-widest text-accent-green font-bold mb-1">Competitor Profile</div>
-        <h1 class="text-3xl sm:text-5xl font-bold tracking-tight">Indy Rooftops</h1>
+        <h1 class="text-3xl sm:text-5xl font-bold tracking-tight text-white">Indy Rooftops</h1>
         
       </div>
       <div class="text-right">
-        <div class="text-xs uppercase tracking-widest text-white/60">Volume Rank</div>
-        <div class="text-3xl font-bold gradient-text">#14</div>
+        <div class="text-xs uppercase tracking-widest text-ink-soft">Volume Rank</div>
+        <div class="text-3xl font-bold gradient-text">#10</div>
       </div>
     </div>
 
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8">
-      <div class="bg-white/10 backdrop-blur border border-accent-green/20 rounded-xl p-4">
-        <div class="text-2xl sm:text-3xl font-bold text-accent-green stat-num">482</div>
-        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">Total Reviews</div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-green">481</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Total Reviews</div>
       </div>
-      <div class="bg-white/10 backdrop-blur border border-accent-green/20 rounded-xl p-4">
-        <div class="text-2xl sm:text-3xl font-bold text-accent-green stat-num">5.0</div>
-        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">Star Rating</div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-green">5.0</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Star Rating</div>
       </div>
-      <div class="bg-white/10 backdrop-blur border border-accent-blue/30 rounded-xl p-4">
-        <div class="text-2xl sm:text-3xl font-bold text-accent-blue stat-num">+19</div>
-        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">This Week</div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-blue">+14</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">This Week</div>
       </div>
-      <div class="bg-white/10 backdrop-blur border border-accent-blue/30 rounded-xl p-4">
-        <div class="text-2xl sm:text-3xl font-bold text-accent-blue stat-num">+52</div>
-        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">Last 30 Days</div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-blue">+47</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Last 30 Days</div>
       </div>
+      
     </div>
 
-    <div class="mt-4 flex items-center gap-4 text-sm text-white/60 flex-wrap">
-      <span><span class="text-white font-semibold">33%</span> response rate</span>
-      <span>+<span class="text-white font-semibold">86</span> in last 90 days</span>
-      <span class="text-white/40">Refreshed April 25, 2026</span>
+    <div class="mt-4 flex items-center gap-4 text-sm text-ink-soft flex-wrap">
+      <span><span class="text-white font-semibold">38%</span> response rate</span>
+      <span>+<span class="text-white font-semibold">72</span> in last 90 days</span>
+      <span class="text-ink-mute">Refreshed April 25, 2026</span>
     </div>
   </div>
 </section>
 
-<main class="max-w-5xl mx-auto px-5 sm:px-8 py-8 space-y-6">
+<main class="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 py-8 space-y-6">
 
   
-  <div class="scroll-fade bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
-    <div class="flex items-center justify-between mb-4">
-      <h2 class="text-lg font-bold text-navy uppercase tracking-wider">Strategic Read</h2>
-      <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-slate-100 px-2 py-1 rounded">Live AI Research</span>
-    </div>
-    <div class="ai-prose text-sm sm:text-base"><p>Now I have sufficient data to compile the full brief. Let me produce it:</p>
-<hr />
-<h1>Competitive Intelligence Brief: Indy Rooftops</h1>
-<p><strong>For:</strong> Cameron Blakely, Raptor Roofing | <strong>Refreshed:</strong> Thursday, April 25, 2026<br />
-<strong>Competitor site:</strong> <a href="https://indyrooftops.com">indyrooftops.com</a> | <strong>Phone:</strong> (317) 617-3928</p>
-<hr />
-<h2><strong>1. Who They Are</strong></h2>
-<p>Indy Rooftops was established in 2022, co-founded by Mitchel Dotson and Cheryl Edens, originally started to create a roofing business for Kevin Dotson, who had been a roofing salesman at another local company for many years.</p>
-<p>It is a woman-owned business, blending personalized attention with the support of national companies and products.</p>
-<p>Based in Brownsburg, Indiana, it is a family-owned and operated roofing company</p>
-<p>with </p>
-<p>named service-area pages targeting Noblesville, Westfield, Carmel, Plainfield, Zionsville, Greenwood, Fishers, and Avon</p>
-<p>— directly overlapping Raptor's Greenwood home turf. Their differentiator pitch is a small-enough-to-care, large-enough-to-deliver model with a strong insurance-advocacy play.</p>
-<hr />
-<h2><strong>2. Estimated Scale</strong></h2>
-<p>ZoomInfo lists Indy Rooftops' corporate office at 4254 N Raceway Rd, Indianapolis, IN 46234, with 11–50 employees.</p>
-<p><strong>Confidence: medium</strong> (ZoomInfo ranges are broad; the company's "family-owned" messaging and 3-year age suggest the lower half of that band, likely 12–20 people including subcontracted crews). </p>
-<p>All full-time employees go through background checks, but the company also works with subcontracted roofing crews, with an in-house manager on-site for every job.</p>
-<p>Estimated annual revenue: <strong>$2M–$4M</strong> based on typical per-job ticket sizes ($10K–$18K) in the Indianapolis market and current review velocity. <strong>Confidence: low</strong> — no public financials available.</p>
-<hr />
-<h2><strong>3. Recent Hiring Signals</strong></h2>
-<p>No active job postings for Indy Rooftops were found on Indeed, LinkedIn, or ZipRecruiter as of April 25, 2026. </p>
-<p>Indeed hosts an Indy Rooftops company page but shows no current job listings.</p>
-<p>Their website has no careers section. This is a notable contrast to larger Indy-area competitors actively recruiting. <strong>Bottom line:</strong> No hiring signals in the last 30 days — they are not visibly scaling headcount or adding sales/ops leadership through public channels right now.</p>
-<hr />
-<h2><strong>4. Off-Google Presence</strong></h2>
-<ul>
-<li><strong>Yelp:</strong> </li>
-</ul>
-<p>Listed at 4254 N Raceway Rd, Indianapolis, IN 46234, updated February 2026</p>
-<p>with 42 reviews. Yelp rating not confirmed as 5.0 — this is a meaningful platform gap versus their 482 Google reviews. The 482-to-42 ratio signals heavy Google funneling.<br />
-- <strong>BBB:</strong> </p>
-<p>Indy Rooftops provides roofing services including roof replacement, repair, and maintenance, siding replacement, gutter installation, window replacement, soffit and fascia repair, and attic insulation; listed owner is Mitchel Dotson and CEO is Cheryl Edens.</p>
-<p>They are BBB-accredited. </p>
-<p>Even as a newer business, Indy Rooftops is already accredited by the BBB with an A+ rating.</p>
-<ul>
-<li><strong>HomeAdvisor/Angi:</strong> </li>
-</ul>
-<p>Their referral program is described as "topnotch" by reviewers</p>
-<p>, with active positive reviews on both platforms — a deliberate multi-platform strategy.<br />
-- <strong>Facebook:</strong> They reference Facebook on their About page as an active platform, but no Facebook Ad Library data was accessible in this sweep — worth Cameron checking directly at <a href="https://www.facebook.com/ads/library">facebook.com/ads/library</a> for active ad creative.<br />
-- <strong>Nextdoor:</strong> No verified Nextdoor business presence found. Opportunity gap.</p>
-<p><strong>Discrepancy flag:</strong> 482 Google reviews vs. ~42 Yelp reviews = 91% review concentration on Google. Classic funnel bottleneck — their customers are not being directed to Yelp, and any Yelp-first homeowner will find a thin profile.</p>
-<hr />
-<h2><strong>5. SEO and AEO Posture</strong></h2>
-<p>Indy Rooftops uses WordPress.org, PHP, and Google Font API</p>
-<p>— a standard templated build. </p>
-<p>They have blog content targeting queries like "top 10 qualities of the best roofing contractors" and "best roofers near me,"</p>
-<p>which is keyword-stuffed but generic. </p>
-<p>They have built out individual service-area landing pages for Noblesville, Carmel, Plainfield, Zionsville, Greenwood, Fishers, and Avon</p>
-<p>— a deliberate local SEO geo-targeting play. </p>
-<p>Third-party directories like Remodelmate cite Indy Rooftops as a top-rated roofing contractor in Indianapolis</p>
-<p>, giving them backlink diversity. However, no evidence was found of local press backlinks, schema markup references, or high-DA editorial coverage. Their site copyright footer still reads "2024" on several pages — a minor signal of slow content maintenance. Domain authority likely in the 15–25 range (estimated; full Ahrefs/Moz pull recommended).</p>
-<hr />
-<h2><strong>6. Generative Engine Visibility</strong></h2>
-<p>Indy Rooftops does appear in at least one AI-adjacent recommendation context: </p>
-<p>Yahoo Local's AI-curated "Best Roofers in Noblesville" roundup (March 2026) names Indy Rooftops as having "quickly made a name for itself in Noblesville and the surrounding Indianapolis area" as a local, family-owned company.</p>
-<p>Yahoo Local calls them their "top alternative" pick for Noblesville.</p>
-<p>Remodelmate's AI-generated "Best Roofers in Indianapolis" list names Indy Rooftops specifically, citing their 5-star rating, specialization in roofing, gutter services, waterproofing, and window supply, and "exceptional customer care."</p>
-<p><strong>However,</strong> no confirmed citations of Indy Rooftops were found in native ChatGPT, Claude, or Gemini outputs for "best roofers Indianapolis," "top roofing contractor near Greenwood Indiana," "roof replacement Carmel Indiana," or "roofing company Fishers Noblesville Zionsville." Raptor, with 664 reviews and stronger volume, currently has a better foundation for AEO citation — this is an active opportunity to press.</p>
-<hr />
-<h2><strong>7. Strategic Read vs. Raptor</strong></h2>
-<table>
-<thead>
-<tr>
-<th></th>
-<th><strong>Indy Rooftops</strong></th>
-<th><strong>Raptor Roofing</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Google Reviews</td>
-<td>482 @ 5.0</td>
-<td><strong>664 @ 5.0 ✅</strong></td>
-</tr>
-<tr>
-<td>Review Velocity (7 days)</td>
-<td>19</td>
-<td>—</td>
-</tr>
-<tr>
-<td>Founded</td>
-<td>2022</td>
-<td>—</td>
-</tr>
-<tr>
-<td>Owner Response Rate</td>
-<td>0.33 (low)</td>
-<td>—</td>
-</tr>
-<tr>
-<td>Woman-Owned Distinction</td>
-<td>✅</td>
-<td>—</td>
-</tr>
-<tr>
-<td>AEO/AI Mentions</td>
-<td>Partial (Yahoo, Remodelmate)</td>
-<td>Edge: higher volume</td>
-</tr>
-<tr>
-<td>Geo-Targeted Pages</td>
-<td>✅ Greenwood, Carmel, Fishers, etc.</td>
-<td>Monitor</td>
-</tr>
-<tr>
-<td>Subcontractor Use</td>
-<td>✅ Confirmed</td>
-<td>Raptor: "we don't outsource accountability" ✅</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Most exploitable weakness:</strong> Their owner response rate of 0.33 means two-thirds of reviews go unanswered — a direct trust gap Raptor can exploit by showcasing 100% owner-responded reviews in ads and on its Google profile.</p>
-<hr />
-<h2><strong>8. What Raptor Should Watch or Copy</strong></h2>
-<ol>
-<li><strong>Geo-landing-page buildout.</strong> </li>
-</ol>
-<p>Indy Rooftops has individual service-area pages for Carmel, Plainfield, Greenwood, and Fishers</p>
-<p>— each targeting local search queries. Raptor should audit whether it has equivalent pages for every key suburb and, if not, build them with genuine project photos and zip-code-specific copy.</p>
-<ol start="2">
-<li><strong>Veteran discount as a conversion hook.</strong> </li>
-</ol>
-<p>Indy Rooftops promotes a Veteran discount sitewide</p>
-<p>, appearing on nearly every page. This is a low-cost trust signal with high emotional resonance in suburban Indy markets. If Raptor isn't featuring a comparable program explicitly in its header/CTA, this is a quick differentiation win to steal or counter.</p>
-<ol start="3">
-<li><strong>Monitor their review velocity closely.</strong> At 19 reviews in 7 days, Indy Rooftops is on a ~82/month pace — if sustained, they close the gap on Raptor's 664 lead by late 2026. Cameron should set a Google Maps alert and check this dashboard every Tuesday/Thursday to catch any sudden acceleration (which would signal a new review-generation tool or campaign launch).</li>
-</ol>
-<hr />
-<p><em>Sources: <a href="https://indyrooftops.com">indyrooftops.com</a> · <a href="https://www.zoominfo.com/c/indy-rooftops/1333226150">ZoomInfo</a> · <a href="https://www.yelp.com/biz/indy-rooftops-indianapolis">Yelp</a> · <a href="https://www.bbb.org/us/in/indianapolis/profile/roofing-contractors/indy-rooftops-llc-0382-90042688">BBB</a> · <a href="https://local.yahoo.com/roofing/article/best-roofing-companies-noblesville-indiana-110003700.html">Yahoo Local – Best Roofers Noblesville</a> · <a href="https://www.remodelmate.com/usa/indiana/best-roofers-indianapolis-in/">Remodelmate</a> · <a href="https://www.homeadvisor.com/rated.IndyRooftopsLLC.125505244.html">HomeAdvisor</a></em></p></div>
+  <div class="scroll-fade panel p-6 sm:p-8 text-center text-ink-soft">
+    Deep profile research populates on the next refresh cycle.
   </div>
   
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <div class="scroll-fade bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
-      <h3 class="text-sm font-bold text-navy uppercase tracking-wider mb-4">Review Velocity</h3>
+    <div class="scroll-fade panel p-6">
+      <h3 class="text-xs font-bold text-accent-green uppercase tracking-[0.15em] mb-4">Review Velocity</h3>
       <div class="space-y-3 text-sm">
-        <div class="flex justify-between items-baseline">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
           <span class="text-ink-soft">Last 7 days</span>
-          <span class="font-bold text-navy stat-num">+19</span>
+          <span class="font-bold text-white stat-num text-lg">+14</span>
         </div>
-        <div class="flex justify-between items-baseline">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
           <span class="text-ink-soft">Last 30 days</span>
-          <span class="font-bold text-navy stat-num">+52</span>
+          <span class="font-bold text-white stat-num text-lg">+47</span>
         </div>
-        <div class="flex justify-between items-baseline">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
           <span class="text-ink-soft">Last 90 days</span>
-          <span class="font-bold text-navy stat-num">+86</span>
+          <span class="font-bold text-white stat-num text-lg">+72</span>
         </div>
-        <div class="flex justify-between items-baseline pt-2 border-t border-slate-100">
+        <div class="flex justify-between items-baseline pt-2">
           <span class="text-ink-soft">Annual pace (90d × 4)</span>
-          <span class="font-bold text-accent-blue stat-num">~344/yr</span>
+          <span class="font-bold text-accent-blue stat-num text-lg">~288/yr</span>
         </div>
       </div>
     </div>
 
-    <div class="scroll-fade bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
-      <h3 class="text-sm font-bold text-navy uppercase tracking-wider mb-4">vs Raptor</h3>
+    <div class="scroll-fade panel p-6">
+      <h3 class="text-xs font-bold text-accent-green uppercase tracking-[0.15em] mb-4">vs Raptor</h3>
       <div class="space-y-3 text-sm">
-        <div class="flex justify-between items-baseline">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
           <span class="text-ink-soft">Total reviews</span>
-          <span class="font-bold text-emerald-600 stat-num">
-            -182
+          <span class="font-bold text-accent-green stat-num text-lg">
+            -183
           </span>
         </div>
-        <div class="flex justify-between items-baseline">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
           <span class="text-ink-soft">Star rating</span>
-          <span class="font-bold text-emerald-600 stat-num">
+          <span class="font-bold text-accent-green stat-num text-lg">
             +0.0
           </span>
         </div>
-        <div class="flex justify-between items-baseline">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
           <span class="text-ink-soft">7-day pace</span>
-          <span class="font-bold text-red-600 stat-num">
-            +17
+          <span class="font-bold text-red-400 stat-num text-lg">
+            +12
           </span>
         </div>
-        <div class="flex justify-between items-baseline pt-2 border-t border-slate-100">
+        <div class="flex justify-between items-baseline pt-2">
           <span class="text-ink-soft">Response rate gap</span>
-          <span class="font-bold stat-num">
+          <span class="font-bold stat-num text-lg">
             
-              <span class="text-emerald-600">
-                -64pts
+              <span class="text-accent-green">
+                -59pts
               </span>
             
           </span>
         </div>
       </div>
-      <p class="text-xs text-ink-soft mt-4 pt-3 border-t border-slate-100">Red = they lead, green = Raptor leads.</p>
+      <p class="text-xs text-ink-soft mt-4 pt-3 border-t border-white/5">Red = competitor leads, green = Raptor leads.</p>
     </div>
   </div>
 
 </main>
 
-<footer class="max-w-5xl mx-auto px-5 sm:px-8 py-10 mt-8 border-t border-slate-200 text-xs text-ink-soft">
+<footer class="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 py-10 mt-8 border-t border-white/5 text-xs text-ink-soft">
   <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-    <a href="../../" class="font-semibold text-navy hover:text-accent-blue">Raptor Review Digest &rarr; Dashboard</a>
+    <a href="../../" class="font-semibold text-white hover:text-accent-blue">Raptor Review Digest &rarr; Dashboard</a>
     <div class="text-right">Profile last refreshed April 25, 2026</div>
   </div>
 </footer>

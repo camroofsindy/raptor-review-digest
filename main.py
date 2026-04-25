@@ -84,9 +84,7 @@ def _anthropic_client():
 
 def _extract_text(response):
     """Return concatenated text blocks from a Claude response that come AFTER the
-    last tool call. For pure-synthesis calls (no tools) this is all text. For
-    web-search calls, this is the final answer Claude wrote once research finished,
-    without the interleaved "I'll search for..." narration before each tool call."""
+    last tool call, with narration preambles stripped."""
     last_tool_idx = -1
     for i, block in enumerate(response.content):
         t = getattr(block, "type", None)
@@ -98,36 +96,50 @@ def _extract_text(response):
             continue
         if getattr(block, "type", None) == "text" and getattr(block, "text", None):
             parts.append(block.text)
-    return "\n\n".join(parts).strip()
+    return _strip_ai_preamble("\n\n".join(parts)).strip()
 
 
 def ai_market_news(client, competitors):
-    """Scan web for newsworthy events involving Indy roofing companies in last 7 days."""
+    """Scan for newsworthy events affecting the Indy roofing market and the broader
+    industry over the last 7 days. Mix local roofing-company moves with national
+    industry shifts (insurance regulation, code changes, manufacturer announcements,
+    supply-chain news) when those are bigger stories."""
     names = sorted({c["name"] for c in competitors[:20]})
     names_list = ", ".join(names)
-    prompt = f"""You are doing market intelligence for Cameron Blakely, owner of Raptor Roofing in Greenwood, Indiana (663 Google reviews, 5.0 stars, ranked #6 by volume in Indianapolis).
+    prompt = f"""You are the Chief Marketing Officer for Raptor Roofing — think of yourself as a $500K/year CMO who reads everything and surfaces only what matters. Cameron Blakely owns Raptor Roofing in Greenwood Indiana (663 Google reviews at 5.0 stars). He gets a digest twice a week and only wants stories that change a decision.
 
-Using web search, find specific newsworthy events from the last 7 days involving ANY Indianapolis-area roofing company. Look for:
-- Awards, "Best of" rankings (Indianapolis Business Journal, IndyStar, Indy's Best, Center Grove Magazine, etc.)
-- Community events, sponsorships, charity work, veteran giveaways, school partnerships
-- New office openings, expansions, acquisitions, market entries
-- Ad campaigns, marketing launches, website redesigns, rebrands
-- Key hires (especially marketing, sales leadership, growth roles)
-- Press releases, local news features
+Use web search aggressively (8-12 searches across different angles). Find up to TEN newsworthy stories from the last 7 days. Mix local Indy roofing events AND national/industry stories that affect the roofing business. Both matter.
 
-Known competitors (but also look beyond this list): {names_list}.
+LOCAL events to look for:
+- Awards or "Best Of" rankings (IBJ, IndyStar, Indy's Best, Center Grove Magazine)
+- Community events, sponsorships, charity, veteran giveaways
+- Office openings, expansions, acquisitions in Indy metro
+- Ad campaign launches, website redesigns, rebrands
+- Key hires (marketing, sales, growth)
+- Local press features
 
-For EACH real event you find, output this EXACT format (no other prose):
+NATIONAL / INDUSTRY events to look for (these often matter MORE than local):
+- Insurance regulation changes (e.g. Fannie Mae / Freddie Mac roof depreciation rule changes, ACV vs RCV policy shifts, state insurance commissioner rulings)
+- IRS / tax code changes affecting commercial roofing depreciation
+- Manufacturer announcements from GAF, Owens Corning, CertainTeed, IKO (warranty changes, product launches, recalls)
+- Trade-association news (NRCA, RCAT, Roofing Contractors Association of Texas, MidWest Roofing)
+- Supply-chain shifts (asphalt prices, shingle availability, labor market)
+- AI / search shifts that affect how homeowners find roofers (Google AI Overviews, ChatGPT integration with maps, etc)
+- Storm and weather events affecting Indiana / Midwest
+
+Known Indy competitors to spot-check: {names_list}.
+
+For EACH real story you find (max 10), output EXACTLY this format:
 
 ---
-COMPANY: [name]
-EVENT: [one sentence on what happened]
+COMPANY: [company name OR "Industry-wide" for non-company-specific stories]
+EVENT: [one sentence on what happened, lead with the most concrete fact]
 WHEN: [approximate date]
-WHY IT MATTERS: [one specific sentence on what Cameron should do or note]
+WHY IT MATTERS: [one CMO-grade sentence on what Cameron should DO or NOTE — be specific, name a tactic if applicable, no clichés]
 SOURCE: [URL]
 ---
 
-If you find nothing substantive in the last 7 days, output "No significant news this week." and stop. Do not invent events. Skip generic content like "they offer roofing" or "they have a website"."""
+If you genuinely find nothing substantive this week (rare — you should always find at least 2-3 industry stories), output "No significant news this week." Do not invent. Do not pad with generic info."""
     response = client.messages.create(
         model=ANTHROPIC_MODEL_RESEARCH,
         max_tokens=4000,
@@ -138,18 +150,20 @@ If you find nothing substantive in the last 7 days, output "No significant news 
 
 
 def ai_rising_profile(client, player):
-    """Research a single rising player; small-base high-velocity account."""
-    prompt = f"""Research "{player['name']}", an Indianapolis-area roofing company.
+    """Per-rising-player profile. CMO-grade research."""
+    prompt = f"""You are Cameron Blakely's Chief Marketing Officer for Raptor Roofing. Treat yourself as a $500K/year CMO doing competitive intelligence. Be insightful, specific, ahead-of-curve. Reference real tactics, name specific platforms and tools, never write generic filler.
 
-Their numbers right now: {player['review_count']} total Google reviews at {player.get('rating', 'n/a')} stars, gained {player.get('reviews_30d', 0)} reviews in the last 30 days. That is high velocity relative to their base, which means something is working.
+Research "{player['name']}", an Indianapolis-area roofing company.
 
-Using web search, tell Cameron Blakely (owner of Raptor Roofing) in 4-6 sentences:
-1. Who they are (ownership, founded, scale, service area)
-2. What is driving the recent review acceleration (specific marketing moves, referrals, a particular campaign, storm chasing, etc.)
-3. One thing Raptor Roofing could learn or copy
-4. One weakness or risk factor Raptor could exploit
+Their numbers: {player['review_count']} total Google reviews at {player.get('rating', 'n/a')} stars, +{player.get('reviews_30d', 0)} in 30 days. {player.get('_rising_reason', '')}
 
-Be specific with facts and URLs. No generic filler."""
+Use web search (5-8 searches). Tell Cameron in 6-8 sentences total:
+1. **Who they are.** Ownership, founding year, scale, service area, what makes them distinct.
+2. **What's driving the velocity.** Be specific — is it a paid media play? A referral engine? A storm-chasing operation? A particular partnership? A community-event blitz? Point to evidence.
+3. **One tactic Raptor should steal.** Name the specific move and how to execute it within 30 days.
+4. **One weakness Raptor can exploit in sales conversations.** Be specific (e.g. "their Yelp is 2.5 stars, lean on Raptor's 5.0 in close").
+
+Cite sources inline as markdown links. Do NOT name specific Raptor team members."""
     response = client.messages.create(
         model=ANTHROPIC_MODEL_RESEARCH,
         max_tokens=2500,
@@ -160,11 +174,8 @@ Be specific with facts and URLs. No generic filler."""
 
 
 def ai_competitor_profile(client, biz, raptor):
-    """Per-competitor deep research with web search. One Sonnet call per competitor
-    that produces an 8-section markdown profile: who they are, employees + revenue
-    estimates with confidence, hiring activity, social presence (Yelp/Reddit/FB/BBB),
-    SEO+AEO assessment, generative engine visibility, and a strategic comparison
-    against Raptor's positioning."""
+    """Per-competitor CMO-grade deep research with web search. One Sonnet call per
+    competitor that produces an 8-section markdown profile."""
     name = biz["name"]
     total = biz.get("review_count", 0)
     rating = biz.get("rating")
@@ -177,7 +188,9 @@ def ai_competitor_profile(client, biz, raptor):
     raptor_total = raptor["review_count"] if raptor else 663
     raptor_rating = raptor["rating"] if raptor else 5.0
 
-    prompt = f"""You are doing a competitive intelligence brief on "{name}" for Cameron Blakely, owner of Raptor Roofing in Greenwood IN. This profile gets refreshed every Tuesday and Thursday on Cameron's dashboard, so keep it specific and current.
+    prompt = f"""You are Cameron Blakely's Chief Marketing Officer at Raptor Roofing — think of yourself as a $500K/year CMO who has worked in residential home-services marketing for 15+ years. You produce competitive intelligence briefs that read like the work of someone who actually knows the playbook (paid media, SEO, AEO, partnerships, sales enablement). No 101-level filler. Be specific, ahead-of-curve, and willing to share contrarian takes when the data supports them.
+
+Refreshed every Tue/Thu on Cameron's dashboard.
 
 Competitor's current numbers:
 - Total Google reviews: {total}
@@ -230,6 +243,58 @@ Aim for 400-650 words total. Cite sources inline as markdown links."""
     return _extract_text(response)
 
 
+def ai_seo_aeo_brief(client, businesses, raptor):
+    """One CMO-grade brief covering: (1) competitor SEO/AEO benchmarks vs Raptor,
+    (2) one specific actionable tactic Raptor should execute this week, (3) Raptor's
+    AEO standing across the metro queries we send to ChatGPT/Claude/Gemini.
+    Output is a markdown document with three section headers."""
+    top10 = sorted(businesses, key=lambda b: b["review_count"], reverse=True)[:10]
+    top_names = ", ".join(b["name"] for b in top10)
+    raptor_name = raptor["name"] if raptor else "Raptor Roofing"
+    prompt = f"""You are Cameron Blakely's CMO at Raptor Roofing. He pays you $500K/year for ahead-of-the-curve thinking. This is the SEO and AEO (AI Engine Optimization) brief for THIS WEEK's dashboard refresh.
+
+Use web search aggressively (10-15 searches). Your job is three sections, one markdown document.
+
+## 1. Competitor SEO/AEO Benchmarks
+
+Compare {raptor_name} against the top Indy roofing competitors: {top_names}. Look at:
+- Domain authority signals (Ahrefs/Moz/Majestic data if surfaceable)
+- Backlink profiles — who has local press citations, association memberships, partnership backlinks
+- Schema markup on their websites (LocalBusiness, RoofingContractor, FAQ, Review schema)
+- Blog cadence and content depth
+- Google Business Profile post frequency, photo upload velocity, service area pages
+- Programmatic city pages vs Raptor's
+
+For each top-3 competitor, write 2-3 specific findings with the gap to Raptor. Lead with the BIGGEST gap.
+
+## 2. Tactic of the Week
+
+ONE specific SEO/AEO move Raptor should execute this week. Be tactical, not strategic. Examples of the kind of thing I want — these are good prototypes for the format, find a NEW one each week:
+- "Post 8 job-site photos to your GBP today. Use a phone with location services on while shooting so EXIF metadata embeds the lat/lon. Google reads that metadata and uses it as a service-area signal. Bone Dry posts 12-15/week. Raptor posted 2 last week. Closing this gap is a 30-day project; start today."
+- "Submit a guest column to Indianapolis Business Journal on roofing-cost trends in 2026. IBJ runs 4-6 industry guest pieces per month. The byline backlink is dofollow and IBJ has a domain authority of 67. One placement = 6 months of consistent local-pack improvement."
+
+Write 200-400 words. Include the WHY (what mechanism does this leverage), the HOW (concrete steps), and the SUCCESS METRIC (what to measure in 30 days).
+
+## 3. Raptor's AEO Standing
+
+Run web searches asking ChatGPT-style queries: "best roofers Indianapolis," "top roofing contractor near Greenwood Indiana," "roof replacement Carmel Indiana," "roofing company Fishers Indiana," "best rated roofer Noblesville," "Zionsville roof repair." Look at what Google AI Overviews / Perplexity / Bing AI return for these and similar prompts.
+
+Report:
+- Which competitors get cited by NAME in AI search answers? (List them with the queries that surfaced them.)
+- Is Raptor cited? Where, and where not?
+- What is Raptor missing structurally that gets others cited (review count threshold? Wikipedia entry? specific publication mention? schema markup?)
+- ONE specific move to improve Raptor's AEO standing in the next 14 days.
+
+Output the full document in markdown. Source links inline as markdown links. Be direct and specific. Do NOT name specific Raptor team members."""
+    response = client.messages.create(
+        model=ANTHROPIC_MODEL_RESEARCH,
+        max_tokens=5000,
+        tools=[WEB_SEARCH_TOOL],
+        messages=[{"role": "user", "content": prompt}],
+    )
+    return _extract_text(response)
+
+
 def _slug(name):
     """URL-safe slug from a competitor name."""
     s = re.sub(r"[^a-z0-9]+", "-", name.lower())
@@ -256,8 +321,8 @@ def render_competitor_pages(businesses, raptor, market_news, run_date_str):
 
 
 def ai_raptor_actions(client, data_summary):
-    """Synthesize 3 concrete actions for Raptor based on the week's data."""
-    prompt = f"""You are Cameron Blakely's strategic advisor. Cameron owns Raptor Roofing in Greenwood, Indiana. Context:
+    """Synthesize 3 specific actions for Raptor based on the week's data."""
+    prompt = f"""You are Cameron Blakely's Chief Marketing Officer at Raptor Roofing. Treat yourself as a $500K/year CMO who's seen everything in residential services marketing — direct response, brand, SEO, AEO, partnerships, the works. Cameron owns the business. Context:
 - 663 Google reviews at 5.0 stars (highest quality rating in Indy top 10 by volume)
 - 16 W-2 employees plus 3 sub crews, ~$1.097M Q1 2026 revenue
 - Targeting $10M for 2026, $50M long-term
@@ -274,7 +339,12 @@ Write 3 specific actions Raptor should take THIS WEEK based on what you see. Eac
 - Is concrete and measurable this week, not a vague suggestion
 - 2-3 sentences
 
-CRITICAL: do NOT name specific Raptor team members (no "Patrick", "Dylan", "Curtis", "Cameron", etc.) and do NOT prescribe who owns the action. Cameron will assign internally. Use phrasing like "someone on the team", "your sales lead", or just describe WHAT to do without naming WHO. Avoid clichés like "focus on reviews" unless the data specifically demands it. If one of the actions is about defending against a specific competitor's move, say so directly."""
+CRITICAL rules:
+- NEVER name specific Raptor team members (no "Patrick", "Dylan", "Curtis", "Cameron", "Mike", "Lauryn", etc.). Cameron assigns internally. Use phrasing like "someone on the team," "your sales lead," "the marketing function," or just describe what to do without naming who.
+- Avoid clichés ("focus on reviews," "improve customer service") unless the data specifically demands it.
+- Bias toward NON-OBVIOUS, ahead-of-curve recommendations a top-tier CMO would surface — partnership plays, content gambits, AEO experiments, ad-creative angles, distribution arbitrage. Cameron has been in the roofing industry; he doesn't need 101-level advice.
+- If something requires deeper detail (e.g. "post job-site photos with EXIF location metadata to your GBP"), include the WHY and HOW in 2-3 extra sentences. Cameron will read longer if the idea is good.
+- If an action defends against a specific competitor move, say which competitor and what move directly."""
     response = client.messages.create(
         model=ANTHROPIC_MODEL_SYNTHESIS,
         max_tokens=2000,
@@ -416,6 +486,58 @@ def _norm(s):
     return re.sub(r"[^a-z0-9]", "", s.lower().replace("&", "and"))
 
 
+# Companies that show up in roofing-adjacent queries but are NOT primarily roofers.
+# Bath/kitchen/door/gutter/window specialists who get caught by exterior remodeling
+# searches. Keep names normalized (lowercase, alphanumeric only).
+NON_ROOFER_BLOCKLIST = {
+    "westshorehome",       # Doors, baths, kitchens, no roofing
+    "renewalbyandersen",   # Windows only
+    "championwindows",     # Windows + sunrooms
+    "champion",            # Champion (when it's the windows brand)
+    "leaffilter",          # Gutter guards only
+    "leafguard",           # Gutter guards only
+    "longhomeproducts",    # Bath + kitchen
+    "ecoshield",           # Pest control
+    "uniquehomesolutions", # Bath + doors per Cameron - excluded pending review
+    "powerhomeremodeling", # Windows + siding, not roofing-led
+}
+
+
+def _is_blocked_non_roofer(name):
+    n = _norm(name)
+    return any(blocked in n for blocked in NON_ROOFER_BLOCKLIST)
+
+
+def extract_action_headlines(actions_md):
+    """Pull just the bold numbered headlines from a Claude-generated actions block.
+    Used to show 3 bullets on the Overview tab while the Moves tab keeps the full
+    multi-paragraph version."""
+    if not actions_md:
+        return []
+    headlines = re.findall(r"\*\*\s*(\d+\.\s+[^*]+?)\*\*", actions_md)
+    return [h.strip().rstrip(".") for h in headlines[:5]]
+
+
+def _strip_ai_preamble(text):
+    """Strip Claude's narration ('Now I have enough data...', 'I'll search...') that
+    sometimes leads AI outputs. Trim until the first real content line."""
+    if not text:
+        return text
+    lines = text.split("\n")
+    drop_patterns = (
+        r"^\s*(now i (have|will|can)|let me (now|produce|compile)|"
+        r"based on (my|the) (research|searches?)|here is|here's the (brief|report|analysis|fully)|"
+        r"i'?ll (now|produce|compile|search|find|look)|"
+        r"i (have|will) (compile|now have|search)|"
+        r"(let|allow) me (search|look|gather|do))"
+    )
+    while lines and re.match(drop_patterns, lines[0], re.IGNORECASE):
+        lines.pop(0)
+    while lines and (not lines[0].strip() or lines[0].strip() == "---"):
+        lines.pop(0)
+    return "\n".join(lines).strip()
+
+
 def scrape_google_maps(query, top_n=20):
     """Scrape Google Maps for the query. Visits each result's detail page to get
     review count, which is no longer present on the list-view cards."""
@@ -547,14 +669,19 @@ def scrape_google_maps(query, top_n=20):
 
     # Filter out generic Google category listings that are not real businesses.
     # These show up as "Roofing Indianapolis", "Commercial Roofing Indianapolis", etc.
-    # and pollute the leaderboard. Match patterns like "<Service> Indianapolis" with
-    # no other distinguishing words.
     GENERIC_PATTERN = re.compile(
         r"^(roofing|commercial roofing|residential roofing|roof repair|"
         r"roof replacement|metal roofing|flat roofing)\s+indianapolis$",
         re.IGNORECASE,
     )
-    return [b for b in merged.values() if not GENERIC_PATTERN.match(b["name"].strip())]
+    out = []
+    for b in merged.values():
+        if GENERIC_PATTERN.match(b["name"].strip()):
+            continue
+        if _is_blocked_non_roofer(b["name"]):
+            continue
+        out.append(b)
+    return out
 
 
 def _extract_place_id(url):
@@ -921,7 +1048,7 @@ def _build_chart_data(businesses, raptor):
 
 
 def render_dashboard(snapshot, prev_snapshot, raptor, businesses, market_news,
-                      rising_profiles, raptor_actions):
+                      rising_profiles, raptor_actions, seo_aeo_brief=None):
     """Render the static dashboard HTML to docs/index.html."""
     env = Environment(loader=FileSystemLoader(str(DASHBOARD_TEMPLATE_DIR)))
     env.filters["md"] = _md_to_html
@@ -949,9 +1076,9 @@ def render_dashboard(snapshot, prev_snapshot, raptor, businesses, market_news,
     )
     chart_data = _build_chart_data(businesses, raptor)
     news_cards = parse_news_blocks(market_news)
-    # Filter leaderboard tables to businesses with >=50 reviews per Cameron's rule.
     by_volume_leaderboard = [b for b in by_volume if (b.get("review_count") or 0) >= 50][:50]
     by_gain_for_table = [b for b in by_gain_7d if (b.get("review_count") or 0) >= 50][:50]
+    action_headlines = extract_action_headlines(raptor_actions)
 
     html = template.render(
         snapshot=snapshot,
@@ -964,6 +1091,8 @@ def render_dashboard(snapshot, prev_snapshot, raptor, businesses, market_news,
         news_cards=news_cards,
         rising_profiles=rising_profiles,
         raptor_actions=raptor_actions,
+        action_headlines=action_headlines,
+        seo_aeo_brief=seo_aeo_brief,
         chart_data=chart_data,
         run_date=datetime.now(timezone.utc).strftime("%B %d, %Y"),
     )
@@ -1119,10 +1248,12 @@ def main():
         "profiled_this_week": [],  # populated below after rising profiling
     }
 
-    # Intelligence layer: call Claude Opus for market news, rising profiles, actions.
+    # Intelligence layer: call Claude Opus/Sonnet for market news, rising profiles,
+    # actions, SEO+AEO brief, and per-competitor deep profiles.
     market_news = None
     rising_profiles = []
     raptor_actions = None
+    seo_aeo_brief = None
     if not scrape_only:
         client = _anthropic_client()
         if client is None:
@@ -1151,7 +1282,7 @@ def main():
             rotation = len(history.get("snapshots", [])) % 4
             risers = detect_rising_players(businesses, exclude_recent=recent_profiled,
                                             fallback_rotation=rotation)
-            for r in risers[:2]:
+            for r in risers[:5]:  # 3-5 rising players per Cameron's request
                 try:
                     print(f"AI: profiling riser {r['name']}...")
                     profile = ai_rising_profile(client, r)
@@ -1161,6 +1292,14 @@ def main():
             # Save the names so next week's run skips them.
             for rp in rising_profiles:
                 snapshot["profiled_this_week"].append(rp["competitor"]["name"])
+
+            # SEO/AEO brief
+            try:
+                print("AI: generating SEO/AEO brief...")
+                raptor_for_seo = next((b for b in businesses if "raptor" in b["name"].lower()), None)
+                seo_aeo_brief = ai_seo_aeo_brief(client, businesses, raptor_for_seo)
+            except Exception as e:
+                print(f"  SEO/AEO brief failed: {e}", file=sys.stderr)
 
             # Synthesis
             try:
@@ -1223,6 +1362,7 @@ def main():
         market_news=market_news,
         rising_profiles=rising_profiles,
         raptor_actions=raptor_actions,
+        seo_aeo_brief=seo_aeo_brief,
     )
     print("Rendering per-competitor sub-pages...")
     run_date_str = datetime.now(timezone.utc).strftime("%B %d, %Y")

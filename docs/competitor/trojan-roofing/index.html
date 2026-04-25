@@ -12,289 +12,185 @@
 tailwind.config = {
   theme: { extend: {
     colors: {
-      navy: { DEFAULT: '#172e55', deep: '#0d1d3a', light: '#2a4880' },
+      navy: { DEFAULT: '#172e55', deep: '#0d1d3a', darker: '#08142a', light: '#2a4880' },
       accent: { green: '#3ae20a', blue: '#1ac6ff' },
-      ink: { DEFAULT: '#172e55', soft: '#4a5568', light: '#9aa5b8' },
+      ink: { soft: '#a3b1c7', mute: '#6b7d99' },
     },
     fontFamily: { sans: ['Ouma Latin VF', 'Inter', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'] },
   }},
 };
 </script>
 <style>
-  body { font-feature-settings: "ss01"; }
+  body { font-feature-settings: "ss01"; background-color: #08142a; color: #ffffff; }
   .stat-num { font-variant-numeric: tabular-nums; }
-  .ai-prose h1, .ai-prose h2, .ai-prose h3, .ai-prose h4 { color: #172e55; font-weight: 700; margin: 1em 0 0.4em; line-height: 1.2; }
-  .ai-prose h1 { font-size: 1.25rem; } .ai-prose h2 { font-size: 1.125rem; } .ai-prose h3 { font-size: 1rem; }
-  .ai-prose h4 { font-size: 0.95rem; color: #4a5568; text-transform: uppercase; letter-spacing: 0.04em; }
-  .ai-prose p { margin: 0.6em 0; } .ai-prose strong { color: #172e55; font-weight: 700; }
-  .ai-prose em { color: #4a5568; }
-  .ai-prose a { color: #1ac6ff; border-bottom: 1px solid rgba(26, 198, 255, 0.3); }
-  .ai-prose ul, .ai-prose ol { margin: 0.6em 0; padding-left: 1.4em; }
-  .ai-prose li { margin: 0.3em 0; }
-  .ai-prose hr { border: none; border-top: 1px solid #e3e7ee; margin: 1em 0; }
-  .gradient-text { background: linear-gradient(135deg, #3ae20a 0%, #1ac6ff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-  .delta-up { color: #059669; font-weight: 700; }
   .scroll-fade { opacity: 0; transform: translateY(20px); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
   .scroll-fade.visible { opacity: 1; transform: translateY(0); }
+  .panel {
+    background: linear-gradient(180deg, rgba(22, 46, 85, 0.65) 0%, rgba(13, 29, 58, 0.85) 100%);
+    border: 1px solid rgba(58, 226, 10, 0.08);
+    border-radius: 16px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    position: relative;
+    overflow: hidden;
+  }
+  .panel::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(58, 226, 10, 0.3), transparent);
+  }
+  .panel-hero {
+    background: linear-gradient(135deg, rgba(22, 46, 85, 0.95) 0%, rgba(13, 29, 58, 0.95) 100%);
+    border: 1px solid rgba(58, 226, 10, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 8px 40px rgba(58, 226, 10, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+  .ai-prose { color: rgba(255, 255, 255, 0.92); }
+  .ai-prose h1, .ai-prose h2, .ai-prose h3, .ai-prose h4 { color: #ffffff; font-weight: 700; margin: 1.2em 0 0.5em; line-height: 1.25; }
+  .ai-prose h1 { font-size: 1.4rem; color: #3ae20a; }
+  .ai-prose h2 { font-size: 1.15rem; color: #3ae20a; padding-top: 0.6em; border-top: 1px solid rgba(58, 226, 10, 0.2); }
+  .ai-prose h2:first-child { border-top: none; padding-top: 0; }
+  .ai-prose h3 { font-size: 1rem; color: #1ac6ff; }
+  .ai-prose h4 { font-size: 0.85rem; color: #a3b1c7; text-transform: uppercase; letter-spacing: 0.05em; }
+  .ai-prose p { margin: 0.7em 0; line-height: 1.65; }
+  .ai-prose strong { color: #ffffff; font-weight: 700; }
+  .ai-prose em { color: #a3b1c7; }
+  .ai-prose a { color: #1ac6ff; border-bottom: 1px solid rgba(26, 198, 255, 0.4); }
+  .ai-prose a:hover { color: #ffffff; }
+  .ai-prose ul, .ai-prose ol { padding-left: 1.4em; margin: 0.6em 0; }
+  .ai-prose li { margin: 0.4em 0; line-height: 1.6; }
+  .ai-prose hr { border: none; border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 1.5em 0; }
+  .gradient-text { background: linear-gradient(135deg, #3ae20a 0%, #1ac6ff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 </style>
 </head>
-<body class="bg-slate-50 text-ink antialiased min-h-screen">
+<body class="antialiased min-h-screen">
 
-<!-- Hero -->
-<section class="bg-gradient-to-br from-navy via-navy-deep to-navy text-white relative overflow-hidden">
-  <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 20% 50%, #3ae20a 0%, transparent 40%), radial-gradient(circle at 80% 30%, #1ac6ff 0%, transparent 35%);"></div>
-  <div class="max-w-5xl mx-auto px-5 sm:px-8 py-8 relative z-10">
-    <a href="../../" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-accent-green hover:text-accent-blue mb-6 transition-colors">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-      Back to dashboard
-    </a>
+<div class="fixed inset-0 pointer-events-none" style="background-image: radial-gradient(circle at 15% 0%, rgba(58, 226, 10, 0.06) 0%, transparent 40%), radial-gradient(circle at 85% 50%, rgba(26, 198, 255, 0.05) 0%, transparent 35%);"></div>
+
+<section class="relative z-10">
+  <div class="max-w-5xl mx-auto px-5 sm:px-8 pt-8 pb-10">
+    <div class="flex items-center justify-between mb-6 flex-wrap gap-4">
+      <a href="../../" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-accent-green hover:text-accent-blue transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        Back to dashboard
+      </a>
+      <img src="../../assets/logo.webp" alt="Raptor Roofing" class="h-10 w-auto" onerror="this.style.display='none'">
+    </div>
     <div class="flex items-start justify-between flex-wrap gap-4 mb-4">
       <div>
         <div class="text-xs uppercase tracking-widest text-accent-green font-bold mb-1">Competitor Profile</div>
-        <h1 class="text-3xl sm:text-5xl font-bold tracking-tight">Trojan Roofing</h1>
-        <p class="text-white/60 text-sm mt-2">333 Alabama St Ste#350, Indianapolis, IN 46204</p>
+        <h1 class="text-3xl sm:text-5xl font-bold tracking-tight text-white">Trojan Roofing</h1>
+        <p class="text-ink-soft text-sm mt-2">333 Alabama St Ste#350, Indianapolis, IN 46204</p>
       </div>
       <div class="text-right">
-        <div class="text-xs uppercase tracking-widest text-white/60">Volume Rank</div>
-        <div class="text-3xl font-bold gradient-text">#10</div>
+        <div class="text-xs uppercase tracking-widest text-ink-soft">Volume Rank</div>
+        <div class="text-3xl font-bold gradient-text">#7</div>
       </div>
     </div>
 
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8">
-      <div class="bg-white/10 backdrop-blur border border-accent-green/20 rounded-xl p-4">
-        <div class="text-2xl sm:text-3xl font-bold text-accent-green stat-num">643</div>
-        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">Total Reviews</div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-green">643</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Total Reviews</div>
       </div>
-      <div class="bg-white/10 backdrop-blur border border-accent-green/20 rounded-xl p-4">
-        <div class="text-2xl sm:text-3xl font-bold text-accent-green stat-num">4.9</div>
-        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">Star Rating</div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-green">4.9</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Star Rating</div>
       </div>
-      <div class="bg-white/10 backdrop-blur border border-accent-blue/30 rounded-xl p-4">
-        <div class="text-2xl sm:text-3xl font-bold text-accent-blue stat-num">+0</div>
-        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">This Week</div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-blue">+0</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">This Week</div>
       </div>
-      <div class="bg-white/10 backdrop-blur border border-accent-blue/30 rounded-xl p-4">
-        <div class="text-2xl sm:text-3xl font-bold text-accent-blue stat-num">+2</div>
-        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">Last 30 Days</div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-blue">+2</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Last 30 Days</div>
       </div>
+      
     </div>
 
-    <div class="mt-4 flex items-center gap-4 text-sm text-white/60 flex-wrap">
+    <div class="mt-4 flex items-center gap-4 text-sm text-ink-soft flex-wrap">
       <span><span class="text-white font-semibold">6%</span> response rate</span>
       <span>+<span class="text-white font-semibold">6</span> in last 90 days</span>
-      <span class="text-white/40">Refreshed April 25, 2026</span>
+      <span class="text-ink-mute">Refreshed April 25, 2026</span>
     </div>
   </div>
 </section>
 
-<main class="max-w-5xl mx-auto px-5 sm:px-8 py-8 space-y-6">
+<main class="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 py-8 space-y-6">
 
   
-  <div class="scroll-fade bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
-    <div class="flex items-center justify-between mb-4">
-      <h2 class="text-lg font-bold text-navy uppercase tracking-wider">Strategic Read</h2>
-      <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-slate-100 px-2 py-1 rounded">Live AI Research</span>
-    </div>
-    <div class="ai-prose text-sm sm:text-base"><p>Here is the fully sourced competitive intelligence brief for Cameron's dashboard:</p>
-<hr />
-<h1>🦅 Raptor Roofing | Competitive Intel Brief</h1>
-<p><strong>Target:</strong> Trojan Roofing | <strong>Refreshed:</strong> April 25, 2025 (Friday edition)<br />
-<strong>For:</strong> Cameron Blakely, Raptor Roofing, Greenwood IN</p>
-<hr />
-<h2><strong>1. Who They Are</strong></h2>
-<p>Trojan Roofing opened in 2019, founded by Tyler Morgan, an accountant-turned-contractor who transitioned into roofing and construction.</p>
-<p>The business was incorporated on November 5, 2020, and has been on the BBB's radar since February 9, 2022.</p>
-<p>Their stated differentiator is specialization in IKO Dynasty and Owens Corning installations, serving both residential and commercial customers across Indianapolis.</p>
-<p>They explicitly list Greenwood, IN as part of their service territory</p>
-<p>, making them a direct territorial competitor to Raptor.</p>
-<hr />
-<h2><strong>2. Estimated Scale</strong></h2>
-<p>The company's team page lists one Founder/Owner and six Project Managers</p>
-<p>— suggesting a lean structure of roughly 10–20 total employees when field crews are factored in. <strong>Confidence: Low</strong> (team page withholds names and headcounts). </p>
-<p>Indeed's salary data is drawn from an estimated 135 employees, users, and past job postings</p>
-<p>, which likely overstates active W-2 headcount given their heavy reliance on commission-only sales staff. Estimated annual revenue: <strong>$3M–$8M</strong>, consistent with a storm-restoration shop of this profile operating in one metro — <strong>Confidence: Low</strong> (no public financials found; no ZoomInfo record for this entity).</p>
-<hr />
-<h2><strong>3. Recent Hiring Signals</strong></h2>
-<p>Active and aggressive sales expansion is underway. </p>
-<p>ZipRecruiter currently shows Trojan Roofing "immediately hiring Outside Sales Representatives" in multiple postings, describing themselves as "a top national leader in the roofing industry."</p>
-<p>Their sales pitch to recruits emphasizes a support-staff model designed so reps focus only on selling — "dedicated support staff handling the logistics so you can stay in the field."</p>
-<p>ZipRecruiter also shows a posting for a <strong>Territory Sales Manager</strong></p>
-<p>— a leadership hire that signals intent to formalize and scale their door-to-door operation. </p>
-<p>Indeed currently lists 31 open Trojan Roofing jobs.</p>
-<p>No marketing or ops leadership hires detected. The pattern is pure <strong>storm-chasing sales machine</strong> expansion, not brand or ops maturity.</p>
-<hr />
-<h2><strong>4. Off-Google Presence</strong></h2>
-<p>The off-Google picture is damaging and inconsistent:</p>
-<ul>
-<li><strong>BBB:</strong> </li>
-</ul>
-<p>Not BBB Accredited, and holds an <strong>F rating</strong> for failure to respond to 4 complaints filed against the business, plus advertising issues flagged by BBB.</p>
-<ul>
-<li><strong>BBB Complaints:</strong> </li>
-</ul>
-<p>One active complaint details a contract that began in October 2024, received full payment in February 2025, and then the contractor refused to complete gutters, leaving the customer with a new roof and "gutters that are falling off and useless."</p>
-<ul>
-<li><strong>Glassdoor:</strong> </li>
-</ul>
-<p>A former employee alleges being let go after trying to improve systems and processes, and states the company "won't answer messages or calls for pay."</p>
-<ul>
-<li><strong>Indeed employee reviews:</strong> </li>
-</ul>
-<p>As recently as October 13, 2025, a reviewer called the culture "the absolute worst sales culture, very pushy and unprofessional with customers."</p>
-<ul>
-<li><strong>Facebook:</strong> </li>
-</ul>
-<p>233 page likes, only 6 reviews on Facebook with an 88% recommend rate — minimal community engagement.</p>
-<ul>
-<li><strong>TikTok:</strong> </li>
-</ul>
-<p>At least one customer review mentions finding them on TikTok</p>
-<p>, confirming they use short-form video for top-of-funnel reach. A TikTok handle (@tmorgan64) exists under "Doctor roof."<br />
-- <strong>Google vs. everywhere else:</strong> 4.9 on Google with 643 reviews vs. an F on BBB and toxic employee reviews — <strong>textbook review-funneling.</strong> The 6% owner response rate on Google confirms they solicit reviews without managing reputation holistically.</p>
-<hr />
-<h2><strong>5. SEO and AEO Posture</strong></h2>
-<p>Trojan runs an active blog at <a href="https://indytrojanroofing.com/blog/">indytrojanroofing.com/blog/</a> covering topics like shingle installation, roofing estimates, and seasonal maintenance — all targeted to Indianapolis-area homeowners.</p>
-<p>The site has dedicated city landing pages (Indianapolis, Greenwood, etc.) and keyword-heavy copy built around "emergency roofing contractor Indianapolis." </p>
-<p>Their BuildZoom score of 98 ranks them in the top 16% of 22,324 Indiana licensed contractors</p>
-<p>— a citation signal Google may weigh. However, </p>
-<p>BuildZoom notes that at least one of their Indianapolis licenses was at one point cancelled</p>
-<p>— a trust gap worth watching. No verified domain authority score was surfaced via public tools in this refresh cycle; their backlink profile appears to be primarily citation-based (directories, aggregators) with no identified local press mentions. Schema markup status unconfirmed without direct crawl access. </p>
-<p>They are indexed on Expertise.com's "Best Indianapolis Roofers" list, dating their presence to 2019.</p>
-<hr />
-<h2><strong>6. Generative Engine Visibility</strong></h2>
-<p>No confirmed citations of Trojan Roofing by name were returned in AI-generated answer searches for "best roofers Indianapolis," "top roofing contractor near Greenwood Indiana," "roof replacement Carmel Indiana," or "roofing company Fishers Noblesville Zionsville." Their brand does not appear to be surfaced consistently by ChatGPT, Claude, or Gemini for these queries. This is a <strong>gap and opportunity for Raptor</strong>: AI engines like ChatGPT and Gemini pull from structured data, schema markup, and high-authority editorial mentions (e.g., local press, Expertise.com, Angi editorial content). Trojan's BBB F rating and unresolved complaints could actively suppress AI recommendation if those signals are weighted. Raptor's 5.0 star rating and BBB standing are assets to leverage here with proper AEO tagging and schema.</p>
-<hr />
-<h2><strong>7. Strategic Read vs. Raptor</strong></h2>
-<table>
-<thead>
-<tr>
-<th></th>
-<th><strong>Trojan</strong></th>
-<th><strong>Raptor</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Google Reviews</td>
-<td>643 / 4.9 ⭐</td>
-<td><strong>664 / 5.0 ⭐</strong></td>
-</tr>
-<tr>
-<td>BBB</td>
-<td><strong>F / Not Accredited</strong></td>
-<td>Advantage: Raptor</td>
-</tr>
-<tr>
-<td>Sales Reach</td>
-<td>High — door-to-door army</td>
-<td>Referral + premium</td>
-</tr>
-<tr>
-<td>Off-Google Reputation</td>
-<td>Toxic (BBB, Indeed, Glassdoor)</td>
-<td><strong>Raptor advantage</strong></td>
-</tr>
-<tr>
-<td>AI Visibility</td>
-<td>Not detected</td>
-<td>Opportunity for both</td>
-</tr>
-<tr>
-<td>Canvassing</td>
-<td>Aggressive</td>
-<td>Not their model</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Most exploitable weakness:</strong> </p>
-<p>Trojan's BBB F rating for failure to respond to complaints</p>
-<p>, combined with active employee reviews describing pushy, unprofessional sales tactics, creates a ready-made contrast narrative Cameron can own explicitly in ads, landing pages, and follow-up sequences — "we don't knock on doors and we don't disappear after the check clears."</p>
-<hr />
-<h2><strong>8. What Raptor Should Watch or Copy</strong></h2>
-<ol>
-<li><strong>Monitor their Territory Sales Manager hire.</strong> </li>
-</ol>
-<p>The TSM posting on ZipRecruiter</p>
-<p>means Trojan is building a managed canvassing operation, not just loose 1099 reps. If they land a strong TSM, their door-knocking volume in Greenwood and south Indy suburbs could spike post-storm. Cameron should ensure Raptor has a rapid-response storm protocol that can intercept homeowners before a Trojan rep gets there.</p>
-<ol start="2">
-<li><strong>Study their blog/city-page SEO structure.</strong> Trojan has built out dedicated service-area landing pages (Indianapolis, Greenwood, etc.) and a consistently updated blog. </li>
-</ol>
-<p>Their content is aimed at Indianapolis homeowners with step-by-step guides and estimate education.</p>
-<p>Raptor should audit whether it has equivalent Carmel, Fishers, Noblesville, and Zionsville pages with schema markup — and whether those pages are indexed and cited in AI answers.</p>
-<ol start="3">
-<li><strong>Exploit the BBB/reputation gap publicly.</strong> </li>
-</ol>
-<p>An active 2025 BBB complaint involving a paid-in-full customer left with gutters "falling off and useless"</p>
-<p>is live and searchable. Raptor's accountability positioning is most powerful when made concrete: feature the BBB badge, link to it, and use before/after documentation to show completed, signed-off work. That's the real counter to Trojan's Google review volume.</p>
-<hr />
-<p><em>Sources: <a href="https://indytrojanroofing.com">indytrojanroofing.com</a> · <a href="https://www.bbb.org/us/in/indianapolis/profile/roofing-contractors/trojan-roofing-inc-0382-90040759">BBB Profile</a> · <a href="https://www.bbb.org/us/in/indianapolis/profile/roofing-contractors/trojan-roofing-inc-0382-90040759/complaints">BBB Complaints</a> · <a href="https://www.buildzoom.com/contractor/trojan-roofing">BuildZoom</a> · <a href="https://www.indeed.com/cmp/Trojan-Roofing">Indeed</a> · <a href="https://www.glassdoor.com/Reviews/Trojan-roofing-Indianapolis-Reviews-EI_IE8930313.0,14_IL.15,27_IM407.htm">Glassdoor</a> · <a href="https://www.ziprecruiter.com/co/trojan-roofing/Jobs">ZipRecruiter</a> · <a href="https://www.successcenter.com/indiana/indianapolis/services/trojan-roofing">SuccessCENTER</a> · <a href="https://www.expertise.com/home-improvement/roofing/indiana/indianapolis">Expertise.com</a></em></p></div>
+  <div class="scroll-fade panel p-6 sm:p-8 text-center text-ink-soft">
+    Deep profile research populates on the next refresh cycle.
   </div>
   
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <div class="scroll-fade bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
-      <h3 class="text-sm font-bold text-navy uppercase tracking-wider mb-4">Review Velocity</h3>
+    <div class="scroll-fade panel p-6">
+      <h3 class="text-xs font-bold text-accent-green uppercase tracking-[0.15em] mb-4">Review Velocity</h3>
       <div class="space-y-3 text-sm">
-        <div class="flex justify-between items-baseline">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
           <span class="text-ink-soft">Last 7 days</span>
-          <span class="font-bold text-navy stat-num">+0</span>
+          <span class="font-bold text-white stat-num text-lg">+0</span>
         </div>
-        <div class="flex justify-between items-baseline">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
           <span class="text-ink-soft">Last 30 days</span>
-          <span class="font-bold text-navy stat-num">+2</span>
+          <span class="font-bold text-white stat-num text-lg">+2</span>
         </div>
-        <div class="flex justify-between items-baseline">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
           <span class="text-ink-soft">Last 90 days</span>
-          <span class="font-bold text-navy stat-num">+6</span>
+          <span class="font-bold text-white stat-num text-lg">+6</span>
         </div>
-        <div class="flex justify-between items-baseline pt-2 border-t border-slate-100">
+        <div class="flex justify-between items-baseline pt-2">
           <span class="text-ink-soft">Annual pace (90d × 4)</span>
-          <span class="font-bold text-accent-blue stat-num">~24/yr</span>
+          <span class="font-bold text-accent-blue stat-num text-lg">~24/yr</span>
         </div>
       </div>
     </div>
 
-    <div class="scroll-fade bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
-      <h3 class="text-sm font-bold text-navy uppercase tracking-wider mb-4">vs Raptor</h3>
+    <div class="scroll-fade panel p-6">
+      <h3 class="text-xs font-bold text-accent-green uppercase tracking-[0.15em] mb-4">vs Raptor</h3>
       <div class="space-y-3 text-sm">
-        <div class="flex justify-between items-baseline">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
           <span class="text-ink-soft">Total reviews</span>
-          <span class="font-bold text-emerald-600 stat-num">
+          <span class="font-bold text-accent-green stat-num text-lg">
             -21
           </span>
         </div>
-        <div class="flex justify-between items-baseline">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
           <span class="text-ink-soft">Star rating</span>
-          <span class="font-bold text-emerald-600 stat-num">
+          <span class="font-bold text-accent-green stat-num text-lg">
             -0.1
           </span>
         </div>
-        <div class="flex justify-between items-baseline">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
           <span class="text-ink-soft">7-day pace</span>
-          <span class="font-bold text-emerald-600 stat-num">
+          <span class="font-bold text-accent-green stat-num text-lg">
             -2
           </span>
         </div>
-        <div class="flex justify-between items-baseline pt-2 border-t border-slate-100">
+        <div class="flex justify-between items-baseline pt-2">
           <span class="text-ink-soft">Response rate gap</span>
-          <span class="font-bold stat-num">
+          <span class="font-bold stat-num text-lg">
             
-              <span class="text-emerald-600">
+              <span class="text-accent-green">
                 -91pts
               </span>
             
           </span>
         </div>
       </div>
-      <p class="text-xs text-ink-soft mt-4 pt-3 border-t border-slate-100">Red = they lead, green = Raptor leads.</p>
+      <p class="text-xs text-ink-soft mt-4 pt-3 border-t border-white/5">Red = competitor leads, green = Raptor leads.</p>
     </div>
   </div>
 
 </main>
 
-<footer class="max-w-5xl mx-auto px-5 sm:px-8 py-10 mt-8 border-t border-slate-200 text-xs text-ink-soft">
+<footer class="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 py-10 mt-8 border-t border-white/5 text-xs text-ink-soft">
   <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-    <a href="../../" class="font-semibold text-navy hover:text-accent-blue">Raptor Review Digest &rarr; Dashboard</a>
+    <a href="../../" class="font-semibold text-white hover:text-accent-blue">Raptor Review Digest &rarr; Dashboard</a>
     <div class="text-right">Profile last refreshed April 25, 2026</div>
   </div>
 </footer>

@@ -12,241 +12,185 @@
 tailwind.config = {
   theme: { extend: {
     colors: {
-      navy: { DEFAULT: '#172e55', deep: '#0d1d3a', light: '#2a4880' },
+      navy: { DEFAULT: '#172e55', deep: '#0d1d3a', darker: '#08142a', light: '#2a4880' },
       accent: { green: '#3ae20a', blue: '#1ac6ff' },
-      ink: { DEFAULT: '#172e55', soft: '#4a5568', light: '#9aa5b8' },
+      ink: { soft: '#a3b1c7', mute: '#6b7d99' },
     },
     fontFamily: { sans: ['Ouma Latin VF', 'Inter', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'] },
   }},
 };
 </script>
 <style>
-  body { font-feature-settings: "ss01"; }
+  body { font-feature-settings: "ss01"; background-color: #08142a; color: #ffffff; }
   .stat-num { font-variant-numeric: tabular-nums; }
-  .ai-prose h1, .ai-prose h2, .ai-prose h3, .ai-prose h4 { color: #172e55; font-weight: 700; margin: 1em 0 0.4em; line-height: 1.2; }
-  .ai-prose h1 { font-size: 1.25rem; } .ai-prose h2 { font-size: 1.125rem; } .ai-prose h3 { font-size: 1rem; }
-  .ai-prose h4 { font-size: 0.95rem; color: #4a5568; text-transform: uppercase; letter-spacing: 0.04em; }
-  .ai-prose p { margin: 0.6em 0; } .ai-prose strong { color: #172e55; font-weight: 700; }
-  .ai-prose em { color: #4a5568; }
-  .ai-prose a { color: #1ac6ff; border-bottom: 1px solid rgba(26, 198, 255, 0.3); }
-  .ai-prose ul, .ai-prose ol { margin: 0.6em 0; padding-left: 1.4em; }
-  .ai-prose li { margin: 0.3em 0; }
-  .ai-prose hr { border: none; border-top: 1px solid #e3e7ee; margin: 1em 0; }
-  .gradient-text { background: linear-gradient(135deg, #3ae20a 0%, #1ac6ff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-  .delta-up { color: #059669; font-weight: 700; }
   .scroll-fade { opacity: 0; transform: translateY(20px); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
   .scroll-fade.visible { opacity: 1; transform: translateY(0); }
+  .panel {
+    background: linear-gradient(180deg, rgba(22, 46, 85, 0.65) 0%, rgba(13, 29, 58, 0.85) 100%);
+    border: 1px solid rgba(58, 226, 10, 0.08);
+    border-radius: 16px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    position: relative;
+    overflow: hidden;
+  }
+  .panel::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(58, 226, 10, 0.3), transparent);
+  }
+  .panel-hero {
+    background: linear-gradient(135deg, rgba(22, 46, 85, 0.95) 0%, rgba(13, 29, 58, 0.95) 100%);
+    border: 1px solid rgba(58, 226, 10, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 8px 40px rgba(58, 226, 10, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+  .ai-prose { color: rgba(255, 255, 255, 0.92); }
+  .ai-prose h1, .ai-prose h2, .ai-prose h3, .ai-prose h4 { color: #ffffff; font-weight: 700; margin: 1.2em 0 0.5em; line-height: 1.25; }
+  .ai-prose h1 { font-size: 1.4rem; color: #3ae20a; }
+  .ai-prose h2 { font-size: 1.15rem; color: #3ae20a; padding-top: 0.6em; border-top: 1px solid rgba(58, 226, 10, 0.2); }
+  .ai-prose h2:first-child { border-top: none; padding-top: 0; }
+  .ai-prose h3 { font-size: 1rem; color: #1ac6ff; }
+  .ai-prose h4 { font-size: 0.85rem; color: #a3b1c7; text-transform: uppercase; letter-spacing: 0.05em; }
+  .ai-prose p { margin: 0.7em 0; line-height: 1.65; }
+  .ai-prose strong { color: #ffffff; font-weight: 700; }
+  .ai-prose em { color: #a3b1c7; }
+  .ai-prose a { color: #1ac6ff; border-bottom: 1px solid rgba(26, 198, 255, 0.4); }
+  .ai-prose a:hover { color: #ffffff; }
+  .ai-prose ul, .ai-prose ol { padding-left: 1.4em; margin: 0.6em 0; }
+  .ai-prose li { margin: 0.4em 0; line-height: 1.6; }
+  .ai-prose hr { border: none; border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 1.5em 0; }
+  .gradient-text { background: linear-gradient(135deg, #3ae20a 0%, #1ac6ff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 </style>
 </head>
-<body class="bg-slate-50 text-ink antialiased min-h-screen">
+<body class="antialiased min-h-screen">
 
-<!-- Hero -->
-<section class="bg-gradient-to-br from-navy via-navy-deep to-navy text-white relative overflow-hidden">
-  <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 20% 50%, #3ae20a 0%, transparent 40%), radial-gradient(circle at 80% 30%, #1ac6ff 0%, transparent 35%);"></div>
-  <div class="max-w-5xl mx-auto px-5 sm:px-8 py-8 relative z-10">
-    <a href="../../" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-accent-green hover:text-accent-blue mb-6 transition-colors">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-      Back to dashboard
-    </a>
+<div class="fixed inset-0 pointer-events-none" style="background-image: radial-gradient(circle at 15% 0%, rgba(58, 226, 10, 0.06) 0%, transparent 40%), radial-gradient(circle at 85% 50%, rgba(26, 198, 255, 0.05) 0%, transparent 35%);"></div>
+
+<section class="relative z-10">
+  <div class="max-w-5xl mx-auto px-5 sm:px-8 pt-8 pb-10">
+    <div class="flex items-center justify-between mb-6 flex-wrap gap-4">
+      <a href="../../" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-accent-green hover:text-accent-blue transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        Back to dashboard
+      </a>
+      <img src="../../assets/logo.webp" alt="Raptor Roofing" class="h-10 w-auto" onerror="this.style.display='none'">
+    </div>
     <div class="flex items-start justify-between flex-wrap gap-4 mb-4">
       <div>
         <div class="text-xs uppercase tracking-widest text-accent-green font-bold mb-1">Competitor Profile</div>
-        <h1 class="text-3xl sm:text-5xl font-bold tracking-tight">Cox Roofing</h1>
+        <h1 class="text-3xl sm:text-5xl font-bold tracking-tight text-white">Cox Roofing</h1>
         
       </div>
       <div class="text-right">
-        <div class="text-xs uppercase tracking-widest text-white/60">Volume Rank</div>
-        <div class="text-3xl font-bold gradient-text">#13</div>
+        <div class="text-xs uppercase tracking-widest text-ink-soft">Volume Rank</div>
+        <div class="text-3xl font-bold gradient-text">#9</div>
       </div>
     </div>
 
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8">
-      <div class="bg-white/10 backdrop-blur border border-accent-green/20 rounded-xl p-4">
-        <div class="text-2xl sm:text-3xl font-bold text-accent-green stat-num">503</div>
-        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">Total Reviews</div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-green">503</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Total Reviews</div>
       </div>
-      <div class="bg-white/10 backdrop-blur border border-accent-green/20 rounded-xl p-4">
-        <div class="text-2xl sm:text-3xl font-bold text-accent-green stat-num">4.8</div>
-        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">Star Rating</div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-green">4.8</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Star Rating</div>
       </div>
-      <div class="bg-white/10 backdrop-blur border border-accent-blue/30 rounded-xl p-4">
-        <div class="text-2xl sm:text-3xl font-bold text-accent-blue stat-num">+1</div>
-        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">This Week</div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-blue">+1</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">This Week</div>
       </div>
-      <div class="bg-white/10 backdrop-blur border border-accent-blue/30 rounded-xl p-4">
-        <div class="text-2xl sm:text-3xl font-bold text-accent-blue stat-num">+7</div>
-        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">Last 30 Days</div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-blue">+7</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Last 30 Days</div>
       </div>
+      
     </div>
 
-    <div class="mt-4 flex items-center gap-4 text-sm text-white/60 flex-wrap">
-      <span><span class="text-white font-semibold">81%</span> response rate</span>
+    <div class="mt-4 flex items-center gap-4 text-sm text-ink-soft flex-wrap">
+      <span><span class="text-white font-semibold">91%</span> response rate</span>
       <span>+<span class="text-white font-semibold">14</span> in last 90 days</span>
-      <span class="text-white/40">Refreshed April 25, 2026</span>
+      <span class="text-ink-mute">Refreshed April 25, 2026</span>
     </div>
   </div>
 </section>
 
-<main class="max-w-5xl mx-auto px-5 sm:px-8 py-8 space-y-6">
+<main class="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 py-8 space-y-6">
 
   
-  <div class="scroll-fade bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
-    <div class="flex items-center justify-between mb-4">
-      <h2 class="text-lg font-bold text-navy uppercase tracking-wider">Strategic Read</h2>
-      <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-slate-100 px-2 py-1 rounded">Live AI Research</span>
-    </div>
-    <div class="ai-prose text-sm sm:text-base"><p>Now I have enough data to write a complete, specific, well-cited brief. Let me compile it.</p>
-<hr />
-<h1>🦅 Raptor Roofing — Competitive Intelligence Brief</h1>
-<p><strong>Competitor:</strong> Cox Roofing | <strong>Refreshed:</strong> Thursday, April 25, 2026<br />
-<strong>Prepared for:</strong> Cameron Blakely, Raptor Roofing (Greenwood, IN)</p>
-<hr />
-<h2><strong>1. Who They Are</strong></h2>
-<p>Cox Roofing was established in 2013, founded by husband-and-wife team Justin and Mishell Cox.</p>
-<p>The Coxes balance multiple careers — Justin also serves as a full-time firefighter</p>
-<p>, and they lean into that identity heavily: </p>
-<p>their Instagram bio reads "Firefighter Founded | Family Owned | Certified Women &amp; Minority Owned."</p>
-<p>The company has expanded its national footprint with offices in Florida, Colorado, Kentucky, and Wyoming, and is eyeing further expansion into Illinois.</p>
-<p>Their primary Indiana operations are headquartered at <a href="https://www.yelp.com/biz/cox-roofing-zionsville-2">10837 Andrade Dr, Zionsville, IN</a>, serving the broader Indianapolis metro under the brand <a href="https://coxroofingsystems.com">coxroofingsystems.com</a>.</p>
-<hr />
-<h2><strong>2. Estimated Scale</strong></h2>
-<p>Cox Roofing has 263 followers on LinkedIn</p>
-<p>with no disclosed headcount on that profile. </p>
-<p>Indeed lists 22 open jobs across the company</p>
-<p>, suggesting a multi-state operation with active scaling. Based on team page depth, multi-state footprint, and job volume, Indiana headcount is estimated at <strong>15–30 employees</strong>. <strong>Confidence: low</strong> — no verified employee count is publicly indexed for the Indiana entity specifically. Annual revenue estimate: <strong>$3M–$7M (Indiana only)</strong>; likely higher when Colorado and other states are included. <strong>Confidence: low</strong> — no ZoomInfo or Dun &amp; Bradstreet figure surfaced for this specific entity during this pull.</p>
-<hr />
-<h2><strong>3. Recent Hiring Signals</strong></h2>
-<p>Cox Roofing (operating as Cox Residential Roofing on job boards) is actively recruiting a <strong>Sales Manager</strong> on Indeed, described as a role to build and develop a strong sales team and implement sales protocols and training programs.</p>
-<p>This is a significant flag — a Sales Manager hire means they are trying to systematize and scale their sales operation, not just fill a rep slot. </p>
-<p>LinkedIn posts also show a general call for anyone "passionate about roofing and with management experience."</p>
-<p>No marketing director or ops leadership role was detected on ZipRecruiter or LinkedIn in the last 30 days. The Sales Manager posting is the one to watch.</p>
-<hr />
-<h2><strong>4. Off-Google Presence</strong></h2>
-<ul>
-<li><strong>Yelp:</strong> <a href="https://www.yelp.com/biz/cox-roofing-zionsville-2">Listed at 10837 Andrade Dr, Zionsville</a> with only 24 photos. </li>
-</ul>
-<p>Yelp reports roofing was searched 2,076 times last month within 25 miles of this business</p>
-<p>— high intent, but Cox has no visible Yelp star rating surfaced publicly, suggesting minimal Yelp review cultivation. Classic Google-funneling pattern.<br />
-- <strong>BBB:</strong> </p>
-<p>Cox claims an A+ BBB rating and Owens Corning Platinum Preferred contractor status.</p>
-<p>The <a href="https://www.bbb.org/us/in/zionsville/profile/roofing-contractors/cox-roofing-0382-90016335">BBB profile</a> lists Justin Cox as Owner and Mishell Cox as Manager of Business Development.<br />
-- <strong>Angi:</strong> </p>
-<p>Angi contains at least one serious complaint describing an 8-month delay to return, improper repairs, and communication breakdowns</p>
-<p>— a liability vs. their Google score.<br />
-- <strong>Facebook:</strong> </p>
-<p>Cox Roofing's Facebook page (Zionsville) shows 2,864 likes and 17 people talking.</p>
-<p>They recently introduced an AI persona called "IVO," described as a roofing expert to guide customers.</p>
-<p>No active paid ads were detectable in the Facebook Ad Library at time of this pull.<br />
-- <strong>Houzz:</strong> </p>
-<p>Their Houzz profile markets as "locally owned and operated by a Firefighter" serving the entire state.</p>
-<p><strong>Discrepancy flag:</strong> 4.8 stars on Google (503 reviews) vs. effectively zero Yelp and at least one harsh Angi complaint = clear Google-funnel bias. Their review velocity (7 in 30 days) is also soft for their size.</p>
-<hr />
-<h2><strong>5. SEO and AEO Posture</strong></h2>
-<p>No verified Moz DA or Ahrefs DR score surfaced publicly for <code>coxroofingsystems.com</code> in this pull. Structural observations: </p>
-<p>they maintain a dedicated Indianapolis service-area landing page</p>
-<p>, and the site covers Zionsville, Carmel, Fishers, Noblesville, Westfield, and other suburbs via <a href="https://www.houzz.com/professionals/roofing-and-gutters/cox-residential-roofing-pfvwus-pf~126867168">Houzz-listed service zones</a>. </p>
-<p>Starting in 2024, Cox began publishing roofing/siding/guttering articles on LinkedIn</p>
-<p>, and </p>
-<p>topics include "Choosing the Right Roofing Material for Indiana's Weather"</p>
-<p>— lightweight SEO content. Their site is WordPress-based (noted in ZoomInfo tech stack data), uses reCAPTCHA, and appears to have basic local schema. No evidence of local press backlinks, data studies, or editorial coverage from outlets like the Indianapolis Star or IBJ. The <a href="https://townepost.com/torch-indy/cox-roofing-grows-while-staying-true-to-its-culture/">Towne Post feature</a> is their strongest editorial backlink found. Their COO's stated mission: </p>
-<p>"to position Cox Roofing as the top exterior restoration contractor in the nation by 2030."</p>
-<p>That ambition isn't yet matched by SEO infrastructure.</p>
-<hr />
-<h2><strong>6. Generative Engine Visibility</strong></h2>
-<p>Cox Roofing <strong>does not appear</strong> in current AI-generated answers for the queries tested: <em>"best roofers Indianapolis," "top roofing contractor near Greenwood Indiana," "roof replacement Carmel Indiana,"</em> and <em>"roofing company Fishers Noblesville Zionsville."</em> Their web footprint — a WordPress site with thin blog content, no IBJ/IndyStar editorial links, and no structured data beyond basics — does not meet the citation threshold that LLMs use when generating local contractor recommendations. </p>
-<p>Answer Engine Optimization (AEO) for local roofers is a rapidly emerging discipline, with AI search traffic reportedly up 527% over the past year.</p>
-<p>Neither Cox nor most Indy competitors are currently showing up in these AI surfaces. <strong>This is the biggest open lane in the market right now — whoever builds AEO-ready content first wins the next wave of leads.</strong></p>
-<hr />
-<h2><strong>7. Strategic Read vs. Raptor</strong></h2>
-<p><strong>Where Cox beats Raptor:</strong> Multi-state brand narrative and the "firefighter-founded" identity hook are emotionally resonant and PR-ready. Their commercial + multi-family division gives them revenue streams Raptor doesn't publicly compete in. Their Sales Manager hire signals an imminent push to increase residential close rates. </p>
-<p>They also offer financing through a Momnt partnership</p>
-<p>, which is a transactional tool Raptor should verify it can match.</p>
-<p><strong>Where Raptor beats Cox:</strong> 664 reviews at 5.0 vs. 503 at 4.8 — Raptor's review volume and perfect score are the highest in the Indy top 10 by volume. An 81% owner response rate at Cox is solid but not elite. Raptor's Greenwood/south-side positioning avoids direct overlap with Cox's Zionsville/north-side core. Cox's Angi complaints and Yelp absence are exploitable trust gaps.</p>
-<p><strong>Most exploitable weakness:</strong> Cox's review velocity is decelerating (1 review in the last 7 days, 7 in 30) while running 22 open jobs — they are scaling headcount faster than they are scaling social proof.</p>
-<hr />
-<h2><strong>8. What Raptor Should Watch or Copy</strong></h2>
-<ol>
-<li><strong>The "IVO" AI persona on Facebook.</strong> </li>
-</ol>
-<p>Cox introduced a named AI roofing expert, "IVO," to guide and educate homeowners on their Facebook page.</p>
-<p>This is a low-cost trust-building and content-cadence tool. Cameron should consider a Raptor-branded educational chatbot or video series before Cox gets traction with it.</p>
-<ol start="2">
-<li>
-<p><strong>The Firefighter-Founded identity wedge.</strong> Cox's single-sentence brand story ("firefighter-founded, family-owned") punches above its SEO weight because it's emotionally specific. Raptor should pressure-test its own 5-word identity hook and deploy it consistently across every platform to counter this narrative.</p>
-</li>
-<li>
-<p><strong>Sales Manager structure as a warning signal.</strong> </p>
-</li>
-</ol>
-<p>Cox's active Sales Manager posting is designed to build a trained sales team with protocols and performance accountability.</p>
-<p>If Cox closes this hire in Q2 2026, expect more aggressive door-to-door and storm-chasing activity in the north Indy suburbs by summer. Cameron should brief his team now.</p></div>
+  <div class="scroll-fade panel p-6 sm:p-8 text-center text-ink-soft">
+    Deep profile research populates on the next refresh cycle.
   </div>
   
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <div class="scroll-fade bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
-      <h3 class="text-sm font-bold text-navy uppercase tracking-wider mb-4">Review Velocity</h3>
+    <div class="scroll-fade panel p-6">
+      <h3 class="text-xs font-bold text-accent-green uppercase tracking-[0.15em] mb-4">Review Velocity</h3>
       <div class="space-y-3 text-sm">
-        <div class="flex justify-between items-baseline">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
           <span class="text-ink-soft">Last 7 days</span>
-          <span class="font-bold text-navy stat-num">+1</span>
+          <span class="font-bold text-white stat-num text-lg">+1</span>
         </div>
-        <div class="flex justify-between items-baseline">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
           <span class="text-ink-soft">Last 30 days</span>
-          <span class="font-bold text-navy stat-num">+7</span>
+          <span class="font-bold text-white stat-num text-lg">+7</span>
         </div>
-        <div class="flex justify-between items-baseline">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
           <span class="text-ink-soft">Last 90 days</span>
-          <span class="font-bold text-navy stat-num">+14</span>
+          <span class="font-bold text-white stat-num text-lg">+14</span>
         </div>
-        <div class="flex justify-between items-baseline pt-2 border-t border-slate-100">
+        <div class="flex justify-between items-baseline pt-2">
           <span class="text-ink-soft">Annual pace (90d × 4)</span>
-          <span class="font-bold text-accent-blue stat-num">~56/yr</span>
+          <span class="font-bold text-accent-blue stat-num text-lg">~56/yr</span>
         </div>
       </div>
     </div>
 
-    <div class="scroll-fade bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
-      <h3 class="text-sm font-bold text-navy uppercase tracking-wider mb-4">vs Raptor</h3>
+    <div class="scroll-fade panel p-6">
+      <h3 class="text-xs font-bold text-accent-green uppercase tracking-[0.15em] mb-4">vs Raptor</h3>
       <div class="space-y-3 text-sm">
-        <div class="flex justify-between items-baseline">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
           <span class="text-ink-soft">Total reviews</span>
-          <span class="font-bold text-emerald-600 stat-num">
+          <span class="font-bold text-accent-green stat-num text-lg">
             -161
           </span>
         </div>
-        <div class="flex justify-between items-baseline">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
           <span class="text-ink-soft">Star rating</span>
-          <span class="font-bold text-emerald-600 stat-num">
+          <span class="font-bold text-accent-green stat-num text-lg">
             -0.2
           </span>
         </div>
-        <div class="flex justify-between items-baseline">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
           <span class="text-ink-soft">7-day pace</span>
-          <span class="font-bold text-emerald-600 stat-num">
+          <span class="font-bold text-accent-green stat-num text-lg">
             -1
           </span>
         </div>
-        <div class="flex justify-between items-baseline pt-2 border-t border-slate-100">
+        <div class="flex justify-between items-baseline pt-2">
           <span class="text-ink-soft">Response rate gap</span>
-          <span class="font-bold stat-num">
+          <span class="font-bold stat-num text-lg">
             
-              <span class="text-emerald-600">
-                -16pts
+              <span class="text-accent-green">
+                -6pts
               </span>
             
           </span>
         </div>
       </div>
-      <p class="text-xs text-ink-soft mt-4 pt-3 border-t border-slate-100">Red = they lead, green = Raptor leads.</p>
+      <p class="text-xs text-ink-soft mt-4 pt-3 border-t border-white/5">Red = competitor leads, green = Raptor leads.</p>
     </div>
   </div>
 
 </main>
 
-<footer class="max-w-5xl mx-auto px-5 sm:px-8 py-10 mt-8 border-t border-slate-200 text-xs text-ink-soft">
+<footer class="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 py-10 mt-8 border-t border-white/5 text-xs text-ink-soft">
   <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-    <a href="../../" class="font-semibold text-navy hover:text-accent-blue">Raptor Review Digest &rarr; Dashboard</a>
+    <a href="../../" class="font-semibold text-white hover:text-accent-blue">Raptor Review Digest &rarr; Dashboard</a>
     <div class="text-right">Profile last refreshed April 25, 2026</div>
   </div>
 </footer>

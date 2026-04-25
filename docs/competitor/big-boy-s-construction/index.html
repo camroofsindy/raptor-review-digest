@@ -12,259 +12,190 @@
 tailwind.config = {
   theme: { extend: {
     colors: {
-      navy: { DEFAULT: '#172e55', deep: '#0d1d3a', light: '#2a4880' },
+      navy: { DEFAULT: '#172e55', deep: '#0d1d3a', darker: '#08142a', light: '#2a4880' },
       accent: { green: '#3ae20a', blue: '#1ac6ff' },
-      ink: { DEFAULT: '#172e55', soft: '#4a5568', light: '#9aa5b8' },
+      ink: { soft: '#a3b1c7', mute: '#6b7d99' },
     },
     fontFamily: { sans: ['Ouma Latin VF', 'Inter', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'] },
   }},
 };
 </script>
 <style>
-  body { font-feature-settings: "ss01"; }
+  body { font-feature-settings: "ss01"; background-color: #08142a; color: #ffffff; }
   .stat-num { font-variant-numeric: tabular-nums; }
-  .ai-prose h1, .ai-prose h2, .ai-prose h3, .ai-prose h4 { color: #172e55; font-weight: 700; margin: 1em 0 0.4em; line-height: 1.2; }
-  .ai-prose h1 { font-size: 1.25rem; } .ai-prose h2 { font-size: 1.125rem; } .ai-prose h3 { font-size: 1rem; }
-  .ai-prose h4 { font-size: 0.95rem; color: #4a5568; text-transform: uppercase; letter-spacing: 0.04em; }
-  .ai-prose p { margin: 0.6em 0; } .ai-prose strong { color: #172e55; font-weight: 700; }
-  .ai-prose em { color: #4a5568; }
-  .ai-prose a { color: #1ac6ff; border-bottom: 1px solid rgba(26, 198, 255, 0.3); }
-  .ai-prose ul, .ai-prose ol { margin: 0.6em 0; padding-left: 1.4em; }
-  .ai-prose li { margin: 0.3em 0; }
-  .ai-prose hr { border: none; border-top: 1px solid #e3e7ee; margin: 1em 0; }
-  .gradient-text { background: linear-gradient(135deg, #3ae20a 0%, #1ac6ff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-  .delta-up { color: #059669; font-weight: 700; }
   .scroll-fade { opacity: 0; transform: translateY(20px); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
   .scroll-fade.visible { opacity: 1; transform: translateY(0); }
+  .panel {
+    background: linear-gradient(180deg, rgba(22, 46, 85, 0.65) 0%, rgba(13, 29, 58, 0.85) 100%);
+    border: 1px solid rgba(58, 226, 10, 0.08);
+    border-radius: 16px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    position: relative;
+    overflow: hidden;
+  }
+  .panel::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(58, 226, 10, 0.3), transparent);
+  }
+  .panel-hero {
+    background: linear-gradient(135deg, rgba(22, 46, 85, 0.95) 0%, rgba(13, 29, 58, 0.95) 100%);
+    border: 1px solid rgba(58, 226, 10, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 8px 40px rgba(58, 226, 10, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+  .ai-prose { color: rgba(255, 255, 255, 0.92); }
+  .ai-prose h1, .ai-prose h2, .ai-prose h3, .ai-prose h4 { color: #ffffff; font-weight: 700; margin: 1.2em 0 0.5em; line-height: 1.25; }
+  .ai-prose h1 { font-size: 1.4rem; color: #3ae20a; }
+  .ai-prose h2 { font-size: 1.15rem; color: #3ae20a; padding-top: 0.6em; border-top: 1px solid rgba(58, 226, 10, 0.2); }
+  .ai-prose h2:first-child { border-top: none; padding-top: 0; }
+  .ai-prose h3 { font-size: 1rem; color: #1ac6ff; }
+  .ai-prose h4 { font-size: 0.85rem; color: #a3b1c7; text-transform: uppercase; letter-spacing: 0.05em; }
+  .ai-prose p { margin: 0.7em 0; line-height: 1.65; }
+  .ai-prose strong { color: #ffffff; font-weight: 700; }
+  .ai-prose em { color: #a3b1c7; }
+  .ai-prose a { color: #1ac6ff; border-bottom: 1px solid rgba(26, 198, 255, 0.4); }
+  .ai-prose a:hover { color: #ffffff; }
+  .ai-prose ul, .ai-prose ol { padding-left: 1.4em; margin: 0.6em 0; }
+  .ai-prose li { margin: 0.4em 0; line-height: 1.6; }
+  .ai-prose hr { border: none; border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 1.5em 0; }
+  .gradient-text { background: linear-gradient(135deg, #3ae20a 0%, #1ac6ff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 </style>
 </head>
-<body class="bg-slate-50 text-ink antialiased min-h-screen">
+<body class="antialiased min-h-screen">
 
-<!-- Hero -->
-<section class="bg-gradient-to-br from-navy via-navy-deep to-navy text-white relative overflow-hidden">
-  <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 20% 50%, #3ae20a 0%, transparent 40%), radial-gradient(circle at 80% 30%, #1ac6ff 0%, transparent 35%);"></div>
-  <div class="max-w-5xl mx-auto px-5 sm:px-8 py-8 relative z-10">
-    <a href="../../" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-accent-green hover:text-accent-blue mb-6 transition-colors">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-      Back to dashboard
-    </a>
+<div class="fixed inset-0 pointer-events-none" style="background-image: radial-gradient(circle at 15% 0%, rgba(58, 226, 10, 0.06) 0%, transparent 40%), radial-gradient(circle at 85% 50%, rgba(26, 198, 255, 0.05) 0%, transparent 35%);"></div>
+
+<section class="relative z-10">
+  <div class="max-w-5xl mx-auto px-5 sm:px-8 pt-8 pb-10">
+    <div class="flex items-center justify-between mb-6 flex-wrap gap-4">
+      <a href="../../" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-accent-green hover:text-accent-blue transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        Back to dashboard
+      </a>
+      <img src="../../assets/logo.webp" alt="Raptor Roofing" class="h-10 w-auto" onerror="this.style.display='none'">
+    </div>
     <div class="flex items-start justify-between flex-wrap gap-4 mb-4">
       <div>
         <div class="text-xs uppercase tracking-widest text-accent-green font-bold mb-1">Competitor Profile</div>
-        <h1 class="text-3xl sm:text-5xl font-bold tracking-tight">Big Boy's Construction</h1>
-        <p class="text-white/60 text-sm mt-2">241 S State Ave Suite B, Indianapolis, IN 46201</p>
+        <h1 class="text-3xl sm:text-5xl font-bold tracking-tight text-white">Big Boy's Construction</h1>
+        <p class="text-ink-soft text-sm mt-2">241 S State Ave Suite B, Indianapolis, IN 46201</p>
       </div>
       <div class="text-right">
-        <div class="text-xs uppercase tracking-widest text-white/60">Volume Rank</div>
-        <div class="text-3xl font-bold gradient-text">#7</div>
+        <div class="text-xs uppercase tracking-widest text-ink-soft">Volume Rank</div>
+        <div class="text-3xl font-bold gradient-text">#5</div>
       </div>
     </div>
 
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8">
-      <div class="bg-white/10 backdrop-blur border border-accent-green/20 rounded-xl p-4">
-        <div class="text-2xl sm:text-3xl font-bold text-accent-green stat-num">844</div>
-        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">Total Reviews</div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-green">844</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Total Reviews</div>
       </div>
-      <div class="bg-white/10 backdrop-blur border border-accent-green/20 rounded-xl p-4">
-        <div class="text-2xl sm:text-3xl font-bold text-accent-green stat-num">4.9</div>
-        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">Star Rating</div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-green">4.9</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Star Rating</div>
       </div>
-      <div class="bg-white/10 backdrop-blur border border-accent-blue/30 rounded-xl p-4">
-        <div class="text-2xl sm:text-3xl font-bold text-accent-blue stat-num">+0</div>
-        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">This Week</div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-blue">+0</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">This Week</div>
       </div>
-      <div class="bg-white/10 backdrop-blur border border-accent-blue/30 rounded-xl p-4">
-        <div class="text-2xl sm:text-3xl font-bold text-accent-blue stat-num">+24</div>
-        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">Last 30 Days</div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-blue">+24</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Last 30 Days</div>
       </div>
+      
     </div>
 
-    <div class="mt-4 flex items-center gap-4 text-sm text-white/60 flex-wrap">
+    <div class="mt-4 flex items-center gap-4 text-sm text-ink-soft flex-wrap">
       <span><span class="text-white font-semibold">100%</span> response rate</span>
       <span>+<span class="text-white font-semibold">46</span> in last 90 days</span>
-      <span class="text-white/40">Refreshed April 25, 2026</span>
+      <span class="text-ink-mute">Refreshed April 25, 2026</span>
     </div>
   </div>
 </section>
 
-<main class="max-w-5xl mx-auto px-5 sm:px-8 py-8 space-y-6">
+<main class="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 py-8 space-y-6">
 
   
-  <div class="scroll-fade bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
+  <div class="scroll-fade panel-hero p-6 sm:p-8">
     <div class="flex items-center justify-between mb-4">
-      <h2 class="text-lg font-bold text-navy uppercase tracking-wider">Strategic Read</h2>
-      <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-slate-100 px-2 py-1 rounded">Live AI Research</span>
+      <h2 class="text-base sm:text-lg font-bold text-white uppercase tracking-wider">Strategic Read</h2>
+      <span class="text-[10px] uppercase tracking-wider text-accent-green bg-accent-green/15 border border-accent-green/30 px-2 py-1 rounded-full">CMO Briefing</span>
     </div>
-    <div class="ai-prose text-sm sm:text-base"><p>Now I have enough data to write a thorough, specific brief. Let me compile it.</p>
-<hr />
-<h1>🦅 Raptor Roofing — Competitor Intelligence Brief</h1>
-<p><strong>Target:</strong> Big Boy's Construction | <strong>Prepared for:</strong> Cameron Blakely<br />
-<strong>Last refreshed:</strong> Thursday, April 25, 2025 | <em>Next refresh: Tuesday, April 29</em></p>
-<hr />
-<h2><strong>1. Who They Are</strong></h2>
-<p>Big Boy's Construction is a privately held Indianapolis roofing and general contracting company founded in <strong>2011</strong>.</p>
-<p>President and owner is <strong>Mark Andrew</strong>, who leads the company out of its current address at 241 S State Ave Suite B, Indianapolis, IN 46201.</p>
-<p>They serve customers across Indiana with a primary focus on the Indianapolis area, with a stated targeted service area of a 75-mile radius around Indianapolis — and further in storm-affected areas.</p>
-<p>Their key differentiator is GAF Master Elite status, </p>
-<p>placing them in the top 2% of all contractors in the country</p>
-<p>, plus a heavy emphasis on insurance claim navigation as a core offering.</p>
-<hr />
-<h2><strong>2. Estimated Scale</strong></h2>
-<p>LinkedIn lists them at <strong>11–50 employees</strong>, privately held, founded 2011.</p>
-<p>Prospeo.io independently corroborates 21–50 employees.</p>
-<p>Cross-referencing with </p>
-<p>Indeed salary data showing job titles spanning Sales Coordinator through Sales Manager (avg. $57K–$110K)</p>
-<p>, the company appears to run a sizable commission-based sales force. <strong>Confidence: medium</strong> (no public revenue filing exists). Estimated annual revenue: <strong>$3M–$7M</strong> based on headcount and typical residential roofing revenue-per-employee benchmarks for storm-restoration shops in their size band. </p>
-<p>ZoomInfo notes Big Boy's Construction "is expanding and recently hired new employees,"</p>
-<p>suggesting a growth phase.</p>
-<hr />
-<h2><strong>3. Recent Hiring Signals</strong></h2>
-<p>A Glassdoor listing dated <strong>July 21, 2025</strong> (now expired) posted a "Life-Changing Sales Career" role based in Indianapolis, hybrid format, paying <strong>$60,000–$150,000+/year</strong>.</p>
-<p>Their own careers page (<a href="https://bigboysconstructioninc.com/careers/">bigboysconstructioninc.com/careers</a>) is actively maintained, pitching the company as one that "invests considerably into our employees" with training and development.</p>
-<p>No marketing, ops leadership, or digital roles were found in active listings in the last 30 days on Indeed, LinkedIn, or ZipRecruiter. <strong>Primary hiring signal is sales reps</strong> — classic volume-based storm-chasing model. No CMO/marketing director hire detected, which is notable.</p>
-<hr />
-<h2><strong>4. Off-Google Presence</strong></h2>
-<table>
-<thead>
-<tr>
-<th>Platform</th>
-<th>Signal</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>BBB</strong></td>
-<td><a href="https://www.bbb.org/us/in/indianapolis/profile/general-contractor/big-boys-construction-inc-0382-90012960">A+ rated, accredited since 7/6/2012</a></td>
-</tr>
-<tr>
-<td><strong>Yelp</strong></td>
-<td><a href="https://www.yelp.com/biz/big-boys-construction-indianapolis">Zero reviews — profile exists but completely unreviewed</a></td>
-</tr>
-<tr>
-<td><strong>Facebook</strong></td>
-<td><a href="https://www.facebook.com/BigBoysConstructionInc/">2,241 likes, 52 reviews, 100% recommend</a> — active posting, storm-season content</td>
-</tr>
-<tr>
-<td><strong>Nextdoor</strong></td>
-<td><a href="https://nextdoor.com/pages/big-boys-construction-inc/">Listed on two separate Nextdoor pages</a>, only 3 ❤️ recommendations per BestProsInTown</td>
-</tr>
-<tr>
-<td><strong>GuildQuality</strong></td>
-<td>Verified reviews present, mostly 2021 — no recent entries</td>
-</tr>
-</tbody>
-</table>
-<p>On Yelp, zero customers have reviewed them — they are literally unrated on the platform.</p>
-<p>This is a <strong>major discrepancy</strong> vs. 844 Google reviews at 4.9 stars and is a textbook review-funneling pattern: all social proof is concentrated on Google. </p>
-<p>Their Nextdoor page touts being "Five Star rated on Google, Angie's List, Facebook and Thumbtack"</p>
-<p>— notably, Yelp is never mentioned. No Facebook Ad Library ads were found in current active rotation (no paid campaigns detected).</p>
-<hr />
-<h2><strong>5. SEO and AEO Posture</strong></h2>
-<p>Their site (<a href="https://bigboysconstructioninc.com">bigboysconstructioninc.com</a>) is built on WordPress </p>
-<p>using reCAPTCHA and PHP via Nexcess hosting.</p>
-<p>They have built out dedicated service-area landing pages (e.g., <a href="https://bigboysconstructioninc.com/indianapolis-roofing-company/">/indianapolis-roofing-company/</a>) and individual service pages for repair, inspection, and replacement — this is solid on-page SEO architecture. </p>
-<p>They actively market drone technology for roof inspections</p>
-<p>, which creates differentiated content. Their domain appears in third-party "best of" roundups from Expertise.com, which carries backlink value. </p>
-<p>Expertise.com lists them as a top Indianapolis roofer</p>
-<p>, providing a legitimate local backlink. However, no local press coverage (Indianapolis Star, Indy Star, WTHR, etc.) or editorial links were found in search results — their backlink profile appears directory-heavy rather than editorial. No blog/content cadence is visible on the site. Domain authority is likely in the <strong>15–25 Moz DA range</strong> (medium-confidence estimate for a 14-year-old local trade site with directory links but no press). They are <strong>not</strong> appearing in the <a href="https://staydryroofing.com/updated-2026-top-10-roofing-companies-in-indianapolis/">Stay Dry Roofing top-10 list for 2026</a> or <a href="https://indyroofandrestoration.com/the-10-best-roofing-companies-in-indianapolis-for-2026/">Indy Roof &amp; Restoration's 2026 top-10 list</a> — notable SEO misses for "best roofing Indianapolis" roundup queries.</p>
-<hr />
-<h2><strong>6. Generative Engine Visibility</strong></h2>
-<p>For queries including "best roofers Indianapolis," "top roofing contractor near Greenwood Indiana," "roof replacement Carmel Indiana," and "roofing company Fishers Noblesville Zionsville" — <strong>Big Boy's Construction does not appear to be cited by name in current AI-generated roundup answers</strong> on ChatGPT, Claude, or Gemini. The companies that dominate AI answers for these queries are Indy Roof &amp; Restoration, Bone Dry Roofing, Stay Dry Roofing, Amos Exteriors, and Coomer Roofing — all of which benefit from editorial backlinks and press coverage that AI engines use as citation sources. </p>
-<p>One 2026 roundup, published by Stay Dry Roofing, explicitly cites "local reputation, verified credentials, customer reviews, service offerings, and industry recognition" as selection criteria</p>
-<p>— Big Boy's Construction is absent. Big Boy's does appear on Expertise.com's Indianapolis roofer list, </p>
-<p>which scored contractors on more than 25 variables</p>
-<p>, providing some AEO-friendly citation potential. <strong>This is Raptor's biggest AEO opportunity</strong>: both Raptor and Big Boy's are currently invisible to generative engines for suburban queries (Greenwood, Fishers, Noblesville, Zionsville, Carmel).</p>
-<hr />
-<h2><strong>7. Strategic Read vs. Raptor</strong></h2>
-<p><strong>Where Big Boy's beats Raptor:</strong> Raw Google review volume (844 vs. 664) — they have a 180-review head start, and </p>
-<p>operator.fyi forecasts them to hold the #1 volume position in Indianapolis with 72% confidence at current velocity.</p>
-<p>They also have 14 years of operating history, GAF Master Elite status, and a multi-service offering (siding, gutters, windows, mold remediation) that creates more customer touchpoints. Their 75-mile service radius is broader by claim.</p>
-<p><strong>Where Raptor beats Big Boy's:</strong> Raptor holds the <strong>highest star rating in the Indy top-10 by volume at 5.0</strong> vs. Big Boy's 4.9. Yelp presence is non-existent for Big Boy's — zero reviews — while their owner response rate is 1.0 on Google, meaning 100% response, but cross-platform reputation is fragile. Raptor's premium positioning ("we don't outsource accountability") is a direct counter to a company built on a large, commissioned, sales-rep-heavy model.</p>
-<p><strong>Most exploitable weakness:</strong> Big Boy's has <strong>zero Yelp reviews</strong> despite 844 Google reviews and 14 years in business — a glaring review-funneling signal that sophisticated homeowners and AI citation engines will notice.</p>
-<hr />
-<h2><strong>8. What Raptor Should Watch or Copy</strong></h2>
-<ol>
-<li><strong>Drone inspection marketing.</strong> </li>
-</ol>
-<p>Big Boy's actively markets drone technology for both exterior inspections and safety — drones let roofers stay on the ground while producing comprehensive inspection footage.</p>
-<p>This is a concrete, visual content differentiator Cameron should match or beat with documented video walkthroughs published to YouTube and the Raptor site.</p>
-<ol start="2">
-<li>
-<p><strong>Dedicated city/suburb landing pages.</strong> Big Boy's has built <code>/indianapolis-roofing-company/</code> as a keyword-targeted page. Raptor should build equivalent pages for Greenwood, Whiteland, Franklin, and Bargersville — towns where Raptor's proximity is a genuine advantage and where Big Boy's is competing from an Indianapolis address.</p>
-</li>
-<li>
-<p><strong>Monitor the Glassdoor sales hiring cadence.</strong> </p>
-</li>
-</ol>
-<p>Their most recent open role was a sales rep at $60K–$150K+, posted July 2025.</p>
-<p>When Big Boy's is actively hiring salespeople, they're about to ramp up door-knocking and storm-chasing canvassing. Watch Glassdoor quarterly — if new sales roles appear, expect increased canvassing in Greenwood and Southside neighborhoods within 30–60 days.</p></div>
+    <div class="ai-prose text-sm sm:text-base"><h2>1. Who They Are</h2>
+<p>Test profile <strong>bold</strong> <a href="https://example.com">link</a></p></div>
   </div>
   
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <div class="scroll-fade bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
-      <h3 class="text-sm font-bold text-navy uppercase tracking-wider mb-4">Review Velocity</h3>
+    <div class="scroll-fade panel p-6">
+      <h3 class="text-xs font-bold text-accent-green uppercase tracking-[0.15em] mb-4">Review Velocity</h3>
       <div class="space-y-3 text-sm">
-        <div class="flex justify-between items-baseline">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
           <span class="text-ink-soft">Last 7 days</span>
-          <span class="font-bold text-navy stat-num">+0</span>
+          <span class="font-bold text-white stat-num text-lg">+0</span>
         </div>
-        <div class="flex justify-between items-baseline">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
           <span class="text-ink-soft">Last 30 days</span>
-          <span class="font-bold text-navy stat-num">+24</span>
+          <span class="font-bold text-white stat-num text-lg">+24</span>
         </div>
-        <div class="flex justify-between items-baseline">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
           <span class="text-ink-soft">Last 90 days</span>
-          <span class="font-bold text-navy stat-num">+46</span>
+          <span class="font-bold text-white stat-num text-lg">+46</span>
         </div>
-        <div class="flex justify-between items-baseline pt-2 border-t border-slate-100">
+        <div class="flex justify-between items-baseline pt-2">
           <span class="text-ink-soft">Annual pace (90d × 4)</span>
-          <span class="font-bold text-accent-blue stat-num">~184/yr</span>
+          <span class="font-bold text-accent-blue stat-num text-lg">~184/yr</span>
         </div>
       </div>
     </div>
 
-    <div class="scroll-fade bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
-      <h3 class="text-sm font-bold text-navy uppercase tracking-wider mb-4">vs Raptor</h3>
+    <div class="scroll-fade panel p-6">
+      <h3 class="text-xs font-bold text-accent-green uppercase tracking-[0.15em] mb-4">vs Raptor</h3>
       <div class="space-y-3 text-sm">
-        <div class="flex justify-between items-baseline">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
           <span class="text-ink-soft">Total reviews</span>
-          <span class="font-bold text-red-600 stat-num">
+          <span class="font-bold text-red-400 stat-num text-lg">
             +180
           </span>
         </div>
-        <div class="flex justify-between items-baseline">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
           <span class="text-ink-soft">Star rating</span>
-          <span class="font-bold text-emerald-600 stat-num">
+          <span class="font-bold text-accent-green stat-num text-lg">
             -0.1
           </span>
         </div>
-        <div class="flex justify-between items-baseline">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
           <span class="text-ink-soft">7-day pace</span>
-          <span class="font-bold text-emerald-600 stat-num">
+          <span class="font-bold text-accent-green stat-num text-lg">
             -2
           </span>
         </div>
-        <div class="flex justify-between items-baseline pt-2 border-t border-slate-100">
+        <div class="flex justify-between items-baseline pt-2">
           <span class="text-ink-soft">Response rate gap</span>
-          <span class="font-bold stat-num">
+          <span class="font-bold stat-num text-lg">
             
-              <span class="text-red-600">
+              <span class="text-red-400">
                 +3pts
               </span>
             
           </span>
         </div>
       </div>
-      <p class="text-xs text-ink-soft mt-4 pt-3 border-t border-slate-100">Red = they lead, green = Raptor leads.</p>
+      <p class="text-xs text-ink-soft mt-4 pt-3 border-t border-white/5">Red = competitor leads, green = Raptor leads.</p>
     </div>
   </div>
 
 </main>
 
-<footer class="max-w-5xl mx-auto px-5 sm:px-8 py-10 mt-8 border-t border-slate-200 text-xs text-ink-soft">
+<footer class="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 py-10 mt-8 border-t border-white/5 text-xs text-ink-soft">
   <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-    <a href="../../" class="font-semibold text-navy hover:text-accent-blue">Raptor Review Digest &rarr; Dashboard</a>
+    <a href="../../" class="font-semibold text-white hover:text-accent-blue">Raptor Review Digest &rarr; Dashboard</a>
     <div class="text-right">Profile last refreshed April 25, 2026</div>
   </div>
 </footer>

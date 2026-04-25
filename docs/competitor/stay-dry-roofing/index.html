@@ -12,293 +12,185 @@
 tailwind.config = {
   theme: { extend: {
     colors: {
-      navy: { DEFAULT: '#172e55', deep: '#0d1d3a', light: '#2a4880' },
+      navy: { DEFAULT: '#172e55', deep: '#0d1d3a', darker: '#08142a', light: '#2a4880' },
       accent: { green: '#3ae20a', blue: '#1ac6ff' },
-      ink: { DEFAULT: '#172e55', soft: '#4a5568', light: '#9aa5b8' },
+      ink: { soft: '#a3b1c7', mute: '#6b7d99' },
     },
     fontFamily: { sans: ['Ouma Latin VF', 'Inter', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'] },
   }},
 };
 </script>
 <style>
-  body { font-feature-settings: "ss01"; }
+  body { font-feature-settings: "ss01"; background-color: #08142a; color: #ffffff; }
   .stat-num { font-variant-numeric: tabular-nums; }
-  .ai-prose h1, .ai-prose h2, .ai-prose h3, .ai-prose h4 { color: #172e55; font-weight: 700; margin: 1em 0 0.4em; line-height: 1.2; }
-  .ai-prose h1 { font-size: 1.25rem; } .ai-prose h2 { font-size: 1.125rem; } .ai-prose h3 { font-size: 1rem; }
-  .ai-prose h4 { font-size: 0.95rem; color: #4a5568; text-transform: uppercase; letter-spacing: 0.04em; }
-  .ai-prose p { margin: 0.6em 0; } .ai-prose strong { color: #172e55; font-weight: 700; }
-  .ai-prose em { color: #4a5568; }
-  .ai-prose a { color: #1ac6ff; border-bottom: 1px solid rgba(26, 198, 255, 0.3); }
-  .ai-prose ul, .ai-prose ol { margin: 0.6em 0; padding-left: 1.4em; }
-  .ai-prose li { margin: 0.3em 0; }
-  .ai-prose hr { border: none; border-top: 1px solid #e3e7ee; margin: 1em 0; }
-  .gradient-text { background: linear-gradient(135deg, #3ae20a 0%, #1ac6ff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-  .delta-up { color: #059669; font-weight: 700; }
   .scroll-fade { opacity: 0; transform: translateY(20px); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
   .scroll-fade.visible { opacity: 1; transform: translateY(0); }
+  .panel {
+    background: linear-gradient(180deg, rgba(22, 46, 85, 0.65) 0%, rgba(13, 29, 58, 0.85) 100%);
+    border: 1px solid rgba(58, 226, 10, 0.08);
+    border-radius: 16px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    position: relative;
+    overflow: hidden;
+  }
+  .panel::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(58, 226, 10, 0.3), transparent);
+  }
+  .panel-hero {
+    background: linear-gradient(135deg, rgba(22, 46, 85, 0.95) 0%, rgba(13, 29, 58, 0.95) 100%);
+    border: 1px solid rgba(58, 226, 10, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 8px 40px rgba(58, 226, 10, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+  .ai-prose { color: rgba(255, 255, 255, 0.92); }
+  .ai-prose h1, .ai-prose h2, .ai-prose h3, .ai-prose h4 { color: #ffffff; font-weight: 700; margin: 1.2em 0 0.5em; line-height: 1.25; }
+  .ai-prose h1 { font-size: 1.4rem; color: #3ae20a; }
+  .ai-prose h2 { font-size: 1.15rem; color: #3ae20a; padding-top: 0.6em; border-top: 1px solid rgba(58, 226, 10, 0.2); }
+  .ai-prose h2:first-child { border-top: none; padding-top: 0; }
+  .ai-prose h3 { font-size: 1rem; color: #1ac6ff; }
+  .ai-prose h4 { font-size: 0.85rem; color: #a3b1c7; text-transform: uppercase; letter-spacing: 0.05em; }
+  .ai-prose p { margin: 0.7em 0; line-height: 1.65; }
+  .ai-prose strong { color: #ffffff; font-weight: 700; }
+  .ai-prose em { color: #a3b1c7; }
+  .ai-prose a { color: #1ac6ff; border-bottom: 1px solid rgba(26, 198, 255, 0.4); }
+  .ai-prose a:hover { color: #ffffff; }
+  .ai-prose ul, .ai-prose ol { padding-left: 1.4em; margin: 0.6em 0; }
+  .ai-prose li { margin: 0.4em 0; line-height: 1.6; }
+  .ai-prose hr { border: none; border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 1.5em 0; }
+  .gradient-text { background: linear-gradient(135deg, #3ae20a 0%, #1ac6ff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 </style>
 </head>
-<body class="bg-slate-50 text-ink antialiased min-h-screen">
+<body class="antialiased min-h-screen">
 
-<!-- Hero -->
-<section class="bg-gradient-to-br from-navy via-navy-deep to-navy text-white relative overflow-hidden">
-  <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 20% 50%, #3ae20a 0%, transparent 40%), radial-gradient(circle at 80% 30%, #1ac6ff 0%, transparent 35%);"></div>
-  <div class="max-w-5xl mx-auto px-5 sm:px-8 py-8 relative z-10">
-    <a href="../../" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-accent-green hover:text-accent-blue mb-6 transition-colors">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-      Back to dashboard
-    </a>
+<div class="fixed inset-0 pointer-events-none" style="background-image: radial-gradient(circle at 15% 0%, rgba(58, 226, 10, 0.06) 0%, transparent 40%), radial-gradient(circle at 85% 50%, rgba(26, 198, 255, 0.05) 0%, transparent 35%);"></div>
+
+<section class="relative z-10">
+  <div class="max-w-5xl mx-auto px-5 sm:px-8 pt-8 pb-10">
+    <div class="flex items-center justify-between mb-6 flex-wrap gap-4">
+      <a href="../../" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-accent-green hover:text-accent-blue transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        Back to dashboard
+      </a>
+      <img src="../../assets/logo.webp" alt="Raptor Roofing" class="h-10 w-auto" onerror="this.style.display='none'">
+    </div>
     <div class="flex items-start justify-between flex-wrap gap-4 mb-4">
       <div>
         <div class="text-xs uppercase tracking-widest text-accent-green font-bold mb-1">Competitor Profile</div>
-        <h1 class="text-3xl sm:text-5xl font-bold tracking-tight">Stay Dry Roofing</h1>
-        <p class="text-white/60 text-sm mt-2">5060 E 62nd St #130, Indianapolis, IN 46220</p>
+        <h1 class="text-3xl sm:text-5xl font-bold tracking-tight text-white">Stay Dry Roofing</h1>
+        <p class="text-ink-soft text-sm mt-2">5060 E 62nd St #130, Indianapolis, IN 46220</p>
       </div>
       <div class="text-right">
-        <div class="text-xs uppercase tracking-widest text-white/60">Volume Rank</div>
-        <div class="text-3xl font-bold gradient-text">#15</div>
+        <div class="text-xs uppercase tracking-widest text-ink-soft">Volume Rank</div>
+        <div class="text-3xl font-bold gradient-text">#11</div>
       </div>
     </div>
 
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8">
-      <div class="bg-white/10 backdrop-blur border border-accent-green/20 rounded-xl p-4">
-        <div class="text-2xl sm:text-3xl font-bold text-accent-green stat-num">421</div>
-        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">Total Reviews</div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-green">421</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Total Reviews</div>
       </div>
-      <div class="bg-white/10 backdrop-blur border border-accent-green/20 rounded-xl p-4">
-        <div class="text-2xl sm:text-3xl font-bold text-accent-green stat-num">4.9</div>
-        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">Star Rating</div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-green">4.9</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Star Rating</div>
       </div>
-      <div class="bg-white/10 backdrop-blur border border-accent-blue/30 rounded-xl p-4">
-        <div class="text-2xl sm:text-3xl font-bold text-accent-blue stat-num">+0</div>
-        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">This Week</div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-blue">+0</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">This Week</div>
       </div>
-      <div class="bg-white/10 backdrop-blur border border-accent-blue/30 rounded-xl p-4">
-        <div class="text-2xl sm:text-3xl font-bold text-accent-blue stat-num">+2</div>
-        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">Last 30 Days</div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-blue">+2</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Last 30 Days</div>
       </div>
+      
     </div>
 
-    <div class="mt-4 flex items-center gap-4 text-sm text-white/60 flex-wrap">
-      <span><span class="text-white font-semibold">78%</span> response rate</span>
+    <div class="mt-4 flex items-center gap-4 text-sm text-ink-soft flex-wrap">
+      <span><span class="text-white font-semibold">81%</span> response rate</span>
       <span>+<span class="text-white font-semibold">8</span> in last 90 days</span>
-      <span class="text-white/40">Refreshed April 25, 2026</span>
+      <span class="text-ink-mute">Refreshed April 25, 2026</span>
     </div>
   </div>
 </section>
 
-<main class="max-w-5xl mx-auto px-5 sm:px-8 py-8 space-y-6">
+<main class="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 py-8 space-y-6">
 
   
-  <div class="scroll-fade bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
-    <div class="flex items-center justify-between mb-4">
-      <h2 class="text-lg font-bold text-navy uppercase tracking-wider">Strategic Read</h2>
-      <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-slate-100 px-2 py-1 rounded">Live AI Research</span>
-    </div>
-    <div class="ai-prose text-sm sm:text-base"><p>Now I have enough data to produce a thorough brief. Here it is:</p>
-<hr />
-<h1>🦅 Raptor Roofing — Competitor Intel Brief</h1>
-<p><strong>Target:</strong> Stay Dry Roofing | <strong>Refreshed:</strong> Thursday, April 25, 2026<br />
-<strong>Prepared for:</strong> Cameron Blakely, Raptor Roofing, Greenwood IN</p>
-<hr />
-<h2><strong>1. Who They Are</strong></h2>
-<p>Stay Dry Roofing, LLC was founded in 2016 as a residential and commercial exterior contractor.</p>
-<p>Principal Owner and President is Josh Lyon</p>
-<p>, though a 2021 <a href="https://www.ibj.com/articles/fast-25-stay-dry-roofing">Indianapolis Business Journal Fast 25 feature</a> also identifies CEO John Olinger and CMO Matthew Bullock as part of the founding leadership team — suggesting a multi-principal structure that warrants monitoring. </p>
-<p>They serve Indianapolis and surrounding cities including Carmel, Greenwood, Fishers, Noblesville, Brownsburg, Plainfield, and Fort Wayne</p>
-<p>, with a residential-first orientation and a secondary commercial division operating under <a href="https://staydrycommercial.com">staydrycommercial.com</a>. </p>
-<p>They are a 5-star rated GAF Master Elite contractor</p>
-<p>, and </p>
-<p>were recognized by GAF Roofing as a 2026 President's Club Award winner.</p>
-<hr />
-<h2><strong>2. Estimated Scale</strong></h2>
-<p>Stay Dry Roofing is estimated to have $5.5 million in revenue and 31 employees</p>
-<p>per <a href="https://rocketreach.co/stay-dry-roofing-profile_b45246adfc8f0123">RocketReach</a> (2026 estimate). <strong>Confidence: medium</strong> — this is modeled data, not a filed disclosure. The <a href="https://www.ibj.com/articles/fast-25-stay-dry-roofing-2">IBJ Fast 25 piece from 2022</a> reported </p>
-<p>2021 revenue of $13.8 million with 81% growth from 2019–2021</p>
-<p>, suggesting the current RocketReach figure may significantly undercount post-peak revenue. </p>
-<p>LinkedIn lists company size as 11–50 employees.</p>
-<p><strong>Confidence: medium.</strong> True revenue likely sits in the $6–12M range given trajectory and headcount.</p>
-<hr />
-<h2><strong>3. Recent Hiring Signals</strong></h2>
-<p>ZipRecruiter currently shows 10 Stay Dry Roofing jobs in Indianapolis, ranging $64K–$338K.</p>
-<p>The active posting visible on <a href="https://www.ziprecruiter.com/c/Stay-Dry-Roofing/Job/Sales-Lead-Coordinator/-in-Indianapolis,IN?jid=bf335146ff04019d">ZipRecruiter</a> is a <strong>Sales Lead Coordinator</strong> role — a notable ops/inside sales hybrid hire suggesting pipeline management investment. </p>
-<p>Indeed shows an active posting for a Residential Sales Advisor in Westfield, IN, assisting homeowners with roofing, guttering, and siding needs.</p>
-<p>Employee reviews note a 100% commission pay plan</p>
-<p>for sales reps, which means heavy canvassing and door-to-door activity is their primary growth engine. No marketing director, digital ops, or C-suite leadership hires are visible in the last 30 days — the expansion is sales-force-first, not marketing-infrastructure-first.</p>
-<hr />
-<h2><strong>4. Off-Google Presence</strong></h2>
-<ul>
-<li><strong>Yelp:</strong> </li>
-</ul>
-<p>Stay Dry Roofing on Yelp has 26 reviews</p>
-<p>at the <a href="https://www.yelp.com/biz/stay-dry-roofing-indianapolis">Indianapolis listing</a> — a thin presence compared to 421 Google reviews. No visible star rating surfaced in results, indicating Yelp is not a channel they prioritize or actively funnel customers to.<br />
-- <strong>BBB:</strong> </p>
-<p>BBB-accredited with an A+ rating and an average of 9 customer reviews at 5/5 stars.</p>
-<p>Accredited since May 19, 2017.</p>
-<p>They earned a "Complaint Free Year" recognition from the BBB in 2023.</p>
-<ul>
-<li><strong>Angi:</strong> </li>
-</ul>
-<p>Rated 4.4 out of 5 on Angi</p>
-<p>, with several negative reviews flagging communication and job completion issues from 2021–2022 — older but public and visible to comparison shoppers.<br />
-- <strong>Facebook:</strong> </p>
-<p>Their Facebook page shows 1,098 likes and only 4 people "talking about this"</p>
-<p>— very low engagement for an active company. No confirmed active paid ads surfaced in the Meta Ad Library during this refresh.<br />
-- <strong>BirdEye:</strong> </p>
-<p>Stay Dry Roofing holds a 4.7-star rating with 635 reviews on BirdEye</p>
-<p>— a meaningful discrepancy from their 4.9 Google rating, suggesting Google is the curated channel.</p>
-<p><strong>Key discrepancy:</strong> 4.9 on Google vs. 4.7 on BirdEye and negative Angi reviews = classic review-funneling behavior. They are deliberately directing satisfied customers to Google.</p>
-<hr />
-<h2><strong>5. SEO and AEO Posture</strong></h2>
-<p>Stay Dry focuses heavily on its online presence, with a minority business partner running a digital marketing firm. They concentrated on SEO, picking keywords like "roofing," "roof replacement Indianapolis," and "roofing contractors" with the goal to "dominate those keywords."</p>
-<p>This IBJ-confirmed SEO-first strategy — dating to 2021 — has produced real results: <a href="https://staydryroofing.com">staydryroofing.com</a> publishes a self-authored <a href="https://staydryroofing.com/updated-2026-top-10-roofing-companies-in-indianapolis/">2026 Top 10 Roofing Companies in Indianapolis list</a> ranking themselves #1, a clear AEO/authority-building play designed to capture AI and "best roofer" queries. </p>
-<p>The page declares Stay Dry "earns the top spot for 2026 because it combines proven growth, strong third-party recognition, local focus, and practical service offerings."</p>
-<p>They also maintain dedicated service-area landing pages for Carmel, Fishers, Noblesville, Greenwood, and others. Press backlinks include <a href="https://www.inc.com/profile/stay-dry-roofing">Inc. 5000 (2022)</a>, the <a href="https://www.ibj.com/articles/fast-25-stay-dry-roofing-2">Indianapolis Business Journal Fast 25</a>, and a FinancialContent/PR wire feature — a legitimate high-DA backlink stack for a local roofer. </p>
-<p>Their homepage also prominently features the 2026 GAF President's Club Award</p>
-<p>as a trust signal. No blog post frequency or schema markup status was directly confirmed, but the FAQ-rich homepage structure (<a href="https://staydryroofing.com">staydryroofing.com</a>) suggests they are schema-aware.</p>
-<hr />
-<h2><strong>6. Generative Engine Visibility</strong></h2>
-<p>Stay Dry Roofing has engineered meaningful AI/AEO visibility through self-authored content. The "2026 Top 10 Roofing Companies In Indianapolis" page on their own domain is structured precisely to be cited by generative engines answering queries like <em>"best roofers Indianapolis"</em> or <em>"top roofing contractor Carmel Indiana."</em> Their Inc. 5000 listing (<a href="https://www.inc.com/profile/stay-dry-roofing">inc.com/profile/stay-dry-roofing</a>) provides a high-authority third-party citation. However, a competing third-party top-10 list from <a href="https://indyroofandrestoration.com/the-10-best-roofing-companies-in-indianapolis-for-2026/">indyroofandrestoration.com</a> </p>
-<p>places Stay Dry Roofing last on their 2026 list, noting they "may not offer the massive scope of Bone Dry or the advocacy" of others, but are adequate for "the homeowner seeking a simple transaction."</p>
-<p>That unflattering framing — published by a competitor's domain — is likely being ingested by AI engines. <strong>Raptor opportunity:</strong> Neither Stay Dry nor competitors appear to dominate Greenwood-specific or Fishers/Noblesville AEO queries with authoritative third-party citations. Raptor has a clean lane to build AI presence for Greenwood and south-suburban Indianapolis queries.</p>
-<hr />
-<h2><strong>7. Strategic Read vs. Raptor</strong></h2>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Stay Dry Roofing</th>
-<th>Raptor Roofing</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Google Reviews</td>
-<td>421 @ 4.9 ⭐</td>
-<td>664 @ 5.0 ⭐ — <strong>Raptor wins</strong></td>
-</tr>
-<tr>
-<td>Review velocity (last 90 days)</td>
-<td>8 reviews</td>
-<td>N/A (Cameron tracks)</td>
-</tr>
-<tr>
-<td>Star rating</td>
-<td>4.9</td>
-<td><strong>5.0 — only company in Indy top 10 by volume</strong></td>
-</tr>
-<tr>
-<td>GAF Master Elite</td>
-<td>✅ Yes</td>
-<td>Check if applicable</td>
-</tr>
-<tr>
-<td>Inc. 5000 / IBJ press</td>
-<td>✅ Yes, 2022</td>
-<td>Opportunity</td>
-</tr>
-<tr>
-<td>Self-authored SEO "top 10" content</td>
-<td>✅ Active play</td>
-<td>Not yet matched</td>
-</tr>
-<tr>
-<td>Yelp/Angi weak spots</td>
-<td>✅ Exploitable</td>
-<td>Raptor should shine here</td>
-</tr>
-<tr>
-<td>Sales model</td>
-<td>100% commission canvassers</td>
-<td>Raptor's "we don't outsource accountability"</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Most exploitable weakness:</strong> Stay Dry's canvassing-first, 100% commission sales model creates documented complaints about unfinished work and overselling on Angi — Raptor's accountability positioning directly counters this, and Cameron should amplify it in markets where Stay Dry canvassers are active (Westfield, Carmel, Greenwood).</p>
-<hr />
-<h2><strong>8. What Raptor Should Watch or Copy</strong></h2>
-<ol>
-<li>
-<p><strong>The self-authored "Top 10" content play.</strong> Stay Dry published a <a href="https://staydryroofing.com/updated-2026-top-10-roofing-companies-in-indianapolis/">2026 Top 10 Roofing Companies in Indianapolis</a> on their own domain and ranked themselves #1. Cameron should commission a credibly-written, third-party-cited version on Raptor's site targeting Greenwood, Carmel, and Fishers specifically — structured for AI engine citation.</p>
-</li>
-<li>
-<p><strong>GAF President's Club / award-stacking for trust signals.</strong> </p>
-</li>
-</ol>
-<p>Stay Dry prominently features the 2026 GAF President's Club Award as a credibility anchor on their homepage.</p>
-<p>Raptor should audit every certification, award, and manufacturer recognition available and stack them visibly on the homepage and service-area pages — these are directly referenced by AI engines answering "who is the best roofer in [city]."</p>
-<ol start="3">
-<li><strong>Monitor their Westfield/Carmel canvassing territory.</strong> </li>
-</ol>
-<p>Stay Dry is actively hiring Residential Sales Advisors in Westfield, IN</p>
-<p>— which sits between Raptor's Greenwood base and their northside offices. Watch for door-knock activity in Carmel and Westfield subdivisions. When a homeowner gets a Stay Dry knock, Raptor's 5.0 star rating and "we don't outsource accountability" message is a direct counter-offer Cameron can arm his team with.</p></div>
+  <div class="scroll-fade panel p-6 sm:p-8 text-center text-ink-soft">
+    Deep profile research populates on the next refresh cycle.
   </div>
   
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <div class="scroll-fade bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
-      <h3 class="text-sm font-bold text-navy uppercase tracking-wider mb-4">Review Velocity</h3>
+    <div class="scroll-fade panel p-6">
+      <h3 class="text-xs font-bold text-accent-green uppercase tracking-[0.15em] mb-4">Review Velocity</h3>
       <div class="space-y-3 text-sm">
-        <div class="flex justify-between items-baseline">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
           <span class="text-ink-soft">Last 7 days</span>
-          <span class="font-bold text-navy stat-num">+0</span>
+          <span class="font-bold text-white stat-num text-lg">+0</span>
         </div>
-        <div class="flex justify-between items-baseline">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
           <span class="text-ink-soft">Last 30 days</span>
-          <span class="font-bold text-navy stat-num">+2</span>
+          <span class="font-bold text-white stat-num text-lg">+2</span>
         </div>
-        <div class="flex justify-between items-baseline">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
           <span class="text-ink-soft">Last 90 days</span>
-          <span class="font-bold text-navy stat-num">+8</span>
+          <span class="font-bold text-white stat-num text-lg">+8</span>
         </div>
-        <div class="flex justify-between items-baseline pt-2 border-t border-slate-100">
+        <div class="flex justify-between items-baseline pt-2">
           <span class="text-ink-soft">Annual pace (90d × 4)</span>
-          <span class="font-bold text-accent-blue stat-num">~32/yr</span>
+          <span class="font-bold text-accent-blue stat-num text-lg">~32/yr</span>
         </div>
       </div>
     </div>
 
-    <div class="scroll-fade bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
-      <h3 class="text-sm font-bold text-navy uppercase tracking-wider mb-4">vs Raptor</h3>
+    <div class="scroll-fade panel p-6">
+      <h3 class="text-xs font-bold text-accent-green uppercase tracking-[0.15em] mb-4">vs Raptor</h3>
       <div class="space-y-3 text-sm">
-        <div class="flex justify-between items-baseline">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
           <span class="text-ink-soft">Total reviews</span>
-          <span class="font-bold text-emerald-600 stat-num">
+          <span class="font-bold text-accent-green stat-num text-lg">
             -243
           </span>
         </div>
-        <div class="flex justify-between items-baseline">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
           <span class="text-ink-soft">Star rating</span>
-          <span class="font-bold text-emerald-600 stat-num">
+          <span class="font-bold text-accent-green stat-num text-lg">
             -0.1
           </span>
         </div>
-        <div class="flex justify-between items-baseline">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
           <span class="text-ink-soft">7-day pace</span>
-          <span class="font-bold text-emerald-600 stat-num">
+          <span class="font-bold text-accent-green stat-num text-lg">
             -2
           </span>
         </div>
-        <div class="flex justify-between items-baseline pt-2 border-t border-slate-100">
+        <div class="flex justify-between items-baseline pt-2">
           <span class="text-ink-soft">Response rate gap</span>
-          <span class="font-bold stat-num">
+          <span class="font-bold stat-num text-lg">
             
-              <span class="text-emerald-600">
-                -19pts
+              <span class="text-accent-green">
+                -16pts
               </span>
             
           </span>
         </div>
       </div>
-      <p class="text-xs text-ink-soft mt-4 pt-3 border-t border-slate-100">Red = they lead, green = Raptor leads.</p>
+      <p class="text-xs text-ink-soft mt-4 pt-3 border-t border-white/5">Red = competitor leads, green = Raptor leads.</p>
     </div>
   </div>
 
 </main>
 
-<footer class="max-w-5xl mx-auto px-5 sm:px-8 py-10 mt-8 border-t border-slate-200 text-xs text-ink-soft">
+<footer class="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 py-10 mt-8 border-t border-white/5 text-xs text-ink-soft">
   <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-    <a href="../../" class="font-semibold text-navy hover:text-accent-blue">Raptor Review Digest &rarr; Dashboard</a>
+    <a href="../../" class="font-semibold text-white hover:text-accent-blue">Raptor Review Digest &rarr; Dashboard</a>
     <div class="text-right">Profile last refreshed April 25, 2026</div>
   </div>
 </footer>

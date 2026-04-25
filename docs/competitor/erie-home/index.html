@@ -12,283 +12,185 @@
 tailwind.config = {
   theme: { extend: {
     colors: {
-      navy: { DEFAULT: '#172e55', deep: '#0d1d3a', light: '#2a4880' },
+      navy: { DEFAULT: '#172e55', deep: '#0d1d3a', darker: '#08142a', light: '#2a4880' },
       accent: { green: '#3ae20a', blue: '#1ac6ff' },
-      ink: { DEFAULT: '#172e55', soft: '#4a5568', light: '#9aa5b8' },
+      ink: { soft: '#a3b1c7', mute: '#6b7d99' },
     },
     fontFamily: { sans: ['Ouma Latin VF', 'Inter', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'] },
   }},
 };
 </script>
 <style>
-  body { font-feature-settings: "ss01"; }
+  body { font-feature-settings: "ss01"; background-color: #08142a; color: #ffffff; }
   .stat-num { font-variant-numeric: tabular-nums; }
-  .ai-prose h1, .ai-prose h2, .ai-prose h3, .ai-prose h4 { color: #172e55; font-weight: 700; margin: 1em 0 0.4em; line-height: 1.2; }
-  .ai-prose h1 { font-size: 1.25rem; } .ai-prose h2 { font-size: 1.125rem; } .ai-prose h3 { font-size: 1rem; }
-  .ai-prose h4 { font-size: 0.95rem; color: #4a5568; text-transform: uppercase; letter-spacing: 0.04em; }
-  .ai-prose p { margin: 0.6em 0; } .ai-prose strong { color: #172e55; font-weight: 700; }
-  .ai-prose em { color: #4a5568; }
-  .ai-prose a { color: #1ac6ff; border-bottom: 1px solid rgba(26, 198, 255, 0.3); }
-  .ai-prose ul, .ai-prose ol { margin: 0.6em 0; padding-left: 1.4em; }
-  .ai-prose li { margin: 0.3em 0; }
-  .ai-prose hr { border: none; border-top: 1px solid #e3e7ee; margin: 1em 0; }
-  .gradient-text { background: linear-gradient(135deg, #3ae20a 0%, #1ac6ff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-  .delta-up { color: #059669; font-weight: 700; }
   .scroll-fade { opacity: 0; transform: translateY(20px); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
   .scroll-fade.visible { opacity: 1; transform: translateY(0); }
+  .panel {
+    background: linear-gradient(180deg, rgba(22, 46, 85, 0.65) 0%, rgba(13, 29, 58, 0.85) 100%);
+    border: 1px solid rgba(58, 226, 10, 0.08);
+    border-radius: 16px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    position: relative;
+    overflow: hidden;
+  }
+  .panel::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(58, 226, 10, 0.3), transparent);
+  }
+  .panel-hero {
+    background: linear-gradient(135deg, rgba(22, 46, 85, 0.95) 0%, rgba(13, 29, 58, 0.95) 100%);
+    border: 1px solid rgba(58, 226, 10, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 8px 40px rgba(58, 226, 10, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+  .ai-prose { color: rgba(255, 255, 255, 0.92); }
+  .ai-prose h1, .ai-prose h2, .ai-prose h3, .ai-prose h4 { color: #ffffff; font-weight: 700; margin: 1.2em 0 0.5em; line-height: 1.25; }
+  .ai-prose h1 { font-size: 1.4rem; color: #3ae20a; }
+  .ai-prose h2 { font-size: 1.15rem; color: #3ae20a; padding-top: 0.6em; border-top: 1px solid rgba(58, 226, 10, 0.2); }
+  .ai-prose h2:first-child { border-top: none; padding-top: 0; }
+  .ai-prose h3 { font-size: 1rem; color: #1ac6ff; }
+  .ai-prose h4 { font-size: 0.85rem; color: #a3b1c7; text-transform: uppercase; letter-spacing: 0.05em; }
+  .ai-prose p { margin: 0.7em 0; line-height: 1.65; }
+  .ai-prose strong { color: #ffffff; font-weight: 700; }
+  .ai-prose em { color: #a3b1c7; }
+  .ai-prose a { color: #1ac6ff; border-bottom: 1px solid rgba(26, 198, 255, 0.4); }
+  .ai-prose a:hover { color: #ffffff; }
+  .ai-prose ul, .ai-prose ol { padding-left: 1.4em; margin: 0.6em 0; }
+  .ai-prose li { margin: 0.4em 0; line-height: 1.6; }
+  .ai-prose hr { border: none; border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 1.5em 0; }
+  .gradient-text { background: linear-gradient(135deg, #3ae20a 0%, #1ac6ff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 </style>
 </head>
-<body class="bg-slate-50 text-ink antialiased min-h-screen">
+<body class="antialiased min-h-screen">
 
-<!-- Hero -->
-<section class="bg-gradient-to-br from-navy via-navy-deep to-navy text-white relative overflow-hidden">
-  <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 20% 50%, #3ae20a 0%, transparent 40%), radial-gradient(circle at 80% 30%, #1ac6ff 0%, transparent 35%);"></div>
-  <div class="max-w-5xl mx-auto px-5 sm:px-8 py-8 relative z-10">
-    <a href="../../" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-accent-green hover:text-accent-blue mb-6 transition-colors">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-      Back to dashboard
-    </a>
+<div class="fixed inset-0 pointer-events-none" style="background-image: radial-gradient(circle at 15% 0%, rgba(58, 226, 10, 0.06) 0%, transparent 40%), radial-gradient(circle at 85% 50%, rgba(26, 198, 255, 0.05) 0%, transparent 35%);"></div>
+
+<section class="relative z-10">
+  <div class="max-w-5xl mx-auto px-5 sm:px-8 pt-8 pb-10">
+    <div class="flex items-center justify-between mb-6 flex-wrap gap-4">
+      <a href="../../" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-accent-green hover:text-accent-blue transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        Back to dashboard
+      </a>
+      <img src="../../assets/logo.webp" alt="Raptor Roofing" class="h-10 w-auto" onerror="this.style.display='none'">
+    </div>
     <div class="flex items-start justify-between flex-wrap gap-4 mb-4">
       <div>
         <div class="text-xs uppercase tracking-widest text-accent-green font-bold mb-1">Competitor Profile</div>
-        <h1 class="text-3xl sm:text-5xl font-bold tracking-tight">Erie Home</h1>
+        <h1 class="text-3xl sm:text-5xl font-bold tracking-tight text-white">Erie Home</h1>
         
       </div>
       <div class="text-right">
-        <div class="text-xs uppercase tracking-widest text-white/60">Volume Rank</div>
-        <div class="text-3xl font-bold gradient-text">#19</div>
+        <div class="text-xs uppercase tracking-widest text-ink-soft">Volume Rank</div>
+        <div class="text-3xl font-bold gradient-text">#12</div>
       </div>
     </div>
 
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8">
-      <div class="bg-white/10 backdrop-blur border border-accent-green/20 rounded-xl p-4">
-        <div class="text-2xl sm:text-3xl font-bold text-accent-green stat-num">274</div>
-        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">Total Reviews</div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-green">274</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Total Reviews</div>
       </div>
-      <div class="bg-white/10 backdrop-blur border border-accent-green/20 rounded-xl p-4">
-        <div class="text-2xl sm:text-3xl font-bold text-accent-green stat-num">4.6</div>
-        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">Star Rating</div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-green">4.6</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Star Rating</div>
       </div>
-      <div class="bg-white/10 backdrop-blur border border-accent-blue/30 rounded-xl p-4">
-        <div class="text-2xl sm:text-3xl font-bold text-accent-blue stat-num">+3</div>
-        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">This Week</div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-blue">+3</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">This Week</div>
       </div>
-      <div class="bg-white/10 backdrop-blur border border-accent-blue/30 rounded-xl p-4">
-        <div class="text-2xl sm:text-3xl font-bold text-accent-blue stat-num">+7</div>
-        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">Last 30 Days</div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-blue">+7</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Last 30 Days</div>
       </div>
+      
     </div>
 
-    <div class="mt-4 flex items-center gap-4 text-sm text-white/60 flex-wrap">
+    <div class="mt-4 flex items-center gap-4 text-sm text-ink-soft flex-wrap">
       <span><span class="text-white font-semibold">97%</span> response rate</span>
       <span>+<span class="text-white font-semibold">9</span> in last 90 days</span>
-      <span class="text-white/40">Refreshed April 25, 2026</span>
+      <span class="text-ink-mute">Refreshed April 25, 2026</span>
     </div>
   </div>
 </section>
 
-<main class="max-w-5xl mx-auto px-5 sm:px-8 py-8 space-y-6">
+<main class="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 py-8 space-y-6">
 
   
-  <div class="scroll-fade bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
-    <div class="flex items-center justify-between mb-4">
-      <h2 class="text-lg font-bold text-navy uppercase tracking-wider">Strategic Read</h2>
-      <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-slate-100 px-2 py-1 rounded">Live AI Research</span>
-    </div>
-    <div class="ai-prose text-sm sm:text-base"><p>Here is the fully sourced brief for Cameron's dashboard:</p>
-<hr />
-<h1>Erie Home — Competitive Intelligence Brief</h1>
-<p><strong>For: Cameron Blakely, Raptor Roofing | Greenwood, IN</strong><br />
-<strong>Refreshed: Thursday, April 24, 2025</strong></p>
-<hr />
-<h2><strong>1. Who They Are</strong></h2>
-<p>Founded in 1982, Erie Home has grown to become a national company providing end-to-end services and consumer product solutions.</p>
-<p>Pat Trompeter is the founder; Jenilee Common currently serves as CEO, with Randy Hamilton as President.</p>
-<p>As of September 8, 2025, Leaf Home announced its acquisition of Erie Home, combining two leaders in the direct-to-consumer home solutions sector.</p>
-<p>The Indianapolis office (</p>
-<p>6925 Corporate Circle, Indianapolis, IN 46278</p>
-<p>) serves Central Indiana with their distinct pitch: </p>
-<p>ultra-durable steel metal roofs designed to withstand hail and winds up to 120 mph, available in styles mimicking dimensional shingles, shakes, and barrel tile.</p>
-<hr />
-<h2><strong>2. Estimated Scale</strong></h2>
-<p><strong>National:</strong> </p>
-<p>Erie Home claims over 100 locations and $600M+ in annual revenue</p>
-<p>, corroborated by their own job postings. </p>
-<p>In 2022 the company generated $448 million in revenue from 58 offices,</p>
-<p>per <em>Qualified Remodeler</em>. <strong>Confidence: high.</strong></p>
-<p><strong>Indianapolis office employee count:</strong> </p>
-<p>Salary data estimated from 10,700 employees</p>
-<p>nationally per Indeed. </p>
-<p>The Indianapolis location specifically draws salary estimates from 156 employees.</p>
-<p>A local crew of 10–25 is a reasonable estimate. <strong>Confidence: low</strong> (no direct local headcount disclosed).</p>
-<hr />
-<h2><strong>3. Recent Hiring Signals</strong></h2>
-<p>Erie Home is actively hiring in Indiana right now. </p>
-<p>A Sales Manager in Training (MIT) program posting targets Indianapolis, IN.</p>
-<p>Erie Home is hiring for a Field Marketing team role with a stated base hourly wage, weekly bonuses, and uncapped commissions.</p>
-<p>A $2,000 sign-on bonus is being offered for roofing subcontractors in Indiana</p>
-<p>via <a href="https://www.ziprecruiter.com/co/Erie-Construction/Jobs/--in-Indiana">ZipRecruiter</a>. <strong>Flag:</strong> Simultaneous sales leadership, field canvassing, and subcontractor postings signal an aggressive market expansion push locally — not a steady-state operation.</p>
-<hr />
-<h2><strong>4. Off-Google Presence</strong></h2>
-<ul>
-<li><strong>Google (Indianapolis):</strong> 274 reviews at 4.6 stars. Owner response rate: 0.97. Only 9 reviews in the last 90 days — very slow velocity.</li>
-<li><strong>Yelp:</strong> </li>
-</ul>
-<p>Erie Home maintains a 1.2-star rating from 386 Yelp reviews nationally.</p>
-<p>Classic review-funneling pattern: near-perfect on curated platforms, catastrophic on open ones.<br />
-- <strong>BBB (Indianapolis):</strong> </p>
-<p>A+ rated, BBB Accredited since June 1, 2023.</p>
-<p>Nationally, 377 total complaints filed in the last three years, with 136 in the past 12 months alone.</p>
-<ul>
-<li><strong>Birdeye:</strong> </li>
-</ul>
-<p>Erie Home Indianapolis shows a 4.6-star rating with 381 reviews</p>
-<p>— consistent with Google, suggesting both platforms are part of their managed review funnel.<br />
-- <strong>Facebook:</strong> </p>
-<p>69,000+ likes on the national page, actively posting.</p>
-<p>Local Facebook Ad Library activity is consistent with their canvassing-plus-digital model.<br />
-- <strong>ConsumerAffairs:</strong> Recent reviews from late 2025 include a customer who alleged </p>
-<p>Erie's own website only showed 5-star reviews with no option to post a critical one.</p>
-<ul>
-<li><strong>Reddit/Nextdoor:</strong> No verified Erie Home Indianapolis-specific Reddit thread surfaced; Glassdoor Indianapolis employees gave a work-life balance score of </li>
-</ul>
-<p>2.9 out of 5 for work-life balance and 3.5 for culture and values.</p>
-<hr />
-<h2><strong>5. SEO and AEO Posture</strong></h2>
-<p>Erie Home operates a <strong>high-authority national domain</strong> (eriehome.com) backed by industry press links from <em>Roofing Contractor</em>, <em>Qualified Remodeler</em>, and <em>This Old House</em> — all organic backlinks a local operator can't easily match. They have a </p>
-<p>dedicated Indianapolis location page targeting Carmel, Greenwood, and Lawrence by name</p>
-<p>at <a href="https://eriehome.com/locations/roofing/indianapolis-in/">eriehome.com/locations/roofing/indianapolis-in/</a>. The page includes geo-specific H2s and service area copy structured for local pack eligibility. Their UTM tagging (<code>?utm_source=gbp&amp;utm_medium=roofing&amp;utm_campaign=Indianapolis</code>) confirms active GBP-to-website conversion tracking. No evidence of a blog content strategy at the local Indianapolis level — their blog is corporate/national. <strong>Raptor opportunity:</strong> A locally authored blog targeting "roof replacement Greenwood IN," "storm damage roofer Carmel IN," and "best roofing contractor Zionsville" would go uncontested by Erie at the local content level.</p>
-<hr />
-<h2><strong>6. Generative Engine Visibility</strong></h2>
-<p>Based on current AI engine behavior for queries like "best roofers Indianapolis," "top roofing contractor near Greenwood Indiana," and "roof replacement Carmel Indiana": Erie Home <strong>does surface</strong> in AI-generated responses primarily because of its national brand footprint, high-volume review profiles on BBB and GuildQuality, and coverage by authoritative sites like <a href="https://www.thisoldhouse.com/roofing/erie-roofing-review">This Old House</a> and <a href="https://www.qualifiedremodeler.com/erie-home-names-new-ceo/">Qualified Remodeler</a>. </p>
-<p>Erie Home receives high average scores of 4.7 stars on the BBB and GuildQuality,</p>
-<p>which are the citation sources AI tools tend to draw from. For hyper-local queries like "roofing company Fishers Noblesville Zionsville," Erie appears inconsistently — it lacks the locally-anchored content depth that AI models require for city-specific confidence. <strong>This is Raptor's window</strong>: Cameron's 664 reviews at 5.0 stars on a local domain with Greenwood/Indy-specific content is a stronger AEO signal for local queries than Erie's thin local pages.</p>
-<hr />
-<h2><strong>7. Strategic Read vs. Raptor</strong></h2>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Erie Home</th>
-<th>Raptor Roofing</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Google reviews (Indy)</strong></td>
-<td>274 / 4.6 ⭐</td>
-<td>664 / 5.0 ⭐</td>
-</tr>
-<tr>
-<td><strong>National brand scale</strong></td>
-<td>✅ $600M+, 100+ locations</td>
-<td>❌ Local</td>
-</tr>
-<tr>
-<td><strong>Review velocity (90 days)</strong></td>
-<td>9 reviews</td>
-<td>—</td>
-</tr>
-<tr>
-<td><strong>Yelp / open platforms</strong></td>
-<td>1.2 stars</td>
-<td>Advantage: Raptor</td>
-</tr>
-<tr>
-<td><strong>Subcontractor model</strong></td>
-<td>✅</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p>Erie uses subcontractors</p>
-<p>| ❌ Raptor owns accountability |<br />
-| <strong>Acquisition instability</strong> | </p>
-<p>Leaf Home acquisition Sept 2025</p>
-<p>| Stable, independent |</p>
-<p><strong>Most exploitable weakness:</strong> Erie's 3-4 hour high-pressure sales presentations and subcontractor install model are actively documented negatives on Yelp, Glassdoor, and ConsumerAffairs — Raptor's "we don't outsource accountability" messaging hits this gap directly and surgically.</p>
-<hr />
-<h2><strong>8. What Raptor Should Watch or Copy</strong></h2>
-<ol>
-<li>
-<p><strong>Dedicated suburb landing pages.</strong> Erie has a purpose-built page for <a href="https://eriehome.com/locations/roofing/indianapolis-in/">Indianapolis roofing</a> with Carmel, Greenwood, and Lawrence mentioned by name. Raptor should build or optimize equivalent pages for every suburb it serves (Bargersville, Whiteland, Franklin, Mooresville) to out-rank Erie on hyper-local queries where its national domain has no depth.</p>
-</li>
-<li>
-<p><strong>Field marketing canvassing model.</strong> </p>
-</li>
-</ol>
-<p>Erie walks designated neighborhoods to identify potential roof replacement needs and schedules no-cost consultations for interested homeowners.</p>
-<p>This door-knocking-plus-digital funnel drives leads at scale. Cameron should monitor Erie's canvassing schedules in Greenwood ZIP codes — that's direct competition for the same homeowners.</p>
-<ol start="3">
-<li><strong>GBP campaign UTM structure.</strong> Erie's GBP links include full UTM parameters (<code>utm_source=gbp</code>, <code>utm_medium=roofing</code>, <code>utm_campaign=Indianapolis</code>), meaning they are measuring GBP-driven traffic and conversions precisely. If Raptor isn't doing this yet, adopting the same tracking infrastructure will reveal exactly how many leads originate from the Google Business Profile — a conversion insight Erie is clearly using to optimize spend.</li>
-</ol></div>
+  <div class="scroll-fade panel p-6 sm:p-8 text-center text-ink-soft">
+    Deep profile research populates on the next refresh cycle.
   </div>
   
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <div class="scroll-fade bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
-      <h3 class="text-sm font-bold text-navy uppercase tracking-wider mb-4">Review Velocity</h3>
+    <div class="scroll-fade panel p-6">
+      <h3 class="text-xs font-bold text-accent-green uppercase tracking-[0.15em] mb-4">Review Velocity</h3>
       <div class="space-y-3 text-sm">
-        <div class="flex justify-between items-baseline">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
           <span class="text-ink-soft">Last 7 days</span>
-          <span class="font-bold text-navy stat-num">+3</span>
+          <span class="font-bold text-white stat-num text-lg">+3</span>
         </div>
-        <div class="flex justify-between items-baseline">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
           <span class="text-ink-soft">Last 30 days</span>
-          <span class="font-bold text-navy stat-num">+7</span>
+          <span class="font-bold text-white stat-num text-lg">+7</span>
         </div>
-        <div class="flex justify-between items-baseline">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
           <span class="text-ink-soft">Last 90 days</span>
-          <span class="font-bold text-navy stat-num">+9</span>
+          <span class="font-bold text-white stat-num text-lg">+9</span>
         </div>
-        <div class="flex justify-between items-baseline pt-2 border-t border-slate-100">
+        <div class="flex justify-between items-baseline pt-2">
           <span class="text-ink-soft">Annual pace (90d × 4)</span>
-          <span class="font-bold text-accent-blue stat-num">~36/yr</span>
+          <span class="font-bold text-accent-blue stat-num text-lg">~36/yr</span>
         </div>
       </div>
     </div>
 
-    <div class="scroll-fade bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
-      <h3 class="text-sm font-bold text-navy uppercase tracking-wider mb-4">vs Raptor</h3>
+    <div class="scroll-fade panel p-6">
+      <h3 class="text-xs font-bold text-accent-green uppercase tracking-[0.15em] mb-4">vs Raptor</h3>
       <div class="space-y-3 text-sm">
-        <div class="flex justify-between items-baseline">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
           <span class="text-ink-soft">Total reviews</span>
-          <span class="font-bold text-emerald-600 stat-num">
+          <span class="font-bold text-accent-green stat-num text-lg">
             -390
           </span>
         </div>
-        <div class="flex justify-between items-baseline">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
           <span class="text-ink-soft">Star rating</span>
-          <span class="font-bold text-emerald-600 stat-num">
+          <span class="font-bold text-accent-green stat-num text-lg">
             -0.4
           </span>
         </div>
-        <div class="flex justify-between items-baseline">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
           <span class="text-ink-soft">7-day pace</span>
-          <span class="font-bold text-red-600 stat-num">
+          <span class="font-bold text-red-400 stat-num text-lg">
             +1
           </span>
         </div>
-        <div class="flex justify-between items-baseline pt-2 border-t border-slate-100">
+        <div class="flex justify-between items-baseline pt-2">
           <span class="text-ink-soft">Response rate gap</span>
-          <span class="font-bold stat-num">
+          <span class="font-bold stat-num text-lg">
             
-              <span class="text-emerald-600">
+              <span class="text-accent-green">
                 +0pts
               </span>
             
           </span>
         </div>
       </div>
-      <p class="text-xs text-ink-soft mt-4 pt-3 border-t border-slate-100">Red = they lead, green = Raptor leads.</p>
+      <p class="text-xs text-ink-soft mt-4 pt-3 border-t border-white/5">Red = competitor leads, green = Raptor leads.</p>
     </div>
   </div>
 
 </main>
 
-<footer class="max-w-5xl mx-auto px-5 sm:px-8 py-10 mt-8 border-t border-slate-200 text-xs text-ink-soft">
+<footer class="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 py-10 mt-8 border-t border-white/5 text-xs text-ink-soft">
   <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-    <a href="../../" class="font-semibold text-navy hover:text-accent-blue">Raptor Review Digest &rarr; Dashboard</a>
+    <a href="../../" class="font-semibold text-white hover:text-accent-blue">Raptor Review Digest &rarr; Dashboard</a>
     <div class="text-right">Profile last refreshed April 25, 2026</div>
   </div>
 </footer>
