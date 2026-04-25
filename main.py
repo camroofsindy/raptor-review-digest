@@ -747,23 +747,35 @@ def parse_markdown_sections(md_text):
 
 
 def parse_rising_profile(profile_md):
-    """Split a rising-player profile into structured fields. The prompt asks for
-    four sections (Who/Driving/Steal/Weakness). Parse into a dict so the template
-    can render visual cards instead of one prose blob."""
+    """Split a rising-player profile into structured fields {who/driving/steal/weakness}.
+    The AI prompt asks for these four sections; this parses bold-headline patterns
+    like '**1. Who they are.** body...' or '**Who they are.** body...' so the
+    template can render visual cards instead of one prose blob."""
     if not profile_md:
         return None
     fields = {"who": "", "driving": "", "steal": "", "weakness": "", "raw": profile_md}
-    # Look for the 4-section structure with bold or markdown sub-headings.
-    patterns = [
-        ("who", r"(?:^|\n)\*?\*?\s*(?:1\.\s*|##\s*)?\*?\*?\s*Who (?:they|they are|theyre)\*?\*?[:.]?\s*(.+?)(?=\n\s*\*?\*?\s*(?:2\.|##|\*\*[2-9])|\Z)"),
-        ("driving", r"(?:^|\n)\*?\*?\s*(?:2\.\s*|##\s*)?\*?\*?\s*What.+?driving.+?velocity\*?\*?[:.]?\s*(.+?)(?=\n\s*\*?\*?\s*(?:3\.|##|\*\*[3-9])|\Z)"),
-        ("steal", r"(?:^|\n)\*?\*?\s*(?:3\.\s*|##\s*)?\*?\*?\s*One tactic.+?steal\*?\*?[:.]?\s*(.+?)(?=\n\s*\*?\*?\s*(?:4\.|##|\*\*[4-9])|\Z)"),
-        ("weakness", r"(?:^|\n)\*?\*?\s*(?:4\.\s*|##\s*)?\*?\*?\s*One weakness.+?exploit\*?\*?[:.]?\s*(.+?)(?=\n\s*---+|\Z)"),
-    ]
-    for key, pattern in patterns:
-        m = re.search(pattern, profile_md, re.IGNORECASE | re.DOTALL)
-        if m:
-            fields[key] = m.group(1).strip()
+    # First split into sections by any bold heading line, then categorize each section.
+    # Pattern: bold heading followed by body until next bold or end.
+    section_pattern = re.compile(
+        r"\*\*\s*(?:\d+\.\s*)?([^*\n]+?)\.?\s*\*\*\s*(.*?)(?=\*\*\s*(?:\d+\.\s*)?[^*\n]+?\.?\s*\*\*|\Z)",
+        re.DOTALL,
+    )
+    matches = section_pattern.findall(profile_md)
+    for heading, body in matches:
+        h = heading.lower()
+        b = body.strip()
+        # Drop trailing "---" markers
+        b = re.sub(r"\n+---+\s*$", "", b).strip()
+        if not b:
+            continue
+        if "who" in h and ("they" in h or "are" in h):
+            fields["who"] = b
+        elif ("driv" in h and "velocity" in h) or "what" in h and "driv" in h:
+            fields["driving"] = b
+        elif "steal" in h or ("tactic" in h and "raptor" in h) or ("learn" in h and "copy" in h):
+            fields["steal"] = b
+        elif "weakness" in h or "exploit" in h or "risk" in h:
+            fields["weakness"] = b
     return fields
 
 
