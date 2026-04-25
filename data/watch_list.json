@@ -13,6 +13,7 @@
     {"name": "Indy Rooftops", "note": "471 reviews, also 5.0 stars"},
     {"name": "Stay Dry Roofing", "note": "~620 aggregate across multiple GBPs"},
     {"name": "Erie Home", "note": "National franchise, 273 reviews"},
-    {"name": "AmeriPro Roofing", "note": "Carmel, 255 reviews"}
+    {"name": "AmeriPro Roofing", "note": "Carmel, 255 reviews"},
+    {"name": "Cochran Exteriors", "search_query": "Cochran Exteriors 8461 Castlewood Indianapolis", "note": "Since 2010, ~1,171 reviews 4.7 stars; primary GBP category is exterior remodeling not roofing, so auto-discovery misses them"}
   ]
 }

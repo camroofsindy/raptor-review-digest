@@ -16,8 +16,10 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from pathlib import Path
 
+import markdown as md
 from dotenv import load_dotenv
 from jinja2 import Environment, FileSystemLoader
+from markupsafe import Markup
 from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).parent
@@ -180,10 +182,16 @@ Avoid clichés like "focus on reviews" unless the data specifically demands it. 
     return _extract_text(response)
 
 
-def detect_rising_players(competitors, min_velocity_ratio=0.08, min_30d=15, max_total=700):
-    """Flag small-base high-velocity accounts worth researching."""
+def detect_rising_players(competitors, min_velocity_ratio=0.08, min_30d=15,
+                           max_total=700, exclude_recent=None):
+    """Flag small-base high-velocity accounts worth researching.
+    exclude_recent: a set of company names that were profiled in recent digests;
+    skip them so weekly digests rotate to new profiles."""
+    exclude = {n.lower() for n in (exclude_recent or [])}
     risers = []
     for c in competitors:
+        if c["name"].lower() in exclude:
+            continue
         r30 = c.get("reviews_30d") or 0
         total = c.get("review_count") or 0
         if total == 0 or total > max_total:
@@ -196,6 +204,34 @@ def detect_rising_players(competitors, min_velocity_ratio=0.08, min_30d=15, max_
             risers.append(c)
     risers.sort(key=lambda c: c["_velocity_ratio"], reverse=True)
     return risers
+
+
+def merge_identical_places(businesses):
+    """Catch duplicates that escaped place_id dedup (different display names but
+    same physical place). If two entries have identical review_count AND rating
+    AND non-zero matching reviews_30d, merge them into the entry with the longer
+    name (which usually has richer label text)."""
+    out = []
+    used = set()
+    for i, a in enumerate(businesses):
+        if i in used:
+            continue
+        kept = a
+        for j in range(i + 1, len(businesses)):
+            if j in used:
+                continue
+            b = businesses[j]
+            same_count = a.get("review_count") and a["review_count"] == b.get("review_count")
+            same_rating = a.get("rating") == b.get("rating")
+            same_30d = (a.get("reviews_30d") or 0) == (b.get("reviews_30d") or 0)
+            same_7d = (a.get("reviews_7d") or 0) == (b.get("reviews_7d") or 0)
+            if same_count and same_rating and same_30d and same_7d:
+                used.add(j)
+                # Keep the entry with the SHORTER, cleaner name (typically the pinned one).
+                if len(b["name"]) < len(kept["name"]):
+                    kept = b
+        out.append(kept)
+    return out
 
 
 def _norm(s):
@@ -621,10 +657,20 @@ def compute_rank_changes(current_sorted, prev_snapshot):
         biz["rank_change"] = (old_rank - new_rank) if old_rank else None
 
 
+def _md_to_html(text):
+    """Convert markdown text to HTML for use in email body. Wraps in Markup so
+    Jinja does not auto-escape the HTML."""
+    if not text:
+        return ""
+    html = md.markdown(text, extensions=["extra", "nl2br", "sane_lists"])
+    return Markup(html)
+
+
 def render_email(snapshot, prev_snapshot, raptor, businesses, market_news,
                   rising_profiles, raptor_actions, new_entrants):
     """Render the v3 insights-first HTML email."""
     env = Environment(loader=FileSystemLoader(str(ROOT)))
+    env.filters["md"] = _md_to_html
     template = env.get_template("email_template.html")
     is_baseline = prev_snapshot is None
     # Sort businesses for different sections:
@@ -708,6 +754,12 @@ def main():
             print(f"  [{i}] {biz['name']}: 7d={t['reviews_7d']} 30d={t['reviews_30d']} 90d={t['reviews_90d']} resp={t['response_rate']} loaded={t['reviews_loaded']}")
         browser.close()
 
+    # Post-timeline merge of identical-data duplicates. These slip past place_id
+    # dedup when two records have different display names but the scraper landed
+    # on the same physical place (common for multi-location chains).
+    businesses = merge_identical_places(businesses)
+    print(f"after identical-data dedup: {len(businesses)} unique places")
+
     # Snapshot bookkeeping + deltas (kept as secondary signal now that timelines are primary).
     history = load_history()
     businesses = compute_weekly_deltas(businesses, history)
@@ -719,6 +771,7 @@ def main():
     snapshot = {
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "businesses": businesses,
+        "profiled_this_week": [],  # populated below after rising profiling
     }
 
     # Intelligence layer: call Claude Opus for market news, rising profiles, actions.
@@ -736,7 +789,11 @@ def main():
             except Exception as e:
                 print(f"  market news failed: {e}", file=sys.stderr)
 
-            risers = detect_rising_players(businesses)
+            # Read recently-profiled competitors from history so we rotate weekly.
+            recent_profiled = []
+            for snap in history.get("snapshots", [])[-3:]:
+                recent_profiled.extend(snap.get("profiled_this_week", []))
+            risers = detect_rising_players(businesses, exclude_recent=recent_profiled)
             for r in risers[:2]:
                 try:
                     print(f"AI: profiling riser {r['name']}...")
@@ -744,6 +801,9 @@ def main():
                     rising_profiles.append({"competitor": r, "profile": profile})
                 except Exception as e:
                     print(f"  rising profile failed for {r['name']}: {e}", file=sys.stderr)
+            # Save the names so next week's run skips them.
+            for rp in rising_profiles:
+                snapshot["profiled_this_week"].append(rp["competitor"]["name"])
 
             # Synthesis
             try:

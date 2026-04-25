@@ -3,43 +3,62 @@
 <head>
 <meta charset="UTF-8">
 <style>
-  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #1a1a1a; max-width: 720px; margin: 0 auto; padding: 20px; background: #f5f5f5; line-height: 1.6; }
-  .card { background: white; border-radius: 8px; padding: 24px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
-  h1 { color: #b91c1c; font-size: 24px; margin: 0 0 8px 0; }
-  h2 { color: #1a1a1a; font-size: 18px; margin: 0 0 14px 0; border-bottom: 2px solid #b91c1c; padding-bottom: 6px; }
-  .sub { color: #666; font-size: 13px; margin-bottom: 16px; }
+  :root {
+    --navy: #172e55;
+    --navy-deep: #0d1d3a;
+    --green: #3ae20a;
+    --blue: #1ac6ff;
+    --bg: #f3f5f9;
+    --card: #ffffff;
+    --ink: #172e55;
+    --ink-soft: #4a5568;
+    --line: #e3e7ee;
+    --shade: #f7f9fc;
+  }
+  body { font-family: 'Ouma Latin VF', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: var(--ink); max-width: 720px; margin: 0 auto; padding: 20px; background: var(--bg); line-height: 1.55; }
+  .card { background: var(--card); border-radius: 10px; padding: 26px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(23, 46, 85, 0.06); border: 1px solid var(--line); }
+  h1 { color: var(--navy); font-size: 24px; margin: 0 0 8px 0; letter-spacing: -0.01em; }
+  h2 { color: var(--navy); font-size: 17px; margin: 0 0 14px 0; padding-bottom: 8px; border-bottom: 2px solid var(--green); letter-spacing: 0.01em; text-transform: uppercase; font-weight: 700; }
+  h3, h4 { color: var(--navy); margin: 14px 0 6px 0; font-size: 15px; }
+  p { margin: 8px 0; }
+  .sub { color: var(--ink-soft); font-size: 12px; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.05em; }
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  th { text-align: left; padding: 8px; background: #f9fafb; border-bottom: 1px solid #e5e7eb; font-weight: 600; font-size: 12px; letter-spacing: 0.03em; }
-  td { padding: 8px; border-bottom: 1px solid #f3f4f6; vertical-align: top; }
-  .raptor-row { background: #fef2f2; font-weight: 600; }
-  .up { color: #059669; font-weight: 600; }
+  th { text-align: left; padding: 10px 8px; background: var(--shade); border-bottom: 2px solid var(--navy); font-weight: 700; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--navy); }
+  td { padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  .raptor-row { background: rgba(58, 226, 10, 0.08); font-weight: 600; }
+  .raptor-row td:first-child { border-left: 3px solid var(--green); }
+  .up { color: #1a7d1a; font-weight: 700; }
   .flat { color: #9ca3af; }
-  .hero { background: linear-gradient(135deg, #b91c1c 0%, #7f1d1d 100%); color: white; padding: 28px; border-radius: 8px; margin-bottom: 16px; }
-  .hero h1 { color: white; font-size: 26px; margin: 0 0 6px 0; }
-  .hero .label { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.85; }
-  .hero p { margin: 10px 0 0 0; font-size: 14px; opacity: 0.95; }
-  .stat-grid { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
-  .stat { flex: 1; min-width: 130px; background: rgba(255,255,255,0.15); padding: 12px; border-radius: 6px; }
-  .stat .num { font-size: 22px; font-weight: 700; }
-  .stat .label { font-size: 11px; opacity: 0.9; margin-top: 2px; letter-spacing: 0.05em; text-transform: uppercase; }
-  .news-item { padding: 14px 0; border-bottom: 1px solid #f3f4f6; }
-  .news-item:last-child { border-bottom: none; }
-  .news-item .company { font-weight: 700; color: #b91c1c; font-size: 15px; }
-  .news-item .event { margin-top: 4px; font-size: 14px; }
-  .news-item .relevance { margin-top: 6px; font-size: 13px; color: #4b5563; padding: 8px 12px; background: #fef3c7; border-left: 3px solid #f59e0b; border-radius: 3px; }
-  .news-item .source { margin-top: 6px; font-size: 12px; color: #6b7280; }
-  .news-item .source a { color: #b91c1c; text-decoration: none; }
-  .riser { padding: 14px 0; border-bottom: 1px solid #f3f4f6; }
+  .hero { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-deep) 100%); color: white; padding: 30px; border-radius: 10px; margin-bottom: 16px; }
+  .hero h1 { color: white; font-size: 28px; margin: 0 0 6px 0; letter-spacing: -0.02em; }
+  .hero .label { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--green); font-weight: 700; }
+  .hero p { margin: 8px 0 0 0; font-size: 13px; opacity: 0.9; }
+  .stat-grid { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+  .stat { flex: 1; min-width: 130px; background: rgba(255,255,255,0.10); padding: 14px; border-radius: 6px; border: 1px solid rgba(58, 226, 10, 0.2); }
+  .stat .num { font-size: 24px; font-weight: 700; color: var(--green); line-height: 1; }
+  .stat .label { font-size: 10px; opacity: 0.85; margin-top: 6px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .ai-content { font-size: 14px; }
+  .ai-content h1, .ai-content h2, .ai-content h3, .ai-content h4 { color: var(--navy); margin: 16px 0 6px 0; padding: 0; border: none; text-transform: none; letter-spacing: 0; }
+  .ai-content h1 { font-size: 17px; }
+  .ai-content h2 { font-size: 16px; }
+  .ai-content h3 { font-size: 14px; }
+  .ai-content h4 { font-size: 13px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.04em; }
+  .ai-content strong { color: var(--navy); font-weight: 700; }
+  .ai-content em { color: var(--ink-soft); }
+  .ai-content ul, .ai-content ol { padding-left: 22px; margin: 8px 0; }
+  .ai-content li { margin-bottom: 5px; }
+  .ai-content a { color: var(--blue); text-decoration: none; border-bottom: 1px solid rgba(26, 198, 255, 0.3); }
+  .ai-content hr { border: none; border-top: 1px solid var(--line); margin: 16px 0; }
+  .ai-content p { margin: 8px 0; }
+  .news-block { padding: 16px 18px; background: var(--shade); border-left: 3px solid var(--green); border-radius: 0 6px 6px 0; margin: 10px 0; }
+  .riser { padding: 16px 0; border-bottom: 1px solid var(--line); }
   .riser:last-child { border-bottom: none; }
-  .riser .heading { font-weight: 700; color: #b91c1c; font-size: 15px; }
-  .riser .stats { color: #4b5563; font-size: 12px; margin-top: 2px; }
-  .riser .profile { margin-top: 10px; font-size: 14px; white-space: pre-wrap; }
-  ul.actions { margin: 0; padding-left: 20px; }
-  ul.actions li { margin-bottom: 12px; font-size: 14px; }
-  .action-block { white-space: pre-wrap; font-size: 14px; }
-  .sig { font-size: 12px; color: #666; margin-top: 24px; padding-top: 16px; border-top: 1px solid #e5e7eb; }
-  .callout { background: #fff7ed; border-left: 4px solid #f59e0b; padding: 12px 16px; border-radius: 4px; font-size: 14px; }
-  pre.raw { white-space: pre-wrap; font-family: inherit; margin: 0; font-size: 14px; }
+  .riser .heading { font-weight: 700; color: var(--navy); font-size: 16px; }
+  .riser .stats { color: var(--ink-soft); font-size: 12px; margin-top: 4px; padding: 6px 10px; background: var(--shade); border-radius: 4px; display: inline-block; }
+  .sig { font-size: 11px; color: var(--ink-soft); margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--line); line-height: 1.6; }
+  .sig strong { color: var(--navy); }
+  .callout { background: rgba(26, 198, 255, 0.08); border-left: 3px solid var(--blue); padding: 12px 16px; border-radius: 0 6px 6px 0; font-size: 14px; }
 </style>
 </head>
 <body>
@@ -49,24 +68,24 @@
   <h1>Raptor Review Digest</h1>
   <p>{{ run_date }}</p>
   {% if is_baseline %}
-  <p>This is the baseline snapshot. Starting next Friday, you will see the week's news, rising players, and specific actions based on market movement.</p>
+  <p style="margin-top: 14px;">This is the baseline snapshot. Starting next Friday you will see the week's news, rising players, and Raptor's specific moves based on real market movement.</p>
   {% else %}
   <div class="stat-grid">
     <div class="stat">
       <div class="num">+{{ raptor.reviews_7d if raptor else 0 }}</div>
-      <div class="label">Raptor last 7 days</div>
+      <div class="label">Raptor 7 Days</div>
     </div>
     <div class="stat">
       <div class="num">+{{ raptor.reviews_30d if raptor else 0 }}</div>
-      <div class="label">Raptor last 30 days</div>
+      <div class="label">Raptor 30 Days</div>
     </div>
     <div class="stat">
       <div class="num">#{{ raptor_rank or 'n/a' }}</div>
-      <div class="label">Volume rank</div>
+      <div class="label">Volume Rank</div>
     </div>
     <div class="stat">
-      <div class="num">{{ (raptor.response_rate * 100)|int if raptor and raptor.response_rate else 'n/a' }}{% if raptor and raptor.response_rate %}%{% endif %}</div>
-      <div class="label">Your response rate</div>
+      <div class="num">{% if raptor and raptor.response_rate %}{{ (raptor.response_rate * 100)|int }}%{% else %}n/a{% endif %}</div>
+      <div class="label">Response Rate</div>
     </div>
   </div>
   {% endif %}
@@ -75,32 +94,28 @@
 {% if raptor_actions %}
 <div class="card">
   <h2>Raptor's Moves This Week</h2>
-  <p class="sub">Specific actions based on what the data and news show. Claude Opus synthesized from the full week's intel.</p>
-  <div class="action-block">{{ raptor_actions }}</div>
+  <div class="ai-content">{{ raptor_actions | md }}</div>
 </div>
 {% endif %}
 
 {% if market_news %}
 <div class="card">
   <h2>This Week in Indy Roofing</h2>
-  <p class="sub">News, press, community events, and marketing moves from the last 7 days. Researched via web search.</p>
-  <pre class="raw">{{ market_news }}</pre>
+  <div class="ai-content">{{ market_news | md }}</div>
 </div>
 {% endif %}
 
 {% if rising_profiles %}
 <div class="card">
   <h2>Rising Players</h2>
-  <p class="sub">Small-base accounts with high recent velocity. Worth watching.</p>
+  <p class="sub">Small base, fast growth. New names this week (rotated weekly).</p>
   {% for rp in rising_profiles %}
   <div class="riser">
     <div class="heading">{{ rp.competitor.name }}</div>
     <div class="stats">
-      {{ rp.competitor.review_count }} total reviews at {{ rp.competitor.rating }} stars
-      &middot; +{{ rp.competitor.reviews_30d or 0 }} in last 30 days
-      &middot; +{{ rp.competitor.reviews_7d or 0 }} this week
+      {{ rp.competitor.review_count }} reviews &middot; {{ rp.competitor.rating }} stars &middot; +{{ rp.competitor.reviews_30d or 0 }} in 30d &middot; +{{ rp.competitor.reviews_7d or 0 }} this week
     </div>
-    <div class="profile">{{ rp.profile }}</div>
+    <div class="ai-content" style="margin-top: 12px;">{{ rp.profile | md }}</div>
   </div>
   {% endfor %}
 </div>
@@ -108,29 +123,29 @@
 
 {% if by_gain_7d %}
 <div class="card">
-  <h2>Biggest Review Gainers This Week</h2>
-  <p class="sub">All tracked competitors sorted by reviews added in the last 7 days. Response rate shown because Google weights engagement when ranking businesses.</p>
+  <h2>Biggest Gainers This Week</h2>
+  <p class="sub">All tracked competitors, sorted by 7-day gain. Resp = % of reviews replied to (Google ranks engagement).</p>
   <table>
     <tr>
       <th>#</th>
       <th>Company</th>
       <th>Total</th>
-      <th>Rating</th>
-      <th>Last 7d</th>
-      <th>Last 30d</th>
-      <th>Last 90d</th>
-      <th>Resp %</th>
+      <th>★</th>
+      <th>7d</th>
+      <th>30d</th>
+      <th>90d</th>
+      <th>Resp</th>
     </tr>
     {% for biz in by_gain_7d[:25] %}
     <tr class="{% if 'raptor' in biz.name.lower() %}raptor-row{% endif %}">
       <td>{{ loop.index }}</td>
       <td>{{ biz.name }}</td>
       <td>{{ '{:,}'.format(biz.review_count) }}</td>
-      <td>{{ biz.rating if biz.rating is not none else 'n/a' }}</td>
+      <td>{{ biz.rating if biz.rating is not none else '–' }}</td>
       <td><span class="{% if biz.reviews_7d and biz.reviews_7d > 0 %}up{% else %}flat{% endif %}">+{{ biz.reviews_7d or 0 }}</span></td>
       <td>+{{ biz.reviews_30d or 0 }}</td>
       <td>+{{ biz.reviews_90d or 0 }}</td>
-      <td>{% if biz.response_rate is not none %}{{ (biz.response_rate * 100)|int }}%{% else %}&mdash;{% endif %}</td>
+      <td>{% if biz.response_rate is not none %}{{ (biz.response_rate * 100)|int }}%{% else %}–{% endif %}</td>
     </tr>
     {% endfor %}
   </table>
@@ -138,8 +153,8 @@
 {% endif %}
 
 <div class="card">
-  <h2>Leaderboard by Volume (Reference)</h2>
-  <p class="sub">Total review count snapshot. This does not change much week-to-week, so it is secondary to the movement data above.</p>
+  <h2>Leaderboard by Volume</h2>
+  <p class="sub">Reference. Volume rank changes slowly; movement above is what to watch.</p>
   <table>
     <tr><th>#</th><th>Company</th><th>Total Reviews</th><th>Rating</th></tr>
     {% for biz in by_volume[:15] %}
@@ -147,7 +162,7 @@
       <td>{{ loop.index }}</td>
       <td>{{ biz.name }}</td>
       <td>{{ '{:,}'.format(biz.review_count) }}</td>
-      <td>{{ biz.rating if biz.rating is not none else 'n/a' }}</td>
+      <td>{{ biz.rating if biz.rating is not none else '–' }}</td>
     </tr>
     {% endfor %}
   </table>
@@ -157,7 +172,7 @@
 <div class="card">
   <h2>What Next Friday Will Look Like</h2>
   <div class="callout">
-    Starting next Friday, this email leads with the week's news in Indy roofing (awards, community events, PR, ad launches), then <strong>Raptor's Moves This Week</strong> (3 Claude-synthesized actions), then <strong>Rising Players</strong> (researched profiles of accelerating accounts), then the full weekly gainers table.
+    Starting next Friday, this email leads with the week's news in Indy roofing (awards, community events, PR, ad launches), then Raptor's three moves for the week (Opus-synthesized), then rotating rising-player profiles, then the full weekly gainers table.
   </div>
 </div>
 {% endif %}
