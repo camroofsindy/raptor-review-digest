@@ -159,6 +159,102 @@ Be specific with facts and URLs. No generic filler."""
     return _extract_text(response)
 
 
+def ai_competitor_profile(client, biz, raptor):
+    """Per-competitor deep research with web search. One Sonnet call per competitor
+    that produces an 8-section markdown profile: who they are, employees + revenue
+    estimates with confidence, hiring activity, social presence (Yelp/Reddit/FB/BBB),
+    SEO+AEO assessment, generative engine visibility, and a strategic comparison
+    against Raptor's positioning."""
+    name = biz["name"]
+    total = biz.get("review_count", 0)
+    rating = biz.get("rating")
+    r7 = biz.get("reviews_7d") or 0
+    r30 = biz.get("reviews_30d") or 0
+    r90 = biz.get("reviews_90d") or 0
+    resp = biz.get("response_rate")
+    addr = biz.get("address") or "Indianapolis area"
+
+    raptor_total = raptor["review_count"] if raptor else 663
+    raptor_rating = raptor["rating"] if raptor else 5.0
+
+    prompt = f"""You are doing a competitive intelligence brief on "{name}" for Cameron Blakely, owner of Raptor Roofing in Greenwood IN. This profile gets refreshed every Tuesday and Thursday on Cameron's dashboard, so keep it specific and current.
+
+Competitor's current numbers:
+- Total Google reviews: {total}
+- Star rating: {rating}
+- Reviews last 7 days: {r7}
+- Reviews last 30 days: {r30}
+- Reviews last 90 days: {r90}
+- Owner response rate: {resp}
+- Address: {addr}
+
+Raptor's numbers for comparison:
+- {raptor_total} reviews at {raptor_rating} stars
+- 5.0 rating is highest in the Indy top 10 by volume
+- Premium positioning, "we don't outsource accountability"
+
+Using web search (use it generously, 6-10 searches), produce a markdown brief in EXACTLY this structure. Use bold section headings. Be specific with names, dates, URLs. NO generic filler. NO naming Raptor team members beyond Cameron and Patrick.
+
+## 1. Who They Are
+2-3 sentences: founding year, owner(s), service area, what makes them distinct.
+
+## 2. Estimated Scale
+Employee count estimate (with **confidence: high/medium/low** label) and rough annual revenue estimate (with confidence). Cite source if available (LinkedIn employee count, ZoomInfo, BuildZoom permits, etc).
+
+## 3. Recent Hiring Signals
+What roles they're posting on Indeed, LinkedIn, ZipRecruiter in the last 30 days. Especially flag marketing, sales, ops leadership hires. If nothing recent, say so.
+
+## 4. Off-Google Presence
+How they show up on Yelp, Reddit, Facebook (Ad Library too), BBB, Nextdoor. Note discrepancies (e.g., 4.9 on Google but 2.5 on Yelp = obvious review-funneling).
+
+## 5. SEO and AEO Posture
+What's their domain authority signal, are they ranking for key Indy roofing queries, do they have schema markup, blog content, backlinks from local press? Anything Raptor could copy or counter.
+
+## 6. Generative Engine Visibility
+Search ChatGPT/Claude/Gemini results for "best roofers Indianapolis", "top roofing contractor near Greenwood Indiana", "roof replacement Carmel Indiana", "roofing company Fishers Noblesville Zionsville." Are they cited by name in AI answers? If yes, where and why. If no, that's an opportunity to note.
+
+## 7. Strategic Read vs Raptor
+Where they beat Raptor. Where Raptor beats them. One sentence on the most exploitable weakness.
+
+## 8. What Raptor Should Watch or Copy
+2-3 specific tactics Cameron should monitor or steal from this competitor.
+
+Aim for 400-650 words total. Cite sources inline as markdown links."""
+
+    response = client.messages.create(
+        model=ANTHROPIC_MODEL_RESEARCH,
+        max_tokens=4000,
+        tools=[WEB_SEARCH_TOOL],
+        messages=[{"role": "user", "content": prompt}],
+    )
+    return _extract_text(response)
+
+
+def _slug(name):
+    """URL-safe slug from a competitor name."""
+    s = re.sub(r"[^a-z0-9]+", "-", name.lower())
+    return s.strip("-") or "competitor"
+
+
+def render_competitor_pages(businesses, raptor, market_news, run_date_str):
+    """Render docs/competitor/<slug>/index.html for top 30 by volume."""
+    env = Environment(loader=FileSystemLoader(str(DASHBOARD_TEMPLATE_DIR)))
+    env.filters["md"] = _md_to_html
+    template = env.get_template("competitor.html.j2")
+    by_volume = sorted(businesses, key=lambda b: b["review_count"], reverse=True)
+    pages_dir = DOCS_DIR / "competitor"
+    pages_dir.mkdir(parents=True, exist_ok=True)
+    for i, biz in enumerate(by_volume[:50], 1):
+        slug = _slug(biz["name"])
+        biz["_slug"] = slug
+        page_dir = pages_dir / slug
+        page_dir.mkdir(parents=True, exist_ok=True)
+        profile = biz.get("_deep_profile")
+        html = template.render(biz=biz, raptor=raptor or {}, rank=i, profile=profile,
+                                run_date=run_date_str)
+        (page_dir / "index.html").write_text(html)
+
+
 def ai_raptor_actions(client, data_summary):
     """Synthesize 3 concrete actions for Raptor based on the week's data."""
     prompt = f"""You are Cameron Blakely's strategic advisor. Cameron owns Raptor Roofing in Greenwood, Indiana. Context:
@@ -831,6 +927,7 @@ def render_dashboard(snapshot, prev_snapshot, raptor, businesses, market_news,
         b.setdefault("reviews_90d", None)
         b.setdefault("response_rate", None)
         b.setdefault("address", None)
+        b["slug"] = _slug(b["name"])
 
     by_volume = sorted(businesses, key=lambda b: b["review_count"], reverse=True)
     by_gain_7d = sorted(
@@ -1065,6 +1162,46 @@ def main():
             except Exception as e:
                 print(f"  actions synthesis failed: {e}", file=sys.stderr)
 
+            # Per-competitor deep profiles for top N by volume.
+            # First-time: profile everyone in scope. Subsequent runs: re-profile each
+            # competitor at most once per 14 days (rolling) to control cost. We track
+            # by reading the previous snapshot's profiles_dates map.
+            raptor_for_profile = next((b for b in businesses if "raptor" in b["name"].lower()), None)
+            top_for_profile = sorted(businesses, key=lambda b: b["review_count"], reverse=True)[:20]
+            prev_profile_dates = {}
+            for snap in reversed(history.get("snapshots", [])):
+                pd = snap.get("profile_dates")
+                if pd:
+                    prev_profile_dates = pd
+                    break
+            now_iso = datetime.now(timezone.utc).date().isoformat()
+            new_profile_dates = dict(prev_profile_dates)
+            stale_cutoff = (datetime.now(timezone.utc) - timedelta(days=14)).date().isoformat()
+            for biz in top_for_profile:
+                key = biz.get("place_id") or _norm(biz["name"])
+                last_done = prev_profile_dates.get(key)
+                if last_done and last_done > stale_cutoff:
+                    # Reuse the cached profile from the previous snapshot.
+                    prev_profile = None
+                    for snap in reversed(history.get("snapshots", [])):
+                        for pb in snap.get("businesses", []):
+                            if (pb.get("place_id") and pb.get("place_id") == biz.get("place_id")) \
+                                    or _norm(pb["name"]) == _norm(biz["name"]):
+                                prev_profile = pb.get("_deep_profile")
+                                break
+                        if prev_profile:
+                            break
+                    if prev_profile:
+                        biz["_deep_profile"] = prev_profile
+                        continue
+                try:
+                    print(f"AI: deep profile for {biz['name']}...")
+                    biz["_deep_profile"] = ai_competitor_profile(client, biz, raptor_for_profile)
+                    new_profile_dates[key] = now_iso
+                except Exception as e:
+                    print(f"  profile for {biz['name']} failed: {e}", file=sys.stderr)
+            snapshot["profile_dates"] = new_profile_dates
+
     raptor = next(
         (b for b in businesses if "raptor" in b["name"].lower()), None
     )
@@ -1079,6 +1216,9 @@ def main():
         rising_profiles=rising_profiles,
         raptor_actions=raptor_actions,
     )
+    print("Rendering per-competitor sub-pages...")
+    run_date_str = datetime.now(timezone.utc).strftime("%B %d, %Y")
+    render_competitor_pages(businesses, raptor, market_news, run_date_str)
     html = render_email(
         snapshot=snapshot,
         prev_snapshot=prev_snapshot,
