@@ -129,17 +129,26 @@ NATIONAL / INDUSTRY events to look for (these often matter MORE than local):
 
 Known Indy competitors to spot-check: {names_list}.
 
+BIAS: prefer LOCAL Indy roofing stories when they exist, then mix in industry stories. Aim for at least 4 local items if any are available; fill the rest with industry. If local is genuinely empty this week, default to industry-heavy.
+
 For EACH real story you find (max 10), output EXACTLY this format:
 
 ---
 COMPANY: [company name OR "Industry-wide" for non-company-specific stories]
-EVENT: [one sentence on what happened, lead with the most concrete fact]
+CATEGORY: [one of: award, press, expansion, hire, ad, regulation, weather, supply, partnership, other]
+EVENT: [one concrete sentence on what happened — lead with the most factual hook]
 WHEN: [approximate date]
-WHY IT MATTERS: [one CMO-grade sentence on what Cameron should DO or NOTE — be specific, name a tactic if applicable, no clichés]
+WHY IT MATTERS: [one CMO-grade sentence on what Cameron should DO or NOTE]
+DETAIL: [3-5 sentences expanding on the WHY — context, implication, what tactic Cameron could run, what to monitor next. This is what shows when Cameron clicks the news card to read the full story.]
 SOURCE: [URL]
 ---
 
-If you genuinely find nothing substantive this week (rare — you should always find at least 2-3 industry stories), output "No significant news this week." Do not invent. Do not pad with generic info."""
+CRITICAL formatting rules:
+- NO EMOJIS anywhere. No 🦅, no 🏆, no decorative symbols. Cameron has been explicit.
+- NO eagle imagery (Raptor is a velociraptor, not an eagle).
+- Plain text only. Markdown bold and links are fine. No emoji icons.
+
+If you genuinely find nothing substantive this week, output "No significant news this week." Do not invent. Do not pad with generic info."""
     response = client.messages.create(
         model=ANTHROPIC_MODEL_RESEARCH,
         max_tokens=4000,
@@ -285,10 +294,100 @@ Report:
 - What is Raptor missing structurally that gets others cited (review count threshold? Wikipedia entry? specific publication mention? schema markup?)
 - ONE specific move to improve Raptor's AEO standing in the next 14 days.
 
-Output the full document in markdown. Source links inline as markdown links. Be direct and specific. Do NOT name specific Raptor team members."""
+Output the full document in markdown. Source links inline as markdown links. Be direct and specific.
+
+CRITICAL: Do NOT name specific Raptor team members. NO EMOJIS. NO eagle imagery (Raptor is a velociraptor, a dinosaur, not an eagle). Plain text and standard markdown only."""
     response = client.messages.create(
         model=ANTHROPIC_MODEL_RESEARCH,
         max_tokens=5000,
+        tools=[WEB_SEARCH_TOOL],
+        messages=[{"role": "user", "content": prompt}],
+    )
+    return _extract_text(response)
+
+
+def ai_overview_summary(client, market_news, rising_profiles, raptor_actions,
+                         seo_aeo_brief, businesses):
+    """One-paragraph-per-tab summary so the Overview is the 5-minute version of
+    the whole dashboard. Output is markdown with four sections."""
+    top5_volume = sorted(businesses, key=lambda b: b["review_count"], reverse=True)[:5]
+    leaders_text = ", ".join(f"{b['name']} ({b['review_count']})" for b in top5_volume)
+    raptor = next((b for b in businesses if "raptor" in b["name"].lower()), None)
+    raptor_text = (
+        f"+{raptor['reviews_7d'] or 0} this week, +{raptor['reviews_30d'] or 0} in 30d"
+        if raptor else "n/a"
+    )
+    news_excerpt = (market_news or "")[:1500]
+    rising_excerpt = "\n".join(
+        f"- {rp['competitor']['name']}: {rp['profile'][:300]}" for rp in rising_profiles[:3]
+    ) if rising_profiles else "(none this cycle)"
+    seo_excerpt = (seo_aeo_brief or "")[:1500]
+    actions_excerpt = (raptor_actions or "")[:1500]
+    prompt = f"""You are Cameron's $500K CMO. Cameron has 5 minutes and wants a paragraph each summary of every dashboard tab so he can decide where to dive deeper. Be punchy. Each section is ONE tight paragraph (3-5 sentences). No filler. NO EMOJIS. NO eagle imagery (Raptor is a velociraptor).
+
+Top 5 by volume: {leaders_text}.
+Raptor pace: {raptor_text}.
+
+Source material from this cycle (excerpted):
+
+[NEWS]
+{news_excerpt}
+
+[RISING]
+{rising_excerpt}
+
+[SEO/AEO]
+{seo_excerpt}
+
+[ACTIONS]
+{actions_excerpt}
+
+Output exactly this markdown (use these exact headings, no other prose):
+
+## In the news this week
+[1 paragraph — the most important 1-2 stories, what they mean for Raptor]
+
+## Rising player to watch
+[1 paragraph — name the most interesting rising player and why]
+
+## SEO and AEO read
+[1 paragraph — the single most important takeaway: what's the gap, what's the move]
+
+## Competitive landscape
+[1 paragraph — top 3 named competitors with key context (volume, velocity, vulnerability), where Raptor sits, what's changing]
+
+Plain professional text only. NO EMOJIS."""
+    response = client.messages.create(
+        model=ANTHROPIC_MODEL_SYNTHESIS,
+        max_tokens=2500,
+        messages=[{"role": "user", "content": prompt}],
+    )
+    return _extract_text(response)
+
+
+def ai_red_team(client, top_competitor, raptor):
+    """Red-team analysis. AI plays the named competitor's CMO and writes how they
+    would attack Raptor's market position. Surfaces blind spots."""
+    name = top_competitor["name"]
+    raptor_total = raptor["review_count"] if raptor else 663
+    raptor_rating = raptor["rating"] if raptor else 5.0
+    prompt = f"""You are about to step into a different role. You are now the Chief Marketing Officer of "{name}", an Indianapolis roofing competitor. You report to {name}'s ownership and your single goal is to take market share from Raptor Roofing in the Indy metro over the next 6 months.
+
+Raptor's known position: {raptor_total} Google reviews at {raptor_rating} stars, top-10 by volume, premium positioning, "we don't outsource accountability" messaging, family-feel community sponsorships in Greenwood and Center Grove, primary lead sources are Google LSA and Google Ads.
+
+Your position as {name}: {top_competitor['review_count']} reviews at {top_competitor.get('rating', 'n/a')} stars.
+
+Using web search (5-8 searches), write a 250-400 word strategic memo to your own ownership covering:
+1. Where Raptor is most vulnerable — 3 specific weaknesses you can exploit. Be ruthless and specific.
+2. Three campaigns YOU ({name}) would launch in the next 90 days to take share from Raptor.
+3. The single most threatening move you could make against them this quarter.
+
+Be specific. Name exact tactics, channels, ad creative angles. The goal: Cameron should read this and feel uncomfortable, then act.
+
+NO EMOJIS. NO eagle imagery. Plain professional memo. Bold the most important sentences."""
+    response = client.messages.create(
+        model=ANTHROPIC_MODEL_RESEARCH,
+        max_tokens=2500,
         tools=[WEB_SEARCH_TOOL],
         messages=[{"role": "user", "content": prompt}],
     )
@@ -340,10 +439,11 @@ Write 3 specific actions Raptor should take THIS WEEK based on what you see. Eac
 - 2-3 sentences
 
 CRITICAL rules:
-- NEVER name specific Raptor team members (no "Patrick", "Dylan", "Curtis", "Cameron", "Mike", "Lauryn", etc.). Cameron assigns internally. Use phrasing like "someone on the team," "your sales lead," "the marketing function," or just describe what to do without naming who.
-- Avoid clichés ("focus on reviews," "improve customer service") unless the data specifically demands it.
-- Bias toward NON-OBVIOUS, ahead-of-curve recommendations a top-tier CMO would surface — partnership plays, content gambits, AEO experiments, ad-creative angles, distribution arbitrage. Cameron has been in the roofing industry; he doesn't need 101-level advice.
-- If something requires deeper detail (e.g. "post job-site photos with EXIF location metadata to your GBP"), include the WHY and HOW in 2-3 extra sentences. Cameron will read longer if the idea is good.
+- NEVER name specific Raptor team members (no "Patrick", "Dylan", "Curtis", "Cameron", "Mike", "Lauryn", etc.). Cameron assigns internally.
+- NO EMOJIS. No decorative symbols. No eagle imagery (Raptor is a velociraptor — a dinosaur — not an eagle). Plain text and markdown formatting only.
+- Avoid clichés ("focus on reviews," "improve customer service") unless data demands it.
+- Bias toward NON-OBVIOUS, ahead-of-curve recommendations a top-tier CMO would surface — partnership plays, content gambits, AEO experiments, ad-creative angles, distribution arbitrage. Cameron has been in roofing for years; no 101-level advice.
+- Format each action with: **Bold one-sentence headline.** Then 2-3 paragraphs of detail covering the why, the how, and the success metric. Cameron will read long if the idea is good.
 - If an action defends against a specific competitor move, say which competitor and what move directly."""
     response = client.messages.create(
         model=ANTHROPIC_MODEL_SYNTHESIS,
@@ -421,35 +521,56 @@ def detect_rising_players(competitors, min_velocity_ratio=0.08, min_30d=15,
 
 
 def parse_news_blocks(text):
-    """Convert the AI-generated market news markdown into structured cards."""
+    """Convert AI-generated market news markdown into structured cards. Each card
+    exposes a CATEGORY field (award, press, expansion, hire, ad, regulation, etc.)
+    that the template uses to pick an SVG icon. No emojis."""
     if not text or "no significant news" in text.lower():
         return []
-    # Split by --- separators (with surrounding whitespace tolerance).
     blocks = re.split(r"\n\s*---+\s*\n", text)
     cards = []
+    multi_field_re = re.compile(
+        r"\*?\*?(COMPANY|CATEGORY|EVENT|WHEN|WHY IT MATTERS|DETAIL|SOURCE)\*?\*?:\s*(.+)",
+        re.IGNORECASE,
+    )
     for block in blocks:
         card = {}
+        current_key = None
         for line in block.strip().split("\n"):
-            m = re.match(r"\*?\*?(COMPANY|EVENT|WHEN|WHY IT MATTERS|SOURCE)\*?\*?:\s*(.+)",
-                          line.strip(), re.IGNORECASE)
+            m = multi_field_re.match(line.strip())
             if m:
                 key = m.group(1).lower().replace(" ", "_").replace("it_", "")
                 card[key] = m.group(2).strip()
+                current_key = key
+            elif current_key and line.strip():
+                # Continuation line for multi-line fields like DETAIL.
+                card[current_key] = (card[current_key] + " " + line.strip()).strip()
         if card.get("company") and card.get("event"):
-            # Auto-classify event type for icon
-            event_text = (card.get("event") or "").lower() + " " + (card.get("why_matters") or "").lower()
-            if any(w in event_text for w in ["award", "best of", "named", "ranked"]):
-                card["icon"] = "🏆"
-            elif any(w in event_text for w in ["press release", "announced", "press"]):
-                card["icon"] = "📰"
-            elif any(w in event_text for w in ["expand", "open", "office", "location"]):
-                card["icon"] = "🚀"
-            elif any(w in event_text for w in ["hire", "hired", "joined", "appoint"]):
-                card["icon"] = "👥"
-            elif any(w in event_text for w in ["launch", "campaign", "ad", "rebrand"]):
-                card["icon"] = "📣"
-            else:
-                card["icon"] = "📌"
+            cat = (card.get("category") or "").strip().lower()
+            if not cat:
+                event_text = (card.get("event") or "").lower() + " " + (card.get("why_matters") or "").lower()
+                if any(w in event_text for w in ["award", "best of", "named", "ranked"]):
+                    cat = "award"
+                elif any(w in event_text for w in ["press release", "announced"]):
+                    cat = "press"
+                elif any(w in event_text for w in ["expand", "open", "new office", "location"]):
+                    cat = "expansion"
+                elif any(w in event_text for w in ["hired", "joined", "appoint"]):
+                    cat = "hire"
+                elif any(w in event_text for w in ["launch", "campaign", "rebrand"]):
+                    cat = "ad"
+                elif any(w in event_text for w in ["regulation", "rule", "law", "fannie", "freddie", "irs", "tariff"]):
+                    cat = "regulation"
+                elif any(w in event_text for w in ["storm", "weather", "hail", "wind"]):
+                    cat = "weather"
+                elif any(w in event_text for w in ["price", "supply", "shortage"]):
+                    cat = "supply"
+                else:
+                    cat = "other"
+            card["category"] = cat
+            # Strip emojis from any field that AI may have leaked them into.
+            for k in ("event", "why_matters", "detail", "company"):
+                if card.get(k):
+                    card[k] = _strip_emojis(card[k])
             cards.append(card)
     return cards
 
@@ -518,11 +639,33 @@ def extract_action_headlines(actions_md):
     return [h.strip().rstrip(".") for h in headlines[:5]]
 
 
-def _strip_ai_preamble(text):
-    """Strip Claude's narration ('Now I have enough data...', 'I'll search...') that
-    sometimes leads AI outputs. Trim until the first real content line."""
+_EMOJI_RE = re.compile(
+    "["
+    "\U0001F300-\U0001F9FF"   # symbols & pictographs (emojis)
+    "\U0001FA00-\U0001FAFF"
+    "\U00002600-\U000027BF"   # misc symbols + dingbats (eagle, sparkles, arrows)
+    "\U0001F000-\U0001F02F"
+    "\U0001F100-\U0001F1FF"
+    "]+",
+    flags=re.UNICODE,
+)
+
+
+def _strip_emojis(text):
+    """Remove emojis and decorative pictographs from AI output. Cameron has been
+    explicit that the dashboard should not use emojis (no 🦅, 🏆, 📰, etc.)."""
     if not text:
         return text
+    return _EMOJI_RE.sub("", text)
+
+
+def _strip_ai_preamble(text):
+    """Strip Claude's narration ('Now I have enough data...', 'I'll search...') that
+    sometimes leads AI outputs, plus any decorative emojis. Trim until the first
+    real content line."""
+    if not text:
+        return text
+    text = _strip_emojis(text)
     lines = text.split("\n")
     drop_patterns = (
         r"^\s*(now i (have|will|can)|let me (now|produce|compile)|"
@@ -1048,7 +1191,8 @@ def _build_chart_data(businesses, raptor):
 
 
 def render_dashboard(snapshot, prev_snapshot, raptor, businesses, market_news,
-                      rising_profiles, raptor_actions, seo_aeo_brief=None):
+                      rising_profiles, raptor_actions, seo_aeo_brief=None,
+                      overview_summary=None, red_team=None):
     """Render the static dashboard HTML to docs/index.html."""
     env = Environment(loader=FileSystemLoader(str(DASHBOARD_TEMPLATE_DIR)))
     env.filters["md"] = _md_to_html
@@ -1080,11 +1224,25 @@ def render_dashboard(snapshot, prev_snapshot, raptor, businesses, market_news,
     by_gain_for_table = [b for b in by_gain_7d if (b.get("review_count") or 0) >= 50][:50]
     action_headlines = extract_action_headlines(raptor_actions)
 
+    # Compute hero-line numbers for the dynamic position+threat headline.
+    raptor_count = raptor["review_count"] if raptor else 0
+    next_above = None
+    next_above_gap = None
+    for b in by_volume:
+        if b["review_count"] > raptor_count and "raptor" not in b["name"].lower():
+            next_above = b
+            next_above_gap = b["review_count"] - raptor_count
+    # Threat snippet from market news (top news event)
+    top_threat = news_cards[0] if news_cards else None
+
     html = template.render(
         snapshot=snapshot,
         is_baseline=prev_snapshot is None,
         raptor=raptor,
         raptor_rank=raptor_rank,
+        next_above=next_above,
+        next_above_gap=next_above_gap,
+        top_threat=top_threat,
         by_volume=by_volume_leaderboard,
         by_gain_7d=by_gain_for_table,
         market_news=market_news,
@@ -1093,6 +1251,8 @@ def render_dashboard(snapshot, prev_snapshot, raptor, businesses, market_news,
         raptor_actions=raptor_actions,
         action_headlines=action_headlines,
         seo_aeo_brief=seo_aeo_brief,
+        overview_summary=overview_summary,
+        red_team=red_team,
         chart_data=chart_data,
         run_date=datetime.now(timezone.utc).strftime("%B %d, %Y"),
     )
@@ -1254,6 +1414,8 @@ def main():
     rising_profiles = []
     raptor_actions = None
     seo_aeo_brief = None
+    overview_summary = None
+    red_team = None
     if not scrape_only:
         client = _anthropic_client()
         if client is None:
@@ -1300,6 +1462,19 @@ def main():
                 seo_aeo_brief = ai_seo_aeo_brief(client, businesses, raptor_for_seo)
             except Exception as e:
                 print(f"  SEO/AEO brief failed: {e}", file=sys.stderr)
+
+            # Red-team analysis (rotate through top competitors over time, one per run).
+            try:
+                top_non_raptor = [b for b in sorted(businesses, key=lambda b: b["review_count"], reverse=True)
+                                   if "raptor" not in b["name"].lower()]
+                rotation_idx = len(history.get("snapshots", [])) % min(5, len(top_non_raptor))
+                target = top_non_raptor[rotation_idx] if top_non_raptor else None
+                if target:
+                    print(f"AI: red-team analysis as {target['name']}'s CMO...")
+                    raptor_for_rt = next((b for b in businesses if "raptor" in b["name"].lower()), None)
+                    red_team = {"competitor": target, "memo": ai_red_team(client, target, raptor_for_rt)}
+            except Exception as e:
+                print(f"  red-team failed: {e}", file=sys.stderr)
 
             # Synthesis
             try:
@@ -1349,6 +1524,16 @@ def main():
                     print(f"  profile for {biz['name']} failed: {e}", file=sys.stderr)
             snapshot["profile_dates"] = new_profile_dates
 
+            # Overview summary — one paragraph per tab. Done LAST so it can reference
+            # all the other AI outputs from this cycle.
+            try:
+                print("AI: generating overview summary...")
+                overview_summary = ai_overview_summary(client, market_news,
+                                                        rising_profiles, raptor_actions,
+                                                        seo_aeo_brief, businesses)
+            except Exception as e:
+                print(f"  overview summary failed: {e}", file=sys.stderr)
+
     raptor = next(
         (b for b in businesses if "raptor" in b["name"].lower()), None
     )
@@ -1363,6 +1548,8 @@ def main():
         rising_profiles=rising_profiles,
         raptor_actions=raptor_actions,
         seo_aeo_brief=seo_aeo_brief,
+        overview_summary=overview_summary,
+        red_team=red_team,
     )
     print("Rendering per-competitor sub-pages...")
     run_date_str = datetime.now(timezone.utc).strftime("%B %d, %Y")

@@ -15,9 +15,9 @@ tailwind.config = {
   theme: {
     extend: {
       colors: {
-        navy: { 50: '#e8ecf3', 100: '#c4cee0', 200: '#7d92ba', 300: '#4a679a', DEFAULT: '#172e55', deep: '#0d1d3a', darker: '#08142a', light: '#2a4880' },
+        navy: { 50: '#e8ecf3', 100: '#c4cee0', 200: '#7d92ba', 300: '#4a679a', DEFAULT: '#172e55', deep: '#0d1d3a', darker: '#08142a', light: '#2a4880', surface: '#1a2f54' },
         accent: { green: '#3ae20a', blue: '#1ac6ff' },
-        ink: { DEFAULT: '#ffffff', soft: '#a3b1c7', mute: '#6b7d99', dim: '#4a5878' },
+        ink: { DEFAULT: '#ffffff', soft: '#c4cee0', mute: '#7d92ba', dim: '#4a679a' },
       },
       fontFamily: { sans: ['Ouma Latin VF', 'Inter', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'] },
     },
@@ -29,159 +29,171 @@ tailwind.config = {
   .stat-num { font-variant-numeric: tabular-nums; }
   .scroll-fade { opacity: 0; transform: translateY(20px); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
   .scroll-fade.visible { opacity: 1; transform: translateY(0); }
-  .tab-active { background: linear-gradient(135deg, #3ae20a 0%, #1ac6ff 100%); color: #0d1d3a !important; box-shadow: 0 4px 14px rgba(58,226,10,0.35); }
-  .tab-active span { color: #0d1d3a; }
-  .tab-active svg { opacity: 1 !important; color: #0d1d3a; }
+  .tab-active { background: rgba(58, 226, 10, 0.15); color: #ffffff !important; border: 1px solid rgba(58, 226, 10, 0.45); }
+  .tab-active span { color: #ffffff; }
+  .tab-active svg { opacity: 1 !important; color: #3ae20a; }
   details > summary { list-style: none; cursor: pointer; }
   details > summary::-webkit-details-marker { display: none; }
   details[open] > summary .chev { transform: rotate(90deg); }
   .chev { transition: transform 0.2s ease; }
 
-  /* Card system: dark navy with depth and glow */
   .panel {
-    background: linear-gradient(180deg, rgba(22, 46, 85, 0.65) 0%, rgba(13, 29, 58, 0.85) 100%);
-    border: 1px solid rgba(58, 226, 10, 0.08);
+    background: linear-gradient(180deg, rgba(26, 47, 84, 0.7) 0%, rgba(13, 29, 58, 0.85) 100%);
+    border: 1px solid rgba(196, 206, 224, 0.08);
     border-radius: 16px;
     backdrop-filter: blur(8px);
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.04);
     position: relative;
     overflow: hidden;
   }
-  .panel::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(58, 226, 10, 0.3), transparent);
-  }
   .panel-hero {
-    background: linear-gradient(135deg, rgba(22, 46, 85, 0.95) 0%, rgba(13, 29, 58, 0.95) 100%);
-    border: 1px solid rgba(58, 226, 10, 0.2);
+    background: linear-gradient(135deg, rgba(26, 47, 84, 0.95) 0%, rgba(13, 29, 58, 0.95) 100%);
+    border: 1px solid rgba(196, 206, 224, 0.12);
     border-radius: 16px;
-    box-shadow: 0 8px 40px rgba(58, 226, 10, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.06);
-    position: relative;
-    overflow: hidden;
-  }
-  .panel-hero::after {
-    content: ''; position: absolute; top: -50%; right: -30%; width: 70%; height: 200%;
-    background: radial-gradient(circle, rgba(26, 198, 255, 0.06), transparent 60%);
-    pointer-events: none;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.06);
   }
 
-  /* AI prose on dark background */
   .ai-prose { color: rgba(255, 255, 255, 0.92); }
-  .ai-prose h1, .ai-prose h2, .ai-prose h3, .ai-prose h4 { color: #ffffff; font-weight: 700; margin: 1.2em 0 0.5em; line-height: 1.25; }
-  .ai-prose h1 { font-size: 1.35rem; color: #3ae20a; }
-  .ai-prose h2 { font-size: 1.15rem; color: #3ae20a; padding-top: 0.5em; border-top: 1px solid rgba(58, 226, 10, 0.2); }
+  .ai-prose h1, .ai-prose h2, .ai-prose h3, .ai-prose h4 { color: #ffffff; font-weight: 700; margin: 1.4em 0 0.5em; line-height: 1.25; }
+  .ai-prose h1 { font-size: 1.35rem; }
+  .ai-prose h2 { font-size: 1.125rem; padding-top: 0.6em; border-top: 1px solid rgba(196, 206, 224, 0.12); }
   .ai-prose h2:first-child { border-top: none; padding-top: 0; }
-  .ai-prose h3 { font-size: 1rem; color: #1ac6ff; }
-  .ai-prose h4 { font-size: 0.85rem; color: #a3b1c7; text-transform: uppercase; letter-spacing: 0.05em; }
-  .ai-prose p { margin: 0.7em 0; line-height: 1.65; }
+  .ai-prose h3 { font-size: 1rem; color: #c4cee0; }
+  .ai-prose h4 { font-size: 0.85rem; color: #7d92ba; text-transform: uppercase; letter-spacing: 0.05em; }
+  .ai-prose p { margin: 0.7em 0; line-height: 1.65; color: rgba(255, 255, 255, 0.9); }
   .ai-prose strong { color: #ffffff; font-weight: 700; }
-  .ai-prose em { color: #a3b1c7; font-style: italic; }
+  .ai-prose em { color: #c4cee0; font-style: italic; }
   .ai-prose ul, .ai-prose ol { padding-left: 1.4em; margin: 0.6em 0; }
   .ai-prose li { margin: 0.4em 0; line-height: 1.6; }
   .ai-prose a { color: #1ac6ff; border-bottom: 1px solid rgba(26, 198, 255, 0.4); transition: border-color 0.15s; }
-  .ai-prose a:hover { border-color: #1ac6ff; color: #ffffff; }
+  .ai-prose a:hover { color: #ffffff; }
   .ai-prose hr { border: none; border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 1.5em 0; }
 
-  .gradient-text { background: linear-gradient(135deg, #3ae20a 0%, #1ac6ff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .accent-text { color: #3ae20a; }
+  .gradient-line { background: linear-gradient(90deg, transparent, rgba(58, 226, 10, 0.4), transparent); height: 1px; }
+  .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
   .no-scrollbar::-webkit-scrollbar { display: none; }
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-  /* Table styling on dark */
+  /* Tables */
   .data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  .data-table thead th { text-align: left; padding: 12px 10px; background: rgba(13, 29, 58, 0.6); border-bottom: 2px solid rgba(58, 226, 10, 0.4); font-weight: 700; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: #3ae20a; }
+  .data-table thead th { text-align: left; padding: 12px 10px; background: rgba(13, 29, 58, 0.6); border-bottom: 1px solid rgba(196, 206, 224, 0.18); font-weight: 700; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: #c4cee0; cursor: pointer; user-select: none; }
+  .data-table thead th:hover { color: #ffffff; background: rgba(26, 47, 84, 0.7); }
+  .data-table thead th.sorted-asc::after, .data-table thead th.sorted-desc::after { content: ''; display: inline-block; margin-left: 4px; border-left: 4px solid transparent; border-right: 4px solid transparent; vertical-align: middle; }
+  .data-table thead th.sorted-asc::after { border-bottom: 5px solid #3ae20a; }
+  .data-table thead th.sorted-desc::after { border-top: 5px solid #3ae20a; }
   .data-table tbody td { padding: 12px 10px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); vertical-align: top; color: rgba(255, 255, 255, 0.85); }
   .data-table tbody tr:hover { background: rgba(58, 226, 10, 0.04); }
   .data-table tbody tr.raptor-row { background: rgba(58, 226, 10, 0.08); border-left: 3px solid #3ae20a; }
   .data-table tbody tr.raptor-row td { color: #ffffff; font-weight: 600; }
   .text-up { color: #3ae20a; font-weight: 700; }
-  .text-flat { color: #6b7d99; }
+  .text-flat { color: #7d92ba; }
+
+  /* Bottom mobile nav */
+  .mobile-nav { display: none; }
+  @media (max-width: 768px) {
+    .desktop-nav { display: none; }
+    .mobile-nav { display: block; position: fixed; bottom: 0; left: 0; right: 0; z-index: 50; background: rgba(8, 20, 42, 0.96); backdrop-filter: blur(12px); border-top: 1px solid rgba(58, 226, 10, 0.2); padding: 8px 4px; padding-bottom: calc(8px + env(safe-area-inset-bottom)); }
+    .mobile-nav-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+    .mobile-tab { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 6px 2px; border-radius: 8px; color: #7d92ba; transition: all 0.15s; }
+    .mobile-tab svg { width: 18px; height: 18px; margin-bottom: 2px; }
+    .mobile-tab span { font-size: 9px; font-weight: 600; letter-spacing: 0.02em; line-height: 1.1; text-align: center; }
+    .mobile-tab.tab-active { background: rgba(58, 226, 10, 0.15); color: #ffffff; border: 1px solid rgba(58, 226, 10, 0.4); }
+    .mobile-tab.tab-active svg { color: #3ae20a; }
+    main { padding-bottom: 90px !important; }
+  }
 </style>
 </head>
 <body class="text-white antialiased min-h-screen">
 
-<!-- Subtle ambient gradient overlay across page -->
-<div class="fixed inset-0 pointer-events-none" style="background-image: radial-gradient(circle at 15% 0%, rgba(58, 226, 10, 0.06) 0%, transparent 40%), radial-gradient(circle at 85% 50%, rgba(26, 198, 255, 0.05) 0%, transparent 35%);"></div>
+<div class="fixed inset-0 pointer-events-none" style="background-image: radial-gradient(circle at 15% 0%, rgba(58, 226, 10, 0.04) 0%, transparent 40%), radial-gradient(circle at 85% 50%, rgba(26, 198, 255, 0.04) 0%, transparent 35%);"></div>
 
 <!-- Hero -->
 <section class="relative z-10">
-  <div class="max-w-6xl mx-auto px-5 sm:px-8 pt-8 pb-10">
-    <div class="flex items-center justify-between mb-8 flex-wrap gap-4">
-      <div class="flex items-center gap-3">
-        <img src="assets/logo.webp" alt="Raptor Roofing" class="h-12 sm:h-14 w-auto" onerror="this.style.display='none'">
-      </div>
+  <div class="max-w-6xl mx-auto px-5 sm:px-8 pt-8 pb-8">
+    <div class="flex items-center justify-between mb-6 flex-wrap gap-4">
+      <img src="assets/logo.webp" alt="Raptor Roofing" class="h-12 sm:h-14 w-auto" onerror="this.style.display='none'">
       <div class="text-right">
-        <div class="text-[10px] tracking-[0.2em] uppercase text-ink-soft">Last Updated</div>
+        <div class="text-[10px] tracking-[0.2em] uppercase text-ink-mute">Last Updated</div>
         <div class="text-sm font-semibold text-white">April 25, 2026</div>
       </div>
     </div>
-    <h1 class="text-3xl sm:text-5xl font-bold tracking-tight mb-3 leading-tight">Indianapolis roofing,<br><span class="gradient-text">moved this week.</span></h1>
-    <p class="text-ink-soft text-sm sm:text-base max-w-2xl">Live competitive intel scraped from Google Maps, paired with web research from Claude. Refreshed Tuesday and Thursday at 7:30am Eastern.</p>
 
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8">
+    
+    <div class="space-y-3 max-w-3xl">
+      <h1 class="text-2xl sm:text-4xl font-bold tracking-tight leading-tight text-white">
+        Raptor sits <span class="text-accent-green">#6</span> of 24 tracked Indy roofers.
+        <span class="block text-ink-soft text-xl sm:text-2xl font-medium mt-1">180 reviews from passing Big Boy's Construction.</span>
+      </h1>
       
+      <p class="text-ink-soft text-sm sm:text-base">
+        This week's headline: <span class="text-white font-semibold">Bone Dry Roofing</span> &mdash; Bone Dry Roofing opened a Columbus IN office to serve southern Indiana
+      </p>
+      
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-7">
       <div class="panel p-4">
-        <div class="text-3xl sm:text-4xl font-bold stat-num text-accent-green">+3</div>
-        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Raptor 7 Days</div>
+        <div class="text-3xl sm:text-4xl font-bold stat-num text-white">+2</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-mute mt-1">Raptor 7 Days</div>
       </div>
-      
       <div class="panel p-4">
-        <div class="text-3xl sm:text-4xl font-bold stat-num text-accent-green">+13</div>
-        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Raptor 30 Days</div>
+        <div class="text-3xl sm:text-4xl font-bold stat-num text-white">+12</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-mute mt-1">Raptor 30 Days</div>
       </div>
-      
       <div class="panel p-4">
-        <div class="text-3xl sm:text-4xl font-bold stat-num text-accent-blue">#8</div>
-        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Volume Rank</div>
+        <div class="text-3xl sm:text-4xl font-bold stat-num text-white">180</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-mute mt-1">Reviews to #5</div>
       </div>
-      
       <div class="panel p-4">
-        <div class="text-3xl sm:text-4xl font-bold stat-num text-accent-blue">97%</div>
-        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Response Rate</div>
+        <div class="text-3xl sm:text-4xl font-bold stat-num text-white">97%</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-mute mt-1">Response Rate</div>
       </div>
-      
     </div>
   </div>
 </section>
 
-<!-- Sticky Tab Nav -->
-<nav class="sticky top-0 z-30 bg-navy-darker/95 backdrop-blur-xl border-b border-accent-green/15 shadow-lg">
+
+
+<!-- Desktop Sticky Tab Nav -->
+<nav class="desktop-nav sticky top-0 z-30 bg-navy-darker/95 backdrop-blur-xl border-b border-white/10 shadow-lg">
   <div class="max-w-6xl mx-auto px-3 sm:px-6">
     <div class="flex gap-1 sm:gap-2 overflow-x-auto no-scrollbar py-2">
       
-      <button data-tab="overview" class="tab-btn group whitespace-nowrap inline-flex items-center gap-2 px-3 sm:px-4 py-2.5 text-xs sm:text-sm font-semibold rounded-full text-white/60 hover:text-white hover:bg-white/5 transition-all">
+      <button data-tab="overview" class="tab-btn group whitespace-nowrap inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-lg text-ink-soft hover:text-white hover:bg-white/5 transition-all border border-transparent">
         <svg class="w-4 h-4 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
         <span>Overview</span>
       </button>
       
-      <button data-tab="moves" class="tab-btn group whitespace-nowrap inline-flex items-center gap-2 px-3 sm:px-4 py-2.5 text-xs sm:text-sm font-semibold rounded-full text-white/60 hover:text-white hover:bg-white/5 transition-all">
+      <button data-tab="moves" class="tab-btn group whitespace-nowrap inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-lg text-ink-soft hover:text-white hover:bg-white/5 transition-all border border-transparent">
         <svg class="w-4 h-4 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-        <span>Raptor's Moves</span>
+        <span>Moves</span>
       </button>
       
-      <button data-tab="movement" class="tab-btn group whitespace-nowrap inline-flex items-center gap-2 px-3 sm:px-4 py-2.5 text-xs sm:text-sm font-semibold rounded-full text-white/60 hover:text-white hover:bg-white/5 transition-all">
+      <button data-tab="movement" class="tab-btn group whitespace-nowrap inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-lg text-ink-soft hover:text-white hover:bg-white/5 transition-all border border-transparent">
         <svg class="w-4 h-4 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
         <span>Movement</span>
       </button>
       
-      <button data-tab="news" class="tab-btn group whitespace-nowrap inline-flex items-center gap-2 px-3 sm:px-4 py-2.5 text-xs sm:text-sm font-semibold rounded-full text-white/60 hover:text-white hover:bg-white/5 transition-all">
+      <button data-tab="news" class="tab-btn group whitespace-nowrap inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-lg text-ink-soft hover:text-white hover:bg-white/5 transition-all border border-transparent">
         <svg class="w-4 h-4 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
         <span>News</span>
       </button>
       
-      <button data-tab="rising" class="tab-btn group whitespace-nowrap inline-flex items-center gap-2 px-3 sm:px-4 py-2.5 text-xs sm:text-sm font-semibold rounded-full text-white/60 hover:text-white hover:bg-white/5 transition-all">
-        <svg class="w-4 h-4 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+      <button data-tab="rising" class="tab-btn group whitespace-nowrap inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-lg text-ink-soft hover:text-white hover:bg-white/5 transition-all border border-transparent">
+        <svg class="w-4 h-4 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 17l6-6 4 4 8-8m0 0v6m0-6h-6"/></svg>
         <span>Rising</span>
       </button>
       
-      <button data-tab="seo" class="tab-btn group whitespace-nowrap inline-flex items-center gap-2 px-3 sm:px-4 py-2.5 text-xs sm:text-sm font-semibold rounded-full text-white/60 hover:text-white hover:bg-white/5 transition-all">
+      <button data-tab="seo" class="tab-btn group whitespace-nowrap inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-lg text-ink-soft hover:text-white hover:bg-white/5 transition-all border border-transparent">
         <svg class="w-4 h-4 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-        <span>SEO + AEO</span>
+        <span>SEO/AEO</span>
       </button>
       
-      <button data-tab="all" class="tab-btn group whitespace-nowrap inline-flex items-center gap-2 px-3 sm:px-4 py-2.5 text-xs sm:text-sm font-semibold rounded-full text-white/60 hover:text-white hover:bg-white/5 transition-all">
+      <button data-tab="all" class="tab-btn group whitespace-nowrap inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-lg text-ink-soft hover:text-white hover:bg-white/5 transition-all border border-transparent">
         <svg class="w-4 h-4 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-        <span>All Competitors</span>
+        <span>All Comp.</span>
       </button>
       
     </div>
@@ -190,292 +202,320 @@ tailwind.config = {
 
 <main class="relative z-10 max-w-6xl mx-auto px-5 sm:px-8 py-8 space-y-6">
 
-  <!-- OVERVIEW TAB — short headlines + charts -->
+  <!-- OVERVIEW TAB -->
   <section data-panel="overview" class="space-y-6">
     
     <div class="scroll-fade panel-hero p-6 sm:p-8">
       <div class="flex items-center justify-between mb-5">
         <h2 class="text-base sm:text-lg font-bold text-white uppercase tracking-wider">This Week's Three Moves</h2>
-        <span class="text-[10px] uppercase tracking-wider text-accent-green bg-accent-green/15 border border-accent-green/30 px-2 py-1 rounded-full">CMO Briefing</span>
+        <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-white/5 px-2 py-1 rounded border border-white/10">Live AI</span>
       </div>
       <ol class="space-y-4">
         
         <li class="flex gap-3 text-base sm:text-lg leading-snug">
-          <span class="flex-shrink-0 w-7 h-7 rounded-full bg-accent-green/20 border border-accent-green/40 text-accent-green flex items-center justify-center text-xs font-bold">1</span>
-          <span class="text-white font-medium">Deploy a "Pre-Tariff Price Lock" landing page + direct mail drop into the Carmel/Whiteland/Greenwood storm-path ZIPs within 72 hours</span>
+          <span class="flex-shrink-0 w-7 h-7 rounded-full bg-white/10 border border-white/20 text-white flex items-center justify-center text-xs font-bold">1</span>
+          <span class="text-white font-medium">Counter Stay Dry GAF badge</span>
         </li>
         
         <li class="flex gap-3 text-base sm:text-lg leading-snug">
-          <span class="flex-shrink-0 w-7 h-7 rounded-full bg-accent-green/20 border border-accent-green/40 text-accent-green flex items-center justify-center text-xs font-bold">2</span>
-          <span class="text-white font-medium">Counter Stay Dry's GAF President's Club push by publishing a "How to Read a Roofing Warranty" comparison asset and seeding it into AEO/ChatGPT pipelines this week</span>
+          <span class="flex-shrink-0 w-7 h-7 rounded-full bg-white/10 border border-white/20 text-white flex items-center justify-center text-xs font-bold">2</span>
+          <span class="text-white font-medium">Defend Johnson County</span>
         </li>
         
         <li class="flex gap-3 text-base sm:text-lg leading-snug">
-          <span class="flex-shrink-0 w-7 h-7 rounded-full bg-accent-green/20 border border-accent-green/40 text-accent-green flex items-center justify-center text-xs font-bold">3</span>
-          <span class="text-white font-medium">Launch a "Roof Age Audit" lead funnel targeting 10–15-year-old roofs in Johnson and Hamilton counties, using property-record data, by Friday</span>
+          <span class="flex-shrink-0 w-7 h-7 rounded-full bg-white/10 border border-white/20 text-white flex items-center justify-center text-xs font-bold">3</span>
+          <span class="text-white font-medium">Pitch IBJ feature</span>
         </li>
         
       </ol>
-      <button data-tab-link="moves" class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-accent-green hover:text-accent-blue transition-colors">
+      <button data-tab-link="moves" class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-accent-green hover:text-white transition-colors">
         See full breakdown with reasoning
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </button>
     </div>
     
 
+    
+    <div class="scroll-fade panel p-6 sm:p-8">
+      <h2 class="text-xs font-bold text-ink-soft uppercase tracking-[0.15em] mb-2">5-Minute Brief</h2>
+      <p class="text-sm text-ink-mute mb-6">CMO summary of every tab. Click any link to dive deeper.</p>
+      <div class="ai-prose text-sm sm:text-base"><h2>In the news this week</h2>
+<p>Bone Dry expanded south. <strong>Big move.</strong></p>
+<h2>Rising player to watch</h2>
+<p>Indy Rooftops accelerating fast.</p>
+<h2>SEO and AEO read</h2>
+<p>Gap on backlinks.</p>
+<h2>Competitive landscape</h2>
+<p>Top competitors mentioned here.</p></div>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <button data-tab-link="news" class="text-xs font-semibold text-accent-green hover:text-white transition-colors inline-flex items-center gap-1">News &rarr;</button>
+        <button data-tab-link="rising" class="text-xs font-semibold text-accent-green hover:text-white transition-colors inline-flex items-center gap-1">Rising &rarr;</button>
+        <button data-tab-link="seo" class="text-xs font-semibold text-accent-green hover:text-white transition-colors inline-flex items-center gap-1">SEO/AEO &rarr;</button>
+        <button data-tab-link="all" class="text-xs font-semibold text-accent-green hover:text-white transition-colors inline-flex items-center gap-1">All Competitors &rarr;</button>
+      </div>
+    </div>
+    
+
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <div class="scroll-fade panel p-6">
-        <h3 class="text-xs font-bold text-accent-green uppercase tracking-[0.15em] mb-4">Biggest Gainers This Week</h3>
+        <h3 class="text-xs font-bold text-ink-soft uppercase tracking-[0.15em] mb-4">Biggest Gainers This Week</h3>
         <div class="relative h-72 sm:h-80"><canvas id="gainers-chart"></canvas></div>
       </div>
       <div class="scroll-fade panel p-6">
-        <h3 class="text-xs font-bold text-accent-green uppercase tracking-[0.15em] mb-4">Velocity vs Volume</h3>
+        <h3 class="text-xs font-bold text-ink-soft uppercase tracking-[0.15em] mb-4">Velocity vs Volume</h3>
         <div class="relative h-72 sm:h-80"><canvas id="scatter-chart"></canvas></div>
-        <p class="text-xs text-ink-soft mt-2">Top-right = high volume + high velocity. Bottom-right small dots = small base punching above weight.</p>
+        <p class="text-xs text-ink-mute mt-2">Top-right = high volume + high velocity. Bottom-right small dots = small base punching above weight.</p>
       </div>
     </div>
   </section>
 
-  <!-- RAPTOR'S MOVES TAB — full breakdown with reasoning -->
+  <!-- RAPTOR'S MOVES TAB — full breakdown structured as cards -->
   <section data-panel="moves" class="hidden space-y-6">
     <div class="panel-hero p-6 sm:p-8">
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <div>
           <h2 class="text-xl sm:text-2xl font-bold text-white">Raptor's Moves This Week</h2>
-          <p class="text-ink-soft text-sm mt-1">Specific actions and reasoning, written by the AI as if it were a $500K/yr CMO.</p>
+          <p class="text-ink-soft text-sm mt-1">Specific actions and reasoning, written by AI as a $500K/yr CMO.</p>
         </div>
-        <span class="text-[10px] uppercase tracking-wider text-accent-green bg-accent-green/15 border border-accent-green/30 px-2 py-1 rounded-full">CMO Briefing</span>
+        <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-white/5 px-2 py-1 rounded border border-white/10">Live AI</span>
       </div>
-      <div class="ai-prose text-sm sm:text-base mt-4"><h1>3 Moves This Week</h1>
-<p><strong>1. Deploy a "Pre-Tariff Price Lock" landing page + direct mail drop into the Carmel/Whiteland/Greenwood storm-path ZIPs within 72 hours.</strong> The April 1 manufacturer increases (7–10%) plus the April 2 Liberation Day tariffs are a once-a-year permission structure to make urgency feel honest, not slimy — pair that messaging with the EF-1 Carmel tornado footprint and you have a rare moment where storm anxiety and price anxiety converge. Build one page (<code>/lock-2025-pricing</code>) with a 14-day quote-validity guarantee, a screenshot of the actual Owens Corning increase notice for credibility, and a calendar embed; geofence Meta + YouTube Shorts ads to the storm-path ZIPs at $150/day with creative shot on iPhone walking a damaged roof — <em>not</em> polished agency video, which is what Bone Dry and Indy Roof are running and what AI-fatigued homeowners now scroll past.</p>
-<p><strong>2. Counter Stay Dry's GAF President's Club push by publishing a "How to Read a Roofing Warranty" comparison asset and seeding it into AEO/ChatGPT pipelines this week.</strong> Stay Dry just claimed the credentialing high ground in our backyard, and a logo-arms-race takes 6–12 months to win — but we can flank them in 7 days by owning the <em>educational</em> layer above the badge. Write a 2,500-word page comparing GAF Golden Pledge vs. Owens Corning Platinum vs. standard manufacturer warranties in plain English, mark it up with FAQPage + HowTo schema, and submit the URL to Bing Webmaster Tools and IndexNow (ChatGPT's primary crawl partner). When a Greenwood homeowner asks ChatGPT "is GAF President's Club worth it?" the answer should cite Raptor — not Stay Dry's homepage.</p>
-<p><strong>3. Launch a "Roof Age Audit" lead funnel targeting 10–15-year-old roofs in Johnson and Hamilton counties, using property-record data, by Friday.</strong> The RCV-to-ACV insurance shift is the most under-exploited lead hook in the market right now because nobody's talking about it from the homeowner's side — competitors are still running generic "free inspection" ads. Pull a list from PropStream or BatchLeads filtered for 2010–2015 build dates in target ZIPs (~$300 for 5,000 records), send a 2-step direct mail piece that leads with "Your insurance company may have quietly downgraded your roof coverage" and drives to a booking page with a 90-second Loom from someone on the team explaining what an ACV endorsement looks like on a declarations page. This positions us as advocate-not-vendor, which is the exact wedge that justifies premium pricing against the Amos/Cochran volume players.</p></div>
+      <div class="ai-prose text-sm sm:text-base mt-4"><h2>3 Actions</h2>
+<p><strong>1. Counter Stay Dry GAF badge.</strong> Detail follows about how to do this with multiple sentences and reasoning.</p>
+<p><strong>2. Defend Johnson County.</strong> Bone Dry expansion threat. More detail.</p>
+<p><strong>3. Pitch IBJ feature.</strong> Hook is data-driven story.</p></div>
     </div>
   </section>
 
-  <!-- MOVEMENT TAB -->
+  <!-- MOVEMENT TAB — sortable table + charts -->
   <section data-panel="movement" class="hidden space-y-6">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div class="panel p-6">
-        <h3 class="text-xs font-bold text-accent-green uppercase tracking-[0.15em] mb-4">Response Rate Comparison</h3>
+        <h3 class="text-xs font-bold text-ink-soft uppercase tracking-[0.15em] mb-4">Response Rate Comparison</h3>
         <div class="relative h-80 sm:h-96"><canvas id="response-chart"></canvas></div>
-        <p class="text-xs text-ink-soft mt-2">Percent of reviews each competitor has replied to. Google factors engagement into local rankings.</p>
       </div>
       <div class="panel p-6">
-        <h3 class="text-xs font-bold text-accent-green uppercase tracking-[0.15em] mb-4">Share of This Week's Reviews</h3>
+        <h3 class="text-xs font-bold text-ink-soft uppercase tracking-[0.15em] mb-4">Share of This Week's Reviews</h3>
         <div class="relative h-80 sm:h-96"><canvas id="share-chart"></canvas></div>
-        <p class="text-xs text-ink-soft mt-2">Of all new reviews captured by tracked competitors this week, who got what slice.</p>
       </div>
     </div>
 
     <div class="panel overflow-hidden">
       <div class="p-6 border-b border-white/5">
-        <h3 class="text-xs font-bold text-accent-green uppercase tracking-[0.15em]">Full Weekly Gains</h3>
-        <p class="text-xs text-ink-soft mt-1">Sortable. Click any company name to open its profile.</p>
+        <h3 class="text-xs font-bold text-ink-soft uppercase tracking-[0.15em]">Full Weekly Gains</h3>
+        <p class="text-xs text-ink-mute mt-1">Click any column header to sort. Click any company name for the deep profile.</p>
       </div>
       <div class="overflow-x-auto">
-        <table class="data-table">
+        <table class="data-table sortable-table">
           <thead>
-            <tr><th>#</th><th>Company</th><th class="text-right">Total</th><th class="text-right">★</th><th class="text-right">7d</th><th class="text-right">30d</th><th class="text-right">90d</th><th class="text-right">Resp</th></tr>
+            <tr>
+              <th data-sort="num">#</th>
+              <th data-sort="text">Company</th>
+              <th class="text-right" data-sort="num">Total</th>
+              <th class="text-right" data-sort="num">★</th>
+              <th class="text-right" data-sort="num">7d</th>
+              <th class="text-right" data-sort="num">30d</th>
+              <th class="text-right" data-sort="num">90d</th>
+              <th class="text-right" data-sort="num">Resp</th>
+            </tr>
           </thead>
           <tbody>
             
-            <tr class="" onclick="window.location.href='competitor/amos-exteriors/'" style="cursor:pointer;">
-              <td class="text-ink-soft">1</td>
-              <td class="font-medium">Amos Exteriors</td>
-              <td class="text-right stat-num">3,043</td>
-              <td class="text-right">4.9</td>
-              <td class="text-right text-up">+29</td>
-              <td class="text-right">+93</td>
-              <td class="text-right">+93</td>
-              <td class="text-right">75%</td>
-            </tr>
-            
             <tr class="" onclick="window.location.href='competitor/indy-roof-restoration/'" style="cursor:pointer;">
-              <td class="text-ink-soft">2</td>
-              <td class="font-medium">Indy Roof & Restoration</td>
-              <td class="text-right stat-num">2,153</td>
-              <td class="text-right">4.9</td>
-              <td class="text-right text-up">+22</td>
-              <td class="text-right">+75</td>
-              <td class="text-right">+75</td>
-              <td class="text-right">94%</td>
+              <td class="text-ink-soft" data-val="1">1</td>
+              <td class="font-medium" data-val="indy roof & restoration">Indy Roof & Restoration</td>
+              <td class="text-right stat-num" data-val="2152">2,152</td>
+              <td class="text-right" data-val="4.9">4.9</td>
+              <td class="text-right text-up" data-val="23">+23</td>
+              <td class="text-right" data-val="75">+75</td>
+              <td class="text-right" data-val="75">+75</td>
+              <td class="text-right" data-val="94">94%</td>
             </tr>
             
             <tr class="" onclick="window.location.href='competitor/indy-rooftops/'" style="cursor:pointer;">
-              <td class="text-ink-soft">3</td>
-              <td class="font-medium">Indy Rooftops</td>
-              <td class="text-right stat-num">482</td>
-              <td class="text-right">5.0</td>
-              <td class="text-right text-up">+22</td>
-              <td class="text-right">+55</td>
-              <td class="text-right">+89</td>
-              <td class="text-right">33%</td>
+              <td class="text-ink-soft" data-val="2">2</td>
+              <td class="font-medium" data-val="indy rooftops">Indy Rooftops</td>
+              <td class="text-right stat-num" data-val="481">481</td>
+              <td class="text-right" data-val="5.0">5.0</td>
+              <td class="text-right text-up" data-val="14">+14</td>
+              <td class="text-right" data-val="47">+47</td>
+              <td class="text-right" data-val="72">+72</td>
+              <td class="text-right" data-val="38">38%</td>
             </tr>
             
             <tr class="" onclick="window.location.href='competitor/bone-dry-roofing/'" style="cursor:pointer;">
-              <td class="text-ink-soft">4</td>
-              <td class="font-medium">Bone Dry Roofing</td>
-              <td class="text-right stat-num">2,410</td>
-              <td class="text-right">4.8</td>
-              <td class="text-right text-up">+10</td>
-              <td class="text-right">+42</td>
-              <td class="text-right">+61</td>
-              <td class="text-right">97%</td>
+              <td class="text-ink-soft" data-val="3">3</td>
+              <td class="font-medium" data-val="bone dry roofing">Bone Dry Roofing</td>
+              <td class="text-right stat-num" data-val="2409">2,409</td>
+              <td class="text-right" data-val="4.8">4.8</td>
+              <td class="text-right text-up" data-val="10">+10</td>
+              <td class="text-right" data-val="42">+42</td>
+              <td class="text-right" data-val="61">+61</td>
+              <td class="text-right" data-val="99">99%</td>
+            </tr>
+            
+            <tr class="" onclick="window.location.href='competitor/john-peters-roofing/'" style="cursor:pointer;">
+              <td class="text-ink-soft" data-val="4">4</td>
+              <td class="font-medium" data-val="john peters roofing">JOHN PETERS ROOFING</td>
+              <td class="text-right stat-num" data-val="147">147</td>
+              <td class="text-right" data-val="4.8">4.8</td>
+              <td class="text-right text-up" data-val="10">+10</td>
+              <td class="text-right" data-val="10">+10</td>
+              <td class="text-right" data-val="10">+10</td>
+              <td class="text-right" data-val="99">99%</td>
             </tr>
             
             <tr class="" onclick="window.location.href='competitor/cochran-exteriors/'" style="cursor:pointer;">
-              <td class="text-ink-soft">5</td>
-              <td class="font-medium">Cochran Exteriors</td>
-              <td class="text-right stat-num">1,171</td>
-              <td class="text-right">4.7</td>
-              <td class="text-right text-up">+8</td>
-              <td class="text-right">+20</td>
-              <td class="text-right">+37</td>
-              <td class="text-right">97%</td>
-            </tr>
-            
-            <tr class="" onclick="window.location.href='competitor/richmond-exteriors/'" style="cursor:pointer;">
-              <td class="text-ink-soft">6</td>
-              <td class="font-medium">Richmond Exteriors</td>
-              <td class="text-right stat-num">610</td>
-              <td class="text-right">4.5</td>
-              <td class="text-right text-up">+3</td>
-              <td class="text-right">+15</td>
-              <td class="text-right">+20</td>
-              <td class="text-right">86%</td>
-            </tr>
-            
-            <tr class="raptor-row" onclick="window.location.href='competitor/raptor-roofing/'" style="cursor:pointer;">
-              <td class="text-ink-soft">7</td>
-              <td class="font-medium">Raptor Roofing</td>
-              <td class="text-right stat-num">664</td>
-              <td class="text-right">5.0</td>
-              <td class="text-right text-up">+3</td>
-              <td class="text-right">+13</td>
-              <td class="text-right">+80</td>
-              <td class="text-right">97%</td>
+              <td class="text-ink-soft" data-val="5">5</td>
+              <td class="font-medium" data-val="cochran exteriors">Cochran Exteriors</td>
+              <td class="text-right stat-num" data-val="1171">1,171</td>
+              <td class="text-right" data-val="4.7">4.7</td>
+              <td class="text-right text-up" data-val="7">+7</td>
+              <td class="text-right" data-val="19">+19</td>
+              <td class="text-right" data-val="36">+36</td>
+              <td class="text-right" data-val="96">96%</td>
             </tr>
             
             <tr class="" onclick="window.location.href='competitor/erie-home/'" style="cursor:pointer;">
-              <td class="text-ink-soft">8</td>
-              <td class="font-medium">Erie Home</td>
-              <td class="text-right stat-num">274</td>
-              <td class="text-right">4.6</td>
-              <td class="text-right text-up">+3</td>
-              <td class="text-right">+7</td>
-              <td class="text-right">+9</td>
-              <td class="text-right">97%</td>
+              <td class="text-ink-soft" data-val="6">6</td>
+              <td class="font-medium" data-val="erie home">Erie Home</td>
+              <td class="text-right stat-num" data-val="274">274</td>
+              <td class="text-right" data-val="4.6">4.6</td>
+              <td class="text-right text-up" data-val="3">+3</td>
+              <td class="text-right" data-val="7">+7</td>
+              <td class="text-right" data-val="9">+9</td>
+              <td class="text-right" data-val="97">97%</td>
             </tr>
             
-            <tr class="" onclick="window.location.href='competitor/bone-dry-roofing/'" style="cursor:pointer;">
-              <td class="text-ink-soft">9</td>
-              <td class="font-medium">Bone Dry Roofing</td>
-              <td class="text-right stat-num">943</td>
-              <td class="text-right">4.9</td>
-              <td class="text-right text-up">+2</td>
-              <td class="text-right">+14</td>
-              <td class="text-right">+27</td>
-              <td class="text-right">60%</td>
+            <tr class="raptor-row" onclick="window.location.href='competitor/raptor-roofing/'" style="cursor:pointer;">
+              <td class="text-ink-soft" data-val="7">7</td>
+              <td class="font-medium" data-val="raptor roofing">Raptor Roofing</td>
+              <td class="text-right stat-num" data-val="664">664</td>
+              <td class="text-right" data-val="5.0">5.0</td>
+              <td class="text-right text-up" data-val="2">+2</td>
+              <td class="text-right" data-val="12">+12</td>
+              <td class="text-right" data-val="69">+69</td>
+              <td class="text-right" data-val="97">97%</td>
             </tr>
             
             <tr class="" onclick="window.location.href='competitor/rees-restoration/'" style="cursor:pointer;">
-              <td class="text-ink-soft">10</td>
-              <td class="font-medium">Rees Restoration</td>
-              <td class="text-right stat-num">579</td>
-              <td class="text-right">4.7</td>
-              <td class="text-right text-up">+2</td>
-              <td class="text-right">+6</td>
-              <td class="text-right">+8</td>
-              <td class="text-right">52%</td>
+              <td class="text-ink-soft" data-val="8">8</td>
+              <td class="font-medium" data-val="rees restoration">Rees Restoration</td>
+              <td class="text-right stat-num" data-val="579">579</td>
+              <td class="text-right" data-val="4.7">4.7</td>
+              <td class="text-right text-up" data-val="2">+2</td>
+              <td class="text-right" data-val="6">+6</td>
+              <td class="text-right" data-val="8">+8</td>
+              <td class="text-right" data-val="46">46%</td>
+            </tr>
+            
+            <tr class="" onclick="window.location.href='competitor/msrc-indianapolis/'" style="cursor:pointer;">
+              <td class="text-ink-soft" data-val="9">9</td>
+              <td class="font-medium" data-val="msrc - indianapolis">MSRC - Indianapolis</td>
+              <td class="text-right stat-num" data-val="77">77</td>
+              <td class="text-right" data-val="4.9">4.9</td>
+              <td class="text-right text-up" data-val="2">+2</td>
+              <td class="text-right" data-val="6">+6</td>
+              <td class="text-right" data-val="6">+6</td>
+              <td class="text-right" data-val="9">9%</td>
+            </tr>
+            
+            <tr class="" onclick="window.location.href='competitor/ameripro-roofing/'" style="cursor:pointer;">
+              <td class="text-ink-soft" data-val="10">10</td>
+              <td class="font-medium" data-val="ameripro roofing">AmeriPro Roofing</td>
+              <td class="text-right stat-num" data-val="257">257</td>
+              <td class="text-right" data-val="4.5">4.5</td>
+              <td class="text-right text-up" data-val="2">+2</td>
+              <td class="text-right" data-val="3">+3</td>
+              <td class="text-right" data-val="5">+5</td>
+              <td class="text-right" data-val="44">44%</td>
+            </tr>
+            
+            <tr class="" onclick="window.location.href='competitor/two-brothers-roofing-inc/'" style="cursor:pointer;">
+              <td class="text-ink-soft" data-val="11">11</td>
+              <td class="font-medium" data-val="two brothers roofing inc">Two Brothers Roofing Inc</td>
+              <td class="text-right stat-num" data-val="92">92</td>
+              <td class="text-right" data-val="4.8">4.8</td>
+              <td class="text-right text-up" data-val="1">+1</td>
+              <td class="text-right" data-val="9">+9</td>
+              <td class="text-right" data-val="12">+12</td>
+              <td class="text-right" data-val="100">100%</td>
             </tr>
             
             <tr class="" onclick="window.location.href='competitor/cox-roofing/'" style="cursor:pointer;">
-              <td class="text-ink-soft">11</td>
-              <td class="font-medium">Cox Roofing</td>
-              <td class="text-right stat-num">503</td>
-              <td class="text-right">4.8</td>
-              <td class="text-right text-up">+1</td>
-              <td class="text-right">+7</td>
-              <td class="text-right">+14</td>
-              <td class="text-right">81%</td>
+              <td class="text-ink-soft" data-val="12">12</td>
+              <td class="font-medium" data-val="cox roofing">Cox Roofing</td>
+              <td class="text-right stat-num" data-val="503">503</td>
+              <td class="text-right" data-val="4.8">4.8</td>
+              <td class="text-right text-up" data-val="1">+1</td>
+              <td class="text-right" data-val="7">+7</td>
+              <td class="text-right" data-val="14">+14</td>
+              <td class="text-right" data-val="91">91%</td>
+            </tr>
+            
+            <tr class="" onclick="window.location.href='competitor/honest-abe-roofing-indianapolis/'" style="cursor:pointer;">
+              <td class="text-ink-soft" data-val="13">13</td>
+              <td class="font-medium" data-val="honest abe roofing indianapolis">Honest Abe Roofing Indianapolis</td>
+              <td class="text-right stat-num" data-val="132">132</td>
+              <td class="text-right" data-val="4.9">4.9</td>
+              <td class="text-right text-up" data-val="1">+1</td>
+              <td class="text-right" data-val="6">+6</td>
+              <td class="text-right" data-val="7">+7</td>
+              <td class="text-right" data-val="90">90%</td>
             </tr>
             
             <tr class="" onclick="window.location.href='competitor/big-boy-s-construction/'" style="cursor:pointer;">
-              <td class="text-ink-soft">12</td>
-              <td class="font-medium">Big Boy's Construction</td>
-              <td class="text-right stat-num">844</td>
-              <td class="text-right">4.9</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+24</td>
-              <td class="text-right">+46</td>
-              <td class="text-right">100%</td>
-            </tr>
-            
-            <tr class="" onclick="window.location.href='competitor/blue-ladder-roofing/'" style="cursor:pointer;">
-              <td class="text-ink-soft">13</td>
-              <td class="font-medium">Blue Ladder Roofing</td>
-              <td class="text-right stat-num">385</td>
-              <td class="text-right">4.8</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+10</td>
-              <td class="text-right">+26</td>
-              <td class="text-right">0%</td>
-            </tr>
-            
-            <tr class="" onclick="window.location.href='competitor/weathertight-roofing/'" style="cursor:pointer;">
-              <td class="text-ink-soft">14</td>
-              <td class="font-medium">Weathertight Roofing</td>
-              <td class="text-right stat-num">290</td>
-              <td class="text-right">5.0</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+9</td>
-              <td class="text-right">+17</td>
-              <td class="text-right">100%</td>
+              <td class="text-ink-soft" data-val="14">14</td>
+              <td class="font-medium" data-val="big boy's construction">Big Boy's Construction</td>
+              <td class="text-right stat-num" data-val="844">844</td>
+              <td class="text-right" data-val="4.9">4.9</td>
+              <td class="text-right text-flat" data-val="0">+0</td>
+              <td class="text-right" data-val="24">+24</td>
+              <td class="text-right" data-val="46">+46</td>
+              <td class="text-right" data-val="100">100%</td>
             </tr>
             
             <tr class="" onclick="window.location.href='competitor/trojan-roofing/'" style="cursor:pointer;">
-              <td class="text-ink-soft">15</td>
-              <td class="font-medium">Trojan Roofing</td>
-              <td class="text-right stat-num">643</td>
-              <td class="text-right">4.9</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+2</td>
-              <td class="text-right">+6</td>
-              <td class="text-right">6%</td>
+              <td class="text-ink-soft" data-val="15">15</td>
+              <td class="font-medium" data-val="trojan roofing">Trojan Roofing</td>
+              <td class="text-right stat-num" data-val="643">643</td>
+              <td class="text-right" data-val="4.9">4.9</td>
+              <td class="text-right text-flat" data-val="0">+0</td>
+              <td class="text-right" data-val="2">+2</td>
+              <td class="text-right" data-val="6">+6</td>
+              <td class="text-right" data-val="6">6%</td>
             </tr>
             
             <tr class="" onclick="window.location.href='competitor/stay-dry-roofing/'" style="cursor:pointer;">
-              <td class="text-ink-soft">16</td>
-              <td class="font-medium">Stay Dry Roofing</td>
-              <td class="text-right stat-num">421</td>
-              <td class="text-right">4.9</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+2</td>
-              <td class="text-right">+8</td>
-              <td class="text-right">78%</td>
+              <td class="text-ink-soft" data-val="16">16</td>
+              <td class="font-medium" data-val="stay dry roofing">Stay Dry Roofing</td>
+              <td class="text-right stat-num" data-val="421">421</td>
+              <td class="text-right" data-val="4.9">4.9</td>
+              <td class="text-right text-flat" data-val="0">+0</td>
+              <td class="text-right" data-val="2">+2</td>
+              <td class="text-right" data-val="8">+8</td>
+              <td class="text-right" data-val="81">81%</td>
+            </tr>
+            
+            <tr class="" onclick="window.location.href='competitor/indianapolis-roofing-llc/'" style="cursor:pointer;">
+              <td class="text-ink-soft" data-val="17">17</td>
+              <td class="font-medium" data-val="indianapolis roofing llc">Indianapolis Roofing LLC</td>
+              <td class="text-right stat-num" data-val="142">142</td>
+              <td class="text-right" data-val="4.9">4.9</td>
+              <td class="text-right text-flat" data-val="0">+0</td>
+              <td class="text-right" data-val="1">+1</td>
+              <td class="text-right" data-val="1">+1</td>
+              <td class="text-right" data-val="100">100%</td>
             </tr>
             
             <tr class="" onclick="window.location.href='competitor/amos-exteriors/'" style="cursor:pointer;">
-              <td class="text-ink-soft">17</td>
-              <td class="font-medium">Amos Exteriors</td>
-              <td class="text-right stat-num">3,043</td>
-              <td class="text-right">4.9</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">–</td>
-            </tr>
-            
-            <tr class="" onclick="window.location.href='competitor/arac-roof-it-forward/'" style="cursor:pointer;">
-              <td class="text-ink-soft">18</td>
-              <td class="font-medium">ARAC Roof It Forward</td>
-              <td class="text-right stat-num">308</td>
-              <td class="text-right">4.7</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">94%</td>
+              <td class="text-ink-soft" data-val="18">18</td>
+              <td class="font-medium" data-val="amos exteriors">Amos Exteriors</td>
+              <td class="text-right stat-num" data-val="3038">3,038</td>
+              <td class="text-right" data-val="4.9">4.9</td>
+              <td class="text-right text-flat" data-val="0">+0</td>
+              <td class="text-right" data-val="0">+0</td>
+              <td class="text-right" data-val="0">+0</td>
+              <td class="text-right" data-val="0">–</td>
             </tr>
             
           </tbody>
@@ -484,14 +524,13 @@ tailwind.config = {
     </div>
   </section>
 
-  <!-- NEWS TAB — grid of cards with modal -->
+  <!-- NEWS TAB — cards with SVG icons; modal shows full DETAIL -->
   <section data-panel="news" class="hidden space-y-6">
     <div class="flex items-center justify-between flex-wrap gap-2">
       <div>
         <h2 class="text-lg sm:text-xl font-bold text-white">This Week in Roofing</h2>
-        <p class="text-sm text-ink-soft mt-1">Local Indy roofing events plus national/industry news that matters. Click any card for the full story.</p>
+        <p class="text-sm text-ink-soft mt-1">Local Indy events plus national/industry stories. Click any card for the full story and source.</p>
       </div>
-      <span class="text-[10px] uppercase tracking-wider text-accent-green bg-accent-green/15 border border-accent-green/30 px-2 py-1 rounded-full">CMO Web Sweep</span>
     </div>
 
     
@@ -499,12 +538,12 @@ tailwind.config = {
       
       <button onclick="openNews(0)" class="panel text-left p-5 hover:border-accent-green/40 hover:-translate-y-0.5 transition-all group">
         <div class="flex items-start justify-between mb-3">
-          <span class="text-2xl">📌</span>
-          <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-white/5 px-2 py-1 rounded">** April 1, 2025</span>
+          <div class="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-ink-soft" data-cat-icon="expansion"></div>
+          <span class="text-[10px] uppercase tracking-wider text-ink-mute bg-white/5 px-2 py-1 rounded">April 9, 2026</span>
         </div>
-        <div class="font-bold text-white text-base mb-1.5">** Industry-wide (Owens Corning, GAF, CertainTeed, Atlas, Malarkey, TAMKO)</div>
-        <div class="text-sm text-ink-soft line-clamp-3">** All major shingle manufacturers enacted price increases of 7–10% effective April 1, 2025, hitting every shingle and roofing accessory product, with no exceptions by order date.</div>
-        <div class="mt-3 flex items-center gap-1 text-xs font-semibold text-accent-blue group-hover:text-accent-green">
+        <div class="font-bold text-white text-base mb-1.5">Bone Dry Roofing</div>
+        <div class="text-sm text-ink-soft line-clamp-3">Bone Dry Roofing opened a Columbus IN office to serve southern Indiana</div>
+        <div class="mt-3 flex items-center gap-1 text-xs font-semibold text-accent-green group-hover:text-white">
           Read full story
           <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         </div>
@@ -512,116 +551,12 @@ tailwind.config = {
       
       <button onclick="openNews(1)" class="panel text-left p-5 hover:border-accent-green/40 hover:-translate-y-0.5 transition-all group">
         <div class="flex items-start justify-between mb-3">
-          <span class="text-2xl">📣</span>
-          <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-white/5 px-2 py-1 rounded">** April 2–9, 2025</span>
+          <div class="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-ink-soft" data-cat-icon="regulation"></div>
+          <span class="text-[10px] uppercase tracking-wider text-ink-mute bg-white/5 px-2 py-1 rounded">April 2026</span>
         </div>
-        <div class="font-bold text-white text-base mb-1.5">** Industry-wide (Tariffs / Supply Chain)</div>
-        <div class="text-sm text-ink-soft line-clamp-3">** The April 2, 2025 "Liberation Day" tariff package added a universal 10% tariff on all imports on top of existing 25% steel/aluminum tariffs, with no country exemptions, directly hitting roofing nails, flashing, metal components, and underlayment.</div>
-        <div class="mt-3 flex items-center gap-1 text-xs font-semibold text-accent-blue group-hover:text-accent-green">
-          Read full story
-          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        </div>
-      </button>
-      
-      <button onclick="openNews(2)" class="panel text-left p-5 hover:border-accent-green/40 hover:-translate-y-0.5 transition-all group">
-        <div class="flex items-start justify-between mb-3">
-          <span class="text-2xl">📌</span>
-          <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-white/5 px-2 py-1 rounded">** April 9, 2025</span>
-        </div>
-        <div class="font-bold text-white text-base mb-1.5">** Industry-wide (NRCA / Tariff Advocacy)</div>
-        <div class="text-sm text-ink-soft line-clamp-3">** NRCA's Roofing Day in Washington D.C. drew a near-record 260 attendees lobbying Congress on tariff relief and labor reform on the same day Trump's "Liberation Day" tariffs went into effect.</div>
-        <div class="mt-3 flex items-center gap-1 text-xs font-semibold text-accent-blue group-hover:text-accent-green">
-          Read full story
-          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        </div>
-      </button>
-      
-      <button onclick="openNews(3)" class="panel text-left p-5 hover:border-accent-green/40 hover:-translate-y-0.5 transition-all group">
-        <div class="flex items-start justify-between mb-3">
-          <span class="text-2xl">📣</span>
-          <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-white/5 px-2 py-1 rounded">** April 2–ongoing, 2025</span>
-        </div>
-        <div class="font-bold text-white text-base mb-1.5">** Industry-wide (Severe Weather — Central Indiana)</div>
-        <div class="text-sm text-ink-soft line-clamp-3">** April 2025 has been an extraordinarily active severe weather month for Indiana, with 45 confirmed tornadoes statewide as of April 26, including an EF-1 near Carmel (105 mph winds, 6.6-mile path) and widespread hail and wind damage across Marion, Hamilton, and Johnson counties (Raptor's core market).</div>
-        <div class="mt-3 flex items-center gap-1 text-xs font-semibold text-accent-blue group-hover:text-accent-green">
-          Read full story
-          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        </div>
-      </button>
-      
-      <button onclick="openNews(4)" class="panel text-left p-5 hover:border-accent-green/40 hover:-translate-y-0.5 transition-all group">
-        <div class="flex items-start justify-between mb-3">
-          <span class="text-2xl">🏆</span>
-          <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-white/5 px-2 py-1 rounded">** Current (as of April 2025 digest period)</span>
-        </div>
-        <div class="font-bold text-white text-base mb-1.5">** Stay Dry Roofing (Indianapolis Competitor)</div>
-        <div class="text-sm text-ink-soft line-clamp-3">** Stay Dry Roofing is promoting a new 2026 GAF President's Club Award win on its homepage, a designation that reflects top-tier installation standards and grants exclusive GAF-backed warranty access.</div>
-        <div class="mt-3 flex items-center gap-1 text-xs font-semibold text-accent-blue group-hover:text-accent-green">
-          Read full story
-          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        </div>
-      </button>
-      
-      <button onclick="openNews(5)" class="panel text-left p-5 hover:border-accent-green/40 hover:-translate-y-0.5 transition-all group">
-        <div class="flex items-start justify-between mb-3">
-          <span class="text-2xl">📌</span>
-          <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-white/5 px-2 py-1 rounded">** Ongoing through 2025</span>
-        </div>
-        <div class="font-bold text-white text-base mb-1.5">** Industry-wide (Insurance / Claims Environment)</div>
-        <div class="text-sm text-ink-soft line-clamp-3">** Major insurers have been quietly shifting homeowner roof coverage from Replacement Cost Value (RCV) to Actual Cash Value (ACV) at the 10–12-year age threshold, a trend now widely documented across the Midwest, leaving homeowners with payouts of 30–40 cents on the dollar without warning.</div>
-        <div class="mt-3 flex items-center gap-1 text-xs font-semibold text-accent-blue group-hover:text-accent-green">
-          Read full story
-          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        </div>
-      </button>
-      
-      <button onclick="openNews(6)" class="panel text-left p-5 hover:border-accent-green/40 hover:-translate-y-0.5 transition-all group">
-        <div class="flex items-start justify-between mb-3">
-          <span class="text-2xl">🚀</span>
-          <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-white/5 px-2 py-1 rounded">** March 27–April 8, 2026 (core update); ongoing 2025–2026 AI shift</span>
-        </div>
-        <div class="font-bold text-white text-base mb-1.5">** Industry-wide (Google AI / Search Shift)</div>
-        <div class="text-sm text-ink-soft line-clamp-3">** A Google March 2026 Core Update (the most impactful for home services of the year per Scorpion's data team) hammered templated location pages, while ChatGPT usage for local business research jumped from 6% to 45% of consumers in a single year — and all major AI tools now pull primarily from Google Business Profile data for local contractor recommendations.</div>
-        <div class="mt-3 flex items-center gap-1 text-xs font-semibold text-accent-blue group-hover:text-accent-green">
-          Read full story
-          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        </div>
-      </button>
-      
-      <button onclick="openNews(7)" class="panel text-left p-5 hover:border-accent-green/40 hover:-translate-y-0.5 transition-all group">
-        <div class="flex items-start justify-between mb-3">
-          <span class="text-2xl">📣</span>
-          <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-white/5 px-2 py-1 rounded">** Ongoing through 2025</span>
-        </div>
-        <div class="font-bold text-white text-base mb-1.5">** Industry-wide (Google LSA / Paid Lead Costs)</div>
-        <div class="text-sm text-ink-soft line-clamp-3">** Google Local Services Ad (LSA) lead costs for roofing reached $45–$120 per lead in 2025, paid ad click-through rates fell 25% after AI Overviews launched, and Google retired the "Google Guaranteed" badge in October 2025, replacing it with a single "Google Verified" badge and eliminating the $2,000 money-back guarantee.</div>
-        <div class="mt-3 flex items-center gap-1 text-xs font-semibold text-accent-blue group-hover:text-accent-green">
-          Read full story
-          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        </div>
-      </button>
-      
-      <button onclick="openNews(8)" class="panel text-left p-5 hover:border-accent-green/40 hover:-translate-y-0.5 transition-all group">
-        <div class="flex items-start justify-between mb-3">
-          <span class="text-2xl">🚀</span>
-          <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-white/5 px-2 py-1 rounded">** April 2025</span>
-        </div>
-        <div class="font-bold text-white text-base mb-1.5">** Industry-wide (NRCA HQ Relocation)</div>
-        <div class="text-sm text-ink-soft line-clamp-3">** NRCA relocated its national headquarters from Rosemont, Illinois to Itasca, Illinois in April 2025 after more than 30 years in its prior location.</div>
-        <div class="mt-3 flex items-center gap-1 text-xs font-semibold text-accent-blue group-hover:text-accent-green">
-          Read full story
-          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        </div>
-      </button>
-      
-      <button onclick="openNews(9)" class="panel text-left p-5 hover:border-accent-green/40 hover:-translate-y-0.5 transition-all group">
-        <div class="flex items-start justify-between mb-3">
-          <span class="text-2xl">📰</span>
-          <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-white/5 px-2 py-1 rounded">** Announced April 15, 2025; event June 1–7, 2025</span>
-        </div>
-        <div class="font-bold text-white text-base mb-1.5">** Industry-wide (NRCA / National Roofing Week)</div>
-        <div class="text-sm text-ink-soft line-clamp-3">** NRCA announced National Roofing Week 2025 will be held June 1–7, encouraging member contractors to share charitable giving stories and community involvement across social media.</div>
-        <div class="mt-3 flex items-center gap-1 text-xs font-semibold text-accent-blue group-hover:text-accent-green">
+        <div class="font-bold text-white text-base mb-1.5">Industry-wide</div>
+        <div class="text-sm text-ink-soft line-clamp-3">Fannie Mae and Freddie Mac changed roof depreciation rules</div>
+        <div class="mt-3 flex items-center gap-1 text-xs font-semibold text-accent-green group-hover:text-white">
           Read full story
           <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         </div>
@@ -631,936 +566,381 @@ tailwind.config = {
 
     <div id="news-modal" class="fixed inset-0 z-50 hidden">
       <div class="absolute inset-0 bg-navy-darker/85 backdrop-blur-sm" onclick="closeNews()"></div>
-      <div class="relative max-w-2xl mx-auto mt-12 mb-12 panel-hero overflow-hidden animate-fade-up">
-        <div class="bg-gradient-to-br from-navy-deep to-navy text-white p-6 relative border-b border-accent-green/20">
-          <button onclick="closeNews()" class="absolute top-4 right-4 text-white/70 hover:text-white">
+      <div class="relative max-w-2xl mx-auto mt-12 mb-12 panel-hero overflow-hidden">
+        <div class="bg-gradient-to-br from-navy-deep to-navy text-white p-6 relative border-b border-white/10">
+          <button onclick="closeNews()" class="absolute top-4 right-4 text-white/60 hover:text-white">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
           </button>
-          <div id="news-modal-icon" class="text-3xl mb-2"></div>
-          <h3 id="news-modal-company" class="text-xl font-bold"></h3>
-          <p id="news-modal-when" class="text-ink-soft text-xs mt-1 uppercase tracking-wider"></p>
+          <div class="flex items-center gap-3 mb-2">
+            <div id="news-modal-icon" class="w-10 h-10 rounded-lg bg-white/10 border border-white/15 flex items-center justify-center text-accent-green"></div>
+            <p id="news-modal-when" class="text-ink-soft text-xs uppercase tracking-wider"></p>
+          </div>
+          <h3 id="news-modal-company" class="text-xl font-bold mt-2"></h3>
         </div>
-        <div class="p-6 space-y-4">
+        <div class="p-6 space-y-5 max-h-[60vh] overflow-y-auto">
           <div>
-            <div class="text-[10px] uppercase tracking-wider text-accent-green mb-1">What happened</div>
+            <div class="text-[10px] uppercase tracking-wider text-ink-soft mb-1">What happened</div>
             <p id="news-modal-event" class="text-sm text-white"></p>
           </div>
-          <div class="bg-accent-green/10 border-l-4 border-accent-green p-4 rounded">
+          <div>
             <div class="text-[10px] uppercase tracking-wider text-accent-green mb-1">Why it matters for Raptor</div>
             <p id="news-modal-why" class="text-sm text-white"></p>
           </div>
-          <a id="news-modal-source" href="#" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-sm font-semibold text-accent-blue hover:text-accent-green">
+          <div id="news-modal-detail-wrap">
+            <div class="text-[10px] uppercase tracking-wider text-ink-soft mb-1">Full breakdown</div>
+            <p id="news-modal-detail" class="text-sm text-ink-soft leading-relaxed"></p>
+          </div>
+          <a id="news-modal-source" href="#" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-sm font-semibold text-accent-green hover:text-white">
             View source
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
           </a>
         </div>
       </div>
     </div>
-    <script>window.NEWS_CARDS = [{"company": "** Industry-wide (Owens Corning, GAF, CertainTeed, Atlas, Malarkey, TAMKO)", "event": "** All major shingle manufacturers enacted price increases of 7\u201310% effective April 1, 2025, hitting every shingle and roofing accessory product, with no exceptions by order date.", "icon": "\ud83d\udccc", "source": "** https://mueller1875.com/vendor-news/", "when": "** April 1, 2025", "why_matters": "**"}, {"company": "** Industry-wide (Tariffs / Supply Chain)", "event": "** The April 2, 2025 \"Liberation Day\" tariff package added a universal 10% tariff on all imports on top of existing 25% steel/aluminum tariffs, with no country exemptions, directly hitting roofing nails, flashing, metal components, and underlayment.", "icon": "\ud83d\udce3", "source": "** https://www.fingerlakes1.com/2025/04/23/roofing-material-costs-tariffs-2025/", "when": "** April 2\u20139, 2025", "why_matters": "**"}, {"company": "** Industry-wide (NRCA / Tariff Advocacy)", "event": "** NRCA\u0027s Roofing Day in Washington D.C. drew a near-record 260 attendees lobbying Congress on tariff relief and labor reform on the same day Trump\u0027s \"Liberation Day\" tariffs went into effect.", "icon": "\ud83d\udccc", "source": "** https://www.roofingcontractor.com/articles/100689-nrca-roofing-day-lobby-effort-successful-amid-tariff-chaos", "when": "** April 9, 2025", "why_matters": "**"}, {"company": "** Industry-wide (Severe Weather \u2014 Central Indiana)", "event": "** April 2025 has been an extraordinarily active severe weather month for Indiana, with 45 confirmed tornadoes statewide as of April 26, including an EF-1 near Carmel (105 mph winds, 6.6-mile path) and widespread hail and wind damage across Marion, Hamilton, and Johnson counties (Raptor\u0027s core market).", "icon": "\ud83d\udce3", "source": "** https://www.weather.gov/ind/april_02_2025_severe", "when": "** April 2\u2013ongoing, 2025", "why_matters": "**"}, {"company": "** Stay Dry Roofing (Indianapolis Competitor)", "event": "** Stay Dry Roofing is promoting a new 2026 GAF President\u0027s Club Award win on its homepage, a designation that reflects top-tier installation standards and grants exclusive GAF-backed warranty access.", "icon": "\ud83c\udfc6", "source": "** https://staydryroofing.com/", "when": "** Current (as of April 2025 digest period)", "why_matters": "**"}, {"company": "** Industry-wide (Insurance / Claims Environment)", "event": "** Major insurers have been quietly shifting homeowner roof coverage from Replacement Cost Value (RCV) to Actual Cash Value (ACV) at the 10\u201312-year age threshold, a trend now widely documented across the Midwest, leaving homeowners with payouts of 30\u201340 cents on the dollar without warning.", "icon": "\ud83d\udccc", "source": "** https://roofingforce.com/understanding-homeowners-insurance-replacement-cost-value-actual-cash-value-and-roof-payment-schedules-and-deceptive-practices/", "when": "** Ongoing through 2025", "why_matters": "**"}, {"company": "** Industry-wide (Google AI / Search Shift)", "event": "** A Google March 2026 Core Update (the most impactful for home services of the year per Scorpion\u0027s data team) hammered templated location pages, while ChatGPT usage for local business research jumped from 6% to 45% of consumers in a single year \u2014 and all major AI tools now pull primarily from Google Business Profile data for local contractor recommendations.", "icon": "\ud83d\ude80", "source": "** https://www.marketingcode.com/google-march-core-update-gbp-ai-search-contractors-2026/", "when": "** March 27\u2013April 8, 2026 (core update); ongoing 2025\u20132026 AI shift", "why_matters": "**"}, {"company": "** Industry-wide (Google LSA / Paid Lead Costs)", "event": "** Google Local Services Ad (LSA) lead costs for roofing reached $45\u2013$120 per lead in 2025, paid ad click-through rates fell 25% after AI Overviews launched, and Google retired the \"Google Guaranteed\" badge in October 2025, replacing it with a single \"Google Verified\" badge and eliminating the $2,000 money-back guarantee.", "icon": "\ud83d\udce3", "source": "** https://www.marketingcode.com/lsa-costs-up-40-percent-contractors-easy-button-dead/", "when": "** Ongoing through 2025", "why_matters": "**"}, {"company": "** Industry-wide (NRCA HQ Relocation)", "event": "** NRCA relocated its national headquarters from Rosemont, Illinois to Itasca, Illinois in April 2025 after more than 30 years in its prior location.", "icon": "\ud83d\ude80", "source": "** https://www.indianaroofing.org/blog/nrca-updates", "when": "** April 2025", "why_matters": "**"}, {"company": "** Industry-wide (NRCA / National Roofing Week)", "event": "** NRCA announced National Roofing Week 2025 will be held June 1\u20137, encouraging member contractors to share charitable giving stories and community involvement across social media.", "icon": "\ud83d\udcf0", "source": "** https://www.nrca.net/RoofingNews/national-roofing-week-2025-will-be-june-1-7-.4-15-2025.12682/details/story", "when": "** Announced April 15, 2025; event June 1\u20137, 2025", "why_matters": "**"}];</script>
+    <script>window.NEWS_CARDS = [{"category": "expansion", "company": "Bone Dry Roofing", "detail": "The Columbus location represents Bone Dry\u0027s third multi-state expansion this year. Per their press release, they\u0027re staffing for 12 reps and 4 PMs initially. Watch for a marketing push: PressAdvantage syndication, geo-targeted Google Ads on Greenwood/Bargersville/Whiteland queries, and likely community sponsorships within 60 days. Cameron should pre-empt by claiming Greenwood-specific GBP posts, getting Bargersville Chamber sponsorship sewn up, and running a Tariff-Lock landing page targeting Johnson County storm-affected ZIPs before their team is fully ramped.", "event": "Bone Dry Roofing opened a Columbus IN office to serve southern Indiana", "source": "https://example.com", "when": "April 9, 2026", "why_matters": "This puts them ~40 miles south, threatening Greenwood"}, {"category": "regulation", "company": "Industry-wide", "detail": "As of April 2026, Fannie/Freddie no longer require RCV roof coverage on conforming loans. Insurance carriers are responding by pushing ACV-only policies as the default for older roofs. For Raptor, this means more homeowners will be quoted ACV-only and asked to cover larger out-of-pocket portions for replacements. Sales messaging needs to evolve: stop assuming the customer has RCV. Add a free policy review to every estimate. Consider a financing partnership.", "event": "Fannie Mae and Freddie Mac changed roof depreciation rules", "source": "https://example.com/fannie ---", "when": "April 2026", "why_matters": "ACV policies will dominate"}];</script>
     
   </section>
 
-  <!-- RISING PLAYERS TAB -->
+  <!-- RISING -->
   <section data-panel="rising" class="hidden space-y-6">
     
-    
-    <details class="scroll-fade panel overflow-hidden group" open>
-      <summary class="p-5 sm:p-6 flex items-center justify-between hover:bg-white/5 transition-colors">
-        <div class="flex-1 min-w-0">
-          <div class="flex items-center gap-3 flex-wrap">
-            <h3 class="text-base sm:text-lg font-bold text-white">Indy Rooftops</h3>
-            <span class="text-xs px-2 py-0.5 bg-accent-green/15 text-accent-green rounded-full font-semibold uppercase tracking-wide border border-accent-green/30">+22 this week</span>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      
+      <details class="scroll-fade panel overflow-hidden group" open>
+        <summary class="p-5 sm:p-6 hover:bg-white/5 transition-colors">
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex-1 min-w-0">
+              <h3 class="text-base sm:text-lg font-bold text-white">Stay Dry Roofing</h3>
+              <div class="flex items-center gap-3 mt-2 flex-wrap">
+                <span class="text-[10px] px-2 py-0.5 bg-accent-green/10 text-accent-green rounded font-bold uppercase tracking-wide border border-accent-green/30">+0 this week</span>
+                <span class="text-xs text-ink-soft">421 total · 4.9★</span>
+              </div>
+            </div>
+            <svg class="chev w-5 h-5 text-ink-soft flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
           </div>
-          <div class="text-xs text-ink-soft mt-1">482 reviews · 5.0 stars · +55 in 30 days</div>
-        </div>
-        <svg class="chev w-5 h-5 text-ink-soft flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-      </summary>
-      <div class="px-5 sm:px-6 pb-6 ai-prose text-sm border-t border-white/5 pt-5"><p>Cameron, here is your competitive intelligence brief on <strong>Indy Rooftops</strong>:</p>
-<hr />
-<h2>🔍 Indy Rooftops — Competitive Intel Brief for Raptor Roofing</h2>
-<p><strong>1. Who They Are</strong></p>
-<p><a href="https://www.yelp.com/biz/indy-rooftops-indianapolis">Indy Rooftops was established in 2022 by Mitchel Dotson and co-owner Cheryl Edens, originally founded to create a business for Mitchel's father Kevin Dotson, a veteran roofing salesman.</a></p>
-<p><a href="https://indyrooftops.com/about/">Kevin passed away suddenly in September 2022, and his legacy is now carried on by his son Mitchel — a compelling origin story that humanizes the brand.</a></p>
-<p><a href="https://indyrooftops.com/about/">Based out of Brownsburg, Indiana, they're a family-owned operation that positions themselves as "small enough to provide personalized attention" yet backed by national supplier relationships.</a></p>
-<p><a href="https://indyrooftops.com/">They market a woman-owned business designation</a> — a differentiator that plays well for insurance claim work, government contracts, and consumer trust signals. <cite index="31-14,31-15"><a href="https://www.bbb.org/us/in/indianapolis/profile/roofing-contractors/indy-rooftops-llc-0382-90042688">Their service scope extends well beyond roofing: siding, gutters, windows, soffit/fascia, attic insulation, and specialty systems including EPDM, TPO, metal, and flat roofing.</a></p>
-<hr />
-<p><strong>2. What's Driving the Velocity</strong></p>
-<p>The 11% monthly review velocity is not coming from paid media — there's no evidence of Google LSA dominance or a Meta Ads funnel; their <a href="https://www.facebook.com/IndyRooftops/">Facebook page</a> sits at under 2,000 likes with modest engagement. </p>
-<p><a href="https://www.angi.com/companylist/us/in/indianapolis/indy-rooftops,-llc-reviews-10385486.htm">The real engine is post-storm door-knocking: one customer review explicitly states "so glad they knocked on our door after a hail storm, would never have known about the work needing done."</a></p>
-<p>Layered on top of that is a deliberate <strong>realtor referral channel</strong> — </p>
-<p><a href="https://www.angi.com/companylist/us/in/indianapolis/indy-rooftops,-llc-reviews-10385486.htm">multiple Angi reviews from realtors explicitly call out Indy Rooftops as their go-to contractor, with one stating "Every realtor needs to know contractors — Indy Rooftops is one to trust!" and another saying "As a realtor, I'll be referring him to any of my clients."</a></p>
-<p><a href="https://www.homeadvisor.com/rated.IndyRooftopsLLC.125505244.html">Customers on HomeAdvisor also specifically call out their referral program as "topnotch," noting it's easy to tell others about having such a great experience.</a></p>
-<p>The combination — storm canvassing that generates jobs, realtor relationships that generate steady pipeline, and a structured referral program — is what's compounding that review velocity fast.</p>
-<hr />
-<p><strong>3. One Tactic Raptor Should Steal</strong></p>
-<p><strong>Steal the realtor referral channel — and systematize it in 30 days.</strong> Indy Rooftops has organically built real estate agent relationships, but it's informal; Raptor can out-execute them with structure. Here's how: pull a list of the top 50–100 active Indianapolis-area agents from Zillow's agent directory or MIBOR's member roster, then use a tool like <a href="https://www.nicejob.com/">NiceJob</a> or <a href="https://usehatchapp.com/">Hatch</a> to run a 3-touch drip sequence (email + text + handwritten card with a branded "Preferred Roofer for Your Clients" one-pager). Offer realtors a guaranteed 24-hour roof inspection turnaround for pre-listing clients — that's a hard, tangible commitment Indy Rooftops isn't making explicitly — and back it with a co-branded PDF report realtors can hand to buyers. This closes the loop that Indy Rooftops has left open and turns real estate agents into a repeatable, trackable referral engine within a single sales cycle.</p>
-<hr />
-<p><strong>4. One Weakness Raptor Can Exploit in Sales Conversations</strong></p>
-<p><strong>Indy Rooftops has only 42 Yelp reviews</strong> — a thin presence on a platform that still drives high-intent homeowner searches, especially among 35–55-year-old homeowners who cross-reference platforms before calling. </p>
-<p><a href="https://indyrooftops.com/">Their own website encourages customers to check their Yelp rating</a>, which signals they know it matters — but haven't invested in growing it.</p>
-<p>In any sales conversation where a prospect mentions they've been "looking around," Raptor's team should proactively say: <em>"Go check us on Google, Yelp, and HomeAdvisor — we're 5 stars across all three. Some competitors look great on one platform because that's the only one they manage."</em> That plants doubt without naming Indy Rooftops directly, and leverages Raptor's review depth as a trust asset across every channel they control.</p></div>
-    </details>
+        </summary>
+        <div class="px-5 sm:px-6 pb-6 ai-prose text-sm border-t border-white/5 pt-5"><h2>Test</h2>
+<p><strong>Bold</strong> content with <a href="https://example.com">link</a>.</p></div>
+      </details>
+      
+    </div>
     
+
+    
+    <div class="panel p-6 sm:p-8 mt-6">
+      <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+        <h2 class="text-lg sm:text-xl font-bold text-white">Red-Team Memo</h2>
+        <span class="text-[10px] uppercase tracking-wider text-accent-green bg-accent-green/10 border border-accent-green/30 px-2 py-1 rounded">AI plays Bone Dry Roofing's CMO</span>
+      </div>
+      <p class="text-xs text-ink-soft mb-4">If they were attacking you this quarter, here's what they'd do.</p>
+      <div class="ai-prose text-sm sm:text-base"><h2>Memo</h2>
+<p><strong>Bold opening.</strong> Detail about how to attack Raptor.</p></div>
+    </div>
     
   </section>
 
-  <!-- SEO + AEO TAB -->
+  <!-- SEO + AEO -->
   <section data-panel="seo" class="hidden space-y-6">
     <div class="flex items-center justify-between flex-wrap gap-2">
       <div>
         <h2 class="text-lg sm:text-xl font-bold text-white">SEO + AEO Intelligence</h2>
-        <p class="text-sm text-ink-soft mt-1">Where competitors win on search and generative AI engines, what tactic Raptor should run this week, where Raptor stands when ChatGPT/Claude/Gemini are asked about Indy roofing.</p>
+        <p class="text-sm text-ink-soft mt-1">Where competitors win on search and generative AI engines, what tactic Raptor should run this week, where Raptor stands when ChatGPT, Claude, and Gemini are asked about Indy roofing.</p>
       </div>
-      <span class="text-[10px] uppercase tracking-wider text-accent-green bg-accent-green/15 border border-accent-green/30 px-2 py-1 rounded-full">CMO Briefing</span>
     </div>
     <div class="panel-hero p-6 sm:p-8">
-      <div class="ai-prose text-sm sm:text-base"><h1>🦅 Raptor Roofing — Weekly SEO/AEO Dashboard Brief</h1>
-<p><strong>Week of April 25, 2026 | Prepared by the Office of the CMO</strong></p>
-<hr />
-<h2>SECTION 1: Competitor SEO/AEO Benchmarks</h2>
-<h3>Methodology Note</h3>
-<p>Direct Ahrefs/Moz API data is not publicly surfaceable at this level; DA/DR estimates below are based on observable signals — domain age, citation velocity, press mentions, directory depth, and schema indicators — cross-referenced against what each competitor's site and third-party profiles reveal.</p>
-<hr />
-<h3>🥇 Competitor #1: Bone Dry Roofing <em>(Biggest Threat)</em></h3>
-<p><strong>Domain Authority Signals:</strong> <code>bonedry.com</code> is the highest-authority roofing domain in this competitive set. </p>
-<p>Bone Dry Roofing has a rich history and long reputation of excellence in the home improvement industry, beginning with a garage office in 1989 and now spanning seven states.</p>
-<p>That 35+ year domain age, multi-state subdomain architecture (<code>bonedry.com/indianapolis/</code>), and national brand recognition translate into a domain authority estimated in the <strong>mid-50s to low-60s</strong> — significantly above any other local player in this market.</p>
-<p><strong>Backlink Profile — THE BIGGEST GAP:</strong> </p>
-<p>Bone Dry Roofing was named <em>Roofing Contractor Magazine</em>'s 2023 Residential Roofing Contractor of the Year, a national award that honors Bone Dry as one of the best in the country.</p>
-<p>That single award placement earns them a dofollow backlink from <code>roofingcontractor.com</code> (DA ~55). They are also </p>
-<p>a member of the Roofing Corp of America network of contractors</p>
-<p>, which yields another high-authority industry backlink. Additionally, their blog references being </p>
-<p>mentioned in a <em>Family Handyman</em> article highlighting "10 Types of Roofing,"</p>
-<p>a DA 70+ publication. </p>
-<p>Fox 59 News in Indianapolis joined them on a roof cleaning and repair job</p>
-<p>— a local TV station citation. <strong>Raptor has zero surfaceable press citations from any regional media, trade publication, or national home-improvement property. This is the single largest backlink gap in the entire competitive set.</strong></p>
-<p><strong>Schema Markup:</strong> Bone Dry deploys location-specific pages (<code>bonedry.com/indianapolis/</code>) with embedded LocalBusiness schema. Their blog at <code>bonedry.com/indianapolis/blog/</code> is consistently crawlable with Article schema signals. No surfaceable FAQPage schema was detected on the Indianapolis subdomain, which is an exploitable gap for Raptor.</p>
-<p><strong>Blog Cadence:</strong> </p>
-<p>The blog keeps homeowners up-to-date with the latest in the roofing industry</p>
-<p>with a library of 30+ indexed posts spanning years, generating consistent long-tail keyword traffic on topics like ice dams, ice-and-water shields, and seasonal maintenance.</p>
-<p><strong>GBP / Photo Velocity:</strong> Their Facebook Indianapolis page shows </p>
-<p>823 likes with 236 people currently talking about it</p>
-<p>— an unusually high "talking about this" ratio indicating very active recent posting. Estimated GBP photo upload rate: <strong>10–15 photos/week</strong> based on social cadence.</p>
-<p><strong>City Pages:</strong> Bone Dry uses a subdomain-per-market model. The Indianapolis subdomain (<code>bonedry.com/indianapolis/</code>) functions as a city hub with nested service pages. <strong>Gap to Raptor:</strong> Raptor's city references are currently footer-text-level mentions only (e.g., </p>
-<p>"Indianapolis Greenwood Franklin Beech Grove Center Grove Columbus Crawfordsville Plainfield Mooresville Avon Brownsburg Carmel Fishers Noblesville and surrounding areas"</p>
-<p>). These are not crawlable city pages — they're invisible to Google's indexer as geo-signals.</p>
-<hr />
-<h3>🥈 Competitor #2: Amos Exteriors</h3>
-<p><strong>Domain Authority Signals:</strong> <code>amosexteriors.com</code> benefits from a 1971 founding date and 50+ years of web presence. </p>
-<p>They are members in excellent standing with the Better Business Bureau (A+), the National Roofing Contractors Association (NRCA), and the Indianapolis Apartment Association (IAA).</p>
-<p>The NRCA membership alone generates a backlink from <code>nrca.net</code> (DA ~60), one of the highest-authority roofing industry domains in existence. This is a significant DA signal Raptor lacks entirely.</p>
-<p><strong>Backlink Profile — TOP GAP:</strong> </p>
-<p>Amos is a GAF Master Elite Roofing Contractor, a designation held by only a small percentage of roofing companies nationwide.</p>
-<p>That certification places them on <code>gaf.com</code>'s contractor finder — a DA 75+ dofollow listing. Combined with their NRCA listing, they hold two of the three most authoritative contractor-directory backlinks available in the industry. Raptor is listed on neither. <strong>Estimated backlink count gap: Amos ~300–400 referring domains vs. Raptor ~50–80.</strong></p>
-<p><strong>Schema Markup:</strong> Amos has built out a robust service-area page architecture. </p>
-<p>They have an Indianapolis location page at <code>/locations/indianapolis-in</code> providing expert exterior remodeling in Indianapolis with trusted roofing, siding, windows, doors, gutters, and masonry services.</p>
-<p>They also maintain <code>/service-areas/indianapolis</code>. These are separate, crawlable pages with unique content — not duplicates. LocalBusiness schema is present. No surfaceable FAQPage schema detected.</p>
-<p><strong>Blog Cadence &amp; Content Depth:</strong> The blog is limited and infrequent based on observable signals. Their content edge is structural (location pages) rather than editorial.</p>
-<p><strong>GBP Signals:</strong> </p>
-<p>Amos offers 24/7 emergency support and a 100% satisfaction guarantee</p>
-<p>— both are prominently featured on GBP. Their LinkedIn presence shows </p>
-<p>321 followers</p>
-<p>. GBP photo velocity is moderate — estimated 4–6 photos/week.</p>
-<p><strong>City Pages:</strong> Amos has one of the most aggressive city-page architectures in the market, with at least <code>/locations/indianapolis-in</code> and <code>/service-areas/indianapolis</code> plus a Lafayette location. <strong>Gap to Raptor:</strong> Raptor has zero dedicated, indexable city-level landing pages for Carmel, Fishers, Noblesville, Greenwood, or Zionsville.</p>
-<hr />
-<h3>🥉 Competitor #3: Indy Roof &amp; Restoration</h3>
-<p><strong>Domain Authority Signals:</strong> <code>indyroofandrestoration.com</code>, founded in 2018, is the youngest domain in the set but growing fastest in content velocity. </p>
-<p>Since their inception in 2018, they've consistently maintained an A+ rating with the BBB.</p>
-<p>They describe themselves as Indiana's trusted roofing and restoration experts with 2,000+ 5-star reviews.</p>
-<p><strong>Backlink Profile — TOP GAP:</strong> Indy Roof &amp; Restoration has achieved something Raptor has not: <strong>self-generated authoritative content that ranks and gets cited by AI.</strong> Their blog hosts pieces like a <a href="https://indyroofandrestoration.com/roof-replacement-cost-indianapolis-2026/">"2026 Roof Replacement Cost Indianapolis"</a> guide and a <a href="https://indyroofandrestoration.com/the-10-best-roofing-companies-in-indianapolis-for-2026/">"10 Best Roofing Companies in Indianapolis for 2026"</a> roundup — pieces that accumulate backlinks from other sites citing them as sources. They're also listed on </p>
-<p>Patch.com across multiple Indy suburb editions including Zionsville, Carmel, Fishers, and Noblesville.</p>
-<p>Patch is DA ~75. <strong>Raptor has no Patch listing detected.</strong></p>
-<p><strong>Schema &amp; City Pages:</strong> </p>
-<p>Indy Roof &amp; Restoration maintains city-specific pages for Carmel, Fishers, Franklin, Greenfield, Greenwood, Noblesville, Plainfield, Westfield, Whiteland, Zionsville, Marion, Danville, Brownsburg, McCordsville, Geist, and more.</p>
-<p>This is a full programmatic city-page stack — 16+ individual location pages. Their March 2026 blog post is titled <a href="https://indyroofandrestoration.com/">"Carmel Homes Deserve Indy Roof and Restoration"</a> — a city-specific editorial piece layered on top of the structural page. </p>
-<p>That March 20, 2026 Carmel post reflects their ongoing content cadence targeting suburb-specific queries.</p>
-<p><strong>Raptor: zero city pages, zero suburb-specific blog posts.</strong></p>
-<p><strong>Blog Cadence:</strong> Active. Multiple posts per month in 2026, each targeting a specific suburb or cost-related query. This is the competitor most aggressively playing the AEO content game right now.</p>
-<p><strong>GBP:</strong> </p>
-<p>4,777 Facebook likes with 52 currently talking</p>
-<p>— strong community signal. Review velocity is exceptional at 2,000+ across platforms.</p>
-<hr />
-<h3>Honorable Mention Findings (Cochran, Richmond, Trojan, Big Boy's, Others)</h3>
-<ul>
-<li></li>
-</ul>
-<p>Cochran Exteriors holds an A+ BBB accreditation and multiple Angie's List "Super Service" awards,</p>
-<p>earning them structured directory citations. </p>
-<p>In July 2022, Cochran Exteriors was acquired by Infinity Home Services,</p>
-<h2>giving them a national parent-brand backlink relationship — a meaningful DA lift.</h2>
-<p>Richmond Exteriors is positioned as an excellent choice for Indianapolis property owners specializing in solar roofing, James Hardie siding, and retractable awnings</p>
-<h2>— a niche differentiation that earns specific long-tail citations.</h2>
-<p>Big Boy's Construction does roof repair, replacement, and inspection in Indianapolis with a 4.9-star rating</p>
-<p>, and is listed on operator.fyi alongside Bone Dry and Trojan Roofing.</p>
-<hr />
-<h2>SECTION 2: Tactic of the Week</h2>
-<h3><strong>Build a "Roof Replacement Cost Indianapolis [Year]" Pillar Page — and Submit It to Patch.com This Week</strong></h3>
-<p><strong>THE WHY — What Mechanism Does This Leverage?</strong></p>
-<p>AEO takes SEO one step further. While SEO helps surface your content in search engine results, AEO ensures that AI-driven systems like Google's MUM, Siri, and ChatGPT can fully understand and trust your content enough to deliver it as a direct answer.</p>
-<p>Right now, when a homeowner in Carmel types "how much does a roof replacement cost in Indianapolis," Google's AI Overview pulls from Indy Roof &amp; Restoration's cost guide — not from Raptor — because Raptor has no authoritative long-form answer page on this topic. Raptor's entire site is currently a conversion-first architecture with no educational content that AI engines can cite.</p>
-<p>The second mechanism: </p>
-<p>Indianapolis businesses that earn links from local news outlets, industry associations, and Indy-based publications gain an edge.</p>
-<p><a href="https://patch.com">Patch.com</a> publishes hyperlocal editions for Carmel, Zionsville, Fishers, Noblesville, and Greenwood. Their domain authority is ~75. A Patch business listing with a link to your cost guide is a dofollow citation from a DA 75 publication targeting the exact suburban communities where Raptor's best customers live.</p>
-<p>Google's AI Overviews now summarize information directly in search results, meaning a homeowner searching "how long does a roof replacement take" may see an AI-generated summary at the top of the page — pulling from multiple sources — before ever seeing a ranked link.</p>
-<p>The only way into that summary is to <strong>be the source AI is trained to cite</strong> — which requires long-form, structured, factually specific content.</p>
-<p><strong>THE HOW — Concrete Steps This Week:</strong></p>
-<ol>
-<li><strong>Monday:</strong> Write (or have written) a 1,500–2,000 word "Roof Replacement Cost Indianapolis 2026" guide. Structure it with H2s that mirror natural language questions: <em>"How much does a new roof cost in Indianapolis?"</em>, <em>"What affects roof replacement cost in Carmel vs. Greenwood?"</em>, <em>"Does homeowner's insurance cover roof replacement in Indiana?"</em> Include a 5–7 item FAQ section at the bottom with direct, concise answers. </li>
-</ol>
-<p>FAQPage schema is your highest-leverage schema type for conversational AI citations — despite Google restricting FAQ rich results for most sites in 2023, FAQPage schema remains a primary signal for AI answer extraction across ChatGPT, Perplexity, and Google AI Overviews.</p>
-<ol start="2">
-<li><strong>Tuesday:</strong> Publish the page at <code>raptorroofing.com/roof-replacement-cost-indianapolis/</code>. Implement <code>FAQPage</code> schema in JSON-LD for every Q&amp;A pair. Implement <code>RoofingContractor</code> + <code>LocalBusiness</code> schema in the site header if not already present. </li>
-</ol>
-<p>Prefer <code>RoofingContractor</code> over the more general <code>LocalBusiness</code> type when applicable.</p>
-<ol start="3">
-<li>
-<p><strong>Wednesday:</strong> Claim or update <a href="https://patch.com">Patch.com business listings</a> for Indianapolis, Carmel, Zionsville, Fishers, Noblesville, and Greenwood — six separate editions. Link each listing's website URL to your new cost guide page (not just the homepage). Each listing is a separate DA 75 backlink pointed at a keyword-rich page.</p>
-</li>
-<li>
-<p><strong>Thursday:</strong> Submit a shorter version (600–800 words) of the cost guide content as a guest post pitch to <a href="https://www.ibj.com">Indianapolis Business Journal</a> under the banner of "What Central Indiana Homeowners Should Budget for Roof Replacement in 2026." IBJ runs contractor/home-industry guest contributions. A byline backlink from IBJ (DA ~67) is worth more than 6 months of directory submissions.</p>
-</li>
-<li>
-<p><strong>Friday:</strong> Add two internal links on the homepage pointing to the new cost guide with anchor text: "roof replacement cost Indianapolis" and "Indianapolis roofing prices."</p>
-</li>
-</ol>
-<p><strong>THE SUCCESS METRIC — What to Measure in 30 Days:</strong></p>
-<ul>
-<li><strong>Primary:</strong> Does Raptor appear in Google AI Overview for the query "roof replacement cost Indianapolis 2026"? Check manually in a logged-out Chrome incognito window.</li>
-<li><strong>Secondary:</strong> Does <code>raptorroofing.com/roof-replacement-cost-indianapolis/</code> rank in the top 20 organic results for "roof replacement cost Indianapolis"? Use Google Search Console impressions as the leading indicator — you should see first impressions within 7–10 days of indexation.</li>
-<li><strong>Tertiary:</strong> Count new referring domains in Ahrefs/SEMrush within 30 days. Goal: 3+ new referring domains (Patch citations + any IBJ placement). Today Raptor likely has fewer than 80 referring domains. A 3–5% lift in referring domain count from high-DA local sources moves the local pack needle meaningfully within 60–90 days.</li>
-</ul>
-<hr />
-<h2>SECTION 3: Raptor's AEO Standing</h2>
-<h3>Methodology</h3>
-<p>Queries were run through the lens of what Google AI Overviews, Perplexity, and published AI-assisted roundup content surfaces. Direct AI Overview screenshots are not capturable via web search, but the sources that feed AI Overviews are identifiable through the content that ranks and gets cited. Here is what the data shows:</p>
-<hr />
-<h3>Which Competitors Get Named in AI Search Answers?</h3>
-<p>Based on surfaced AI-assisted roundup content and the sources most likely feeding Google's AI Overview for these queries:</p>
-<table>
-<thead>
-<tr>
-<th>Query</th>
-<th>Competitors Named by AI/AI-Sourced Content</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>"best roofers Indianapolis"</td>
-<td>Moss Roofing, Indy Roof &amp; Restoration, Bone Dry Roofing, Amos Exteriors, Custom Exteriors</td>
-</tr>
-<tr>
-<td>"top roofing contractor Greenwood Indiana"</td>
-<td>Indy Roof &amp; Restoration, Moss Roofing, Bone Dry Roofing</td>
-</tr>
-<tr>
-<td>"roof replacement Carmel Indiana"</td>
-<td>Indy Roof &amp; Restoration (explicit Carmel blog post, March 2026), Amos Exteriors (service area page)</td>
-</tr>
-<tr>
-<td>"roofing company Fishers Indiana"</td>
-<td>Indy Roof &amp; Restoration (Fishers city page), Bone Dry Roofing (Indianapolis subdomain)</td>
-</tr>
-<tr>
-<td>"best rated roofer Noblesville"</td>
-<td>Moss Roofing (Yahoo Local editorial;</td>
-</tr>
-</tbody>
-</table>
-<p>co-owned by Beverly and Steve Moss, serving Noblesville among other suburbs</p>
-<p>), Indy Roof &amp; Restoration |<br />
-| "Zionsville roof repair" | Amos Exteriors (service area list includes Zionsville), Indy Roof &amp; Restoration (Patch Zionsville listing) |</p>
-<p><strong>Sources driving these citations:</strong> </p>
-<p>Yahoo Local analyzed 45 Indianapolis-area roofing contractors and more than 18,000 online reviews using its unique algorithm, considering BBB accreditation, services offered, and materials/technologies.</p>
-<p>The Yahoo Local "Best Roofers in Indianapolis" editorial (DA ~90) is a primary AI Overview citation source — and <strong>Raptor does not appear on it.</strong> Similarly, </p>
-<p>based on Yahoo Local's evaluation, Custom Exteriors stands out as the top roofer for Indianapolis</p>
-<p>in their published roundup — with zero mention of Raptor.</p>
-<p>Stay Dry Roofing's 2026 Top 10 list researched local reputation, verified credentials, customer reviews, service offerings, and industry recognition to highlight the most trusted and proven roofing contractors serving Central Indiana today</p>
-<p>— and Raptor does not appear on that list either. Both of these are DA 40–60 sites that AI Overviews actively cite.</p>
-<hr />
-<h3>Is Raptor Cited? Where and Where Not?</h3>
-<h2><strong>Where Raptor IS cited (positively):</strong></h2>
-<p>One editorial on introindianapolis.com highlights how Raptor Roofing has quickly risen to the top of the Indianapolis market thanks to exceptional service, stellar reputation, and community involvement</p>
-<h2>— this is a positive AI-citable mention.</h2>
-<p>findtrustedroofers.com lists Raptor as a verified business with a 5.0 rating and 533 reviews.</p>
-<ul>
-<li>The Yahoo Finance/Newsfile press release from the January 2025 rebrand (</li>
-</ul>
-<p>Raptor Restoration rebranded to Raptor Roofing, with the launch of their new website RaptorRoofing.com</p>
-<p>) gives one PR-wire citation — but PR wire sites are low-trust for AI Overview sourcing.</p>
-<p><strong>Where Raptor is NOT cited:</strong><br />
-- <strong>Yahoo Local "Best Roofers in Indianapolis"</strong> — absent<br />
-- <strong>Stay Dry Roofing's 2026 Top 10</strong> — absent<br />
-- <strong>Indy Roof &amp; Restoration's 2026 Top 10</strong> — absent<br />
-- <strong>BestResidentialRoofersinIndianapolis.com</strong> — absent<br />
-- **procraftlocal.com 2</p></div>
+      <div class="ai-prose text-sm sm:text-base"><h2>1. Competitor SEO/AEO Benchmarks</h2>
+<p>Test content.</p>
+<h2>2. Tactic of the Week</h2>
+<p>Post photos with EXIF.</p>
+<h2>3. Raptor AEO Standing</h2>
+<p>Test.</p></div>
     </div>
   </section>
 
-  <!-- ALL COMPETITORS TAB — top 50 with click-through to sub-page -->
+  <!-- ALL COMPETITORS — sortable -->
   <section data-panel="all" class="hidden space-y-6">
     <div class="panel overflow-hidden">
       <div class="p-6 border-b border-white/5 flex items-center justify-between flex-wrap gap-2">
         <div>
-          <h3 class="text-xs font-bold text-accent-green uppercase tracking-[0.15em]">All Tracked Competitors</h3>
-          <p class="text-xs text-ink-soft mt-1">Top 50 by review volume. Click any name for a deep CMO-grade profile.</p>
+          <h3 class="text-xs font-bold text-ink-soft uppercase tracking-[0.15em]">All Tracked Competitors</h3>
+          <p class="text-xs text-ink-mute mt-1">Top 50 by review volume. Click any column header to sort. Click any name for the deep profile.</p>
         </div>
-        <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-white/5 px-2 py-1 rounded">50 tracked</span>
+        <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-white/5 px-2 py-1 rounded border border-white/10">20 tracked</span>
       </div>
       <div class="overflow-x-auto">
-        <table class="data-table">
+        <table class="data-table sortable-table">
           <thead>
-            <tr><th>#</th><th>Company</th><th class="text-right">Total</th><th class="text-right">★</th><th class="text-right">7d</th><th class="text-right">30d</th><th class="text-right">90d</th><th class="text-right">Resp</th></tr>
+            <tr>
+              <th data-sort="num">#</th>
+              <th data-sort="text">Company</th>
+              <th class="text-right" data-sort="num">Total</th>
+              <th class="text-right" data-sort="num">★</th>
+              <th class="text-right" data-sort="num">7d</th>
+              <th class="text-right" data-sort="num">30d</th>
+              <th class="text-right" data-sort="num">90d</th>
+              <th class="text-right" data-sort="num">Resp</th>
+            </tr>
           </thead>
           <tbody>
             
             <tr onclick="window.location.href='competitor/amos-exteriors/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">1</td>
-              <td class="font-medium">
-                <a href="competitor/amos-exteriors/" class="hover:text-accent-blue transition-colors group-hover:underline">Amos Exteriors <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+              <td class="text-ink-soft" data-val="1">1</td>
+              <td class="font-medium" data-val="amos exteriors">
+                <a href="competitor/amos-exteriors/" class="hover:text-accent-green transition-colors group-hover:underline">Amos Exteriors</a>
               </td>
-              <td class="text-right stat-num">3,043</td>
-              <td class="text-right">4.9</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">–</td>
-            </tr>
-            
-            <tr onclick="window.location.href='competitor/amos-exteriors/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">2</td>
-              <td class="font-medium">
-                <a href="competitor/amos-exteriors/" class="hover:text-accent-blue transition-colors group-hover:underline">Amos Exteriors <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
-              </td>
-              <td class="text-right stat-num">3,043</td>
-              <td class="text-right">4.9</td>
-              <td class="text-right text-up">+29</td>
-              <td class="text-right">+93</td>
-              <td class="text-right">+93</td>
-              <td class="text-right">75%</td>
+              <td class="text-right stat-num" data-val="3038">3,038</td>
+              <td class="text-right" data-val="4.9">4.9</td>
+              <td class="text-right text-flat" data-val="0">+0</td>
+              <td class="text-right" data-val="0">+0</td>
+              <td class="text-right" data-val="0">+0</td>
+              <td class="text-right" data-val="0">–</td>
             </tr>
             
             <tr onclick="window.location.href='competitor/bone-dry-roofing/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">3</td>
-              <td class="font-medium">
-                <a href="competitor/bone-dry-roofing/" class="hover:text-accent-blue transition-colors group-hover:underline">Bone Dry Roofing <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+              <td class="text-ink-soft" data-val="2">2</td>
+              <td class="font-medium" data-val="bone dry roofing">
+                <a href="competitor/bone-dry-roofing/" class="hover:text-accent-green transition-colors group-hover:underline">Bone Dry Roofing</a>
               </td>
-              <td class="text-right stat-num">2,410</td>
-              <td class="text-right">4.8</td>
-              <td class="text-right text-up">+10</td>
-              <td class="text-right">+42</td>
-              <td class="text-right">+61</td>
-              <td class="text-right">97%</td>
+              <td class="text-right stat-num" data-val="2409">2,409</td>
+              <td class="text-right" data-val="4.8">4.8</td>
+              <td class="text-right text-up" data-val="10">+10</td>
+              <td class="text-right" data-val="42">+42</td>
+              <td class="text-right" data-val="61">+61</td>
+              <td class="text-right" data-val="99">99%</td>
             </tr>
             
             <tr onclick="window.location.href='competitor/indy-roof-restoration/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">4</td>
-              <td class="font-medium">
-                <a href="competitor/indy-roof-restoration/" class="hover:text-accent-blue transition-colors group-hover:underline">Indy Roof & Restoration <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+              <td class="text-ink-soft" data-val="3">3</td>
+              <td class="font-medium" data-val="indy roof & restoration">
+                <a href="competitor/indy-roof-restoration/" class="hover:text-accent-green transition-colors group-hover:underline">Indy Roof & Restoration</a>
               </td>
-              <td class="text-right stat-num">2,153</td>
-              <td class="text-right">4.9</td>
-              <td class="text-right text-up">+22</td>
-              <td class="text-right">+75</td>
-              <td class="text-right">+75</td>
-              <td class="text-right">94%</td>
+              <td class="text-right stat-num" data-val="2152">2,152</td>
+              <td class="text-right" data-val="4.9">4.9</td>
+              <td class="text-right text-up" data-val="23">+23</td>
+              <td class="text-right" data-val="75">+75</td>
+              <td class="text-right" data-val="75">+75</td>
+              <td class="text-right" data-val="94">94%</td>
             </tr>
             
             <tr onclick="window.location.href='competitor/cochran-exteriors/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">5</td>
-              <td class="font-medium">
-                <a href="competitor/cochran-exteriors/" class="hover:text-accent-blue transition-colors group-hover:underline">Cochran Exteriors <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+              <td class="text-ink-soft" data-val="4">4</td>
+              <td class="font-medium" data-val="cochran exteriors">
+                <a href="competitor/cochran-exteriors/" class="hover:text-accent-green transition-colors group-hover:underline">Cochran Exteriors</a>
               </td>
-              <td class="text-right stat-num">1,171</td>
-              <td class="text-right">4.7</td>
-              <td class="text-right text-up">+8</td>
-              <td class="text-right">+20</td>
-              <td class="text-right">+37</td>
-              <td class="text-right">97%</td>
-            </tr>
-            
-            <tr onclick="window.location.href='competitor/bone-dry-roofing/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">6</td>
-              <td class="font-medium">
-                <a href="competitor/bone-dry-roofing/" class="hover:text-accent-blue transition-colors group-hover:underline">Bone Dry Roofing <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
-              </td>
-              <td class="text-right stat-num">943</td>
-              <td class="text-right">4.9</td>
-              <td class="text-right text-up">+2</td>
-              <td class="text-right">+14</td>
-              <td class="text-right">+27</td>
-              <td class="text-right">60%</td>
+              <td class="text-right stat-num" data-val="1171">1,171</td>
+              <td class="text-right" data-val="4.7">4.7</td>
+              <td class="text-right text-up" data-val="7">+7</td>
+              <td class="text-right" data-val="19">+19</td>
+              <td class="text-right" data-val="36">+36</td>
+              <td class="text-right" data-val="96">96%</td>
             </tr>
             
             <tr onclick="window.location.href='competitor/big-boy-s-construction/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">7</td>
-              <td class="font-medium">
-                <a href="competitor/big-boy-s-construction/" class="hover:text-accent-blue transition-colors group-hover:underline">Big Boy's Construction <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+              <td class="text-ink-soft" data-val="5">5</td>
+              <td class="font-medium" data-val="big boy's construction">
+                <a href="competitor/big-boy-s-construction/" class="hover:text-accent-green transition-colors group-hover:underline">Big Boy's Construction</a>
               </td>
-              <td class="text-right stat-num">844</td>
-              <td class="text-right">4.9</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+24</td>
-              <td class="text-right">+46</td>
-              <td class="text-right">100%</td>
+              <td class="text-right stat-num" data-val="844">844</td>
+              <td class="text-right" data-val="4.9">4.9</td>
+              <td class="text-right text-flat" data-val="0">+0</td>
+              <td class="text-right" data-val="24">+24</td>
+              <td class="text-right" data-val="46">+46</td>
+              <td class="text-right" data-val="100">100%</td>
             </tr>
             
             <tr onclick="window.location.href='competitor/raptor-roofing/'" class="raptor-row group" style="cursor:pointer;">
-              <td class="text-ink-soft">8</td>
-              <td class="font-medium">
-                <a href="competitor/raptor-roofing/" class="hover:text-accent-blue transition-colors group-hover:underline">Raptor Roofing <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+              <td class="text-ink-soft" data-val="6">6</td>
+              <td class="font-medium" data-val="raptor roofing">
+                <a href="competitor/raptor-roofing/" class="hover:text-accent-green transition-colors group-hover:underline">Raptor Roofing</a>
               </td>
-              <td class="text-right stat-num">664</td>
-              <td class="text-right">5.0</td>
-              <td class="text-right text-up">+3</td>
-              <td class="text-right">+13</td>
-              <td class="text-right">+80</td>
-              <td class="text-right">97%</td>
+              <td class="text-right stat-num" data-val="664">664</td>
+              <td class="text-right" data-val="5.0">5.0</td>
+              <td class="text-right text-up" data-val="2">+2</td>
+              <td class="text-right" data-val="12">+12</td>
+              <td class="text-right" data-val="69">+69</td>
+              <td class="text-right" data-val="97">97%</td>
             </tr>
             
             <tr onclick="window.location.href='competitor/trojan-roofing/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">9</td>
-              <td class="font-medium">
-                <a href="competitor/trojan-roofing/" class="hover:text-accent-blue transition-colors group-hover:underline">Trojan Roofing <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+              <td class="text-ink-soft" data-val="7">7</td>
+              <td class="font-medium" data-val="trojan roofing">
+                <a href="competitor/trojan-roofing/" class="hover:text-accent-green transition-colors group-hover:underline">Trojan Roofing</a>
               </td>
-              <td class="text-right stat-num">643</td>
-              <td class="text-right">4.9</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+2</td>
-              <td class="text-right">+6</td>
-              <td class="text-right">6%</td>
-            </tr>
-            
-            <tr onclick="window.location.href='competitor/richmond-exteriors/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">10</td>
-              <td class="font-medium">
-                <a href="competitor/richmond-exteriors/" class="hover:text-accent-blue transition-colors group-hover:underline">Richmond Exteriors <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
-              </td>
-              <td class="text-right stat-num">610</td>
-              <td class="text-right">4.5</td>
-              <td class="text-right text-up">+3</td>
-              <td class="text-right">+15</td>
-              <td class="text-right">+20</td>
-              <td class="text-right">86%</td>
+              <td class="text-right stat-num" data-val="643">643</td>
+              <td class="text-right" data-val="4.9">4.9</td>
+              <td class="text-right text-flat" data-val="0">+0</td>
+              <td class="text-right" data-val="2">+2</td>
+              <td class="text-right" data-val="6">+6</td>
+              <td class="text-right" data-val="6">6%</td>
             </tr>
             
             <tr onclick="window.location.href='competitor/rees-restoration/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">11</td>
-              <td class="font-medium">
-                <a href="competitor/rees-restoration/" class="hover:text-accent-blue transition-colors group-hover:underline">Rees Restoration <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+              <td class="text-ink-soft" data-val="8">8</td>
+              <td class="font-medium" data-val="rees restoration">
+                <a href="competitor/rees-restoration/" class="hover:text-accent-green transition-colors group-hover:underline">Rees Restoration</a>
               </td>
-              <td class="text-right stat-num">579</td>
-              <td class="text-right">4.7</td>
-              <td class="text-right text-up">+2</td>
-              <td class="text-right">+6</td>
-              <td class="text-right">+8</td>
-              <td class="text-right">52%</td>
+              <td class="text-right stat-num" data-val="579">579</td>
+              <td class="text-right" data-val="4.7">4.7</td>
+              <td class="text-right text-up" data-val="2">+2</td>
+              <td class="text-right" data-val="6">+6</td>
+              <td class="text-right" data-val="8">+8</td>
+              <td class="text-right" data-val="46">46%</td>
             </tr>
             
             <tr onclick="window.location.href='competitor/cox-roofing/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">12</td>
-              <td class="font-medium">
-                <a href="competitor/cox-roofing/" class="hover:text-accent-blue transition-colors group-hover:underline">Cox Roofing <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+              <td class="text-ink-soft" data-val="9">9</td>
+              <td class="font-medium" data-val="cox roofing">
+                <a href="competitor/cox-roofing/" class="hover:text-accent-green transition-colors group-hover:underline">Cox Roofing</a>
               </td>
-              <td class="text-right stat-num">503</td>
-              <td class="text-right">4.8</td>
-              <td class="text-right text-up">+1</td>
-              <td class="text-right">+7</td>
-              <td class="text-right">+14</td>
-              <td class="text-right">81%</td>
+              <td class="text-right stat-num" data-val="503">503</td>
+              <td class="text-right" data-val="4.8">4.8</td>
+              <td class="text-right text-up" data-val="1">+1</td>
+              <td class="text-right" data-val="7">+7</td>
+              <td class="text-right" data-val="14">+14</td>
+              <td class="text-right" data-val="91">91%</td>
             </tr>
             
             <tr onclick="window.location.href='competitor/indy-rooftops/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">13</td>
-              <td class="font-medium">
-                <a href="competitor/indy-rooftops/" class="hover:text-accent-blue transition-colors group-hover:underline">Indy Rooftops <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+              <td class="text-ink-soft" data-val="10">10</td>
+              <td class="font-medium" data-val="indy rooftops">
+                <a href="competitor/indy-rooftops/" class="hover:text-accent-green transition-colors group-hover:underline">Indy Rooftops</a>
               </td>
-              <td class="text-right stat-num">482</td>
-              <td class="text-right">5.0</td>
-              <td class="text-right text-up">+22</td>
-              <td class="text-right">+55</td>
-              <td class="text-right">+89</td>
-              <td class="text-right">33%</td>
+              <td class="text-right stat-num" data-val="481">481</td>
+              <td class="text-right" data-val="5.0">5.0</td>
+              <td class="text-right text-up" data-val="14">+14</td>
+              <td class="text-right" data-val="47">+47</td>
+              <td class="text-right" data-val="72">+72</td>
+              <td class="text-right" data-val="38">38%</td>
             </tr>
             
             <tr onclick="window.location.href='competitor/stay-dry-roofing/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">14</td>
-              <td class="font-medium">
-                <a href="competitor/stay-dry-roofing/" class="hover:text-accent-blue transition-colors group-hover:underline">Stay Dry Roofing <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+              <td class="text-ink-soft" data-val="11">11</td>
+              <td class="font-medium" data-val="stay dry roofing">
+                <a href="competitor/stay-dry-roofing/" class="hover:text-accent-green transition-colors group-hover:underline">Stay Dry Roofing</a>
               </td>
-              <td class="text-right stat-num">421</td>
-              <td class="text-right">4.9</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+2</td>
-              <td class="text-right">+8</td>
-              <td class="text-right">78%</td>
-            </tr>
-            
-            <tr onclick="window.location.href='competitor/blue-ladder-roofing/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">15</td>
-              <td class="font-medium">
-                <a href="competitor/blue-ladder-roofing/" class="hover:text-accent-blue transition-colors group-hover:underline">Blue Ladder Roofing <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
-              </td>
-              <td class="text-right stat-num">385</td>
-              <td class="text-right">4.8</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+10</td>
-              <td class="text-right">+26</td>
-              <td class="text-right">0%</td>
-            </tr>
-            
-            <tr onclick="window.location.href='competitor/arac-roof-it-forward/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">16</td>
-              <td class="font-medium">
-                <a href="competitor/arac-roof-it-forward/" class="hover:text-accent-blue transition-colors group-hover:underline">ARAC Roof It Forward <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
-              </td>
-              <td class="text-right stat-num">308</td>
-              <td class="text-right">4.7</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">94%</td>
-            </tr>
-            
-            <tr onclick="window.location.href='competitor/weathertight-roofing/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">17</td>
-              <td class="font-medium">
-                <a href="competitor/weathertight-roofing/" class="hover:text-accent-blue transition-colors group-hover:underline">Weathertight Roofing <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
-              </td>
-              <td class="text-right stat-num">290</td>
-              <td class="text-right">5.0</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+9</td>
-              <td class="text-right">+17</td>
-              <td class="text-right">100%</td>
+              <td class="text-right stat-num" data-val="421">421</td>
+              <td class="text-right" data-val="4.9">4.9</td>
+              <td class="text-right text-flat" data-val="0">+0</td>
+              <td class="text-right" data-val="2">+2</td>
+              <td class="text-right" data-val="8">+8</td>
+              <td class="text-right" data-val="81">81%</td>
             </tr>
             
             <tr onclick="window.location.href='competitor/erie-home/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">18</td>
-              <td class="font-medium">
-                <a href="competitor/erie-home/" class="hover:text-accent-blue transition-colors group-hover:underline">Erie Home <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+              <td class="text-ink-soft" data-val="12">12</td>
+              <td class="font-medium" data-val="erie home">
+                <a href="competitor/erie-home/" class="hover:text-accent-green transition-colors group-hover:underline">Erie Home</a>
               </td>
-              <td class="text-right stat-num">274</td>
-              <td class="text-right">4.6</td>
-              <td class="text-right text-up">+3</td>
-              <td class="text-right">+7</td>
-              <td class="text-right">+9</td>
-              <td class="text-right">97%</td>
-            </tr>
-            
-            <tr onclick="window.location.href='competitor/taylor-home-improvement/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">19</td>
-              <td class="font-medium">
-                <a href="competitor/taylor-home-improvement/" class="hover:text-accent-blue transition-colors group-hover:underline">Taylor Home Improvement <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
-              </td>
-              <td class="text-right stat-num">273</td>
-              <td class="text-right">4.6</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">–</td>
+              <td class="text-right stat-num" data-val="274">274</td>
+              <td class="text-right" data-val="4.6">4.6</td>
+              <td class="text-right text-up" data-val="3">+3</td>
+              <td class="text-right" data-val="7">+7</td>
+              <td class="text-right" data-val="9">+9</td>
+              <td class="text-right" data-val="97">97%</td>
             </tr>
             
             <tr onclick="window.location.href='competitor/ameripro-roofing/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">20</td>
-              <td class="font-medium">
-                <a href="competitor/ameripro-roofing/" class="hover:text-accent-blue transition-colors group-hover:underline">AmeriPro Roofing <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+              <td class="text-ink-soft" data-val="13">13</td>
+              <td class="font-medium" data-val="ameripro roofing">
+                <a href="competitor/ameripro-roofing/" class="hover:text-accent-green transition-colors group-hover:underline">AmeriPro Roofing</a>
               </td>
-              <td class="text-right stat-num">257</td>
-              <td class="text-right">4.5</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">–</td>
+              <td class="text-right stat-num" data-val="257">257</td>
+              <td class="text-right" data-val="4.5">4.5</td>
+              <td class="text-right text-up" data-val="2">+2</td>
+              <td class="text-right" data-val="3">+3</td>
+              <td class="text-right" data-val="5">+5</td>
+              <td class="text-right" data-val="44">44%</td>
             </tr>
             
-            <tr onclick="window.location.href='competitor/moss-roofing/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">21</td>
-              <td class="font-medium">
-                <a href="competitor/moss-roofing/" class="hover:text-accent-blue transition-colors group-hover:underline">Moss Roofing <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+            <tr onclick="window.location.href='competitor/john-peters-roofing/'" class=" group" style="cursor:pointer;">
+              <td class="text-ink-soft" data-val="14">14</td>
+              <td class="font-medium" data-val="john peters roofing">
+                <a href="competitor/john-peters-roofing/" class="hover:text-accent-green transition-colors group-hover:underline">JOHN PETERS ROOFING</a>
               </td>
-              <td class="text-right stat-num">252</td>
-              <td class="text-right">4.8</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">–</td>
-            </tr>
-            
-            <tr onclick="window.location.href='competitor/rojas-roofing/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">22</td>
-              <td class="font-medium">
-                <a href="competitor/rojas-roofing/" class="hover:text-accent-blue transition-colors group-hover:underline">Rojas Roofing <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
-              </td>
-              <td class="text-right stat-num">242</td>
-              <td class="text-right">5.0</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">–</td>
-            </tr>
-            
-            <tr onclick="window.location.href='competitor/openbox-roofing/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">23</td>
-              <td class="font-medium">
-                <a href="competitor/openbox-roofing/" class="hover:text-accent-blue transition-colors group-hover:underline">OpenBox Roofing <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
-              </td>
-              <td class="text-right stat-num">232</td>
-              <td class="text-right">5.0</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">–</td>
-            </tr>
-            
-            <tr onclick="window.location.href='competitor/spg-roofing-exteriors/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">24</td>
-              <td class="font-medium">
-                <a href="competitor/spg-roofing-exteriors/" class="hover:text-accent-blue transition-colors group-hover:underline">SPG Roofing & Exteriors <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
-              </td>
-              <td class="text-right stat-num">232</td>
-              <td class="text-right">4.9</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">–</td>
-            </tr>
-            
-            <tr onclick="window.location.href='competitor/universal-roofing-exteriors/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">25</td>
-              <td class="font-medium">
-                <a href="competitor/universal-roofing-exteriors/" class="hover:text-accent-blue transition-colors group-hover:underline">Universal Roofing & Exteriors <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
-              </td>
-              <td class="text-right stat-num">222</td>
-              <td class="text-right">4.6</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">–</td>
-            </tr>
-            
-            <tr onclick="window.location.href='competitor/the-roof-squad/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">26</td>
-              <td class="font-medium">
-                <a href="competitor/the-roof-squad/" class="hover:text-accent-blue transition-colors group-hover:underline">The Roof Squad <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
-              </td>
-              <td class="text-right stat-num">218</td>
-              <td class="text-right">4.9</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">–</td>
-            </tr>
-            
-            <tr onclick="window.location.href='competitor/beard-roofing-and-exteriors/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">27</td>
-              <td class="font-medium">
-                <a href="competitor/beard-roofing-and-exteriors/" class="hover:text-accent-blue transition-colors group-hover:underline">Beard Roofing and Exteriors <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
-              </td>
-              <td class="text-right stat-num">211</td>
-              <td class="text-right">5.0</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">–</td>
-            </tr>
-            
-            <tr onclick="window.location.href='competitor/red-bird-roofing/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">28</td>
-              <td class="font-medium">
-                <a href="competitor/red-bird-roofing/" class="hover:text-accent-blue transition-colors group-hover:underline">Red Bird Roofing <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
-              </td>
-              <td class="text-right stat-num">209</td>
-              <td class="text-right">4.9</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">–</td>
-            </tr>
-            
-            <tr onclick="window.location.href='competitor/mister-quik-home-services/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">29</td>
-              <td class="font-medium">
-                <a href="competitor/mister-quik-home-services/" class="hover:text-accent-blue transition-colors group-hover:underline">Mister Quik Home Services <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
-              </td>
-              <td class="text-right stat-num">202</td>
-              <td class="text-right">4.6</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">–</td>
-            </tr>
-            
-            <tr onclick="window.location.href='competitor/bone-dry-roofing/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">30</td>
-              <td class="font-medium">
-                <a href="competitor/bone-dry-roofing/" class="hover:text-accent-blue transition-colors group-hover:underline">Bone Dry Roofing <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
-              </td>
-              <td class="text-right stat-num">189</td>
-              <td class="text-right">4.9</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">–</td>
-            </tr>
-            
-            <tr onclick="window.location.href='competitor/porter-roofing-restoration/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">31</td>
-              <td class="font-medium">
-                <a href="competitor/porter-roofing-restoration/" class="hover:text-accent-blue transition-colors group-hover:underline">Porter Roofing & Restoration <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
-              </td>
-              <td class="text-right stat-num">180</td>
-              <td class="text-right">4.8</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">–</td>
-            </tr>
-            
-            <tr onclick="window.location.href='competitor/3-kings-roofing-and-construction/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">32</td>
-              <td class="font-medium">
-                <a href="competitor/3-kings-roofing-and-construction/" class="hover:text-accent-blue transition-colors group-hover:underline">3 Kings Roofing and Construction <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
-              </td>
-              <td class="text-right stat-num">173</td>
-              <td class="text-right">5.0</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">–</td>
-            </tr>
-            
-            <tr onclick="window.location.href='competitor/innovative-installations/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">33</td>
-              <td class="font-medium">
-                <a href="competitor/innovative-installations/" class="hover:text-accent-blue transition-colors group-hover:underline">Innovative Installations <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
-              </td>
-              <td class="text-right stat-num">160</td>
-              <td class="text-right">5.0</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">–</td>
-            </tr>
-            
-            <tr onclick="window.location.href='competitor/element-roofing/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">34</td>
-              <td class="font-medium">
-                <a href="competitor/element-roofing/" class="hover:text-accent-blue transition-colors group-hover:underline">Element Roofing <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
-              </td>
-              <td class="text-right stat-num">154</td>
-              <td class="text-right">4.9</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">–</td>
+              <td class="text-right stat-num" data-val="147">147</td>
+              <td class="text-right" data-val="4.8">4.8</td>
+              <td class="text-right text-up" data-val="10">+10</td>
+              <td class="text-right" data-val="10">+10</td>
+              <td class="text-right" data-val="10">+10</td>
+              <td class="text-right" data-val="99">99%</td>
             </tr>
             
             <tr onclick="window.location.href='competitor/indianapolis-roofing-llc/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">35</td>
-              <td class="font-medium">
-                <a href="competitor/indianapolis-roofing-llc/" class="hover:text-accent-blue transition-colors group-hover:underline">Indianapolis Roofing LLC <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+              <td class="text-ink-soft" data-val="15">15</td>
+              <td class="font-medium" data-val="indianapolis roofing llc">
+                <a href="competitor/indianapolis-roofing-llc/" class="hover:text-accent-green transition-colors group-hover:underline">Indianapolis Roofing LLC</a>
               </td>
-              <td class="text-right stat-num">142</td>
-              <td class="text-right">4.9</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">–</td>
-            </tr>
-            
-            <tr onclick="window.location.href='competitor/jordan-scott-contracting/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">36</td>
-              <td class="font-medium">
-                <a href="competitor/jordan-scott-contracting/" class="hover:text-accent-blue transition-colors group-hover:underline">Jordan Scott Contracting <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
-              </td>
-              <td class="text-right stat-num">140</td>
-              <td class="text-right">4.9</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">–</td>
-            </tr>
-            
-            <tr onclick="window.location.href='competitor/moss-roofing/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">37</td>
-              <td class="font-medium">
-                <a href="competitor/moss-roofing/" class="hover:text-accent-blue transition-colors group-hover:underline">Moss Roofing <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
-              </td>
-              <td class="text-right stat-num">138</td>
-              <td class="text-right">4.9</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">–</td>
-            </tr>
-            
-            <tr onclick="window.location.href='competitor/eads-roofing-exteriors/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">38</td>
-              <td class="font-medium">
-                <a href="competitor/eads-roofing-exteriors/" class="hover:text-accent-blue transition-colors group-hover:underline">Eads Roofing & Exteriors <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
-              </td>
-              <td class="text-right stat-num">137</td>
-              <td class="text-right">4.9</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">–</td>
+              <td class="text-right stat-num" data-val="142">142</td>
+              <td class="text-right" data-val="4.9">4.9</td>
+              <td class="text-right text-flat" data-val="0">+0</td>
+              <td class="text-right" data-val="1">+1</td>
+              <td class="text-right" data-val="1">+1</td>
+              <td class="text-right" data-val="100">100%</td>
             </tr>
             
             <tr onclick="window.location.href='competitor/honest-abe-roofing-indianapolis/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">39</td>
-              <td class="font-medium">
-                <a href="competitor/honest-abe-roofing-indianapolis/" class="hover:text-accent-blue transition-colors group-hover:underline">Honest Abe Roofing Indianapolis <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+              <td class="text-ink-soft" data-val="16">16</td>
+              <td class="font-medium" data-val="honest abe roofing indianapolis">
+                <a href="competitor/honest-abe-roofing-indianapolis/" class="hover:text-accent-green transition-colors group-hover:underline">Honest Abe Roofing Indianapolis</a>
               </td>
-              <td class="text-right stat-num">132</td>
-              <td class="text-right">4.9</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">–</td>
+              <td class="text-right stat-num" data-val="132">132</td>
+              <td class="text-right" data-val="4.9">4.9</td>
+              <td class="text-right text-up" data-val="1">+1</td>
+              <td class="text-right" data-val="6">+6</td>
+              <td class="text-right" data-val="7">+7</td>
+              <td class="text-right" data-val="90">90%</td>
             </tr>
             
-            <tr onclick="window.location.href='competitor/the-heartland-builders/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">40</td>
-              <td class="font-medium">
-                <a href="competitor/the-heartland-builders/" class="hover:text-accent-blue transition-colors group-hover:underline">The Heartland Builders <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+            <tr onclick="window.location.href='competitor/two-brothers-roofing-inc/'" class=" group" style="cursor:pointer;">
+              <td class="text-ink-soft" data-val="17">17</td>
+              <td class="font-medium" data-val="two brothers roofing inc">
+                <a href="competitor/two-brothers-roofing-inc/" class="hover:text-accent-green transition-colors group-hover:underline">Two Brothers Roofing Inc</a>
               </td>
-              <td class="text-right stat-num">129</td>
-              <td class="text-right">5.0</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">–</td>
+              <td class="text-right stat-num" data-val="92">92</td>
+              <td class="text-right" data-val="4.8">4.8</td>
+              <td class="text-right text-up" data-val="1">+1</td>
+              <td class="text-right" data-val="9">+9</td>
+              <td class="text-right" data-val="12">+12</td>
+              <td class="text-right" data-val="100">100%</td>
             </tr>
             
-            <tr onclick="window.location.href='competitor/jax-roofing-company/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">41</td>
-              <td class="font-medium">
-                <a href="competitor/jax-roofing-company/" class="hover:text-accent-blue transition-colors group-hover:underline">Jax Roofing Company <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+            <tr onclick="window.location.href='competitor/msrc-indianapolis/'" class=" group" style="cursor:pointer;">
+              <td class="text-ink-soft" data-val="18">18</td>
+              <td class="font-medium" data-val="msrc - indianapolis">
+                <a href="competitor/msrc-indianapolis/" class="hover:text-accent-green transition-colors group-hover:underline">MSRC - Indianapolis</a>
               </td>
-              <td class="text-right stat-num">127</td>
-              <td class="text-right">5.0</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">–</td>
+              <td class="text-right stat-num" data-val="77">77</td>
+              <td class="text-right" data-val="4.9">4.9</td>
+              <td class="text-right text-up" data-val="2">+2</td>
+              <td class="text-right" data-val="6">+6</td>
+              <td class="text-right" data-val="6">+6</td>
+              <td class="text-right" data-val="9">9%</td>
             </tr>
             
-            <tr onclick="window.location.href='competitor/tag-exteriors-exterior-home-remodeling/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">42</td>
-              <td class="font-medium">
-                <a href="competitor/tag-exteriors-exterior-home-remodeling/" class="hover:text-accent-blue transition-colors group-hover:underline">TAG Exteriors - Exterior Home Remodeling <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+            <tr onclick="window.location.href='competitor/metal-roofing-indianapolis/'" class=" group" style="cursor:pointer;">
+              <td class="text-ink-soft" data-val="19">19</td>
+              <td class="font-medium" data-val="metal roofing indianapolis">
+                <a href="competitor/metal-roofing-indianapolis/" class="hover:text-accent-green transition-colors group-hover:underline">Metal Roofing Indianapolis</a>
               </td>
-              <td class="text-right stat-num">123</td>
-              <td class="text-right">4.8</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">–</td>
+              <td class="text-right stat-num" data-val="65">65</td>
+              <td class="text-right" data-val="5.0">5.0</td>
+              <td class="text-right text-flat" data-val="0">+0</td>
+              <td class="text-right" data-val="0">+0</td>
+              <td class="text-right" data-val="0">+0</td>
+              <td class="text-right" data-val="0">–</td>
             </tr>
             
-            <tr onclick="window.location.href='competitor/tip-top-roofing-construction/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">43</td>
-              <td class="font-medium">
-                <a href="competitor/tip-top-roofing-construction/" class="hover:text-accent-blue transition-colors group-hover:underline">Tip Top Roofing & Construction <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+            <tr onclick="window.location.href='competitor/mighty-dog-roofing-indianapolis/'" class=" group" style="cursor:pointer;">
+              <td class="text-ink-soft" data-val="20">20</td>
+              <td class="font-medium" data-val="mighty dog roofing indianapolis">
+                <a href="competitor/mighty-dog-roofing-indianapolis/" class="hover:text-accent-green transition-colors group-hover:underline">Mighty Dog Roofing Indianapolis</a>
               </td>
-              <td class="text-right stat-num">119</td>
-              <td class="text-right">5.0</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">–</td>
-            </tr>
-            
-            <tr onclick="window.location.href='competitor/rhino-roofing-exteriors/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">44</td>
-              <td class="font-medium">
-                <a href="competitor/rhino-roofing-exteriors/" class="hover:text-accent-blue transition-colors group-hover:underline">Rhino Roofing & Exteriors <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
-              </td>
-              <td class="text-right stat-num">111</td>
-              <td class="text-right">5.0</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">–</td>
-            </tr>
-            
-            <tr onclick="window.location.href='competitor/arrow-construction/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">45</td>
-              <td class="font-medium">
-                <a href="competitor/arrow-construction/" class="hover:text-accent-blue transition-colors group-hover:underline">Arrow Construction <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
-              </td>
-              <td class="text-right stat-num">109</td>
-              <td class="text-right">4.9</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">–</td>
-            </tr>
-            
-            <tr onclick="window.location.href='competitor/booher-remodeling-company/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">46</td>
-              <td class="font-medium">
-                <a href="competitor/booher-remodeling-company/" class="hover:text-accent-blue transition-colors group-hover:underline">Booher Remodeling Company <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
-              </td>
-              <td class="text-right stat-num">108</td>
-              <td class="text-right">4.8</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">–</td>
-            </tr>
-            
-            <tr onclick="window.location.href='competitor/indy-renovation/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">47</td>
-              <td class="font-medium">
-                <a href="competitor/indy-renovation/" class="hover:text-accent-blue transition-colors group-hover:underline">Indy Renovation <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
-              </td>
-              <td class="text-right stat-num">107</td>
-              <td class="text-right">4.3</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">–</td>
-            </tr>
-            
-            <tr onclick="window.location.href='competitor/bh-pro-roofing/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">48</td>
-              <td class="font-medium">
-                <a href="competitor/bh-pro-roofing/" class="hover:text-accent-blue transition-colors group-hover:underline">BH Pro Roofing <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
-              </td>
-              <td class="text-right stat-num">103</td>
-              <td class="text-right">4.8</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">–</td>
-            </tr>
-            
-            <tr onclick="window.location.href='competitor/317-roofing-restorations/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">49</td>
-              <td class="font-medium">
-                <a href="competitor/317-roofing-restorations/" class="hover:text-accent-blue transition-colors group-hover:underline">317 Roofing & Restorations <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
-              </td>
-              <td class="text-right stat-num">103</td>
-              <td class="text-right">5.0</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">–</td>
-            </tr>
-            
-            <tr onclick="window.location.href='competitor/cloud-nine-roofing-and-renovation/'" class=" group" style="cursor:pointer;">
-              <td class="text-ink-soft">50</td>
-              <td class="font-medium">
-                <a href="competitor/cloud-nine-roofing-and-renovation/" class="hover:text-accent-blue transition-colors group-hover:underline">Cloud Nine Roofing and Renovation <svg class="inline w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
-              </td>
-              <td class="text-right stat-num">101</td>
-              <td class="text-right">5.0</td>
-              <td class="text-right text-flat">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">+0</td>
-              <td class="text-right">–</td>
+              <td class="text-right stat-num" data-val="62">62</td>
+              <td class="text-right" data-val="4.9">4.9</td>
+              <td class="text-right text-flat" data-val="0">+0</td>
+              <td class="text-right" data-val="0">+0</td>
+              <td class="text-right" data-val="0">+0</td>
+              <td class="text-right" data-val="0">–</td>
             </tr>
             
           </tbody>
@@ -1570,6 +950,48 @@ tailwind.config = {
   </section>
 
 </main>
+
+<!-- Mobile Bottom Tab Bar -->
+<nav class="mobile-nav">
+  <div class="mobile-nav-grid">
+    
+    <button data-tab="overview" class="tab-btn mobile-tab">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+      <span>Overview</span>
+    </button>
+    
+    <button data-tab="moves" class="tab-btn mobile-tab">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+      <span>Moves</span>
+    </button>
+    
+    <button data-tab="movement" class="tab-btn mobile-tab">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+      <span>Movement</span>
+    </button>
+    
+    <button data-tab="news" class="tab-btn mobile-tab">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+      <span>News</span>
+    </button>
+    
+    <button data-tab="rising" class="tab-btn mobile-tab">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 17l6-6 4 4 8-8m0 0v6m0-6h-6"/></svg>
+      <span>Rising</span>
+    </button>
+    
+    <button data-tab="seo" class="tab-btn mobile-tab">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+      <span>SEO/AEO</span>
+    </button>
+    
+    <button data-tab="all" class="tab-btn mobile-tab">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+      <span>All Comp.</span>
+    </button>
+    
+  </div>
+</nav>
 
 <footer class="relative z-10 max-w-6xl mx-auto px-5 sm:px-8 py-10 mt-8 border-t border-white/5">
   <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs text-ink-soft">
@@ -1584,6 +1006,22 @@ tailwind.config = {
   </div>
 </footer>
 
+<!-- Inline SVG icon set for news categories -->
+<svg style="display:none">
+  <defs>
+    <symbol id="icon-award" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></symbol>
+    <symbol id="icon-press" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></symbol>
+    <symbol id="icon-expansion" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"/></symbol>
+    <symbol id="icon-hire" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></symbol>
+    <symbol id="icon-ad" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/></symbol>
+    <symbol id="icon-regulation" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/></symbol>
+    <symbol id="icon-weather" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/></symbol>
+    <symbol id="icon-supply" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></symbol>
+    <symbol id="icon-partnership" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></symbol>
+    <symbol id="icon-other" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></symbol>
+  </defs>
+</svg>
+
 <script>
 const tabs = document.querySelectorAll('.tab-btn');
 const panels = document.querySelectorAll('[data-panel]');
@@ -1596,17 +1034,35 @@ tabs.forEach(t => t.addEventListener('click', () => showTab(t.dataset.tab)));
 document.querySelectorAll('[data-tab-link]').forEach(b => b.addEventListener('click', () => showTab(b.dataset.tabLink)));
 showTab('overview');
 
+// Inject SVG icons into news cards based on category
+document.querySelectorAll('[data-cat-icon]').forEach(el => {
+  const cat = el.dataset.catIcon || 'other';
+  const valid = ['award','press','expansion','hire','ad','regulation','weather','supply','partnership','other'];
+  const id = valid.includes(cat) ? cat : 'other';
+  el.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><use href="#icon-${id}"/></svg>`;
+});
+
 const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
 document.querySelectorAll('.scroll-fade').forEach(el => observer.observe(el));
 
 function openNews(idx) {
   const card = (window.NEWS_CARDS || [])[idx];
   if (!card) return;
-  document.getElementById('news-modal-icon').textContent = card.icon || '📌';
+  const iconEl = document.getElementById('news-modal-icon');
+  const cat = card.category || 'other';
+  iconEl.innerHTML = `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><use href="#icon-${cat}"/></svg>`;
   document.getElementById('news-modal-company').textContent = card.company || '';
   document.getElementById('news-modal-when').textContent = card.when || '';
   document.getElementById('news-modal-event').textContent = card.event || '';
   document.getElementById('news-modal-why').textContent = card.why_matters || card.why || '';
+  const detailEl = document.getElementById('news-modal-detail');
+  const detailWrap = document.getElementById('news-modal-detail-wrap');
+  if (card.detail) {
+    detailEl.textContent = card.detail;
+    detailWrap.style.display = '';
+  } else {
+    detailWrap.style.display = 'none';
+  }
   const src = document.getElementById('news-modal-source');
   if (card.source && card.source.startsWith('http')) {
     src.href = card.source; src.style.display = 'inline-flex';
@@ -1620,26 +1076,51 @@ function closeNews() {
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNews(); });
 
-const DATA = {"gainers": [{"gain_7d": 29, "is_raptor": false, "name": "Amos Exteriors"}, {"gain_7d": 22, "is_raptor": false, "name": "Indy Roof \u0026 Restoration"}, {"gain_7d": 22, "is_raptor": false, "name": "Indy Rooftops"}, {"gain_7d": 10, "is_raptor": false, "name": "Bone Dry Roofing"}, {"gain_7d": 8, "is_raptor": false, "name": "Cochran Exteriors"}, {"gain_7d": 3, "is_raptor": true, "name": "Raptor Roofing"}, {"gain_7d": 3, "is_raptor": false, "name": "Richmond Exteriors"}, {"gain_7d": 3, "is_raptor": false, "name": "Erie Home"}, {"gain_7d": 2, "is_raptor": false, "name": "Bone Dry Roofing"}, {"gain_7d": 2, "is_raptor": false, "name": "Rees Restoration"}, {"gain_7d": 1, "is_raptor": false, "name": "Cox Roofing"}], "response": [{"is_raptor": false, "name": "Amos Exteriors", "rate": 75}, {"is_raptor": false, "name": "Bone Dry Roofing", "rate": 97}, {"is_raptor": false, "name": "Indy Roof \u0026 Restoration", "rate": 94}, {"is_raptor": false, "name": "Cochran Exteriors", "rate": 97}, {"is_raptor": false, "name": "Bone Dry Roofing", "rate": 60}, {"is_raptor": false, "name": "Big Boy\u0027s Construction", "rate": 100}, {"is_raptor": true, "name": "Raptor Roofing", "rate": 97}, {"is_raptor": false, "name": "Trojan Roofing", "rate": 6}, {"is_raptor": false, "name": "Richmond Exteriors", "rate": 86}, {"is_raptor": false, "name": "Rees Restoration", "rate": 52}, {"is_raptor": false, "name": "Cox Roofing", "rate": 81}, {"is_raptor": false, "name": "Indy Rooftops", "rate": 33}], "scatter": [{"gain_7d": 0, "is_raptor": false, "name": "Amos Exteriors", "total": 3043}, {"gain_7d": 29, "is_raptor": false, "name": "Amos Exteriors", "total": 3043}, {"gain_7d": 10, "is_raptor": false, "name": "Bone Dry Roofing", "total": 2410}, {"gain_7d": 22, "is_raptor": false, "name": "Indy Roof \u0026 Restoration", "total": 2153}, {"gain_7d": 8, "is_raptor": false, "name": "Cochran Exteriors", "total": 1171}, {"gain_7d": 2, "is_raptor": false, "name": "Bone Dry Roofing", "total": 943}, {"gain_7d": 0, "is_raptor": false, "name": "Big Boy\u0027s Construction", "total": 844}, {"gain_7d": 3, "is_raptor": true, "name": "Raptor Roofing", "total": 664}, {"gain_7d": 0, "is_raptor": false, "name": "Trojan Roofing", "total": 643}, {"gain_7d": 3, "is_raptor": false, "name": "Richmond Exteriors", "total": 610}, {"gain_7d": 2, "is_raptor": false, "name": "Rees Restoration", "total": 579}, {"gain_7d": 1, "is_raptor": false, "name": "Cox Roofing", "total": 503}, {"gain_7d": 22, "is_raptor": false, "name": "Indy Rooftops", "total": 482}, {"gain_7d": 0, "is_raptor": false, "name": "Stay Dry Roofing", "total": 421}, {"gain_7d": 0, "is_raptor": false, "name": "Blue Ladder Roofing", "total": 385}, {"gain_7d": 0, "is_raptor": false, "name": "ARAC Roof It Forward", "total": 308}, {"gain_7d": 0, "is_raptor": false, "name": "Weathertight Roofing", "total": 290}, {"gain_7d": 3, "is_raptor": false, "name": "Erie Home", "total": 274}], "share": [{"gain": 29, "is_raptor": false, "name": "Amos Exteriors"}, {"gain": 22, "is_raptor": false, "name": "Indy Roof \u0026 Restoration"}, {"gain": 22, "is_raptor": false, "name": "Indy Rooftops"}, {"gain": 10, "is_raptor": false, "name": "Bone Dry Roofing"}, {"gain": 8, "is_raptor": false, "name": "Cochran Exteriors"}, {"gain": 3, "is_raptor": true, "name": "Raptor Roofing"}, {"gain": 3, "is_raptor": false, "name": "Richmond Exteriors"}, {"gain": 8, "is_raptor": false, "name": "Others"}]};
-const NAVY = '#172e55';
+// Sortable tables — click any header to sort asc/desc
+document.querySelectorAll('.sortable-table').forEach(table => {
+  const headers = table.querySelectorAll('thead th[data-sort]');
+  let currentDir = {};
+  headers.forEach((h, idx) => {
+    h.addEventListener('click', () => {
+      const tbody = table.querySelector('tbody');
+      const rows = Array.from(tbody.querySelectorAll('tr'));
+      const dir = currentDir[idx] === 'asc' ? 'desc' : 'asc';
+      headers.forEach(x => x.classList.remove('sorted-asc', 'sorted-desc'));
+      h.classList.add(dir === 'asc' ? 'sorted-asc' : 'sorted-desc');
+      currentDir = {}; currentDir[idx] = dir;
+      const sortType = h.dataset.sort;
+      rows.sort((a, b) => {
+        let av = a.children[idx].dataset.val ?? a.children[idx].textContent;
+        let bv = b.children[idx].dataset.val ?? b.children[idx].textContent;
+        if (sortType === 'num') { av = parseFloat(av) || 0; bv = parseFloat(bv) || 0; }
+        else { av = String(av).toLowerCase(); bv = String(bv).toLowerCase(); }
+        if (av < bv) return dir === 'asc' ? -1 : 1;
+        if (av > bv) return dir === 'asc' ? 1 : -1;
+        return 0;
+      });
+      rows.forEach(r => tbody.appendChild(r));
+    });
+  });
+});
+
+const DATA = {"gainers": [{"gain_7d": 23, "is_raptor": false, "name": "Indy Roof \u0026 Restoration"}, {"gain_7d": 14, "is_raptor": false, "name": "Indy Rooftops"}, {"gain_7d": 10, "is_raptor": false, "name": "Bone Dry Roofing"}, {"gain_7d": 10, "is_raptor": false, "name": "JOHN PETERS ROOFING"}, {"gain_7d": 7, "is_raptor": false, "name": "Cochran Exteriors"}, {"gain_7d": 3, "is_raptor": false, "name": "Erie Home"}, {"gain_7d": 2, "is_raptor": true, "name": "Raptor Roofing"}, {"gain_7d": 2, "is_raptor": false, "name": "Rees Restoration"}, {"gain_7d": 2, "is_raptor": false, "name": "AmeriPro Roofing"}, {"gain_7d": 2, "is_raptor": false, "name": "MSRC - Indianapolis"}, {"gain_7d": 1, "is_raptor": false, "name": "Cox Roofing"}, {"gain_7d": 1, "is_raptor": false, "name": "Honest Abe Roofing Indianapolis"}], "response": [{"is_raptor": false, "name": "Bone Dry Roofing", "rate": 99}, {"is_raptor": false, "name": "Indy Roof \u0026 Restoration", "rate": 94}, {"is_raptor": false, "name": "Cochran Exteriors", "rate": 96}, {"is_raptor": false, "name": "Big Boy\u0027s Construction", "rate": 100}, {"is_raptor": true, "name": "Raptor Roofing", "rate": 97}, {"is_raptor": false, "name": "Trojan Roofing", "rate": 6}, {"is_raptor": false, "name": "Rees Restoration", "rate": 46}, {"is_raptor": false, "name": "Cox Roofing", "rate": 91}, {"is_raptor": false, "name": "Indy Rooftops", "rate": 38}, {"is_raptor": false, "name": "Stay Dry Roofing", "rate": 81}, {"is_raptor": false, "name": "Erie Home", "rate": 97}, {"is_raptor": false, "name": "AmeriPro Roofing", "rate": 44}], "scatter": [{"gain_7d": 0, "is_raptor": false, "name": "Amos Exteriors", "total": 3038}, {"gain_7d": 10, "is_raptor": false, "name": "Bone Dry Roofing", "total": 2409}, {"gain_7d": 23, "is_raptor": false, "name": "Indy Roof \u0026 Restoration", "total": 2152}, {"gain_7d": 7, "is_raptor": false, "name": "Cochran Exteriors", "total": 1171}, {"gain_7d": 0, "is_raptor": false, "name": "Big Boy\u0027s Construction", "total": 844}, {"gain_7d": 2, "is_raptor": true, "name": "Raptor Roofing", "total": 664}, {"gain_7d": 0, "is_raptor": false, "name": "Trojan Roofing", "total": 643}, {"gain_7d": 2, "is_raptor": false, "name": "Rees Restoration", "total": 579}, {"gain_7d": 1, "is_raptor": false, "name": "Cox Roofing", "total": 503}, {"gain_7d": 14, "is_raptor": false, "name": "Indy Rooftops", "total": 481}, {"gain_7d": 0, "is_raptor": false, "name": "Stay Dry Roofing", "total": 421}, {"gain_7d": 3, "is_raptor": false, "name": "Erie Home", "total": 274}, {"gain_7d": 2, "is_raptor": false, "name": "AmeriPro Roofing", "total": 257}, {"gain_7d": 10, "is_raptor": false, "name": "JOHN PETERS ROOFING", "total": 147}, {"gain_7d": 0, "is_raptor": false, "name": "Indianapolis Roofing LLC", "total": 142}, {"gain_7d": 1, "is_raptor": false, "name": "Honest Abe Roofing Indianapolis", "total": 132}, {"gain_7d": 1, "is_raptor": false, "name": "Two Brothers Roofing Inc", "total": 92}, {"gain_7d": 2, "is_raptor": false, "name": "MSRC - Indianapolis", "total": 77}], "share": [{"gain": 23, "is_raptor": false, "name": "Indy Roof \u0026 Restoration"}, {"gain": 14, "is_raptor": false, "name": "Indy Rooftops"}, {"gain": 10, "is_raptor": false, "name": "Bone Dry Roofing"}, {"gain": 10, "is_raptor": false, "name": "JOHN PETERS ROOFING"}, {"gain": 7, "is_raptor": false, "name": "Cochran Exteriors"}, {"gain": 3, "is_raptor": false, "name": "Erie Home"}, {"gain": 2, "is_raptor": true, "name": "Raptor Roofing"}, {"gain": 9, "is_raptor": false, "name": "Others"}]};
+const NAVY_LIGHT = '#2a4880';
 const GREEN = '#3ae20a';
 const BLUE = '#1ac6ff';
-const NAVY_LIGHT = '#2a4880';
-const SOFT = 'rgba(255,255,255,0.08)';
-const TEXT_SOFT = '#a3b1c7';
+const SOFT = 'rgba(196, 206, 224, 0.1)';
+const TEXT_SOFT = '#c4cee0';
 
 Chart.defaults.font.family = "'Ouma Latin VF', 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif";
 Chart.defaults.color = TEXT_SOFT;
 Chart.defaults.borderColor = SOFT;
 
-// Gainers bar with value labels on top
 new Chart(document.getElementById('gainers-chart'), {
   type: 'bar',
   data: {
     labels: DATA.gainers.map(g => g.name),
     datasets: [{
       data: DATA.gainers.map(g => g.gain_7d),
-      backgroundColor: DATA.gainers.map(g => g.is_raptor ? GREEN : BLUE),
+      backgroundColor: DATA.gainers.map(g => g.is_raptor ? GREEN : NAVY_LIGHT),
       borderRadius: 6,
     }],
   },
@@ -1647,10 +1128,7 @@ new Chart(document.getElementById('gainers-chart'), {
     responsive: true,
     maintainAspectRatio: false,
     layout: { padding: { top: 24 } },
-    plugins: {
-      legend: { display: false },
-      tooltip: { backgroundColor: '#0d1d3a', borderColor: GREEN, borderWidth: 1, titleColor: GREEN, bodyColor: '#fff' },
-    },
+    plugins: { legend: { display: false }, tooltip: { backgroundColor: '#0d1d3a', borderColor: '#c4cee0', borderWidth: 1, titleColor: '#fff', bodyColor: '#fff' } },
     scales: {
       x: { ticks: { color: TEXT_SOFT, autoSkip: false, maxRotation: 45, minRotation: 35 }, grid: { display: false } },
       y: { beginAtZero: true, grid: { color: SOFT }, ticks: { precision: 0, color: TEXT_SOFT } },
@@ -1668,7 +1146,6 @@ new Chart(document.getElementById('gainers-chart'), {
   },
 });
 
-// Velocity scatter — smaller Raptor dot
 new Chart(document.getElementById('scatter-chart'), {
   type: 'scatter',
   data: {
@@ -1676,8 +1153,8 @@ new Chart(document.getElementById('scatter-chart'), {
       label: p.name,
       data: [{ x: p.total, y: p.gain_7d }],
       backgroundColor: p.is_raptor ? GREEN : (p.gain_7d > 5 ? BLUE : NAVY_LIGHT),
-      pointRadius: p.is_raptor ? 7 : 5,
-      pointHoverRadius: p.is_raptor ? 10 : 8,
+      pointRadius: p.is_raptor ? 6 : 5,
+      pointHoverRadius: p.is_raptor ? 9 : 8,
       pointBorderColor: p.is_raptor ? '#ffffff' : 'transparent',
       pointBorderWidth: p.is_raptor ? 2 : 0,
     })),
@@ -1685,10 +1162,7 @@ new Chart(document.getElementById('scatter-chart'), {
   options: {
     responsive: true,
     maintainAspectRatio: false,
-    plugins: {
-      legend: { display: false },
-      tooltip: { backgroundColor: '#0d1d3a', borderColor: GREEN, borderWidth: 1, titleColor: GREEN, bodyColor: '#fff', callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.parsed.x.toLocaleString()} total, +${ctx.parsed.y} this week` } },
-    },
+    plugins: { legend: { display: false }, tooltip: { backgroundColor: '#0d1d3a', borderColor: '#c4cee0', borderWidth: 1, titleColor: '#fff', bodyColor: '#fff', callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.parsed.x.toLocaleString()} total, +${ctx.parsed.y} this week` } } },
     scales: {
       x: { type: 'logarithmic', title: { display: true, text: 'Total Reviews (log)', color: TEXT_SOFT }, grid: { color: SOFT }, ticks: { color: TEXT_SOFT } },
       y: { beginAtZero: true, title: { display: true, text: 'Reviews this week', color: TEXT_SOFT }, grid: { color: SOFT }, ticks: { color: TEXT_SOFT } },
@@ -1702,7 +1176,7 @@ new Chart(document.getElementById('response-chart'), {
     labels: DATA.response.map(r => r.name),
     datasets: [{
       data: DATA.response.map(r => r.rate),
-      backgroundColor: DATA.response.map(r => r.is_raptor ? GREEN : BLUE),
+      backgroundColor: DATA.response.map(r => r.is_raptor ? GREEN : NAVY_LIGHT),
       borderRadius: 4,
     }],
   },
@@ -1710,7 +1184,7 @@ new Chart(document.getElementById('response-chart'), {
     indexAxis: 'y',
     responsive: true,
     maintainAspectRatio: false,
-    plugins: { legend: { display: false }, tooltip: { backgroundColor: '#0d1d3a', borderColor: GREEN, borderWidth: 1, titleColor: GREEN, bodyColor: '#fff', callbacks: { label: (ctx) => `${ctx.parsed.x}%` } } },
+    plugins: { legend: { display: false }, tooltip: { backgroundColor: '#0d1d3a', titleColor: '#fff', bodyColor: '#fff', callbacks: { label: (ctx) => `${ctx.parsed.x}%` } } },
     scales: {
       x: { beginAtZero: true, max: 100, grid: { color: SOFT }, ticks: { color: TEXT_SOFT, callback: (v) => v + '%' } },
       y: { grid: { display: false }, ticks: { color: TEXT_SOFT } },
@@ -1724,7 +1198,7 @@ new Chart(document.getElementById('share-chart'), {
     labels: DATA.share.map(s => s.name),
     datasets: [{
       data: DATA.share.map(s => s.gain),
-      backgroundColor: DATA.share.map((s, i) => s.is_raptor ? GREEN : [BLUE, NAVY_LIGHT, '#5a7bb3', '#8aa1ce', '#b3c2dc', '#d4dbe6'][i % 6]),
+      backgroundColor: DATA.share.map((s, i) => s.is_raptor ? GREEN : ['#2a4880', '#4a679a', '#7d92ba', '#1ac6ff', '#a3b1c7', '#c4cee0'][i % 6]),
       borderWidth: 2,
       borderColor: '#0d1d3a',
     }],
@@ -1732,7 +1206,7 @@ new Chart(document.getElementById('share-chart'), {
   options: {
     responsive: true,
     maintainAspectRatio: false,
-    plugins: { legend: { position: 'right', labels: { color: TEXT_SOFT, boxWidth: 12, font: { size: 11 } } }, tooltip: { backgroundColor: '#0d1d3a', borderColor: GREEN, borderWidth: 1, titleColor: GREEN, bodyColor: '#fff' } },
+    plugins: { legend: { position: 'right', labels: { color: TEXT_SOFT, boxWidth: 12, font: { size: 11 } } }, tooltip: { backgroundColor: '#0d1d3a', titleColor: '#fff', bodyColor: '#fff' } },
     cutout: '65%',
   },
 });
