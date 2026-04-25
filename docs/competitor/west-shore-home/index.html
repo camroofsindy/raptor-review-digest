@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>West Shore Home | Raptor Review Digest</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23172e55'/%3E%3Ctext x='50' y='62' font-size='40' text-anchor='middle' fill='%233ae20a' font-family='sans-serif' font-weight='700'%3ER%3C/text%3E%3C/svg%3E">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    colors: {
+      navy: { DEFAULT: '#172e55', deep: '#0d1d3a', light: '#2a4880' },
+      accent: { green: '#3ae20a', blue: '#1ac6ff' },
+      ink: { DEFAULT: '#172e55', soft: '#4a5568', light: '#9aa5b8' },
+    },
+    fontFamily: { sans: ['Ouma Latin VF', 'Inter', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'] },
+  }},
+};
+</script>
+<style>
+  body { font-feature-settings: "ss01"; }
+  .stat-num { font-variant-numeric: tabular-nums; }
+  .ai-prose h1, .ai-prose h2, .ai-prose h3, .ai-prose h4 { color: #172e55; font-weight: 700; margin: 1em 0 0.4em; line-height: 1.2; }
+  .ai-prose h1 { font-size: 1.25rem; } .ai-prose h2 { font-size: 1.125rem; } .ai-prose h3 { font-size: 1rem; }
+  .ai-prose h4 { font-size: 0.95rem; color: #4a5568; text-transform: uppercase; letter-spacing: 0.04em; }
+  .ai-prose p { margin: 0.6em 0; } .ai-prose strong { color: #172e55; font-weight: 700; }
+  .ai-prose em { color: #4a5568; }
+  .ai-prose a { color: #1ac6ff; border-bottom: 1px solid rgba(26, 198, 255, 0.3); }
+  .ai-prose ul, .ai-prose ol { margin: 0.6em 0; padding-left: 1.4em; }
+  .ai-prose li { margin: 0.3em 0; }
+  .ai-prose hr { border: none; border-top: 1px solid #e3e7ee; margin: 1em 0; }
+  .gradient-text { background: linear-gradient(135deg, #3ae20a 0%, #1ac6ff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .delta-up { color: #059669; font-weight: 700; }
+  .scroll-fade { opacity: 0; transform: translateY(20px); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+  .scroll-fade.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body class="bg-slate-50 text-ink antialiased min-h-screen">
+
+<!-- Hero -->
+<section class="bg-gradient-to-br from-navy via-navy-deep to-navy text-white relative overflow-hidden">
+  <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 20% 50%, #3ae20a 0%, transparent 40%), radial-gradient(circle at 80% 30%, #1ac6ff 0%, transparent 35%);"></div>
+  <div class="max-w-5xl mx-auto px-5 sm:px-8 py-8 relative z-10">
+    <a href="../../" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-accent-green hover:text-accent-blue mb-6 transition-colors">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+      Back to dashboard
+    </a>
+    <div class="flex items-start justify-between flex-wrap gap-4 mb-4">
+      <div>
+        <div class="text-xs uppercase tracking-widest text-accent-green font-bold mb-1">Competitor Profile</div>
+        <h1 class="text-3xl sm:text-5xl font-bold tracking-tight">West Shore Home</h1>
+        <p class="text-white/60 text-sm mt-2">7531 Miles Dr, Indianapolis, IN 46231</p>
+      </div>
+      <div class="text-right">
+        <div class="text-xs uppercase tracking-widest text-white/60">Volume Rank</div>
+        <div class="text-3xl font-bold gradient-text">#9</div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8">
+      <div class="bg-white/10 backdrop-blur border border-accent-green/20 rounded-xl p-4">
+        <div class="text-2xl sm:text-3xl font-bold text-accent-green stat-num">664</div>
+        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">Total Reviews</div>
+      </div>
+      <div class="bg-white/10 backdrop-blur border border-accent-green/20 rounded-xl p-4">
+        <div class="text-2xl sm:text-3xl font-bold text-accent-green stat-num">4.8</div>
+        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">Star Rating</div>
+      </div>
+      <div class="bg-white/10 backdrop-blur border border-accent-blue/30 rounded-xl p-4">
+        <div class="text-2xl sm:text-3xl font-bold text-accent-blue stat-num">+7</div>
+        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">This Week</div>
+      </div>
+      <div class="bg-white/10 backdrop-blur border border-accent-blue/30 rounded-xl p-4">
+        <div class="text-2xl sm:text-3xl font-bold text-accent-blue stat-num">+47</div>
+        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">Last 30 Days</div>
+      </div>
+    </div>
+
+    <div class="mt-4 flex items-center gap-4 text-sm text-white/60 flex-wrap">
+      <span><span class="text-white font-semibold">95%</span> response rate</span>
+      <span>+<span class="text-white font-semibold">77</span> in last 90 days</span>
+      <span class="text-white/40">Refreshed April 25, 2026</span>
+    </div>
+  </div>
+</section>
+
+<main class="max-w-5xl mx-auto px-5 sm:px-8 py-8 space-y-6">
+
+  
+  <div class="scroll-fade bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-lg font-bold text-navy uppercase tracking-wider">Strategic Read</h2>
+      <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-slate-100 px-2 py-1 rounded">Live AI Research</span>
+    </div>
+    <div class="ai-prose text-sm sm:text-base"><p><strong>Important framing note for Cameron:</strong> West Shore Home is <strong>not a roofing company.</strong> They are a national home remodeling brand (baths, windows, doors, flooring) that shares the same Google Business Profile address and Indianapolis market as Raptor Roofing, and shows up in the same review-volume competitive set. The brief below reflects that reality and identifies where the competitive threat actually exists.</p>
+<hr />
+<h1>West Shore Home — Competitive Intelligence Brief</h1>
+<p><strong>For: Cameron Blakely, Raptor Roofing | Updated: April 25, 2026</strong><br />
+<strong>Competitor address:</strong> <a href="https://maps.google.com/?q=7531+Miles+Dr,+Indianapolis,+IN+46231">7531 Miles Dr, Indianapolis, IN 46231</a></p>
+<hr />
+<h2><strong>1. Who They Are</strong></h2>
+<p>West Shore Home was founded in 2006 by B.J. Werzyn, a 1999 Penn State graduate, beginning as a window and door replacement business out of a single office in central Pennsylvania.</p>
+<p>The company specializes in bathroom remodeling, bath and shower replacement, home window replacement, entry door replacement, and home flooring installation — all completed in as little as one day.</p>
+<p>West Shore Home now has more than 40 branches nationwide serving over 1 million customers across more than 12,000 zip codes</p>
+<p>, with the Indianapolis branch at 7531 Miles Dr opening in 2022. <strong>Critical note:</strong> West Shore Home does <strong>no roofing</strong> — they are a bath/window/door/flooring brand competing for the same Indianapolis homeowner wallet and review leaderboard, not for the same job type as Raptor.</p>
+<hr />
+<h2><strong>2. Estimated Scale</strong></h2>
+<p>As of early 2025, CEO B.J. Werzyn stated the company operates in 40 markets across 21 states with approximately 3,500 employees.</p>
+<p>ZoomInfo reports revenue of $991.2M</p>
+<p>— approaching $1B nationally. For the <strong>Indianapolis branch specifically</strong>, </p>
+<p>LeadIQ estimated approximately 1,300 employees company-wide as of March 2026</p>
+<p>, with the local branch being a fraction of that. <strong>Confidence: Medium</strong> — national figures are well-sourced; Indianapolis-branch-only headcount is not broken out publicly. Zippia's $5.2M local estimate (<a href="https://www.zippia.com/west-shore-careers-1551488/revenue/">Zippia</a>) likely undercounts a branch of a near-billion-dollar parent.</p>
+<hr />
+<h2><strong>3. Recent Hiring Signals</strong></h2>
+<p>Indeed currently lists 9 West Shore Home jobs specific to Indianapolis, IN.</p>
+<p>Nationally, </p>
+<p>West Shore Home has 390 open jobs on Indeed</p>
+<p>and </p>
+<p>411 open positions on Glassdoor.</p>
+<p>Active role categories include: </p>
+<p>Exterior Remodeling Carpenter (paid training) and Outside Sales Representative (paid training)</p>
+<p>— both Indianapolis-eligible. </p>
+<p>Centrally, their marketing department in Mechanicsburg, PA is hiring a Lead Generation Account Manager to oversee third-party vendor relationships driving traffic for bath, window, and door services</p>
+<p>— a signal of aggressive paid lead-gen scaling. No ops leadership or branch GM roles are specifically listed for Indianapolis at this time.</p>
+<hr />
+<h2><strong>4. Off-Google Presence</strong></h2>
+<ul>
+<li><strong>Google:</strong> 664 reviews, 4.8 stars, 95% owner-response rate (per Cameron's data) — disciplined reputation management.</li>
+<li><strong>Yelp (<a href="https://www.yelp.com/biz/west-shore-home-indianapolis-4">listing</a>):</strong> Active listing at 7531 Miles Dr; no star count visible in public snippet — sparse Yelp engagement vs. Google volume is a classic review-funnel signal.</li>
+<li><strong>Angi/HomeAdvisor:</strong> </li>
+</ul>
+<p>Rated 4.9 out of 5 on Angi for Indianapolis</p>
+<p>— consistent with Google, suggesting real satisfaction, not just funnel manipulation.<br />
+- <strong>PissedConsumer (<a href="https://west-shore-home.pissedconsumer.com/review.html">link</a>):</strong> 211 complaints nationally. </p>
+<p>Recurring themes include aggressive salespeople and warranty disclosure issues.</p>
+<p>One reviewer paid $24,000 for windows and a shower and strongly advised others to avoid the company.</p>
+<ul>
+<li><strong>Facebook (<a href="https://www.facebook.com/WestShoreHomeIndianapolis/">Indianapolis page</a>):</strong> </li>
+</ul>
+<p>149 likes; announced a PGA TOUR partnership with Max Greyserman in February 2025.</p>
+<p>Running national TV/digital ad campaigns (</p>
+<p>including a 60-second "New Year's Flash Sale" spot in January 2025</p>
+<p>).<br />
+- <strong>BBB:</strong> </p>
+<p>BBB Accredited since August 26, 2022</p>
+<p>; Mark Deary listed as Director of Customer Service, B.J. Werzyn as CEO.<br />
+- <strong>Glassdoor:</strong> </p>
+<p>Employees rate West Shore Home 3.1 out of 5 stars based on 495 anonymous reviews</p>
+<p>— a notable internal culture gap vs. the polished customer-facing image.</p>
+<hr />
+<h2><strong>5. SEO and AEO Posture</strong></h2>
+<p>Westshorehome.com has a link base of approximately 420 referring domains and 610 external backlinks</p>
+<p>— a modest but non-trivial national footprint. The site runs <strong>dedicated location pages</strong> for Indianapolis (e.g., <a href="https://westshorehome.com/locations/indianapolis-in/bathroom-remodeling/">westshorehome.com/locations/indianapolis-in/bathroom-remodeling/</a>), with geo-tagged service copy, climate-localized content, and FAQ schema — a well-structured local SEO play. </p>
+<p>West Shore Home recently hired a Chief Data and AI Officer and acquired a software development firm to build proprietary systems including real-time remodel visualization and instant pricing tools</p>
+<p>— meaning their AEO/technical infrastructure is accelerating. </p>
+<p>West Shore Home was named to HousingWire's 2026 Tech100 Real Estate list and received Platinum at the Pinnacle Awards for AI Workflow Orchestration.</p>
+<p>They are not ranking for roofing queries — zero roofing content exists on their site — so there is <strong>no direct SERP collision</strong> with Raptor on roofing keywords.</p>
+<hr />
+<h2><strong>6. Generative Engine Visibility</strong></h2>
+<p>West Shore Home is <strong>not appearing</strong> in AI-generated answers for "best roofers Indianapolis," "top roofing contractor near Greenwood Indiana," "roof replacement Carmel Indiana," or "roofing company Fishers Noblesville Zionsville" — because they do not offer roofing. This is entirely Raptor's territory in generative results. However, for broader "home improvement Indianapolis" or "bathroom remodel Indianapolis" prompts, West Shore Home's national brand scale, Wikipedia presence (<a href="https://en.wikipedia.org/wiki/West_Shore_Home">link</a>), and press coverage (Penn State naming rights, <a href="https://www.businesswire.com/news/home/20250821052944/en/Who-is-West-Shore-Homeand-Why-Is-Their-Logo-Now-on-the-Field-at-Beaver-Stadium">BusinessWire</a>) make them increasingly AI-citable. <strong>Roofing AI queries are an open lane for Raptor with zero West Shore Home interference.</strong></p>
+<hr />
+<h2><strong>7. Strategic Read vs. Raptor</strong></h2>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>West Shore Home</th>
+<th>Raptor Roofing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Google Rating</td>
+<td>4.8 ⭐</td>
+<td><strong>5.0 ⭐</strong> (highest in Indy top 10)</td>
+</tr>
+<tr>
+<td>Review Volume</td>
+<td>664</td>
+<td>664 (tied)</td>
+</tr>
+<tr>
+<td>Response Rate</td>
+<td>95%</td>
+<td>Tracked</td>
+</tr>
+<tr>
+<td>Brand Scale</td>
+<td>National (~$1B revenue)</td>
+<td>Local premium</td>
+</tr>
+<tr>
+<td>Internal Culture</td>
+<td>3.1/5 Glassdoor</td>
+<td>Accountability-first</td>
+</tr>
+<tr>
+<td>Complaint Pattern</td>
+<td>Aggressive sales, warranty surprises</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Service Overlap</td>
+<td><strong>None</strong> (baths/windows/doors)</td>
+<td>Roofing only</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Where they beat Raptor:</strong> National marketing budget, proprietary tech (iPad design app, AI scheduling), TV/PGA Tour sponsorships, and a brand large enough to show up in AI answers for adjacent home services. <strong>Where Raptor beats them:</strong> 5.0 rating, zero outsourcing, no deceptive sales complaints on record, and total ownership of roofing AI/AEO results in Greater Indianapolis. <strong>Most exploitable weakness:</strong> </p>
+<p>Consumer complaints about aggressive salespeople</p>
+<p>and undisclosed warranty terms create a credibility opening — Raptor's "we don't outsource accountability" positioning directly counters the corporate-franchise sales pressure West Shore Home is known for.</p>
+<hr />
+<h2><strong>8. What Raptor Should Watch or Copy</strong></h2>
+<ol>
+<li>
+<p><strong>Dedicated suburb landing pages with climate-localized copy.</strong> West Shore Home runs <a href="https://westshorehome.com/locations/indianapolis-in/bathroom-remodeling/">individual location pages</a> for each service + city combo with Indiana-specific content. Raptor should build equivalent pages for Greenwood, Carmel, Fishers, Noblesville, and Zionsville — targeting roofing AI queries in each suburb before West Shore Home or a roofing franchise does.</p>
+</li>
+<li>
+<p><strong>PGA Tour / sports sponsorship as brand amplifier.</strong> </p>
+</li>
+</ol>
+<p>West Shore Home's February 2025 partnership with PGA TOUR star Max Greyserman</p>
+<p>and their </p>
+<p>$50M naming rights deal at Penn State's Beaver Stadium</p>
+<p>show how they punch above weight in earned media. Cameron should evaluate a local sports or community anchor (e.g., Greenwood Bluefish, Indiana Pacers community tie-in) to generate press-link backlinks that fuel AI citability.</p>
+<ol start="3">
+<li><strong>Monitor their Indianapolis hiring board weekly.</strong> </li>
+</ol>
+<p>ZoomInfo flagged West Shore Home is seeking a Branch General Manager</p>
+<p>nationally. If a GM role posts specifically for Indianapolis, it signals a local expansion push — new services, more aggressive local marketing spend, or a potential roofing adjacency play. Watch <a href="https://careers.westshorehome.com">careers.westshorehome.com</a> and their <a href="https://www.indeed.com/cmp/West-Shore-Home/jobs/l-Indianapolis,-IN">Indeed Indianapolis page</a> for any shift toward exterior services.</p></div>
+  </div>
+  
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="scroll-fade bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+      <h3 class="text-sm font-bold text-navy uppercase tracking-wider mb-4">Review Velocity</h3>
+      <div class="space-y-3 text-sm">
+        <div class="flex justify-between items-baseline">
+          <span class="text-ink-soft">Last 7 days</span>
+          <span class="font-bold text-navy stat-num">+7</span>
+        </div>
+        <div class="flex justify-between items-baseline">
+          <span class="text-ink-soft">Last 30 days</span>
+          <span class="font-bold text-navy stat-num">+47</span>
+        </div>
+        <div class="flex justify-between items-baseline">
+          <span class="text-ink-soft">Last 90 days</span>
+          <span class="font-bold text-navy stat-num">+77</span>
+        </div>
+        <div class="flex justify-between items-baseline pt-2 border-t border-slate-100">
+          <span class="text-ink-soft">Annual pace (90d × 4)</span>
+          <span class="font-bold text-accent-blue stat-num">~308/yr</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-fade bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+      <h3 class="text-sm font-bold text-navy uppercase tracking-wider mb-4">vs Raptor</h3>
+      <div class="space-y-3 text-sm">
+        <div class="flex justify-between items-baseline">
+          <span class="text-ink-soft">Total reviews</span>
+          <span class="font-bold text-emerald-600 stat-num">
+            0
+          </span>
+        </div>
+        <div class="flex justify-between items-baseline">
+          <span class="text-ink-soft">Star rating</span>
+          <span class="font-bold text-emerald-600 stat-num">
+            -0.2
+          </span>
+        </div>
+        <div class="flex justify-between items-baseline">
+          <span class="text-ink-soft">7-day pace</span>
+          <span class="font-bold text-red-600 stat-num">
+            +5
+          </span>
+        </div>
+        <div class="flex justify-between items-baseline pt-2 border-t border-slate-100">
+          <span class="text-ink-soft">Response rate gap</span>
+          <span class="font-bold stat-num">
+            
+              <span class="text-emerald-600">
+                -2pts
+              </span>
+            
+          </span>
+        </div>
+      </div>
+      <p class="text-xs text-ink-soft mt-4 pt-3 border-t border-slate-100">Red = they lead, green = Raptor leads.</p>
+    </div>
+  </div>
+
+</main>
+
+<footer class="max-w-5xl mx-auto px-5 sm:px-8 py-10 mt-8 border-t border-slate-200 text-xs text-ink-soft">
+  <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <a href="../../" class="font-semibold text-navy hover:text-accent-blue">Raptor Review Digest &rarr; Dashboard</a>
+    <div class="text-right">Profile last refreshed April 25, 2026</div>
+  </div>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+document.querySelectorAll('.scroll-fade').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
