@@ -583,6 +583,8 @@ def scrape_review_timeline(page, href):
             'div[role="tab"]:has-text("Reviews")',
             'a[aria-label*="reviews"]',
             'button:has-text("More reviews")',
+            'button[jsaction*="reviewchart"]',
+            'a[href*="/reviews"]',
         ]:
             try:
                 el = page.locator(selector).first
@@ -593,8 +595,10 @@ def scrape_review_timeline(page, href):
             except Exception:
                 continue
         if not clicked:
-            print(f"    reviews tab click failed for {href[:60]}", file=sys.stderr)
-            return timeline
+            # Fallback: don't bail. Some place pages render reviews inline without a tab,
+            # and some show them after we scroll the main panel. We'll proceed with the
+            # extraction and rely on the data-review-id selectors to find anything visible.
+            print(f"    reviews tab click failed for {href[:60]} - trying inline scroll", file=sys.stderr)
         page.wait_for_timeout(2000)
         # Sort by most recent if possible (Google may show by "most relevant" default).
         try:
@@ -608,14 +612,18 @@ def scrape_review_timeline(page, href):
                     page.wait_for_timeout(1500)
         except Exception:
             pass
-        # Scroll the reviews feed to load ~50-100 reviews or until we see >90 day ages.
+        # Scroll the reviews feed AND the main panel to load reviews. Some place pages
+        # don't have the dedicated reviews container — scroll everything.
         scroll_target_js = """
-            const el = document.querySelector('div[role="main"] div.m6QErb.DxyBCb, div.m6QErb.DxyBCb');
-            if (el) { el.scrollBy(0, 1500); }
+            const el = document.querySelector('div[role="main"] div.m6QErb.DxyBCb, div.m6QErb.DxyBCb, div[role="main"] div.m6QErb');
+            if (el) el.scrollBy(0, 1500);
+            const main = document.querySelector('div[role="main"]');
+            if (main) main.scrollBy(0, 1200);
+            window.scrollBy(0, 800);
         """
-        for _ in range(20):
+        for _ in range(22):
             page.evaluate(scroll_target_js)
-            page.wait_for_timeout(500)
+            page.wait_for_timeout(450)
         # Extract review cards via JS. Use data-review-id as the canonical wrapper to
         # avoid double-counting when a review has nested divs matching other selectors.
         cards_data = page.evaluate("""() => {
