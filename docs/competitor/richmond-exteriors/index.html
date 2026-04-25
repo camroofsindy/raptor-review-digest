@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Richmond Exteriors | Raptor Review Digest</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23172e55'/%3E%3Ctext x='50' y='62' font-size='40' text-anchor='middle' fill='%233ae20a' font-family='sans-serif' font-weight='700'%3ER%3C/text%3E%3C/svg%3E">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    colors: {
+      navy: { DEFAULT: '#172e55', deep: '#0d1d3a', light: '#2a4880' },
+      accent: { green: '#3ae20a', blue: '#1ac6ff' },
+      ink: { DEFAULT: '#172e55', soft: '#4a5568', light: '#9aa5b8' },
+    },
+    fontFamily: { sans: ['Ouma Latin VF', 'Inter', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'] },
+  }},
+};
+</script>
+<style>
+  body { font-feature-settings: "ss01"; }
+  .stat-num { font-variant-numeric: tabular-nums; }
+  .ai-prose h1, .ai-prose h2, .ai-prose h3, .ai-prose h4 { color: #172e55; font-weight: 700; margin: 1em 0 0.4em; line-height: 1.2; }
+  .ai-prose h1 { font-size: 1.25rem; } .ai-prose h2 { font-size: 1.125rem; } .ai-prose h3 { font-size: 1rem; }
+  .ai-prose h4 { font-size: 0.95rem; color: #4a5568; text-transform: uppercase; letter-spacing: 0.04em; }
+  .ai-prose p { margin: 0.6em 0; } .ai-prose strong { color: #172e55; font-weight: 700; }
+  .ai-prose em { color: #4a5568; }
+  .ai-prose a { color: #1ac6ff; border-bottom: 1px solid rgba(26, 198, 255, 0.3); }
+  .ai-prose ul, .ai-prose ol { margin: 0.6em 0; padding-left: 1.4em; }
+  .ai-prose li { margin: 0.3em 0; }
+  .ai-prose hr { border: none; border-top: 1px solid #e3e7ee; margin: 1em 0; }
+  .gradient-text { background: linear-gradient(135deg, #3ae20a 0%, #1ac6ff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .delta-up { color: #059669; font-weight: 700; }
+  .scroll-fade { opacity: 0; transform: translateY(20px); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+  .scroll-fade.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body class="bg-slate-50 text-ink antialiased min-h-screen">
+
+<!-- Hero -->
+<section class="bg-gradient-to-br from-navy via-navy-deep to-navy text-white relative overflow-hidden">
+  <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 20% 50%, #3ae20a 0%, transparent 40%), radial-gradient(circle at 80% 30%, #1ac6ff 0%, transparent 35%);"></div>
+  <div class="max-w-5xl mx-auto px-5 sm:px-8 py-8 relative z-10">
+    <a href="../../" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-accent-green hover:text-accent-blue mb-6 transition-colors">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+      Back to dashboard
+    </a>
+    <div class="flex items-start justify-between flex-wrap gap-4 mb-4">
+      <div>
+        <div class="text-xs uppercase tracking-widest text-accent-green font-bold mb-1">Competitor Profile</div>
+        <h1 class="text-3xl sm:text-5xl font-bold tracking-tight">Richmond Exteriors</h1>
+        <p class="text-white/60 text-sm mt-2">3510 S Keystone Ave, Indianapolis, IN 46227</p>
+      </div>
+      <div class="text-right">
+        <div class="text-xs uppercase tracking-widest text-white/60">Volume Rank</div>
+        <div class="text-3xl font-bold gradient-text">#12</div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8">
+      <div class="bg-white/10 backdrop-blur border border-accent-green/20 rounded-xl p-4">
+        <div class="text-2xl sm:text-3xl font-bold text-accent-green stat-num">610</div>
+        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">Total Reviews</div>
+      </div>
+      <div class="bg-white/10 backdrop-blur border border-accent-green/20 rounded-xl p-4">
+        <div class="text-2xl sm:text-3xl font-bold text-accent-green stat-num">4.5</div>
+        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">Star Rating</div>
+      </div>
+      <div class="bg-white/10 backdrop-blur border border-accent-blue/30 rounded-xl p-4">
+        <div class="text-2xl sm:text-3xl font-bold text-accent-blue stat-num">+2</div>
+        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">This Week</div>
+      </div>
+      <div class="bg-white/10 backdrop-blur border border-accent-blue/30 rounded-xl p-4">
+        <div class="text-2xl sm:text-3xl font-bold text-accent-blue stat-num">+14</div>
+        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">Last 30 Days</div>
+      </div>
+    </div>
+
+    <div class="mt-4 flex items-center gap-4 text-sm text-white/60 flex-wrap">
+      <span><span class="text-white font-semibold">86%</span> response rate</span>
+      <span>+<span class="text-white font-semibold">19</span> in last 90 days</span>
+      <span class="text-white/40">Refreshed April 25, 2026</span>
+    </div>
+  </div>
+</section>
+
+<main class="max-w-5xl mx-auto px-5 sm:px-8 py-8 space-y-6">
+
+  
+  <div class="scroll-fade bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-lg font-bold text-navy uppercase tracking-wider">Strategic Read</h2>
+      <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-slate-100 px-2 py-1 rounded">Live AI Research</span>
+    </div>
+    <div class="ai-prose text-sm sm:text-base"><p>Here is the full competitive intelligence brief for Cameron Blakely, refreshed for <strong>Thursday, April 25, 2026</strong>:</p>
+<hr />
+<h1>🦅 Raptor Roofing — Competitor Intelligence Brief</h1>
+<p><strong>Target:</strong> Richmond Exteriors | <strong>Updated:</strong> Thursday, April 25, 2026<br />
+<strong>Dashboard refresh cycle:</strong> Every Tuesday &amp; Thursday</p>
+<hr />
+<h2><strong>1. Who They Are</strong></h2>
+<p>Richmond Exteriors is a family-owned business founded in 1987 by William F. Richmond II, originally operating as Richmond Guttering.</p>
+<p>Now a second-generation, family-owned and operated exterior remodeling company, they serve Indianapolis, IN homeowners and business owners with a full menu of exterior services.</p>
+<p>They specialize in gutters, roofing, siding, soffits, awnings, replacement windows, doors, fencing, railing, decking, insulation, and custom copper work — serving both residential clients in Central Indiana and commercial clients throughout the Midwest.</p>
+<p>Their domain is <a href="https://www.richmondguttering.com">richmondguttering.com</a> — notably, the URL still references "guttering," a legacy brand signal that causes mild identity confusion in searches.</p>
+<hr />
+<h2><strong>2. Estimated Scale</strong></h2>
+<p>RocketReach estimates Richmond Exteriors at approximately <strong>32 employees</strong> and <strong>$25.2 million in annual revenue</strong>.</p>
+<p>That said, </p>
+<p>ZoomInfo records indicate that Richmond Guttering received an SBA PPP loan of <strong>$686,499</strong>, with the retention of <strong>65 jobs</strong></p>
+<p>cited at the time of that filing — suggesting peak headcount has been higher. <strong>Confidence: medium.</strong> The RocketReach figure is the more current estimate; the PPP data reflects a 2020 snapshot and likely includes subcontractors.</p>
+<hr />
+<h2><strong>3. Recent Hiring Signals</strong></h2>
+<p>No active job postings were found on Indeed, LinkedIn, or ZipRecruiter as of this refresh. </p>
+<p>Their careers page at <a href="https://www.richmondguttering.com/careers/">richmondguttering.com/careers</a> lists service areas including Avon, Brownsburg, Carmel, Fishers, and Greenwood</p>
+<p>but shows no open roles currently. </p>
+<p>A prior listing on Indeed sought a full-time <strong>Commercial Project Estimator</strong> for their Indianapolis office</p>
+<p>, flagging commercial expansion ambitions, but this role is not currently live. <strong>No active hiring signals in the last 30 days.</strong> Watch for sales or estimator roles — those would signal a push into Raptor's territory south of Indianapolis.</p>
+<hr />
+<h2><strong>4. Off-Google Presence</strong></h2>
+<p>The cross-platform review picture is sharply mixed — a classic review-funneling pattern:</p>
+<ul>
+<li><strong>Google:</strong> 610 reviews at 4.5 stars <em>(per dashboard data)</em></li>
+<li><strong>Yelp:</strong> </li>
+</ul>
+<p>Active listing at 3510 S Keystone Ave with 23 reviews</p>
+<p>— Yelp rating is not prominently displayed, and the most visible public Q&amp;A on the page is a scathing complaint about an incomplete job.<br />
+- <strong>Angi:</strong> </p>
+<p>Rated <strong>2.9 out of 5</strong></p>
+<p>, with </p>
+<p>at least one Nov. 2025 review citing a James Hardie siding job that required legal action and a $65K settlement.</p>
+<ul>
+<li><strong>HomeAdvisor:</strong> </li>
+</ul>
+<p>Rated <strong>3.3 out of 5</strong></p>
+<p>, with multiple complaints about poor follow-through and missed scheduling windows.<br />
+- <strong>YellowPages:</strong> </p>
+<p>Rated <strong>2.5 stars</strong></p>
+<p>, with complaints including improper shingle installation and demands for payment to fix their own work.<br />
+- <strong>BBB:</strong> </p>
+<p>BBB Accredited since 9/19/1994.</p>
+<p>Leadership listed: </p>
+<p>William Richmond (President), Evan Allen (Sales Manager), and Jerrad Richmond (Sales &amp; Marketing Manager).</p>
+<ul>
+<li><strong>Facebook:</strong> Active page at <a href="https://www.facebook.com/IndianapolisExteriors/">facebook.com/IndianapolisExteriors</a>. </li>
+</ul>
+<p>ZoomInfo confirms they are running Facebook Web Custom Audiences and Facebook Pixel</p>
+<p>— meaning paid Facebook ad retargeting is active.<br />
+- <strong>Instagram:</strong> </p>
+<p>253 followers, 215 posts at @richmond_exteriors</p>
+<p>— thin social following relative to their volume.</p>
+<p><strong>⚠️ Key Discrepancy:</strong> 4.5 stars on Google vs. 2.5–2.9 on YP/Angi/HomeAdvisor = textbook review-funneling. Their Google review velocity (only 19 in the last 90 days) is also slowing.</p>
+<hr />
+<h2><strong>5. SEO and AEO Posture</strong></h2>
+<p>Richmond's domain (<a href="https://www.richmondguttering.com">richmondguttering.com</a>) is a mature WordPress site with strong on-page keyword density. </p>
+<p>Their roofing service page repeats "Indianapolis roof" several times in the body copy</p>
+<p>, targeting high-volume local queries. They maintain dedicated service area pages </p>
+<p>for Avon, Carmel, Fishers, Greenwood, Noblesville, Westfield, and 20+ other suburbs</p>
+<p>— a well-structured geo-landing-page strategy Raptor should counter with its own suburb pages. </p>
+<p>Their tech stack includes Facebook Pixel, WordPress, and reCAPTCHA</p>
+<p>, which is a baseline setup with no confirmed schema markup or structured data signals surfaced. They have directory citations across Angi, HomeAdvisor, BBB, and BlueBook. Their legacy domain age (since 1987 brand history) gives them organic authority, but their split URL identity (company name ≠ domain) is a vulnerability.</p>
+<hr />
+<h2><strong>6. Generative Engine Visibility</strong></h2>
+<p>A search for AI-generated recommendations for "best roofers Indianapolis," "top roofing contractor near Greenwood Indiana," "roof replacement Carmel Indiana," and "roofing company Fishers Noblesville Zionsville" returned <strong>no specific citation of Richmond Exteriors by name</strong> in AI engine outputs (ChatGPT, Gemini, Claude). </p>
+<p>With over 800 million monthly active users, ChatGPT recommends local roofing companies primarily based on specific recent project documentation demonstrated on the company's website</p>
+<p>— a content format Richmond is not visibly using. </p>
+<p>Answer Engine Optimization (AEO) helps roofing companies appear in LLM answers, and AI search traffic is reportedly up 527% over the past year.</p>
+<p><strong>This is a wide-open lane for Raptor.</strong> Neither Richmond nor most local Indy competitors appear to be actively optimizing for AI citation. Cameron should act first.</p>
+<hr />
+<h2><strong>7. Strategic Read vs. Raptor</strong></h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>Richmond Exteriors</strong></th>
+<th><strong>Raptor Roofing</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Google Reviews</td>
+<td>610 at 4.5 ⭐</td>
+<td><strong>664 at 5.0 ⭐ — wins on both</strong></td>
+</tr>
+<tr>
+<td>Brand Longevity</td>
+<td>Founded 1987, 38 years</td>
+<td>Newer, but momentum-driven</td>
+</tr>
+<tr>
+<td>Service Breadth</td>
+<td>Full exterior (gutters, fence, windows, siding)</td>
+<td>Roofing-focused</td>
+</tr>
+<tr>
+<td>Off-Google Reputation</td>
+<td>2.5–2.9 on YP/Angi — <strong>serious liability</strong></td>
+<td>Clean</td>
+</tr>
+<tr>
+<td>Review Velocity (90 days)</td>
+<td>19 reviews</td>
+<td>Higher (per Raptor's growth)</td>
+</tr>
+<tr>
+<td>Owner Response Rate</td>
+<td>0.86</td>
+<td>Benchmark to beat</td>
+</tr>
+<tr>
+<td>AI Engine Presence</td>
+<td>Not cited</td>
+<td>Not yet cited — equal footing</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Most exploitable weakness:</strong> Richmond's off-Google reputation collapse (2.5–2.9 stars on Angi/YP vs. their 4.5 Google rating) exposes them to any competitor who wins the Angi/HomeAdvisor comparison — Raptor should ensure its Angi profile is spotless and promoted.</p>
+<hr />
+<h2><strong>8. What Raptor Should Watch or Copy</strong></h2>
+<ol>
+<li><strong>Geographic landing page strategy.</strong> </li>
+</ol>
+<p>Richmond maintains individual service area pages for 20+ Indianapolis suburbs including Greenwood, Carmel, Fishers, Noblesville, and Westfield</p>
+<p>. Cameron should audit whether Raptor has comparable suburb-specific pages — if not, build them now with Raptor's 5.0-star proof points embedded.</p>
+<ol start="2">
+<li><strong>Financing as a conversion lever.</strong> </li>
+</ol>
+<p>Richmond actively promotes "no payments, no interest for 12 months" and "$89/month" payment options on their homepage</p>
+<p>. If Raptor isn't matching this offer visibility in ads and on landing pages, it's losing fence-sitters to Richmond's pitch.</p>
+<ol start="3">
+<li><strong>Own the AEO gap before Richmond does.</strong> </li>
+</ol>
+<p>Tools like DataPins allow roofing companies to showcase recent jobs directly on their website so that AI platforms like Gemini, Claude, and ChatGPT can be trained on specific jobs</p>
+<p>. Richmond is not visibly using this. Cameron should post geo-tagged, job-specific content (e.g., "Roof replacement in Greenwood, IN — April 2026") now to establish AI citation priority in the Indy market before this becomes standard practice.</p>
+<hr />
+<p><em>Sources: <a href="https://www.richmondguttering.com">richmondguttering.com</a> · <a href="https://rocketreach.co/richmond-exteriors-profile_b45619a2fca8be83">RocketReach</a> · <a href="https://www.zoominfo.com/c/richmond-guttering-co/369130556">ZoomInfo</a> · <a href="https://www.bbb.org/us/in/indianapolis/profile/roofing-contractors/richmond-exteriors-0382-3001323">BBB</a> · <a href="https://www.yelp.com/biz/richmond-exteriors-indianapolis-3">Yelp</a> · <a href="https://www.angi.com/companylist/us/in/indianapolis/richmond-exteriors-reviews-1.htm">Angi</a> · <a href="https://www.homeadvisor.com/rated.RichmondExteriors.54348699.html">HomeAdvisor</a> · <a href="https://www.yellowpages.com/indianapolis-in/mip/richmond-exteriors-465217325">YellowPages</a> · <a href="https://www.linkedin.com/company/richmond-exteriors">LinkedIn</a> · <a href="https://www.indeed.com/cmp/Richmond-Exteriors">Indeed</a> · <a href="https://www.instagram.com/richmond_exteriors/">Instagram @richmond_exteriors</a> · <a href="https://www.roofingwebmasters.com/ai-seo-for-roofers/">Roofing Webmasters AEO Guide</a></em></p></div>
+  </div>
+  
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="scroll-fade bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+      <h3 class="text-sm font-bold text-navy uppercase tracking-wider mb-4">Review Velocity</h3>
+      <div class="space-y-3 text-sm">
+        <div class="flex justify-between items-baseline">
+          <span class="text-ink-soft">Last 7 days</span>
+          <span class="font-bold text-navy stat-num">+2</span>
+        </div>
+        <div class="flex justify-between items-baseline">
+          <span class="text-ink-soft">Last 30 days</span>
+          <span class="font-bold text-navy stat-num">+14</span>
+        </div>
+        <div class="flex justify-between items-baseline">
+          <span class="text-ink-soft">Last 90 days</span>
+          <span class="font-bold text-navy stat-num">+19</span>
+        </div>
+        <div class="flex justify-between items-baseline pt-2 border-t border-slate-100">
+          <span class="text-ink-soft">Annual pace (90d × 4)</span>
+          <span class="font-bold text-accent-blue stat-num">~76/yr</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-fade bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+      <h3 class="text-sm font-bold text-navy uppercase tracking-wider mb-4">vs Raptor</h3>
+      <div class="space-y-3 text-sm">
+        <div class="flex justify-between items-baseline">
+          <span class="text-ink-soft">Total reviews</span>
+          <span class="font-bold text-emerald-600 stat-num">
+            -54
+          </span>
+        </div>
+        <div class="flex justify-between items-baseline">
+          <span class="text-ink-soft">Star rating</span>
+          <span class="font-bold text-emerald-600 stat-num">
+            -0.5
+          </span>
+        </div>
+        <div class="flex justify-between items-baseline">
+          <span class="text-ink-soft">7-day pace</span>
+          <span class="font-bold text-emerald-600 stat-num">
+            +0
+          </span>
+        </div>
+        <div class="flex justify-between items-baseline pt-2 border-t border-slate-100">
+          <span class="text-ink-soft">Response rate gap</span>
+          <span class="font-bold stat-num">
+            
+              <span class="text-emerald-600">
+                -11pts
+              </span>
+            
+          </span>
+        </div>
+      </div>
+      <p class="text-xs text-ink-soft mt-4 pt-3 border-t border-slate-100">Red = they lead, green = Raptor leads.</p>
+    </div>
+  </div>
+
+</main>
+
+<footer class="max-w-5xl mx-auto px-5 sm:px-8 py-10 mt-8 border-t border-slate-200 text-xs text-ink-soft">
+  <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <a href="../../" class="font-semibold text-navy hover:text-accent-blue">Raptor Review Digest &rarr; Dashboard</a>
+    <div class="text-right">Profile last refreshed April 25, 2026</div>
+  </div>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+document.querySelectorAll('.scroll-fade').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

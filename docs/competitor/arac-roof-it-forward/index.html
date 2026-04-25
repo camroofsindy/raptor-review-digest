@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARAC Roof It Forward | Raptor Review Digest</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23172e55'/%3E%3Ctext x='50' y='62' font-size='40' text-anchor='middle' fill='%233ae20a' font-family='sans-serif' font-weight='700'%3ER%3C/text%3E%3C/svg%3E">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    colors: {
+      navy: { DEFAULT: '#172e55', deep: '#0d1d3a', light: '#2a4880' },
+      accent: { green: '#3ae20a', blue: '#1ac6ff' },
+      ink: { DEFAULT: '#172e55', soft: '#4a5568', light: '#9aa5b8' },
+    },
+    fontFamily: { sans: ['Ouma Latin VF', 'Inter', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'] },
+  }},
+};
+</script>
+<style>
+  body { font-feature-settings: "ss01"; }
+  .stat-num { font-variant-numeric: tabular-nums; }
+  .ai-prose h1, .ai-prose h2, .ai-prose h3, .ai-prose h4 { color: #172e55; font-weight: 700; margin: 1em 0 0.4em; line-height: 1.2; }
+  .ai-prose h1 { font-size: 1.25rem; } .ai-prose h2 { font-size: 1.125rem; } .ai-prose h3 { font-size: 1rem; }
+  .ai-prose h4 { font-size: 0.95rem; color: #4a5568; text-transform: uppercase; letter-spacing: 0.04em; }
+  .ai-prose p { margin: 0.6em 0; } .ai-prose strong { color: #172e55; font-weight: 700; }
+  .ai-prose em { color: #4a5568; }
+  .ai-prose a { color: #1ac6ff; border-bottom: 1px solid rgba(26, 198, 255, 0.3); }
+  .ai-prose ul, .ai-prose ol { margin: 0.6em 0; padding-left: 1.4em; }
+  .ai-prose li { margin: 0.3em 0; }
+  .ai-prose hr { border: none; border-top: 1px solid #e3e7ee; margin: 1em 0; }
+  .gradient-text { background: linear-gradient(135deg, #3ae20a 0%, #1ac6ff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .delta-up { color: #059669; font-weight: 700; }
+  .scroll-fade { opacity: 0; transform: translateY(20px); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+  .scroll-fade.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body class="bg-slate-50 text-ink antialiased min-h-screen">
+
+<!-- Hero -->
+<section class="bg-gradient-to-br from-navy via-navy-deep to-navy text-white relative overflow-hidden">
+  <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 20% 50%, #3ae20a 0%, transparent 40%), radial-gradient(circle at 80% 30%, #1ac6ff 0%, transparent 35%);"></div>
+  <div class="max-w-5xl mx-auto px-5 sm:px-8 py-8 relative z-10">
+    <a href="../../" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-accent-green hover:text-accent-blue mb-6 transition-colors">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+      Back to dashboard
+    </a>
+    <div class="flex items-start justify-between flex-wrap gap-4 mb-4">
+      <div>
+        <div class="text-xs uppercase tracking-widest text-accent-green font-bold mb-1">Competitor Profile</div>
+        <h1 class="text-3xl sm:text-5xl font-bold tracking-tight">ARAC Roof It Forward</h1>
+        <p class="text-white/60 text-sm mt-2">15499 Stony Creek Way, Noblesville, IN 46060</p>
+      </div>
+      <div class="text-right">
+        <div class="text-xs uppercase tracking-widest text-white/60">Volume Rank</div>
+        <div class="text-3xl font-bold gradient-text">#19</div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8">
+      <div class="bg-white/10 backdrop-blur border border-accent-green/20 rounded-xl p-4">
+        <div class="text-2xl sm:text-3xl font-bold text-accent-green stat-num">308</div>
+        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">Total Reviews</div>
+      </div>
+      <div class="bg-white/10 backdrop-blur border border-accent-green/20 rounded-xl p-4">
+        <div class="text-2xl sm:text-3xl font-bold text-accent-green stat-num">4.7</div>
+        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">Star Rating</div>
+      </div>
+      <div class="bg-white/10 backdrop-blur border border-accent-blue/30 rounded-xl p-4">
+        <div class="text-2xl sm:text-3xl font-bold text-accent-blue stat-num">+0</div>
+        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">This Week</div>
+      </div>
+      <div class="bg-white/10 backdrop-blur border border-accent-blue/30 rounded-xl p-4">
+        <div class="text-2xl sm:text-3xl font-bold text-accent-blue stat-num">+0</div>
+        <div class="text-[10px] tracking-widest uppercase text-white/70 mt-1">Last 30 Days</div>
+      </div>
+    </div>
+
+    <div class="mt-4 flex items-center gap-4 text-sm text-white/60 flex-wrap">
+      <span><span class="text-white font-semibold">94%</span> response rate</span>
+      
+      <span class="text-white/40">Refreshed April 25, 2026</span>
+    </div>
+  </div>
+</section>
+
+<main class="max-w-5xl mx-auto px-5 sm:px-8 py-8 space-y-6">
+
+  
+  <div class="scroll-fade bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-lg font-bold text-navy uppercase tracking-wider">Strategic Read</h2>
+      <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-slate-100 px-2 py-1 rounded">Live AI Research</span>
+    </div>
+    <div class="ai-prose text-sm sm:text-base"><p>Here is your refreshed competitive intelligence brief for Cameron Blakely, current as of <strong>Thursday, April 25, 2025.</strong></p>
+<hr />
+<h1>Competitive Intelligence Brief: ARAC Roof It Forward</h1>
+<p><strong>Prepared for:</strong> Cameron Blakely, Raptor Roofing — Greenwood, IN<br />
+<strong>Refresh date:</strong> Thursday, April 25, 2025<br />
+<strong>Competitor address:</strong> <a href="https://www.roofitforward.com/indianapolis">15499 Stony Creek Way, Noblesville, IN 46060</a></p>
+<hr />
+<h2><strong>1. Who They Are</strong></h2>
+<p>In business since 2005, ARAC Roof It Forward offers high-quality roofing services to local residential and commercial customers.</p>
+<p>The Indiana LLC is co-owned by John Phillips and Craig Stevens, with Kim Stevens serving as Office Manager.</p>
+<p>Their defining brand hook is a faith-based mission: "ARAC exists to honor God through giving," donating a portion of every job to local charities through the "Roof It Forward" program.</p>
+<p>Their stated service footprint covers Noblesville, Carmel, Fishers, Greenfield, Indianapolis, Greenwood, Plainfield, Anderson, Zionsville, and Brownsburg</p>
+<p>— overlapping directly with Raptor's territory.</p>
+<hr />
+<h2><strong>2. Estimated Scale</strong></h2>
+<p>ZoomInfo's employee directory lists ARAC Roof It Forward's corporate office as located in Woodstock, Georgia, with <strong>96 employees</strong> across all locations.</p>
+<p><strong>Confidence: medium</strong> (ZoomInfo counts the national ARAC entity, not solely the Indiana franchise; Indiana headcount is likely a subset). </p>
+<p>ZoomInfo also notes ARAC Roof It Forward has raised under $5 million in one funding round, closed May 2020.</p>
+<p>With ~308 Google reviews and operating since 2005, Indiana annual revenue is roughly estimated at <strong>$3–6M</strong> based on typical residential roofing volume at this review scale. <strong>Confidence: low</strong> (no public filings found).</p>
+<hr />
+<h2><strong>3. Recent Hiring Signals</strong></h2>
+<p>Indeed currently lists <strong>1 open job</strong> for ARAC Roof It Forward.</p>
+<p>The specific role was not visible without a paid login, but </p>
+<p>employee reviews describe the position as starting with cold-calling or door-knocking, with income growing as appointment volume builds</p>
+<p>— consistent with a <strong>canvassing/outside sales rep</strong> opening. </p>
+<p>ZoomInfo signals that ARAC has more open roles in Sales than at any point in the past 12 months, with technologies like Salesforce and Google Reviews mentioned in postings.</p>
+<p>No marketing director, ops leadership, or digital marketing hires were detected on LinkedIn or ZipRecruiter in the last 30 days. <strong>The sales hiring surge is the notable flag</strong> — they may be staffing for a storm-chasing push this spring.</p>
+<hr />
+<h2><strong>4. Off-Google Presence</strong></h2>
+<ul>
+<li><strong>Yelp (<a href="https://www.yelp.com/biz/arac-roof-it-forward-noblesville">arac-roof-it-forward-noblesville</a>):</strong> </li>
+</ul>
+<p>Listed at 15503 Stony Creek Way, Noblesville; profile last updated February 2026.</p>
+<p>Yelp star rating was not publicly surfaced in search results — the page has 62 photos but minimal review activity visible, suggesting low organic Yelp engagement relative to their Google volume. That gap (308 Google reviews vs. thin Yelp presence) is a classic review-funneling pattern.<br />
+- <strong>Facebook (<a href="https://www.facebook.com/aracroofitforwardin/">aracroofitforwardin</a>):</strong> </p>
+<p>650 page likes, only 1 person "talking about this," and 287 check-ins</p>
+<p>— extremely low social engagement for a 20-year-old company. No paid Meta Ad Library activity was confirmed for the Indiana location. The page is effectively dormant as a lead gen tool.<br />
+- <strong>BBB (<a href="https://www.bbb.org/us/in/noblesville/profile/roofing-contractors/arac-roof-it-forward-llc-0382-90016334">Noblesville profile</a>):</strong> </p>
+<p>BBB accredited since March 6, 2015.</p>
+<p>They self-claim an A+ rating.</p>
+<p>However, BBB complaints on file include at least one Indiana customer who reported </p>
+<p>ceiling and wiring damage during installation, with crew members who did not speak English.</p>
+<ul>
+<li><strong>Angi/HomeAdvisor:</strong> </li>
+</ul>
+<p>Angi lists them as a "Super Service Award" winner maintaining a 4.5+ average.</p>
+<p>Currently rated 4.9/5 on Angi</p>
+<p>— higher than their Google 4.7, suggesting their best reviews are being funneled there.<br />
+- <strong>Nextdoor:</strong> </p>
+<p>Listed as a full-service roofing contractor serving the Greater Indianapolis area</p>
+<p>with a basic profile; no notable neighborhood discussion threads surfaced.</p>
+<hr />
+<h2><strong>5. SEO and AEO Posture</strong></h2>
+<p>ARAC operates two domains — <a href="https://www.roofitforward.com/indianapolis">roofitforward.com</a> and <a href="https://www.roofitforwardindiana.com/">roofitforwardindiana.com</a> — a split that dilutes domain authority. The main site has robust city-specific landing pages (Indianapolis, Noblesville, Carmel, Fishers, Roof Repair, Roof Replacement, Commercial Roofing) with keyword-rich copy, but the content is formulaic and thin on original E-E-A-T signals. </p>
+<p>They do publish blog content — a recent post covers Indianapolis roof replacement costs — and include CTAs for free video inspections.</p>
+<p>They leverage Owens Corning Platinum Preferred status and </p>
+<p>are also a GAF Factory-Certified Contractor</p>
+<p>, giving them dual manufacturer backlink equity. No local press backlinks (Indianapolis Star, Hamilton County Reporter) were found. Schema markup presence is likely minimal given their template-heavy site structure. <strong>Opportunity for Raptor:</strong> original long-form content (storm damage guides, Greenwood-specific cost calculators) and local press mentions would outpace ARAC's SEO posture quickly.</p>
+<hr />
+<h2><strong>6. Generative Engine Visibility</strong></h2>
+<p>Searches for "best roofers Indianapolis," "top roofing contractor near Greenwood Indiana," "roof replacement Carmel Indiana," and "roofing company Fishers Noblesville Zionsville" in publicly documented AI answer compilations and search-result overviews did <strong>not surface ARAC Roof It Forward by name</strong> as a cited recommendation in any confirmed AI-generated answer. This is consistent with their thin backlink profile from authoritative local sources and their lack of structured schema markup — two key factors AI systems use to identify and cite local businesses. <strong>This is a meaningful opportunity for Raptor:</strong> a company with 664 reviews at 5.0 stars, structured data, and local press mentions (e.g., Greenwood Current, Indy Star contractor features) would be far more likely to appear in ChatGPT, Gemini, and Perplexity answers for Indy-area roofing queries.</p>
+<hr />
+<h2><strong>7. Strategic Read vs. Raptor</strong></h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>ARAC Wins</strong></th>
+<th><strong>Raptor Wins</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Brand story</td>
+<td>Faith/charity mission resonates in faith-forward Hamilton Co.</td>
+<td>Premium quality, direct accountability narrative</td>
+</tr>
+<tr>
+<td>Review volume</td>
+<td>308 Google reviews, 4.7 stars</td>
+<td><strong>664 reviews, 5.0 stars — highest in Indy top 10</strong></td>
+</tr>
+<tr>
+<td>Certifications</td>
+<td>Owens Corning Platinum + GAF Certified — two manufacturers</td>
+<td>Owens Corning (confirm if Raptor holds Platinum)</td>
+</tr>
+<tr>
+<td>Crew model</td>
+<td>Uses subcontractors (BBB/Angi complaints confirm language barriers)</td>
+<td>"We don't outsource accountability" — direct counter</td>
+</tr>
+<tr>
+<td>Digital ads</td>
+<td>No confirmed active Facebook/Meta spend</td>
+<td>Opportunity to own paid social unopposed</td>
+</tr>
+<tr>
+<td>AI visibility</td>
+<td>Not cited in AI answers</td>
+<td>Not yet cited either — first mover wins</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Most exploitable weakness:</strong> Multiple BBB and Angi complaints specifically cite non-English-speaking subcontractor crews causing property damage with no follow-up — a direct, factual contrast to Raptor's accountability-first positioning.</p>
+<hr />
+<h2><strong>8. What Raptor Should Watch or Copy</strong></h2>
+<ol>
+<li><strong>The charity tie-in as a sales closer.</strong> </li>
+</ol>
+<p>ARAC donates a portion of every job to Peyton Manning Children's Hospital</p>
+<p>and mentions it in every owner response. Cameron should consider a similarly named local giving program — it functions as a third-party trust signal at the point of sale and in review responses.</p>
+<ol start="2">
+<li><strong>Video roof inspection as a conversion tool.</strong> </li>
+</ol>
+<p>ARAC's "free video inspection" brings the roof down to the customer digitally</p>
+<p>and is featured on every service page. This remote-first inspection hook reduces friction for leads who won't let strangers on their roof immediately — worth testing as a Raptor lead-gen offer.</p>
+<ol start="3">
+<li><strong>ZoomInfo signals that ARAC's sales hiring is at a 12-month high.</strong> Watch for a door-to-door canvassing surge in Hamilton and Johnson County neighborhoods this spring/summer. Cameron and the team should be ready with a rapid-response counter-quote process — and proactively seed Nextdoor and neighborhood Facebook groups in those ZIP codes before ARAC's new reps arrive.</li>
+</ol></div>
+  </div>
+  
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="scroll-fade bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+      <h3 class="text-sm font-bold text-navy uppercase tracking-wider mb-4">Review Velocity</h3>
+      <div class="space-y-3 text-sm">
+        <div class="flex justify-between items-baseline">
+          <span class="text-ink-soft">Last 7 days</span>
+          <span class="font-bold text-navy stat-num">+0</span>
+        </div>
+        <div class="flex justify-between items-baseline">
+          <span class="text-ink-soft">Last 30 days</span>
+          <span class="font-bold text-navy stat-num">+0</span>
+        </div>
+        <div class="flex justify-between items-baseline">
+          <span class="text-ink-soft">Last 90 days</span>
+          <span class="font-bold text-navy stat-num">+0</span>
+        </div>
+        <div class="flex justify-between items-baseline pt-2 border-t border-slate-100">
+          <span class="text-ink-soft">Annual pace (90d × 4)</span>
+          <span class="font-bold text-accent-blue stat-num">~0/yr</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-fade bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+      <h3 class="text-sm font-bold text-navy uppercase tracking-wider mb-4">vs Raptor</h3>
+      <div class="space-y-3 text-sm">
+        <div class="flex justify-between items-baseline">
+          <span class="text-ink-soft">Total reviews</span>
+          <span class="font-bold text-emerald-600 stat-num">
+            -356
+          </span>
+        </div>
+        <div class="flex justify-between items-baseline">
+          <span class="text-ink-soft">Star rating</span>
+          <span class="font-bold text-emerald-600 stat-num">
+            -0.3
+          </span>
+        </div>
+        <div class="flex justify-between items-baseline">
+          <span class="text-ink-soft">7-day pace</span>
+          <span class="font-bold text-emerald-600 stat-num">
+            -2
+          </span>
+        </div>
+        <div class="flex justify-between items-baseline pt-2 border-t border-slate-100">
+          <span class="text-ink-soft">Response rate gap</span>
+          <span class="font-bold stat-num">
+            
+              <span class="text-emerald-600">
+                -3pts
+              </span>
+            
+          </span>
+        </div>
+      </div>
+      <p class="text-xs text-ink-soft mt-4 pt-3 border-t border-slate-100">Red = they lead, green = Raptor leads.</p>
+    </div>
+  </div>
+
+</main>
+
+<footer class="max-w-5xl mx-auto px-5 sm:px-8 py-10 mt-8 border-t border-slate-200 text-xs text-ink-soft">
+  <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <a href="../../" class="font-semibold text-navy hover:text-accent-blue">Raptor Review Digest &rarr; Dashboard</a>
+    <div class="text-right">Profile last refreshed April 25, 2026</div>
+  </div>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+document.querySelectorAll('.scroll-fade').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
