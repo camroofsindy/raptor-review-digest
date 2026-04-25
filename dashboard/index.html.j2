@@ -130,11 +130,11 @@ tailwind.config = {
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <div class="scroll-fade bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
         <h3 class="text-sm font-bold text-navy uppercase tracking-wider mb-4">Biggest Gainers This Week</h3>
-        <canvas id="gainers-chart" height="200"></canvas>
+        <div class="relative h-64 sm:h-72"><canvas id="gainers-chart"></canvas></div>
       </div>
       <div class="scroll-fade bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
         <h3 class="text-sm font-bold text-navy uppercase tracking-wider mb-4">Velocity vs Volume</h3>
-        <canvas id="scatter-chart" height="200"></canvas>
+        <div class="relative h-64 sm:h-72"><canvas id="scatter-chart"></canvas></div>
         <p class="text-xs text-ink-soft mt-2">Top-right quadrant = high volume, high velocity. Bottom-right = small base punching above weight.</p>
       </div>
     </div>
@@ -156,12 +156,12 @@ tailwind.config = {
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
         <h3 class="text-sm font-bold text-navy uppercase tracking-wider mb-4">Response Rate Comparison</h3>
-        <canvas id="response-chart" height="220"></canvas>
+        <div class="relative h-72 sm:h-80"><canvas id="response-chart"></canvas></div>
         <p class="text-xs text-ink-soft mt-2">% of reviews each competitor has replied to. Google factors engagement into local rankings.</p>
       </div>
       <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
         <h3 class="text-sm font-bold text-navy uppercase tracking-wider mb-4">Share of This Week's Reviews</h3>
-        <canvas id="share-chart" height="220"></canvas>
+        <div class="relative h-72 sm:h-80"><canvas id="share-chart"></canvas></div>
         <p class="text-xs text-ink-soft mt-2">Of all new reviews captured by tracked competitors this week, who got what slice.</p>
       </div>
     </div>
