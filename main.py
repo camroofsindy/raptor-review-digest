@@ -175,11 +175,10 @@ This week's market data:
 Write 3 specific actions Raptor should take THIS WEEK based on what you see. Each:
 - Starts with a verb
 - References a specific competitor event or data point
-- Names who on Raptor's team owns it
 - Is concrete and measurable this week, not a vague suggestion
 - 2-3 sentences
 
-Avoid clichés like "focus on reviews" unless the data specifically demands it. If one of the actions is about defending against a specific competitor's move, say so directly."""
+CRITICAL: do NOT name specific Raptor team members (no "Patrick", "Dylan", "Curtis", "Cameron", etc.) and do NOT prescribe who owns the action. Cameron will assign internally. Use phrasing like "someone on the team", "your sales lead", or just describe WHAT to do without naming WHO. Avoid clichés like "focus on reviews" unless the data specifically demands it. If one of the actions is about defending against a specific competitor's move, say so directly."""
     response = client.messages.create(
         model=ANTHROPIC_MODEL_SYNTHESIS,
         max_tokens=2000,
