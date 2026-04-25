@@ -900,10 +900,19 @@ def main():
             except Exception as e:
                 print(f"  market news failed: {e}", file=sys.stderr)
 
-            # Read recently-profiled competitors from history so we rotate weekly.
+            # Read profiled list from the most recent older snapshot (>= 5 days ago)
+            # so the digest rotates week-to-week without filtering itself out when
+            # multiple test runs happen the same day.
+            cutoff = datetime.now(timezone.utc) - timedelta(days=5)
             recent_profiled = []
-            for snap in history.get("snapshots", [])[-3:]:
-                recent_profiled.extend(snap.get("profiled_this_week", []))
+            for snap in reversed(history.get("snapshots", [])):
+                try:
+                    ts = datetime.fromisoformat(snap["timestamp"].replace("Z", "+00:00"))
+                except Exception:
+                    continue
+                if ts <= cutoff:
+                    recent_profiled = snap.get("profiled_this_week", [])
+                    break
             risers = detect_rising_players(businesses, exclude_recent=recent_profiled)
             for r in risers[:2]:
                 try:
