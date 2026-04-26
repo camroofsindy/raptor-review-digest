@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weathertight Roofing | Raptor Review Digest</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23172e55'/%3E%3Ctext x='50' y='62' font-size='40' text-anchor='middle' fill='%233ae20a' font-family='sans-serif' font-weight='700'%3ER%3C/text%3E%3C/svg%3E">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    colors: {
+      navy: { DEFAULT: '#172e55', deep: '#0d1d3a', darker: '#08142a', light: '#2a4880' },
+      accent: { green: '#3ae20a', blue: '#1ac6ff' },
+      ink: { soft: '#a3b1c7', mute: '#6b7d99' },
+    },
+    fontFamily: { sans: ['Ouma Latin VF', 'Inter', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'] },
+  }},
+};
+</script>
+<style>
+  body { font-feature-settings: "ss01"; background-color: #08142a; color: #ffffff; }
+  .stat-num { font-variant-numeric: tabular-nums; }
+  .scroll-fade { opacity: 0; transform: translateY(20px); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+  .scroll-fade.visible { opacity: 1; transform: translateY(0); }
+  .panel {
+    background: linear-gradient(180deg, rgba(22, 46, 85, 0.65) 0%, rgba(13, 29, 58, 0.85) 100%);
+    border: 1px solid rgba(58, 226, 10, 0.08);
+    border-radius: 16px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    position: relative;
+    overflow: hidden;
+  }
+  .panel::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(58, 226, 10, 0.3), transparent);
+  }
+  .panel-hero {
+    background: linear-gradient(135deg, rgba(22, 46, 85, 0.95) 0%, rgba(13, 29, 58, 0.95) 100%);
+    border: 1px solid rgba(58, 226, 10, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 8px 40px rgba(58, 226, 10, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+  .ai-prose { color: rgba(255, 255, 255, 0.92); }
+  .ai-prose h1, .ai-prose h2, .ai-prose h3, .ai-prose h4 { color: #ffffff; font-weight: 700; margin: 1.2em 0 0.5em; line-height: 1.25; }
+  .ai-prose h1 { font-size: 1.4rem; color: #3ae20a; }
+  .ai-prose h2 { font-size: 1.15rem; color: #3ae20a; padding-top: 0.6em; border-top: 1px solid rgba(58, 226, 10, 0.2); }
+  .ai-prose h2:first-child { border-top: none; padding-top: 0; }
+  .ai-prose h3 { font-size: 1rem; color: #1ac6ff; }
+  .ai-prose h4 { font-size: 0.85rem; color: #a3b1c7; text-transform: uppercase; letter-spacing: 0.05em; }
+  .ai-prose p { margin: 0.7em 0; line-height: 1.65; }
+  .ai-prose strong { color: #ffffff; font-weight: 700; }
+  .ai-prose em { color: #a3b1c7; }
+  .ai-prose a { color: #1ac6ff; border-bottom: 1px solid rgba(26, 198, 255, 0.4); }
+  .ai-prose a:hover { color: #ffffff; }
+  .ai-prose ul, .ai-prose ol { padding-left: 1.4em; margin: 0.6em 0; }
+  .ai-prose li { margin: 0.4em 0; line-height: 1.6; }
+  .ai-prose hr { border: none; border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 1.5em 0; }
+  .gradient-text { background: linear-gradient(135deg, #3ae20a 0%, #1ac6ff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+</style>
+</head>
+<body class="antialiased min-h-screen">
+
+<div class="fixed inset-0 pointer-events-none" style="background-image: radial-gradient(circle at 15% 0%, rgba(58, 226, 10, 0.06) 0%, transparent 40%), radial-gradient(circle at 85% 50%, rgba(26, 198, 255, 0.05) 0%, transparent 35%);"></div>
+
+<section class="relative z-10">
+  <div class="max-w-5xl mx-auto px-5 sm:px-8 pt-8 pb-10">
+    <div class="flex items-center justify-between mb-6 flex-wrap gap-4">
+      <a href="../../" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-accent-green hover:text-accent-blue transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        Back to dashboard
+      </a>
+      <img src="../../assets/logo.webp" alt="Raptor Roofing" class="h-10 w-auto" onerror="this.style.display='none'">
+    </div>
+    <div class="flex items-start justify-between flex-wrap gap-4 mb-4">
+      <div>
+        <div class="text-xs uppercase tracking-widest text-accent-green font-bold mb-1">Competitor Profile</div>
+        <h1 class="text-3xl sm:text-5xl font-bold tracking-tight text-white">Weathertight Roofing</h1>
+        <p class="text-ink-soft text-sm mt-2">8945 South St, Fishers, IN 46038</p>
+      </div>
+      <div class="text-right">
+        <div class="text-xs uppercase tracking-widest text-ink-soft">Volume Rank</div>
+        <div class="text-3xl font-bold gradient-text">#17</div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8">
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-green">290</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Total Reviews</div>
+      </div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-green">5.0</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Star Rating</div>
+      </div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-blue">+0</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">This Week</div>
+      </div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-blue">+8</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Last 30 Days</div>
+      </div>
+      
+    </div>
+
+    <div class="mt-4 flex items-center gap-4 text-sm text-ink-soft flex-wrap">
+      <span><span class="text-white font-semibold">100%</span> response rate</span>
+      <span>+<span class="text-white font-semibold">16</span> in last 90 days</span>
+      <span class="text-ink-mute">Refreshed April 26, 2026</span>
+    </div>
+  </div>
+</section>
+
+<main class="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 py-8 space-y-6">
+
+  
+  <div class="scroll-fade panel-hero p-6 sm:p-8">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-base sm:text-lg font-bold text-white uppercase tracking-wider">Strategic Read</h2>
+      <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-white/5 border border-white/10 px-2 py-1 rounded-full">CMO Briefing</span>
+    </div>
+    <div class="ai-prose text-sm sm:text-base"><p><strong>RAPTOR ROOFING — COMPETITIVE INTELLIGENCE BRIEF</strong><br />
+<strong>Competitor: Weathertight Roofing LLC</strong><br />
+<strong>Updated: April 26, 2026 | Next refresh: April 29, 2026</strong></p>
+<hr />
+<h2>1. Who They Are</h2>
+<p>Owner Corey Cates has been in roofing since 2006, originally picking up the trade on a Hurricane Katrina mission trip in Louisiana. He graduated with a Biology degree from Indiana University and founded Weathertight Roofing in May 2012.</p>
+<p>Since inception, the company has grown from a local family-owned operation into what it claims is central Indiana's roofing leader, providing service across Fishers, Monticello, and Muncie.</p>
+<p>Their core differentiator is GAF Master Elite certification, marketed under the slogan "Roof With The Best Or Leak Like The Rest."</p>
+<hr />
+<h2>2. Estimated Scale</h2>
+<p>BuildZoom lists three named individuals at the company — Alex Grim, Ashley Leitherer, and Corey Cates — and notes they hold a General Contractor license plus 6 other licenses through the Indianapolis license board.</p>
+<p><strong>Confidence: low</strong> on headcount (no LinkedIn company page surfaced for the Fishers LLC; the three names likely represent the core office/sales layer with crews subcontracted). </p>
+<p>BuildZoom records 28 permitted projects totaling $535,800 in declared permit value.</p>
+<p>The typical permitted job value runs approximately $24,950.</p>
+<p>Rough revenue estimate: with sub-permit-threshold residential jobs factored in and a three-location footprint, $2M–$4M ARR is a reasonable range. <strong>Confidence: low.</strong> They are almost certainly running leaner than their "three locations" marketing implies.</p>
+<hr />
+<h2>3. Recent Hiring Signals</h2>
+<p>No active Weathertight Roofing LLC job postings were found on Indeed, LinkedIn, or ZipRecruiter in the last 30 days tied specifically to this entity. The ZipRecruiter Fishers roofing board is populated by competitors (Bone Dry, OpenBox, Kingdom Roofing), not Weathertight. The absence of open roles is consistent with a sub-10-person operation that relies on owner-led sales and subcontracted crews rather than W-2 field staff. No marketing, ops, or sales leadership hires are in motion. No hiring pressure signals to watch currently.</p>
+<hr />
+<h2>4. Off-Google Presence</h2>
+<p>Their Facebook page (facebook.com/weathertightroofs) sits at 975 likes with 29 people currently talking about the page</p>
+<p>— low engagement for a 13-year-old company. No Facebook Ad Library ads were surfaced in searches, suggesting either no active paid social spend or very limited/dark targeting. </p>
+<p>They are BBB-accredited at bbb.org/us/in/fishers/profile/roofing-contractors/weathertight-roofing-llc-0382-90034945</p>
+<p>, which is a credibility signal worth noting, though the BBB profile shows no complaint volume publicly visible. The Yelp profile exists (yelp.com/biz/weathertight-roofing-fishers) but returned no review data in search results — likely very thin. </p>
+<p>Manta shows zero reviews.</p>
+<p>The pattern here is classic review-funneling: all social proof is concentrated on Google, with every other platform essentially dark. That is a vulnerability — a single negative Google review would hurt them more than a diversified competitor.</p>
+<hr />
+<h2>5. SEO and AEO Posture</h2>
+<p><a href="https://weathertightroofingllc.com">Weathertightroofingllc.com</a> has a multi-page site with service-specific pages for commercial roofing, metal roofing, gutters/siding, and location-named URLs (Muncie, Noblesville, Lawrence, Fishers). </p>
+<p>They promote HOVER software integration for 3D roof visualization and accurate estimating</p>
+<p>— this is genuinely differentiated UX content that Google rewards. However, no blog or content marketing cadence was found; the site reads as a brochure, not an authority hub. </p>
+<p>Their BuildZoom score of 106 ranks in the top 7% of Indiana licensed contractors</p>
+<p>, which generates a legitimate third-party citation. Domain authority is likely modest (estimated DA 15–25 range) given the absence of local press backlinks or content-driven inbound links. Their location-page strategy (targeting "Noblesville," "Lawrence," "Muncie" in title tags) is a standard local SEO tactic but the pages lack substantive geo-specific content. No schema markup evidence found. AEO posture is minimal — no FAQ schema, no structured data that would feed generative engines.</p>
+<hr />
+<h2>6. Generative Engine Visibility</h2>
+<p>Based on available search data and the structure of their digital presence, Weathertight Roofing is unlikely to be cited by name in ChatGPT, Claude, or Gemini responses to queries like "best roofers Indianapolis," "roof replacement Carmel Indiana," or "roofing company Fishers Noblesville Zionsville." The factors that drive generative engine citation — authoritative blog content, local press coverage, structured FAQ data, strong third-party directory presence — are all absent or underdeveloped. Their Birdeye and Service Atlas profiles exist and could generate some signal, but </p>
+<p>Service Atlas simply mirrors their Google review count and rating</p>
+<p>without original content that LLMs would index as authoritative. This is a wide-open opportunity for Raptor: any competitor with active AEO content targeting these exact queries wins by default right now.</p>
+<hr />
+<h2>7. Strategic Read vs Raptor</h2>
+<p><strong>Where they beat Raptor:</strong> GAF Master Elite certification is a credentialed differentiator they actively market, and their HOVER-based 3D visualization is a sales tool Raptor should evaluate. Their multi-city location page structure gives them modest geographic spread in organic search.</p>
+<p><strong>Where Raptor beats them:</strong> Raptor carries 664 reviews vs. Weathertight's 290 — more than double the social proof volume at the same 5.0 rating. Raptor's review velocity (data-tracked weekly) is a compounding moat. Weathertight's 30-day review pace of 8 reviews is anemic and suggests either a narrowing project pipeline or a broken review-ask process. Their Facebook page at under 1,000 likes after 13 years signals no real social investment.</p>
+<p><strong>Most exploitable weakness:</strong> Their entire reputation infrastructure sits on a single platform (Google), with zero review depth anywhere else — one crisis-level Google review could crater their LSA ranking overnight.</p>
+<hr />
+<h2>8. What Raptor Should Watch or Copy</h2>
+<ol>
+<li><strong>HOVER 3D Visualization in the Sales Process.</strong> </li>
+</ol>
+<p>Weathertight promotes HOVER as a tool to accurately measure roofs and let customers visualize their home on an interactive 3D model with different products and colors, which they claim removes homeowner hesitation around the project.</p>
+<p>If Raptor is not using HOVER or a comparable tool (e.g., EagleView, RoofSnap), this is a close-rate lever worth evaluating — especially on premium replacement jobs.</p>
+<ol start="2">
+<li><strong>Insurance Claim Positioning as a Marketing Pillar.</strong> </li>
+</ol>
+<p>Weathertight claims over 20 years of experience handling insurance claims and specifically markets their ability to guide clients through the process with honesty and communication.</p>
+<p>This is a high-intent audience segment (storm damage homeowners) that Raptor could own more explicitly with dedicated landing pages and targeted paid search.</p>
+<ol start="3">
+<li><strong>Multi-Location Page Architecture.</strong> Their practice of building out geo-targeted service pages for Noblesville, Lawrence, Muncie, and Fishers is worth auditing against Raptor's own site structure. Even thin location pages create organic footprint; Raptor should ensure every suburb in Hamilton, Boone, and Hendricks County has a properly built, content-rich page — not just a duplicated template.</li>
+</ol></div>
+  </div>
+  
+
+  
+  <div class="scroll-fade panel p-6 sm:p-8">
+    <div class="flex items-center justify-between flex-wrap gap-2 mb-1">
+      <h2 class="text-base sm:text-lg font-bold text-white uppercase tracking-wider">Customer Voice</h2>
+      <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-white/5 border border-white/10 px-2 py-1 rounded-full">Theme cloud</span>
+    </div>
+    <p class="text-xs text-ink-soft mb-5">What customers actually say about this company. Pulled from their last 15 reviews.</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      
+      <div>
+        <div class="text-[10px] uppercase tracking-wider text-accent-green mb-3 flex items-center gap-2">
+          <span>What they love</span>
+          <span class="text-ink-mute font-normal normal-case tracking-normal">(8)</span>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 16px;">excellent cleanup</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 16px;">great communication</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 16px;">professional team</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 16px;">fast response</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 16px;">quality work</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 14px;">competitive pricing</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 14px;">same-day service</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 14px;">transparent proposals</span>
+          
+        </div>
+      </div>
+      
+      
+    </div>
+  </div>
+  
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="scroll-fade panel p-6">
+      <h3 class="text-xs font-bold text-accent-green uppercase tracking-[0.15em] mb-4">Review Velocity</h3>
+      <div class="space-y-3 text-sm">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
+          <span class="text-ink-soft">Last 7 days</span>
+          <span class="font-bold text-white stat-num text-lg">+0</span>
+        </div>
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
+          <span class="text-ink-soft">Last 30 days</span>
+          <span class="font-bold text-white stat-num text-lg">+8</span>
+        </div>
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
+          <span class="text-ink-soft">Last 90 days</span>
+          <span class="font-bold text-white stat-num text-lg">+16</span>
+        </div>
+        <div class="flex justify-between items-baseline pt-2">
+          <span class="text-ink-soft">Annual pace (90d × 4)</span>
+          <span class="font-bold text-accent-blue stat-num text-lg">~64/yr</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-fade panel p-6">
+      <h3 class="text-xs font-bold text-accent-green uppercase tracking-[0.15em] mb-4">vs Raptor</h3>
+      <div class="space-y-3 text-sm">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
+          <span class="text-ink-soft">Total reviews</span>
+          <span class="font-bold text-accent-green stat-num text-lg">
+            -374
+          </span>
+        </div>
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
+          <span class="text-ink-soft">Star rating</span>
+          <span class="font-bold text-accent-green stat-num text-lg">
+            +0.0
+          </span>
+        </div>
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
+          <span class="text-ink-soft">7-day pace</span>
+          <span class="font-bold text-accent-green stat-num text-lg">
+            -3
+          </span>
+        </div>
+        <div class="flex justify-between items-baseline pt-2">
+          <span class="text-ink-soft">Response rate gap</span>
+          <span class="font-bold stat-num text-lg">
+            
+              <span class="text-red-400">
+                +3pts
+              </span>
+            
+          </span>
+        </div>
+      </div>
+      <p class="text-xs text-ink-soft mt-4 pt-3 border-t border-white/5">Red = competitor leads, green = Raptor leads.</p>
+    </div>
+  </div>
+
+</main>
+
+<footer class="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 py-10 mt-8 border-t border-white/5 text-xs text-ink-soft">
+  <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <a href="../../" class="font-semibold text-white hover:text-accent-blue">Raptor Review Digest &rarr; Dashboard</a>
+    <div class="text-right">Profile last refreshed April 26, 2026</div>
+  </div>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+document.querySelectorAll('.scroll-fade').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

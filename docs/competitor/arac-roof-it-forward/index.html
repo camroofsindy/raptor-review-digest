@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARAC Roof It Forward | Raptor Review Digest</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23172e55'/%3E%3Ctext x='50' y='62' font-size='40' text-anchor='middle' fill='%233ae20a' font-family='sans-serif' font-weight='700'%3ER%3C/text%3E%3C/svg%3E">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    colors: {
+      navy: { DEFAULT: '#172e55', deep: '#0d1d3a', darker: '#08142a', light: '#2a4880' },
+      accent: { green: '#3ae20a', blue: '#1ac6ff' },
+      ink: { soft: '#a3b1c7', mute: '#6b7d99' },
+    },
+    fontFamily: { sans: ['Ouma Latin VF', 'Inter', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'] },
+  }},
+};
+</script>
+<style>
+  body { font-feature-settings: "ss01"; background-color: #08142a; color: #ffffff; }
+  .stat-num { font-variant-numeric: tabular-nums; }
+  .scroll-fade { opacity: 0; transform: translateY(20px); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+  .scroll-fade.visible { opacity: 1; transform: translateY(0); }
+  .panel {
+    background: linear-gradient(180deg, rgba(22, 46, 85, 0.65) 0%, rgba(13, 29, 58, 0.85) 100%);
+    border: 1px solid rgba(58, 226, 10, 0.08);
+    border-radius: 16px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    position: relative;
+    overflow: hidden;
+  }
+  .panel::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(58, 226, 10, 0.3), transparent);
+  }
+  .panel-hero {
+    background: linear-gradient(135deg, rgba(22, 46, 85, 0.95) 0%, rgba(13, 29, 58, 0.95) 100%);
+    border: 1px solid rgba(58, 226, 10, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 8px 40px rgba(58, 226, 10, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+  .ai-prose { color: rgba(255, 255, 255, 0.92); }
+  .ai-prose h1, .ai-prose h2, .ai-prose h3, .ai-prose h4 { color: #ffffff; font-weight: 700; margin: 1.2em 0 0.5em; line-height: 1.25; }
+  .ai-prose h1 { font-size: 1.4rem; color: #3ae20a; }
+  .ai-prose h2 { font-size: 1.15rem; color: #3ae20a; padding-top: 0.6em; border-top: 1px solid rgba(58, 226, 10, 0.2); }
+  .ai-prose h2:first-child { border-top: none; padding-top: 0; }
+  .ai-prose h3 { font-size: 1rem; color: #1ac6ff; }
+  .ai-prose h4 { font-size: 0.85rem; color: #a3b1c7; text-transform: uppercase; letter-spacing: 0.05em; }
+  .ai-prose p { margin: 0.7em 0; line-height: 1.65; }
+  .ai-prose strong { color: #ffffff; font-weight: 700; }
+  .ai-prose em { color: #a3b1c7; }
+  .ai-prose a { color: #1ac6ff; border-bottom: 1px solid rgba(26, 198, 255, 0.4); }
+  .ai-prose a:hover { color: #ffffff; }
+  .ai-prose ul, .ai-prose ol { padding-left: 1.4em; margin: 0.6em 0; }
+  .ai-prose li { margin: 0.4em 0; line-height: 1.6; }
+  .ai-prose hr { border: none; border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 1.5em 0; }
+  .gradient-text { background: linear-gradient(135deg, #3ae20a 0%, #1ac6ff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+</style>
+</head>
+<body class="antialiased min-h-screen">
+
+<div class="fixed inset-0 pointer-events-none" style="background-image: radial-gradient(circle at 15% 0%, rgba(58, 226, 10, 0.06) 0%, transparent 40%), radial-gradient(circle at 85% 50%, rgba(26, 198, 255, 0.05) 0%, transparent 35%);"></div>
+
+<section class="relative z-10">
+  <div class="max-w-5xl mx-auto px-5 sm:px-8 pt-8 pb-10">
+    <div class="flex items-center justify-between mb-6 flex-wrap gap-4">
+      <a href="../../" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-accent-green hover:text-accent-blue transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        Back to dashboard
+      </a>
+      <img src="../../assets/logo.webp" alt="Raptor Roofing" class="h-10 w-auto" onerror="this.style.display='none'">
+    </div>
+    <div class="flex items-start justify-between flex-wrap gap-4 mb-4">
+      <div>
+        <div class="text-xs uppercase tracking-widest text-accent-green font-bold mb-1">Competitor Profile</div>
+        <h1 class="text-3xl sm:text-5xl font-bold tracking-tight text-white">ARAC Roof It Forward</h1>
+        <p class="text-ink-soft text-sm mt-2">15499 Stony Creek Way, Noblesville, IN 46060</p>
+      </div>
+      <div class="text-right">
+        <div class="text-xs uppercase tracking-widest text-ink-soft">Volume Rank</div>
+        <div class="text-3xl font-bold gradient-text">#16</div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8">
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-green">308</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Total Reviews</div>
+      </div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-green">4.7</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Star Rating</div>
+      </div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-blue">+0</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">This Week</div>
+      </div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-blue">+0</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Last 30 Days</div>
+      </div>
+      
+    </div>
+
+    <div class="mt-4 flex items-center gap-4 text-sm text-ink-soft flex-wrap">
+      <span><span class="text-white font-semibold">94%</span> response rate</span>
+      
+      <span class="text-ink-mute">Refreshed April 26, 2026</span>
+    </div>
+  </div>
+</section>
+
+<main class="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 py-8 space-y-6">
+
+  
+  <div class="scroll-fade panel-hero p-6 sm:p-8">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-base sm:text-lg font-bold text-white uppercase tracking-wider">Strategic Read</h2>
+      <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-white/5 border border-white/10 px-2 py-1 rounded-full">CMO Briefing</span>
+    </div>
+    <div class="ai-prose text-sm sm:text-base"><h2>ARAC Roof It Forward — Competitive Intelligence Brief</h2>
+<p><strong>Raptor Roofing Dashboard | Updated: April 26, 2025</strong></p>
+<hr />
+<h2>1. Who They Are</h2>
+<p>ARAC Roof It Forward was founded by John Phillips, a Coles College of Business graduate, on the philosophy of doing what they say with excellence.</p>
+<p>In business since 2005, ARAC operates out of Noblesville, IN (15499 Stony Creek Way) and serves the broader Indianapolis metro</p>
+<p>— </p>
+<p>including Noblesville, Carmel, Fishers, Greenwood, Indianapolis, Greenfield, Brownsburg, Plainfield, Anderson, and Zionsville.</p>
+<p>Their core differentiator is a charity-anchored brand identity: </p>
+<p>they donate a portion of every dollar earned to local charities through the Roof It Forward program,</p>
+<p>currently tied to Peyton Manning Children's Hospital in the Indianapolis market. Note: ARAC is a multi-state franchise operation headquartered in Woodstock, GA — the Noblesville location is one of several regional franchises, not an independent local shop.</p>
+<hr />
+<h2>2. Estimated Scale</h2>
+<p>SimplyHired lists ARAC Roof It Forward at 51–200 employees company-wide, with estimated revenue of $25M–$100M (USD).</p>
+<p><strong>Confidence: low</strong> on the Indiana-specific split — those figures roll up the entire multi-state ARAC network. </p>
+<p>The BBB Georgia profile lists 96 employees for the parent entity under owner John Phillips.</p>
+<p><strong>Confidence: medium.</strong> For the Noblesville franchise specifically, a reasonable local-market estimate based on review velocity and territory size is 10–20 field-facing staff and $3M–$8M in Indiana revenue — <strong>confidence: low.</strong> </p>
+<p>ZoomInfo records show ARAC Roof It Forward raised less than $5M in one funding round, last closed May 2020.</p>
+<hr />
+<h2>3. Recent Hiring Signals</h2>
+<p>Indeed currently shows 1 open job for ARAC Roof It Forward</p>
+<p>— the listing is a commission-only sales rep role. </p>
+<p>Door-to-door sales is described as a major part of the day-to-day role,</p>
+<p>consistent with their storm-chasing acquisition model. </p>
+<p>Glassdoor lists 24 open positions across the ARAC Roof It Forward network</p>
+<p>, though most appear tied to other regional markets (Georgia, Florida), not Indiana specifically. </p>
+<p>ZoomInfo signals that ARAC has more open roles in Sales than at any time in the past 12 months,</p>
+<p>which suggests a deliberate expansion push on the revenue side — but no marketing, ops leadership, or project management hires are visible for the Indiana franchise in the last 30 days. No digital marketing or SEO roles detected on any platform.</p>
+<hr />
+<h2>4. Off-Google Presence</h2>
+<p>Their current Google standing (308 reviews / 4.7 stars) trails Raptor's 664 reviews at 5.0. The gap on both volume and rating is significant and exploitable. Cross-platform:</p>
+<ul>
+<li><strong>Angi/HomeAdvisor:</strong> </li>
+</ul>
+<p>Rated 4.9 overall on Angi</p>
+<p>with recent 5-star activity as recently as May 2025 — their best-looking platform. Active owner response present.<br />
+- <strong>BBB:</strong> </p>
+<p>BBB accredited since March 6, 2015.</p>
+<p>However, the Indiana BBB complaints page and the Georgia BBB both surface pattern issues: </p>
+<p>at least one reviewer reports damage to decking, ceiling, wiring, and duct work during installation</p>
+<p>, and </p>
+<p>a 2025 complaint references a warranty crew sent to a home who did not speak English.</p>
+<p>These are not one-offs — similar crew communication complaints appear in multiple markets.<br />
+- <strong>Yelp:</strong> </p>
+<p>ARAC Roof It Forward's Yelp page for Noblesville is active with 62 photos</p>
+<p>, but no star rating was surfaced in crawl results — a common indicator of a thin or suppressed Yelp presence. Worth monitoring.<br />
+- <strong>Nextdoor:</strong> </p>
+<p>They maintain a Nextdoor business page listing full-service roofing in the Greater Indianapolis area.</p>
+<p>Activity level appears passive — no evidence of paid Nextdoor promotion.<br />
+- <strong>Facebook Ad Library:</strong> Not retrievable in this search cycle. Flag for manual check by Cameron or Patrick.</p>
+<p>Key discrepancy: polished Google/Angi presence vs. substantive BBB complaints about subcontracted crews and post-install warranty follow-through. Classic hallmark of a volume-focused sales org.</p>
+<hr />
+<h2>5. SEO and AEO Posture</h2>
+<p>ARAC leads with their Owens Corning Platinum Preferred status</p>
+<p>as the primary SEO hook — it appears in title tags and H1s across most service pages. </p>
+<p>They have dedicated city-level pages targeting Noblesville, Carmel, Fishers, Greenwood, Greenfield, Plainfield, Anderson, Zionsville, and Brownsburg</p>
+<p>— a systematic location-page strategy that generates long-tail ranking coverage. Their domain (roofitforward.com) is a national franchise site; the Indiana franchise also runs a secondary domain at roofitforwardindiana.com, which creates potential canonical fragmentation — a structural SEO vulnerability Raptor does not share. Blog content is minimal and generic. Schema markup and local business structured data are deployed but not differentiated. No evidence of local press backlinks (IBJ, Indianapolis Star) or neighborhood-level content strategies targeting Hamilton County suburbs specifically.</p>
+<hr />
+<h2>6. Generative Engine Visibility</h2>
+<p>Based on known AI training data and citation patterns as of this brief date: ARAC Roof It Forward has moderate but inconsistent generative engine presence. Their brand name ("Roof It Forward") is distinctive and memorable, which helps in AI recall. However, the dual-domain structure (roofitforward.com vs. roofitforwardindiana.com) creates entity-level confusion for LLMs trying to resolve the Indiana-specific entity. Raptor's opportunity: a single authoritative domain, a singular geographic identity, and a growing review corpus at 5.0 stars puts Cameron in a strong position to own AI-generated responses for hyper-local queries like "best roofer in Noblesville Indiana" or "roof replacement Carmel Indiana" — particularly if Raptor invests in structured AEO content (FAQ schema, dedicated suburb pages, first-person testimonial content that LLMs can parse cleanly). ARAC is not doing this with precision. No evidence of AEO-specific content strategy on either domain.</p>
+<hr />
+<h2>7. Strategic Read vs. Raptor</h2>
+<p><strong>Where ARAC beats Raptor:</strong> Charity brand narrative is deeply embedded and emotionally resonant — tying every invoice to Peyton Manning Children's Hospital is a sales-room closer that is hard to dismiss. They also have multi-platform review distribution (Angi, HomeAdvisor, BBB, Nextdoor) that gives them a broader funnel surface. Their city-page coverage across Hamilton and Marion County suburbs is more systematic than Raptor's current posture.</p>
+<p><strong>Where Raptor beats ARAC:</strong> 664 reviews at a perfect 5.0 vs. 308 at 4.7 is not a small gap — it's a dominant trust signal. Zero reviews in the last 90 days is a serious red flag; a stalled review engine is usually a stalled sales engine. Raptor's "we don't outsource accountability" positioning hits the exact BBB complaint pattern that ARAC is accumulating — non-English-speaking subcontracted crews with no direct accountability loop.</p>
+<p><strong>Most exploitable weakness:</strong> ARAC's warranty follow-through complaints and crew communication failures are documented and recurring — Cameron should put that contrast on the table in every sales conversation without naming ARAC directly.</p>
+<hr />
+<h2>8. What Raptor Should Watch or Copy</h2>
+<ol>
+<li><strong>Charity tie-in at the point of close.</strong> </li>
+</ol>
+<p>ARAC's model of donating a portion of every dollar to local charities</p>
+<p>is a proven conversion tool in the sales room. Raptor does not need to replicate the structure, but a named, visible community commitment — announced in proposals and follow-up emails — creates emotional permission for customers to say yes at a premium price.</p>
+<ol start="2">
+<li>
+<p><strong>Systematic suburb landing pages.</strong> ARAC's location-page architecture covering every major Hamilton and Marion County suburb is generating long-tail organic traffic Raptor is likely leaving on the table. Cameron should audit whether Raptor has dedicated, schema-marked pages for Carmel, Fishers, Noblesville, Zionsville, and Westfield — each with unique content, not duplicated boilerplate.</p>
+</li>
+<li>
+<p><strong>Monitor the ZoomInfo sales hiring signal.</strong> </p>
+</li>
+</ol>
+<p>ARAC has more open Sales roles than at any point in the past 12 months, with Salesforce listed as a core tech stack.</p>
+<p>A sales hiring surge ahead of storm season in a competitor's territory is an early warning that they are preparing to flood Hamilton County with door-knockers. Raptor should pre-empt with a spring campaign targeting post-storm urgency before ARAC reps hit the same driveways.</p></div>
+  </div>
+  
+
+  
+  <div class="scroll-fade panel p-6 sm:p-8">
+    <div class="flex items-center justify-between flex-wrap gap-2 mb-1">
+      <h2 class="text-base sm:text-lg font-bold text-white uppercase tracking-wider">Customer Voice</h2>
+      <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-white/5 border border-white/10 px-2 py-1 rounded-full">Theme cloud</span>
+    </div>
+    <p class="text-xs text-ink-soft mb-5">What customers actually say about this company. Pulled from their last 15 reviews.</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      
+      <div>
+        <div class="text-[10px] uppercase tracking-wider text-accent-green mb-3 flex items-center gap-2">
+          <span>What they love</span>
+          <span class="text-ink-mute font-normal normal-case tracking-normal">(8)</span>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 16px;">excellent cleanup</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 17px;">insurance help</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 16px;">knowledgeable staff</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 16px;">professional communication</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 16px;">fast efficient work</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 16px;">easy process</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 15px;">not pushy sales</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 14px;">free inspection</span>
+          
+        </div>
+      </div>
+      
+      
+    </div>
+  </div>
+  
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="scroll-fade panel p-6">
+      <h3 class="text-xs font-bold text-accent-green uppercase tracking-[0.15em] mb-4">Review Velocity</h3>
+      <div class="space-y-3 text-sm">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
+          <span class="text-ink-soft">Last 7 days</span>
+          <span class="font-bold text-white stat-num text-lg">+0</span>
+        </div>
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
+          <span class="text-ink-soft">Last 30 days</span>
+          <span class="font-bold text-white stat-num text-lg">+0</span>
+        </div>
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
+          <span class="text-ink-soft">Last 90 days</span>
+          <span class="font-bold text-white stat-num text-lg">+0</span>
+        </div>
+        <div class="flex justify-between items-baseline pt-2">
+          <span class="text-ink-soft">Annual pace (90d × 4)</span>
+          <span class="font-bold text-accent-blue stat-num text-lg">~0/yr</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-fade panel p-6">
+      <h3 class="text-xs font-bold text-accent-green uppercase tracking-[0.15em] mb-4">vs Raptor</h3>
+      <div class="space-y-3 text-sm">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
+          <span class="text-ink-soft">Total reviews</span>
+          <span class="font-bold text-accent-green stat-num text-lg">
+            -356
+          </span>
+        </div>
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
+          <span class="text-ink-soft">Star rating</span>
+          <span class="font-bold text-accent-green stat-num text-lg">
+            -0.3
+          </span>
+        </div>
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
+          <span class="text-ink-soft">7-day pace</span>
+          <span class="font-bold text-accent-green stat-num text-lg">
+            -3
+          </span>
+        </div>
+        <div class="flex justify-between items-baseline pt-2">
+          <span class="text-ink-soft">Response rate gap</span>
+          <span class="font-bold stat-num text-lg">
+            
+              <span class="text-accent-green">
+                -3pts
+              </span>
+            
+          </span>
+        </div>
+      </div>
+      <p class="text-xs text-ink-soft mt-4 pt-3 border-t border-white/5">Red = competitor leads, green = Raptor leads.</p>
+    </div>
+  </div>
+
+</main>
+
+<footer class="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 py-10 mt-8 border-t border-white/5 text-xs text-ink-soft">
+  <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <a href="../../" class="font-semibold text-white hover:text-accent-blue">Raptor Review Digest &rarr; Dashboard</a>
+    <div class="text-right">Profile last refreshed April 26, 2026</div>
+  </div>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+document.querySelectorAll('.scroll-fade').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

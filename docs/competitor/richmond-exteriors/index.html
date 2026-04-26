@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Richmond Exteriors | Raptor Review Digest</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23172e55'/%3E%3Ctext x='50' y='62' font-size='40' text-anchor='middle' fill='%233ae20a' font-family='sans-serif' font-weight='700'%3ER%3C/text%3E%3C/svg%3E">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    colors: {
+      navy: { DEFAULT: '#172e55', deep: '#0d1d3a', darker: '#08142a', light: '#2a4880' },
+      accent: { green: '#3ae20a', blue: '#1ac6ff' },
+      ink: { soft: '#a3b1c7', mute: '#6b7d99' },
+    },
+    fontFamily: { sans: ['Ouma Latin VF', 'Inter', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'] },
+  }},
+};
+</script>
+<style>
+  body { font-feature-settings: "ss01"; background-color: #08142a; color: #ffffff; }
+  .stat-num { font-variant-numeric: tabular-nums; }
+  .scroll-fade { opacity: 0; transform: translateY(20px); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+  .scroll-fade.visible { opacity: 1; transform: translateY(0); }
+  .panel {
+    background: linear-gradient(180deg, rgba(22, 46, 85, 0.65) 0%, rgba(13, 29, 58, 0.85) 100%);
+    border: 1px solid rgba(58, 226, 10, 0.08);
+    border-radius: 16px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    position: relative;
+    overflow: hidden;
+  }
+  .panel::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(58, 226, 10, 0.3), transparent);
+  }
+  .panel-hero {
+    background: linear-gradient(135deg, rgba(22, 46, 85, 0.95) 0%, rgba(13, 29, 58, 0.95) 100%);
+    border: 1px solid rgba(58, 226, 10, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 8px 40px rgba(58, 226, 10, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+  .ai-prose { color: rgba(255, 255, 255, 0.92); }
+  .ai-prose h1, .ai-prose h2, .ai-prose h3, .ai-prose h4 { color: #ffffff; font-weight: 700; margin: 1.2em 0 0.5em; line-height: 1.25; }
+  .ai-prose h1 { font-size: 1.4rem; color: #3ae20a; }
+  .ai-prose h2 { font-size: 1.15rem; color: #3ae20a; padding-top: 0.6em; border-top: 1px solid rgba(58, 226, 10, 0.2); }
+  .ai-prose h2:first-child { border-top: none; padding-top: 0; }
+  .ai-prose h3 { font-size: 1rem; color: #1ac6ff; }
+  .ai-prose h4 { font-size: 0.85rem; color: #a3b1c7; text-transform: uppercase; letter-spacing: 0.05em; }
+  .ai-prose p { margin: 0.7em 0; line-height: 1.65; }
+  .ai-prose strong { color: #ffffff; font-weight: 700; }
+  .ai-prose em { color: #a3b1c7; }
+  .ai-prose a { color: #1ac6ff; border-bottom: 1px solid rgba(26, 198, 255, 0.4); }
+  .ai-prose a:hover { color: #ffffff; }
+  .ai-prose ul, .ai-prose ol { padding-left: 1.4em; margin: 0.6em 0; }
+  .ai-prose li { margin: 0.4em 0; line-height: 1.6; }
+  .ai-prose hr { border: none; border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 1.5em 0; }
+  .gradient-text { background: linear-gradient(135deg, #3ae20a 0%, #1ac6ff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+</style>
+</head>
+<body class="antialiased min-h-screen">
+
+<div class="fixed inset-0 pointer-events-none" style="background-image: radial-gradient(circle at 15% 0%, rgba(58, 226, 10, 0.06) 0%, transparent 40%), radial-gradient(circle at 85% 50%, rgba(26, 198, 255, 0.05) 0%, transparent 35%);"></div>
+
+<section class="relative z-10">
+  <div class="max-w-5xl mx-auto px-5 sm:px-8 pt-8 pb-10">
+    <div class="flex items-center justify-between mb-6 flex-wrap gap-4">
+      <a href="../../" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-accent-green hover:text-accent-blue transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        Back to dashboard
+      </a>
+      <img src="../../assets/logo.webp" alt="Raptor Roofing" class="h-10 w-auto" onerror="this.style.display='none'">
+    </div>
+    <div class="flex items-start justify-between flex-wrap gap-4 mb-4">
+      <div>
+        <div class="text-xs uppercase tracking-widest text-accent-green font-bold mb-1">Competitor Profile</div>
+        <h1 class="text-3xl sm:text-5xl font-bold tracking-tight text-white">Richmond Exteriors</h1>
+        <p class="text-ink-soft text-sm mt-2">3510 S Keystone Ave, Indianapolis, IN 46227</p>
+      </div>
+      <div class="text-right">
+        <div class="text-xs uppercase tracking-widest text-ink-soft">Volume Rank</div>
+        <div class="text-3xl font-bold gradient-text">#10</div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8">
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-green">610</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Total Reviews</div>
+      </div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-green">4.5</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Star Rating</div>
+      </div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-blue">+5</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">This Week</div>
+      </div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-blue">+17</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Last 30 Days</div>
+      </div>
+      
+    </div>
+
+    <div class="mt-4 flex items-center gap-4 text-sm text-ink-soft flex-wrap">
+      <span><span class="text-white font-semibold">86%</span> response rate</span>
+      <span>+<span class="text-white font-semibold">22</span> in last 90 days</span>
+      <span class="text-ink-mute">Refreshed April 26, 2026</span>
+    </div>
+  </div>
+</section>
+
+<main class="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 py-8 space-y-6">
+
+  
+  <div class="scroll-fade panel-hero p-6 sm:p-8">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-base sm:text-lg font-bold text-white uppercase tracking-wider">Strategic Read</h2>
+      <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-white/5 border border-white/10 px-2 py-1 rounded-full">CMO Briefing</span>
+    </div>
+    <div class="ai-prose text-sm sm:text-base"><h2>Richmond Exteriors — Competitive Intelligence Brief</h2>
+<p><strong>Raptor Roofing | Cameron Blakely, CMO | Refreshed: April 26, 2025</strong></p>
+<hr />
+<h2>1. Who They Are</h2>
+<p>Richmond Exteriors is a second-generation, family-owned and operated exterior remodeling company serving the Indianapolis area since 1987.</p>
+<p>Jerrad Richmond is listed as Sales and Marketing Manager per the BBB profile</p>
+<p>, indicating the founding Richmond family remains operationally active. </p>
+<p>The company serves the Indianapolis, IN area and Central Indiana for residential work, and extends commercial services throughout the Midwest.</p>
+<p>Their competitive angle is breadth — roofing is one of six or more service lines including siding, windows, gutters, fencing, and awnings — which makes them a full-exterior remodeler rather than a roofing-first specialist.</p>
+<hr />
+<h2>2. Estimated Scale</h2>
+<p>Richmond Guttering/Exteriors received an SBA PPP loan of $686,499 from Centier Bank, with the filing indicating retention of 65 jobs.</p>
+<p>That PPP headcount (2020 vintage) is the most reliable public employee count available. </p>
+<p>ContactOut lists the company at 30 employees</p>
+<p>, likely reflecting office/sales staff only, not field crews. <strong>Confidence: medium</strong> on 50–70 total headcount (office + install). At a blended revenue-per-employee ratio typical for multi-trade exteriors shops, 65 retained jobs implies roughly <strong>$6M–$10M annual revenue</strong> — though the PPP basis is now five years old. <strong>Confidence: low</strong> on current revenue figure.</p>
+<hr />
+<h2>3. Recent Hiring Signals</h2>
+<p>Richmond maintains a /careers page on richmondguttering.com, positioning itself as the leading exterior remodeler in Indianapolis with a variety of career opportunities</p>
+<p>, but the page renders no live job postings. No active listings were found on Indeed, LinkedIn, or ZipRecruiter in the last 30 days as of this refresh. The absence of open roles is notable: either they are at capacity, experiencing a quiet sales cycle, or managing headcount tightly after recent volume softness (see review cadence data below). No marketing, sales leadership, or ops hires are being telegraphed publicly right now.</p>
+<hr />
+<h2>4. Off-Google Presence</h2>
+<p>On Yelp, Richmond Exteriors carries only 23 reviews at their 3510 S Keystone Ave location</p>
+<p>— a significant undercount relative to 610 Google reviews. The Yelp Q&amp;A section surfaces unfiltered customer frustration, including a public complaint about an incomplete job still visible to prospective customers. </p>
+<p>On Facebook (facebook.com/IndianapolisExteriors), they have 964 page likes and 47 reviews at a 92% recommendation rate</p>
+<p>— thin engagement for a 38-year-old company. </p>
+<p>On BBB, they hold an A+ accredited rating</p>
+<p>, which is a legitimate trust signal, </p>
+<p>having been BBB accredited since September 19, 1994</p>
+<p>. However, the BBB complaints page shows documented instances of </p>
+<p>customers taking legal action and receiving a $65K settlement for damages caused</p>
+<p>, and several unresolved dispute patterns around permitting and warranty deflection. </p>
+<p>Angi rates them at 4.2 out of 5</p>
+<p>— materially lower than their Google 4.5. The pattern is clear: Google reviews are funneled and managed; off-platform scores tell a more complicated story.</p>
+<hr />
+<h2>5. SEO and AEO Posture</h2>
+<p>Richmond's primary domain is <a href="https://www.richmondguttering.com">richmondguttering.com</a> — a legacy domain rooted in guttering, not roofing, which creates a brand/keyword mismatch for anyone searching "Indianapolis roofing company." They maintain service-specific pages (e.g., /roofing/, /about-us/) and a blog, which provides some topical depth. </p>
+<p>ZoomInfo confirms they run Facebook Web Custom Audiences, Facebook Pixel, and WordPress.org</p>
+<p>, meaning they're doing paid social retargeting on a WordPress build — standard stack but nothing sophisticated. The domain name itself (richmondguttering.com) is a structural SEO liability for roofing queries; any roofer with a cleaner domain targeting "Indianapolis roof replacement" has an inherent keyword-relevance edge. No evidence of local press backlinks, schema markup depth beyond basic local business, or structured FAQ content surfaced in crawls.</p>
+<hr />
+<h2>6. Generative Engine Visibility</h2>
+<p>Richmond Exteriors does not appear in generative AI answers for the primary Indy roofing queries tested (ChatGPT, Claude, Gemini as of April 2025) for prompts including "best roofers Indianapolis," "roof replacement Carmel Indiana," "roofing company Fishers Noblesville Zionsville," or "top roofing contractor near Greenwood Indiana." Their legacy domain name mismatch (guttering vs. roofing) almost certainly suppresses AI citation, since LLMs weight brand-query alignment heavily when aggregating sources. This is a compounding weakness: they're absent from both AI-generated recommendations and the organic longtail queries that feed those models. Raptor should treat Richmond's GEO absence as a benchmark — any structured content investment Raptor makes now will widen this gap faster than Richmond can close it.</p>
+<hr />
+<h2>7. Strategic Read vs Raptor</h2>
+<p><strong>Where Richmond beats Raptor:</strong> Raw review volume (610 vs. 664 — close) and 38 years of brand recognition in Greater Indianapolis give them name-recall with older homeowners. Multi-trade capability (fencing, windows, siding) creates more upsell surface area per customer. </p>
+<p>Their active "no payments/interest for 12 months" financing offer on roof replacements</p>
+<p>is a visible conversion lever Raptor should audit against its own financing messaging.</p>
+<p><strong>Where Raptor beats Richmond:</strong> A full half-star higher Google rating (5.0 vs. 4.5) at comparable volume, zero visible legal/workmanship controversy in the public record, premium positioning that doesn't need to compete on price, and superior GEO presence. Richmond's off-platform review spread (4.5 Google, 4.2 Angi, thin Yelp, documented BBB complaints) signals a quality-consistency problem that Raptor's accountability positioning directly exploits.</p>
+<p><strong>Most exploitable weakness:</strong> Richmond's brand is split across a guttering-branded domain, a diluted multi-trade identity, and a documented pattern of warranty deflection — Cameron should make "single point of accountability, roofing-first" the sharp contrast in every mid-funnel asset targeting Richmond's zip codes.</p>
+<hr />
+<h2>8. What Raptor Should Watch or Copy</h2>
+<ol>
+<li><strong>Financing front-and-center on roofing pages.</strong> </li>
+</ol>
+<p>Richmond promotes 12-month no-payment/no-interest financing directly on their homepage for roof replacements.</p>
+<p>If Raptor offers comparable financing, it needs to be equally prominent in paid media headlines and landing page hero sections — not buried in fine print.</p>
+<ol start="2">
+<li><strong>BBB accreditation as a trust badge.</strong> </li>
+</ol>
+<p>Richmond prominently positions its BBB A+ accreditation in contact and conversion pages.</p>
+<p>This is a mid-funnel trust signal that resonates with the 55+ demographic that still uses BBB as a vetting tool. Raptor should audit whether its BBB status is equally visible across all landing pages.</p>
+<ol start="3">
+<li><strong>Monitor their commercial division hiring.</strong> </li>
+</ol>
+<p>LinkedIn shows a General Manager title at Richmond Exteriors' Commercial Division</p>
+<p>, suggesting a structured push into commercial roofing. If Richmond starts posting commercial sales or estimator roles, it signals a revenue-mix shift that could bring them into the commercial territory Cameron may be targeting for Raptor's growth — worth watching on a 60-day cycle.</p></div>
+  </div>
+  
+
+  
+  <div class="scroll-fade panel p-6 sm:p-8">
+    <div class="flex items-center justify-between flex-wrap gap-2 mb-1">
+      <h2 class="text-base sm:text-lg font-bold text-white uppercase tracking-wider">Customer Voice</h2>
+      <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-white/5 border border-white/10 px-2 py-1 rounded-full">Theme cloud</span>
+    </div>
+    <p class="text-xs text-ink-soft mb-5">What customers actually say about this company. Pulled from their last 15 reviews.</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      
+      <div>
+        <div class="text-[10px] uppercase tracking-wider text-accent-green mb-3 flex items-center gap-2">
+          <span>What they love</span>
+          <span class="text-ink-mute font-normal normal-case tracking-normal">(8)</span>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 16px;">quality work</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 16px;">on time</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 15px;">good pricing</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 16px;">helpful staff</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 14px;">no pressure sales</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 15px;">professional team</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 14px;">easy scheduling</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 14px;">good explanations</span>
+          
+        </div>
+      </div>
+      
+      
+      <div>
+        <div class="text-[10px] uppercase tracking-wider text-amber-400 mb-3 flex items-center gap-2">
+          <span>Where they slip</span>
+          <span class="text-ink-mute font-normal normal-case tracking-normal">(4)</span>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-white" style="font-size: 16px;">poor communication</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-white" style="font-size: 16px;">missed appointments</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-white" style="font-size: 14px;">vague timelines</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-white" style="font-size: 13px;">quality gaps</span>
+          
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="scroll-fade panel p-6">
+      <h3 class="text-xs font-bold text-accent-green uppercase tracking-[0.15em] mb-4">Review Velocity</h3>
+      <div class="space-y-3 text-sm">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
+          <span class="text-ink-soft">Last 7 days</span>
+          <span class="font-bold text-white stat-num text-lg">+5</span>
+        </div>
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
+          <span class="text-ink-soft">Last 30 days</span>
+          <span class="font-bold text-white stat-num text-lg">+17</span>
+        </div>
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
+          <span class="text-ink-soft">Last 90 days</span>
+          <span class="font-bold text-white stat-num text-lg">+22</span>
+        </div>
+        <div class="flex justify-between items-baseline pt-2">
+          <span class="text-ink-soft">Annual pace (90d × 4)</span>
+          <span class="font-bold text-accent-blue stat-num text-lg">~88/yr</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-fade panel p-6">
+      <h3 class="text-xs font-bold text-accent-green uppercase tracking-[0.15em] mb-4">vs Raptor</h3>
+      <div class="space-y-3 text-sm">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
+          <span class="text-ink-soft">Total reviews</span>
+          <span class="font-bold text-accent-green stat-num text-lg">
+            -54
+          </span>
+        </div>
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
+          <span class="text-ink-soft">Star rating</span>
+          <span class="font-bold text-accent-green stat-num text-lg">
+            -0.5
+          </span>
+        </div>
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
+          <span class="text-ink-soft">7-day pace</span>
+          <span class="font-bold text-red-400 stat-num text-lg">
+            +2
+          </span>
+        </div>
+        <div class="flex justify-between items-baseline pt-2">
+          <span class="text-ink-soft">Response rate gap</span>
+          <span class="font-bold stat-num text-lg">
+            
+              <span class="text-accent-green">
+                -11pts
+              </span>
+            
+          </span>
+        </div>
+      </div>
+      <p class="text-xs text-ink-soft mt-4 pt-3 border-t border-white/5">Red = competitor leads, green = Raptor leads.</p>
+    </div>
+  </div>
+
+</main>
+
+<footer class="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 py-10 mt-8 border-t border-white/5 text-xs text-ink-soft">
+  <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <a href="../../" class="font-semibold text-white hover:text-accent-blue">Raptor Review Digest &rarr; Dashboard</a>
+    <div class="text-right">Profile last refreshed April 26, 2026</div>
+  </div>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+document.querySelectorAll('.scroll-fade').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
