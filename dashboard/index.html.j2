@@ -133,24 +133,15 @@ tailwind.config = {
       {% endif %}
     </div>
 
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-7">
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-7" id="hero-stats">
+      {% for stat in per_tab_hero.overview %}
       <div class="panel p-4">
-        <div class="text-3xl sm:text-4xl font-bold stat-num text-white">+{{ raptor.reviews_7d if raptor else 0 }}</div>
-        <div class="text-[10px] tracking-widest uppercase text-ink-mute mt-1">Raptor 7 Days</div>
+        <div class="text-2xl sm:text-3xl lg:text-4xl font-bold stat-num text-white" data-stat-value>{{ stat.value }}</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-mute mt-1" data-stat-label>{{ stat.label }}</div>
       </div>
-      <div class="panel p-4">
-        <div class="text-3xl sm:text-4xl font-bold stat-num text-white">+{{ raptor.reviews_30d if raptor else 0 }}</div>
-        <div class="text-[10px] tracking-widest uppercase text-ink-mute mt-1">Raptor 30 Days</div>
-      </div>
-      <div class="panel p-4">
-        <div class="text-3xl sm:text-4xl font-bold stat-num text-white">{% if next_above_gap %}{{ next_above_gap }}{% else %}–{% endif %}</div>
-        <div class="text-[10px] tracking-widest uppercase text-ink-mute mt-1">Reviews to {% if next_above %}#{{ raptor_rank - 1 }}{% else %}go{% endif %}</div>
-      </div>
-      <div class="panel p-4">
-        <div class="text-3xl sm:text-4xl font-bold stat-num text-white">{% if raptor and raptor.response_rate %}{{ (raptor.response_rate * 100)|int }}%{% else %}–{% endif %}</div>
-        <div class="text-[10px] tracking-widest uppercase text-ink-mute mt-1">Response Rate</div>
-      </div>
+      {% endfor %}
     </div>
+    <script>window.PER_TAB_HERO = {{ per_tab_hero | tojson }};</script>
   </div>
 </section>
 
@@ -577,9 +568,22 @@ tailwind.config = {
 <script>
 const tabs = document.querySelectorAll('.tab-btn');
 const panels = document.querySelectorAll('[data-panel]');
+function updateHeroStats(name) {
+  const stats = (window.PER_TAB_HERO || {})[name];
+  if (!stats) return;
+  const cells = document.querySelectorAll('#hero-stats .panel');
+  stats.forEach((s, i) => {
+    if (!cells[i]) return;
+    const valEl = cells[i].querySelector('[data-stat-value]');
+    const labEl = cells[i].querySelector('[data-stat-label]');
+    if (valEl) valEl.textContent = s.value;
+    if (labEl) labEl.textContent = s.label;
+  });
+}
 function showTab(name) {
   tabs.forEach(t => t.classList.toggle('tab-active', t.dataset.tab === name));
   panels.forEach(p => p.classList.toggle('hidden', p.dataset.panel !== name));
+  updateHeroStats(name);
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 tabs.forEach(t => t.addEventListener('click', () => showTab(t.dataset.tab)));

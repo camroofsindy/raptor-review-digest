@@ -1341,6 +1341,107 @@ def _md_to_html(text):
     return Markup(html)
 
 
+def _compute_per_tab_hero(businesses, raptor, raptor_rank, next_above, next_above_gap,
+                            news_cards, rising_profiles, action_cards, seo_sections,
+                            by_volume, top_threat):
+    """Build hero stat boxes that change per active tab. Returns dict mapping
+    tab name -> list of {value, label} stat objects."""
+    raptor = raptor or {}
+    raptor_7d = raptor.get("reviews_7d") or 0
+    raptor_30d = raptor.get("reviews_30d") or 0
+    raptor_total = raptor.get("review_count") or 0
+    raptor_resp = raptor.get("response_rate")
+
+    # Movement stats
+    gains = [b for b in businesses if b.get("reviews_7d") is not None]
+    total_week_gains = sum((b.get("reviews_7d") or 0) for b in businesses)
+    market_avg_7d = (sum((b.get("reviews_7d") or 0) for b in gains) / len(gains)) if gains else 0
+    biggest_gainer = max(gains, key=lambda b: b.get("reviews_7d") or 0) if gains else None
+    raptor_pct = "–"
+    if raptor and gains:
+        sorted_by_7d = sorted(gains, key=lambda b: b.get("reviews_7d") or 0)
+        raptor_idx = next(
+            (i for i, b in enumerate(sorted_by_7d)
+             if "raptor" in b["name"].lower()), -1
+        )
+        if raptor_idx >= 0:
+            raptor_pct = f"{int((raptor_idx / max(len(sorted_by_7d) - 1, 1)) * 100)}%"
+
+    # News stats
+    company_stories = [c for c in news_cards if c.get("company") and "industry" not in c["company"].lower()]
+    industry_stories = [c for c in news_cards if c.get("company") and "industry" in c["company"].lower()]
+    from collections import Counter
+    mention_counter = Counter(c["company"] for c in company_stories)
+    most_cited = mention_counter.most_common(1)[0][0] if mention_counter else "–"
+    most_cited_short = most_cited.split(" - ")[0].split(" – ")[0][:18] if most_cited != "–" else "–"
+
+    # Rising stats
+    risers = [rp["competitor"] for rp in (rising_profiles or [])]
+    smallest_riser = min((r.get("review_count") or 0 for r in risers), default=0)
+    highest_velocity = 0
+    for r in risers:
+        total = r.get("review_count") or 1
+        v = ((r.get("reviews_30d") or 0) / total) * 100
+        if v > highest_velocity:
+            highest_velocity = v
+    raptor_velocity = ((raptor_30d / max(raptor_total, 1)) * 100) if raptor_total else 0
+
+    # All competitors stats
+    leader = by_volume[0] if by_volume else None
+    leader_count = leader["review_count"] if leader else 0
+    leader_short = (leader["name"].split(" (")[0][:18]) if leader else "–"
+
+    # Top threat short name
+    threat_short = (top_threat["company"].split(" - ")[0].split(" – ")[0][:16]) if top_threat else "–"
+
+    return {
+        "overview": [
+            {"value": f"+{raptor_7d}", "label": "Raptor 7 Days"},
+            {"value": f"+{raptor_30d}", "label": "Raptor 30 Days"},
+            {"value": str(next_above_gap) if next_above_gap else "–",
+             "label": f"Reviews to #{(raptor_rank - 1) if raptor_rank and raptor_rank > 1 else 'go'}"},
+            {"value": f"{int(raptor_resp * 100)}%" if raptor_resp else "–", "label": "Response Rate"},
+        ],
+        "moves": [
+            {"value": str(len(action_cards)), "label": "Actions Live"},
+            {"value": threat_short, "label": "Top Threat"},
+            {"value": f"+{raptor_30d}", "label": "Raptor 30d Pace"},
+            {"value": "7d", "label": "Execution Window"},
+        ],
+        "movement": [
+            {"value": f"+{total_week_gains}", "label": "Indy Reviews 7d"},
+            {"value": f"+{market_avg_7d:.1f}", "label": "Market Avg 7d"},
+            {"value": raptor_pct, "label": "Raptor Percentile"},
+            {"value": f"+{biggest_gainer.get('reviews_7d') or 0}" if biggest_gainer else "–",
+             "label": (biggest_gainer["name"].split(" (")[0][:14] if biggest_gainer else "–")},
+        ],
+        "news": [
+            {"value": str(len(news_cards)), "label": "Stories This Week"},
+            {"value": str(len(company_stories)), "label": "Competitor Moves"},
+            {"value": str(len(industry_stories)), "label": "Industry Moves"},
+            {"value": most_cited_short, "label": "Most Cited"},
+        ],
+        "rising": [
+            {"value": str(len(risers)), "label": "Players Flagged"},
+            {"value": str(smallest_riser), "label": "Smallest Base"},
+            {"value": f"{highest_velocity:.0f}%", "label": "Top Velocity"},
+            {"value": f"{raptor_velocity:.0f}%", "label": "Raptor Velocity"},
+        ],
+        "seo": [
+            {"value": str(len(seo_sections)), "label": "Sections"},
+            {"value": "6", "label": "Metro Queries"},
+            {"value": "ChatGPT/Claude/Gemini"[:18], "label": "Engines Tested"},
+            {"value": "Active", "label": "Brief Status"},
+        ],
+        "all": [
+            {"value": str(len(by_volume)), "label": "Competitors Tracked"},
+            {"value": f"#{raptor_rank or 'n/a'}", "label": "Raptor Rank"},
+            {"value": f"{leader_count:,}", "label": leader_short},
+            {"value": f"{raptor_total:,}", "label": "Raptor Total"},
+        ],
+    }
+
+
 def _build_chart_data(businesses, raptor):
     """Construct JSON-serializable chart datasets for the dashboard."""
     raptor_name = raptor["name"] if raptor else None
@@ -1452,6 +1553,14 @@ def render_dashboard(snapshot, prev_snapshot, raptor, businesses, market_news,
     # Threat snippet from market news (top news event)
     top_threat = news_cards[0] if news_cards else None
 
+    per_tab_hero = _compute_per_tab_hero(
+        businesses=businesses, raptor=raptor, raptor_rank=raptor_rank,
+        next_above=next_above, next_above_gap=next_above_gap,
+        news_cards=news_cards, rising_profiles=rising_profiles,
+        action_cards=action_cards, seo_sections=seo_sections,
+        by_volume=by_volume, top_threat=top_threat,
+    )
+
     html = template.render(
         snapshot=snapshot,
         is_baseline=prev_snapshot is None,
@@ -1473,6 +1582,7 @@ def render_dashboard(snapshot, prev_snapshot, raptor, businesses, market_news,
         overview_summary=overview_summary,
         red_team=red_team,
         chart_data=chart_data,
+        per_tab_hero=per_tab_hero,
         run_date=datetime.now(timezone.utc).strftime("%B %d, %Y"),
     )
     DOCS_DIR.mkdir(exist_ok=True)
