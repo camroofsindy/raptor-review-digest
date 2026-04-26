@@ -290,6 +290,12 @@ def ai_seo_aeo_brief(client, businesses, raptor):
     raptor_name = raptor["name"] if raptor else "Raptor Roofing"
     prompt = f"""You are Cameron Blakely's CMO at Raptor Roofing. He pays you $500K/year for ahead-of-the-curve thinking. This is the SEO and AEO (AI Engine Optimization) brief for THIS WEEK's dashboard refresh.
 
+CRITICAL output rules:
+- Do NOT include any title heading (no "# Raptor Roofing — Weekly SEO/AEO Brief" or similar at the top).
+- Start the document directly with "## 1. Competitor SEO/AEO Benchmarks".
+- Use exactly three ## sections numbered 1, 2, 3 with the headings below.
+- NO emojis, NO eagle imagery (Raptor is a velociraptor).
+
 Use web search aggressively (10-15 searches). Your job is three sections, one markdown document.
 
 ## 1. Competitor SEO/AEO Benchmarks
@@ -759,23 +765,24 @@ def parse_actions_into_cards(actions_md):
 
 def parse_markdown_sections(md_text):
     """Split markdown text into sections by ## or # headings. Returns a list of
-    {heading, body_md} for each section. Used so SEO/AEO and Rising can render
-    section-by-section visual cards instead of one long prose block."""
+    {heading, body_md} for each section. Filters out empty/title-only H1 headers
+    that AI sometimes prepends — only keeps sections with substantive body
+    (>= 100 chars after stripping markdown noise)."""
     if not md_text:
         return []
-    # Match ## or # headings (level 1-2 only — sub-headings stay in body)
     parts = re.split(r"^(#{1,2})\s+(.+?)$", md_text, flags=re.MULTILINE)
     sections = []
-    # parts: [pre, level, heading, body, level, heading, body, ...]
     for i in range(1, len(parts) - 2, 3):
         level = parts[i]
         heading = parts[i + 1].strip()
         body = parts[i + 2].strip()
-        # Drop any trailing horizontal rule artifacts
         body = re.sub(r"\n+---+\s*$", "", body).strip()
+        # Drop sections whose body is just a date or empty title content.
+        plain = re.sub(r"\s+", " ", re.sub(r"[*_#\-`]", "", body)).strip()
+        if len(plain) < 100:
+            continue
         sections.append({"level": len(level), "heading": heading, "body": body})
     if not sections and md_text.strip():
-        # No markdown headings found — return whole thing as one section
         sections.append({"level": 0, "heading": "", "body": md_text.strip()})
     return sections
 
@@ -976,19 +983,49 @@ def scrape_google_maps(query, top_n=20):
         if not biz.get("place_id"):
             biz["place_id"] = name_to_pid.get(_norm(biz["name"]))
 
-    # Multi-location label disambiguation: when the same brand appears in multiple
-    # entries (different place_ids but same name), append a city/area label derived
-    # from each one's scraped address. Bone Dry HQ vs Bone Dry Greenwood, etc.
-    by_name = {}
+    # Multi-location handling. Group by BASE name (stripping any existing
+    # parenthetical) so "Bone Dry Roofing" and "Bone Dry Roofing (HQ)" land in
+    # the same group. Within a group:
+    # 1) Merge near-duplicates (same review_count, or within 1%/5 reviews and
+    #    matching rating). Same physical place, just different listings.
+    # 2) For genuinely-distinct entries, apply (HQ)/(City)/(Loc 2) labels.
+    def _base_name(name):
+        return re.sub(r"\s*\([^)]*\)\s*$", "", name).strip()
+    by_base = {}
     for biz in results:
-        n = _norm(biz["name"])
-        by_name.setdefault(n, []).append(biz)
-    for n, group in by_name.items():
-        if len(group) <= 1:
+        base_n = _norm(_base_name(biz["name"]))
+        by_base.setdefault(base_n, []).append(biz)
+    deduped_results = []
+    for base, group in by_base.items():
+        if len(group) == 1:
+            deduped_results.append(group[0])
             continue
-        # Sort so the entry with the highest review count gets "(HQ)" if no city.
+        # Step 1: merge near-duplicates by review_count proximity + rating match.
+        # Sort by descending review count so we keep the highest-quality record.
         group.sort(key=lambda b: b["review_count"], reverse=True)
-        for i, biz in enumerate(group):
+        kept = []
+        for biz in group:
+            is_dup = False
+            for k in kept:
+                rc1 = biz.get("review_count") or 0
+                rc2 = k.get("review_count") or 0
+                if rc1 == 0 or rc2 == 0:
+                    continue
+                # Same physical place if within 5 reviews and same rating.
+                if abs(rc1 - rc2) <= max(5, int(rc2 * 0.01)) and biz.get("rating") == k.get("rating"):
+                    # Prefer the entry with timeline data captured.
+                    if (biz.get("reviews_loaded") or 0) > (k.get("reviews_loaded") or 0):
+                        # Replace kept with the one that has timeline data.
+                        kept[kept.index(k)] = biz
+                    is_dup = True
+                    break
+            if not is_dup:
+                kept.append(biz)
+        # Step 2: distinct entries — apply (HQ)/(City)/(Loc N) labels.
+        for i, biz in enumerate(kept):
+            current_base = _base_name(biz["name"])
+            if biz["name"] != current_base:
+                continue  # Name already has a parenthetical (e.g. pinned "(HQ)")
             label = None
             addr = biz.get("address") or ""
             city_match = re.search(r",\s*([A-Z][a-zA-Z]+)", addr)
@@ -996,9 +1033,11 @@ def scrape_google_maps(query, top_n=20):
                 label = city_match.group(1)
             if not label:
                 label = "HQ" if i == 0 else f"Loc {i + 1}"
-            # Avoid double-tagging if name already contains a parenthetical
-            if "(" not in biz["name"]:
-                biz["name"] = f"{biz['name']} ({label})"
+            # Only label if the group ended up with 2+ distinct entries.
+            if len(kept) > 1:
+                biz["name"] = f"{current_base} ({label})"
+        deduped_results.extend(kept)
+    results = deduped_results
 
     # Dedup by place_id (stable) when available, falling back to normalized name.
     # Keep whichever record has the higher review count (pinned searches often find HQ).

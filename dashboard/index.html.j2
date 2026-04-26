@@ -300,10 +300,10 @@ tailwind.config = {
               <td class="font-medium" data-val="{{ biz.name|lower }}">{{ biz.name }}</td>
               <td class="text-right stat-num" data-val="{{ biz.review_count }}">{{ '{:,}'.format(biz.review_count) }}</td>
               <td class="text-right" data-val="{{ biz.rating or 0 }}">{{ biz.rating if biz.rating is not none else '–' }}</td>
-              <td class="text-right {% if biz.reviews_7d and biz.reviews_7d > 0 %}text-up{% else %}text-flat{% endif %}" data-val="{{ biz.reviews_7d or 0 }}">+{{ biz.reviews_7d or 0 }}</td>
-              <td class="text-right" data-val="{{ biz.reviews_30d or 0 }}">+{{ biz.reviews_30d or 0 }}</td>
-              <td class="text-right" data-val="{{ biz.reviews_90d or 0 }}">+{{ biz.reviews_90d or 0 }}</td>
-              <td class="text-right" data-val="{{ ((biz.response_rate or 0) * 100)|int }}">{% if biz.response_rate is not none %}{{ (biz.response_rate * 100)|int }}%{% else %}–{% endif %}</td>
+              <td class="text-right {% if biz.reviews_7d and biz.reviews_7d > 0 %}text-up{% else %}text-flat{% endif %}" data-val="{{ biz.reviews_7d if biz.reviews_7d is not none else -1 }}">{% if biz.reviews_7d is none %}<span class="text-flat">–</span>{% else %}+{{ biz.reviews_7d }}{% endif %}</td>
+              <td class="text-right" data-val="{{ biz.reviews_30d if biz.reviews_30d is not none else -1 }}">{% if biz.reviews_30d is none %}<span class="text-flat">–</span>{% else %}+{{ biz.reviews_30d }}{% endif %}</td>
+              <td class="text-right" data-val="{{ biz.reviews_90d if biz.reviews_90d is not none else -1 }}">{% if biz.reviews_90d is none %}<span class="text-flat">–</span>{% else %}+{{ biz.reviews_90d }}{% endif %}</td>
+              <td class="text-right" data-val="{{ ((biz.response_rate or 0) * 100)|int if biz.response_rate is not none else -1 }}">{% if biz.response_rate is not none %}{{ (biz.response_rate * 100)|int }}%{% else %}<span class="text-flat">–</span>{% endif %}</td>
             </tr>
             {% endfor %}
           </tbody>
@@ -510,10 +510,10 @@ tailwind.config = {
               </td>
               <td class="text-right stat-num" data-val="{{ biz.review_count }}">{{ '{:,}'.format(biz.review_count) }}</td>
               <td class="text-right" data-val="{{ biz.rating or 0 }}">{{ biz.rating if biz.rating is not none else '–' }}</td>
-              <td class="text-right {% if biz.reviews_7d and biz.reviews_7d > 0 %}text-up{% else %}text-flat{% endif %}" data-val="{{ biz.reviews_7d or 0 }}">+{{ biz.reviews_7d or 0 }}</td>
-              <td class="text-right" data-val="{{ biz.reviews_30d or 0 }}">+{{ biz.reviews_30d or 0 }}</td>
-              <td class="text-right" data-val="{{ biz.reviews_90d or 0 }}">+{{ biz.reviews_90d or 0 }}</td>
-              <td class="text-right" data-val="{{ ((biz.response_rate or 0) * 100)|int }}">{% if biz.response_rate is not none %}{{ (biz.response_rate * 100)|int }}%{% else %}–{% endif %}</td>
+              <td class="text-right {% if biz.reviews_7d and biz.reviews_7d > 0 %}text-up{% else %}text-flat{% endif %}" data-val="{{ biz.reviews_7d if biz.reviews_7d is not none else -1 }}">{% if biz.reviews_7d is none %}<span class="text-flat">–</span>{% else %}+{{ biz.reviews_7d }}{% endif %}</td>
+              <td class="text-right" data-val="{{ biz.reviews_30d if biz.reviews_30d is not none else -1 }}">{% if biz.reviews_30d is none %}<span class="text-flat">–</span>{% else %}+{{ biz.reviews_30d }}{% endif %}</td>
+              <td class="text-right" data-val="{{ biz.reviews_90d if biz.reviews_90d is not none else -1 }}">{% if biz.reviews_90d is none %}<span class="text-flat">–</span>{% else %}+{{ biz.reviews_90d }}{% endif %}</td>
+              <td class="text-right" data-val="{{ ((biz.response_rate or 0) * 100)|int if biz.response_rate is not none else -1 }}">{% if biz.response_rate is not none %}{{ (biz.response_rate * 100)|int }}%{% else %}<span class="text-flat">–</span>{% endif %}</td>
             </tr>
             {% endfor %}
           </tbody>
