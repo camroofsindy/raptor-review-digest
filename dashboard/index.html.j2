@@ -446,7 +446,7 @@ tailwind.config = {
     {% endif %}
   </section>
 
-  <!-- SEO + AEO — section-by-section visual cards -->
+  <!-- SEO + AEO — charts + section cards -->
   <section data-panel="seo" class="hidden space-y-6">
     <div class="flex items-center justify-between flex-wrap gap-2">
       <div>
@@ -454,6 +454,34 @@ tailwind.config = {
         <p class="text-sm text-ink-soft mt-1">Where competitors win on search and generative AI engines, what tactic Raptor should run this week, where Raptor stands when ChatGPT, Claude, and Gemini are asked about Indy roofing.</p>
       </div>
     </div>
+
+    {% if seo_metrics %}
+    {# Key gap callout + 4 chart-friendly stat tiles parsed from the AI's JSON metrics block. #}
+    {% if seo_metrics.key_gap %}
+    <div class="panel p-5 sm:p-6 border-l-4 border-l-accent-green">
+      <div class="text-[10px] uppercase tracking-wider text-accent-green mb-1">Biggest Gap This Week</div>
+      <div class="text-base sm:text-lg font-bold text-white">{{ seo_metrics.key_gap }}</div>
+    </div>
+    {% endif %}
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {% if seo_metrics.backlink_counts %}
+      <div class="panel p-6">
+        <h3 class="text-xs font-bold text-ink-soft uppercase tracking-[0.15em] mb-1">Backlink Profile (estimated)</h3>
+        <p class="text-xs text-ink-mute mb-3">Press mentions, association memberships, partnership citations.</p>
+        <div class="relative h-64 sm:h-72"><canvas id="seo-backlinks-chart"></canvas></div>
+      </div>
+      {% endif %}
+      {% if seo_metrics.aeo_citations %}
+      <div class="panel p-6">
+        <h3 class="text-xs font-bold text-ink-soft uppercase tracking-[0.15em] mb-1">AEO Citations</h3>
+        <p class="text-xs text-ink-mute mb-3">Times each competitor was named in AI search responses across {{ seo_metrics.queries_tested or 6 }} metro queries.</p>
+        <div class="relative h-64 sm:h-72"><canvas id="seo-aeo-chart"></canvas></div>
+      </div>
+      {% endif %}
+    </div>
+    <script>window.SEO_METRICS = {{ seo_metrics | tojson }};</script>
+    {% endif %}
 
     {% if seo_sections %}
     <div class="space-y-4">
@@ -747,6 +775,58 @@ new Chart(document.getElementById('response-chart'), {
     },
   },
 });
+
+// SEO/AEO charts (only render if metrics block was parsed)
+if (window.SEO_METRICS) {
+  const seoBacklinkEl = document.getElementById('seo-backlinks-chart');
+  if (seoBacklinkEl && window.SEO_METRICS.backlink_counts && window.SEO_METRICS.backlink_counts.length) {
+    new Chart(seoBacklinkEl, {
+      type: 'bar',
+      data: {
+        labels: window.SEO_METRICS.backlink_counts.map(b => b.name),
+        datasets: [{
+          data: window.SEO_METRICS.backlink_counts.map(b => b.count),
+          backgroundColor: window.SEO_METRICS.backlink_counts.map(b => /raptor/i.test(b.name) ? GREEN : NAVY_LIGHT),
+          borderRadius: 4,
+        }],
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false }, tooltip: { backgroundColor: '#0d1d3a', titleColor: '#fff', bodyColor: '#fff' } },
+        scales: {
+          x: { beginAtZero: true, grid: { color: SOFT }, ticks: { color: TEXT_SOFT } },
+          y: { grid: { display: false }, ticks: { color: TEXT_SOFT } },
+        },
+      },
+    });
+  }
+  const seoAeoEl = document.getElementById('seo-aeo-chart');
+  if (seoAeoEl && window.SEO_METRICS.aeo_citations && window.SEO_METRICS.aeo_citations.length) {
+    new Chart(seoAeoEl, {
+      type: 'bar',
+      data: {
+        labels: window.SEO_METRICS.aeo_citations.map(b => b.name),
+        datasets: [{
+          data: window.SEO_METRICS.aeo_citations.map(b => b.cited_in),
+          backgroundColor: window.SEO_METRICS.aeo_citations.map(b => /raptor/i.test(b.name) ? GREEN : BLUE),
+          borderRadius: 4,
+        }],
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false }, tooltip: { backgroundColor: '#0d1d3a', titleColor: '#fff', bodyColor: '#fff', callbacks: { label: (ctx) => `Cited in ${ctx.parsed.x} of ${(window.SEO_METRICS.queries_tested || 6)} queries` } } },
+        scales: {
+          x: { beginAtZero: true, max: window.SEO_METRICS.queries_tested || 6, grid: { color: SOFT }, ticks: { color: TEXT_SOFT, stepSize: 1 } },
+          y: { grid: { display: false }, ticks: { color: TEXT_SOFT } },
+        },
+      },
+    });
+  }
+}
 
 new Chart(document.getElementById('share-chart'), {
   type: 'doughnut',

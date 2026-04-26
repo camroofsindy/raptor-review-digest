@@ -292,9 +292,37 @@ def ai_seo_aeo_brief(client, businesses, raptor):
 
 CRITICAL output rules:
 - Do NOT include any title heading (no "# Raptor Roofing — Weekly SEO/AEO Brief" or similar at the top).
-- Start the document directly with "## 1. Competitor SEO/AEO Benchmarks".
+- Start the document directly with a ```json metrics block (see format below), then "## 1. Competitor SEO/AEO Benchmarks".
 - Use exactly three ## sections numbered 1, 2, 3 with the headings below.
 - NO emojis, NO eagle imagery (Raptor is a velociraptor).
+
+ACCURACY GUARDS (Cameron caught a Malarkey claim error last week):
+- Never claim Raptor would be the "only" or "first" Indianapolis roofer to do/install/use anything unless you have web-verified evidence that no other Indy roofer is doing it. Default to "one of the few" or skip the exclusivity claim.
+- For shingle manufacturer claims (Malarkey, Owens Corning, GAF, IKO, CertainTeed, etc.): verify which competitors install which brands before suggesting Raptor partner with one for differentiation. Indy Roof already installs Malarkey — do not suggest Malarkey exclusivity.
+- When asserting a "first/only/no other" claim, cite the search query you ran to verify, or hedge with "based on a quick scan" / "appears to be".
+
+Before the markdown sections, output a JSON metrics block in this exact format (used to render charts on the dashboard):
+
+```json
+{{
+  "backlink_counts": [
+    {{"name": "Indy Roof & Restoration", "count": 87}},
+    {{"name": "Bone Dry Roofing", "count": 65}},
+    {{"name": "Cochran Exteriors", "count": 42}},
+    {{"name": "Raptor Roofing", "count": 12}}
+  ],
+  "aeo_citations": [
+    {{"name": "Bone Dry Roofing", "cited_in": 3}},
+    {{"name": "Indy Roof & Restoration", "cited_in": 2}},
+    {{"name": "Raptor Roofing", "cited_in": 0}}
+  ],
+  "queries_tested": 6,
+  "key_gap": "Raptor backlinks: 12 vs leader 87 (gap: 75)",
+  "weekly_tactic_verb": "Publish"
+}}
+```
+
+Use real numbers from your research. If you can't get exact backlink counts, estimate based on visible signals (press mentions, association memberships, etc.) and round to nearest 5. If a metric is genuinely unknowable, set its array to empty `[]` rather than fabricating.
 
 Use web search aggressively (10-15 searches). Your job is three sections, one markdown document.
 
@@ -761,6 +789,28 @@ def parse_actions_into_cards(actions_md):
         except (ValueError, IndexError):
             continue
     return cards
+
+
+def parse_seo_metrics(brief_md):
+    """Extract the leading ```json {...}``` block from the SEO/AEO brief if
+    present. Returns the parsed dict or None."""
+    if not brief_md:
+        return None
+    m = re.search(r"```json\s*(\{.*?\})\s*```", brief_md, re.DOTALL)
+    if not m:
+        return None
+    try:
+        return json.loads(m.group(1))
+    except Exception:
+        return None
+
+
+def strip_seo_metrics_block(brief_md):
+    """Return brief_md with the leading ```json {...}``` metrics block stripped
+    so only the prose sections feed into parse_markdown_sections."""
+    if not brief_md:
+        return brief_md
+    return re.sub(r"```json\s*\{.*?\}\s*```\s*", "", brief_md, count=1, flags=re.DOTALL).strip()
 
 
 def parse_markdown_sections(md_text):
@@ -1573,7 +1623,8 @@ def render_dashboard(snapshot, prev_snapshot, raptor, businesses, market_news,
     by_gain_for_table = [b for b in by_gain_7d if (b.get("review_count") or 0) >= 50][:50]
     action_headlines = extract_action_headlines(raptor_actions)
     action_cards = parse_actions_into_cards(raptor_actions)
-    seo_sections = parse_markdown_sections(seo_aeo_brief or "")
+    seo_metrics = parse_seo_metrics(seo_aeo_brief or "")
+    seo_sections = parse_markdown_sections(strip_seo_metrics_block(seo_aeo_brief or ""))
     # Annotate each rising profile with structured fields for card layout.
     rising_with_fields = []
     for rp in rising_profiles or []:
@@ -1618,6 +1669,7 @@ def render_dashboard(snapshot, prev_snapshot, raptor, businesses, market_news,
         action_cards=action_cards,
         seo_aeo_brief=seo_aeo_brief,
         seo_sections=seo_sections,
+        seo_metrics=seo_metrics,
         overview_summary=overview_summary,
         red_team=red_team,
         chart_data=chart_data,
