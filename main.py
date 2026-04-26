@@ -67,7 +67,11 @@ def save_history(history):
 
 ANTHROPIC_MODEL_SYNTHESIS = "claude-opus-4-7"
 ANTHROPIC_MODEL_RESEARCH = "claude-sonnet-4-6"  # Opus 4.7 refuses tool-using research tasks
-WEB_SEARCH_TOOL = {"type": "web_search_20250305", "name": "web_search", "max_uses": 15}
+ANTHROPIC_MODEL_EXTRACTION = "claude-haiku-4-5-20251001"  # Cheaper for structured extraction
+# Reduced from 15 to 4 to cut Anthropic web_search server-tool spend by ~70%.
+# Per Cameron's cost-reduction plan; pre-fetched Google CSE context (Phase 2) will
+# further reduce reliance on iterative search.
+WEB_SEARCH_TOOL = {"type": "web_search_20250305", "name": "web_search", "max_uses": 4}
 
 
 def _anthropic_client():
@@ -158,64 +162,55 @@ If you genuinely find nothing substantive this week, output "No significant news
     return _extract_text(response)
 
 
-def ai_rising_profile(client, player):
-    """Per-rising-player profile. CMO-grade research."""
-    prompt = f"""You are Cameron Blakely's Chief Marketing Officer for Raptor Roofing. Treat yourself as a $500K/year CMO doing competitive intelligence. Be insightful, specific, ahead-of-curve. Reference real tactics, name specific platforms and tools, never write generic filler.
+_RISING_PROFILE_SYSTEM = """You are Cameron Blakely's Chief Marketing Officer for Raptor Roofing. Treat yourself as a $500K/year CMO doing competitive intelligence. Be insightful, specific, ahead-of-curve. Reference real tactics, name specific platforms and tools, never write generic filler.
 
-Research "{player['name']}", an Indianapolis-area roofing company.
+For each rising-player profile, output 6-8 sentences in this 4-section structure with bold headings:
+
+**1. Who they are.** Ownership, founding year, scale, service area, what makes them distinct.
+**2. What's driving the velocity.** Be specific — is it a paid media play? A referral engine? A storm-chasing operation? A particular partnership? A community-event blitz? Point to evidence.
+**3. One tactic Raptor should steal.** Name the specific move and how to execute it within 30 days.
+**4. One weakness Raptor can exploit in sales conversations.** Be specific (e.g. "their Yelp is 2.5 stars, lean on Raptor's 5.0 in close").
+
+Cite sources inline as markdown links. Do NOT name specific Raptor team members. NO emojis, NO eagle imagery (Raptor is a velociraptor, not an eagle)."""
+
+
+def ai_rising_profile(client, player):
+    """Per-rising-player profile. CMO-grade research with prompt caching on the
+    static system block (5 calls per cycle = ~4x cache savings)."""
+    user_msg = f"""Research "{player['name']}", an Indianapolis-area roofing company.
 
 Their numbers: {player['review_count']} total Google reviews at {player.get('rating', 'n/a')} stars, +{player.get('reviews_30d', 0)} in 30 days. {player.get('_rising_reason', '')}
 
-Use web search (5-8 searches). Tell Cameron in 6-8 sentences total:
-1. **Who they are.** Ownership, founding year, scale, service area, what makes them distinct.
-2. **What's driving the velocity.** Be specific — is it a paid media play? A referral engine? A storm-chasing operation? A particular partnership? A community-event blitz? Point to evidence.
-3. **One tactic Raptor should steal.** Name the specific move and how to execute it within 30 days.
-4. **One weakness Raptor can exploit in sales conversations.** Be specific (e.g. "their Yelp is 2.5 stars, lean on Raptor's 5.0 in close").
-
-Cite sources inline as markdown links. Do NOT name specific Raptor team members."""
+Use web search aggressively for this one. Output the 4-section format from the system instructions."""
     response = client.messages.create(
         model=ANTHROPIC_MODEL_RESEARCH,
         max_tokens=2500,
+        system=[{
+            "type": "text",
+            "text": _RISING_PROFILE_SYSTEM,
+            "cache_control": {"type": "ephemeral"},
+        }],
         tools=[WEB_SEARCH_TOOL],
-        messages=[{"role": "user", "content": prompt}],
+        messages=[{"role": "user", "content": user_msg}],
     )
     return _extract_text(response)
 
 
-def ai_competitor_profile(client, biz, raptor):
-    """Per-competitor CMO-grade deep research with web search. One Sonnet call per
-    competitor that produces an 8-section markdown profile."""
-    name = biz["name"]
-    total = biz.get("review_count", 0)
-    rating = biz.get("rating")
-    r7 = biz.get("reviews_7d") or 0
-    r30 = biz.get("reviews_30d") or 0
-    r90 = biz.get("reviews_90d") or 0
-    resp = biz.get("response_rate")
-    addr = biz.get("address") or "Indianapolis area"
-
+def _competitor_profile_system(raptor):
+    """Static system prompt for ai_competitor_profile. Cached across all 20 calls
+    in a cycle so we only pay full input price on the first call."""
     raptor_total = raptor["review_count"] if raptor else 663
     raptor_rating = raptor["rating"] if raptor else 5.0
+    return f"""You are Cameron Blakely's Chief Marketing Officer at Raptor Roofing — think of yourself as a $500K/year CMO who has worked in residential home-services marketing for 15+ years. You produce competitive intelligence briefs that read like the work of someone who actually knows the playbook (paid media, SEO, AEO, partnerships, sales enablement). No 101-level filler. Be specific, ahead-of-curve, and willing to share contrarian takes when the data supports them.
 
-    prompt = f"""You are Cameron Blakely's Chief Marketing Officer at Raptor Roofing — think of yourself as a $500K/year CMO who has worked in residential home-services marketing for 15+ years. You produce competitive intelligence briefs that read like the work of someone who actually knows the playbook (paid media, SEO, AEO, partnerships, sales enablement). No 101-level filler. Be specific, ahead-of-curve, and willing to share contrarian takes when the data supports them.
-
-Refreshed every Tue/Thu on Cameron's dashboard.
-
-Competitor's current numbers:
-- Total Google reviews: {total}
-- Star rating: {rating}
-- Reviews last 7 days: {r7}
-- Reviews last 30 days: {r30}
-- Reviews last 90 days: {r90}
-- Owner response rate: {resp}
-- Address: {addr}
+Each brief refreshes every Tue/Thu on Cameron's dashboard.
 
 Raptor's numbers for comparison:
 - {raptor_total} reviews at {raptor_rating} stars
 - 5.0 rating is highest in the Indy top 10 by volume
 - Premium positioning, "we don't outsource accountability"
 
-Using web search (use it generously, 6-10 searches), produce a markdown brief in EXACTLY this structure. Use bold section headings. Be specific with names, dates, URLs. NO generic filler. NO naming Raptor team members beyond Cameron and Patrick.
+Output a markdown brief in EXACTLY this structure. Use bold section headings. Be specific with names, dates, URLs. NO generic filler. NO naming Raptor team members beyond Cameron and Patrick.
 
 ## 1. Who They Are
 2-3 sentences: founding year, owner(s), service area, what makes them distinct.
@@ -241,13 +236,46 @@ Where they beat Raptor. Where Raptor beats them. One sentence on the most exploi
 ## 8. What Raptor Should Watch or Copy
 2-3 specific tactics Cameron should monitor or steal from this competitor.
 
-Aim for 400-650 words total. Cite sources inline as markdown links."""
+Aim for 400-650 words total. Cite sources inline as markdown links.
+
+CRITICAL: Do NOT name specific Raptor team members. NO EMOJIS. NO eagle imagery (Raptor is a velociraptor, a dinosaur, not an eagle). Plain text and standard markdown only."""
+
+
+def ai_competitor_profile(client, biz, raptor):
+    """Per-competitor CMO-grade deep research with web search. The static system
+    block (instructions + Raptor reference numbers) is cached so we only pay full
+    input price on the first call of the cycle."""
+    name = biz["name"]
+    total = biz.get("review_count", 0)
+    rating = biz.get("rating")
+    r7 = biz.get("reviews_7d") or 0
+    r30 = biz.get("reviews_30d") or 0
+    r90 = biz.get("reviews_90d") or 0
+    resp = biz.get("response_rate")
+    addr = biz.get("address") or "Indianapolis area"
+
+    user_msg = f"""Research "{name}" using web search. Their current numbers:
+
+- Total Google reviews: {total}
+- Star rating: {rating}
+- Reviews last 7 days: {r7}
+- Reviews last 30 days: {r30}
+- Reviews last 90 days: {r90}
+- Owner response rate: {resp}
+- Address: {addr}
+
+Produce the brief in the exact 8-section format from the system instructions."""
 
     response = client.messages.create(
         model=ANTHROPIC_MODEL_RESEARCH,
         max_tokens=4000,
+        system=[{
+            "type": "text",
+            "text": _competitor_profile_system(raptor),
+            "cache_control": {"type": "ephemeral"},
+        }],
         tools=[WEB_SEARCH_TOOL],
-        messages=[{"role": "user", "content": prompt}],
+        messages=[{"role": "user", "content": user_msg}],
     )
     return _extract_text(response)
 
@@ -394,46 +422,52 @@ NO EMOJIS. NO eagle imagery. Plain professional memo. Bold the most important se
     return _extract_text(response)
 
 
-def ai_review_themes(client, biz):
-    """Extract praise + complaint themes from a competitor's recent review samples.
-    Returns a dict {praise: [{theme, weight}, ...], complaints: [{theme, weight}, ...]}.
-    Used for the keyword cloud on the competitor sub-page."""
-    samples = biz.get("review_samples") or []
-    if not samples or len(samples) < 3:
-        return None
-    joined = "\n\n".join(f"- {s}" for s in samples[:15])
-    prompt = f"""You are extracting customer-language themes from real Google reviews of "{biz['name']}", an Indianapolis roofing competitor. Cameron uses these themes to find sales-call wedges and copy ideas.
-
-Recent reviews (verbatim, customer voice):
-
-{joined}
+_THEMES_SYSTEM = """You extract customer-language themes from real Google reviews of Indianapolis roofing competitors. Cameron Blakely (owner of Raptor Roofing) uses these themes to find sales-call wedges and copy ideas.
 
 Output ONLY valid JSON in this exact shape (no other prose, no markdown fences):
 
-{{
+{
   "praise": [
-    {{"theme": "short 1-3 word phrase customers actually used", "weight": 1-10}},
+    {"theme": "short 1-3 word phrase customers actually used", "weight": 1-10},
     ...up to 8 items
   ],
   "complaints": [
-    {{"theme": "short 1-3 word phrase customers actually used", "weight": 1-10}},
+    {"theme": "short 1-3 word phrase customers actually used", "weight": 1-10},
     ...up to 5 items
   ]
-}}
+}
 
 Rules:
 - Themes should be short (1-3 words), in customer voice (e.g. "fast cleanup", "insurance help", "missed appointments")
 - Weight 10 = appears in many reviews; weight 1 = appears once
 - If reviews are uniformly positive, complaints array can be empty []
 - NO emojis, NO eagle imagery, JSON only"""
+
+
+def ai_review_themes(client, biz):
+    """Extract praise + complaint themes from a competitor's recent review samples.
+    Returns a dict {praise: [{theme, weight}, ...], complaints: [{theme, weight}, ...]}.
+    Uses Haiku (cheap, structured-output-only task) with prompt caching on the
+    static system block."""
+    samples = biz.get("review_samples") or []
+    if not samples or len(samples) < 3:
+        return None
+    joined = "\n\n".join(f"- {s}" for s in samples[:15])
+    prompt = f"""Extract themes from these recent reviews of "{biz['name']}":
+
+{joined}"""
     try:
         response = client.messages.create(
-            model=ANTHROPIC_MODEL_RESEARCH,
+            model=ANTHROPIC_MODEL_EXTRACTION,
             max_tokens=1500,
+            system=[{
+                "type": "text",
+                "text": _THEMES_SYSTEM,
+                "cache_control": {"type": "ephemeral"},
+            }],
             messages=[{"role": "user", "content": prompt}],
         )
         text = _extract_text(response)
-        # Strip code fences if present
         text = re.sub(r"^```(?:json)?\s*|\s*```$", "", text.strip(), flags=re.MULTILINE)
         return json.loads(text)
     except Exception as e:
