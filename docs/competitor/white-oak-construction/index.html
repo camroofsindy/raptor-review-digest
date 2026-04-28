@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>White Oak Construction | Raptor Review Digest</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23172e55'/%3E%3Ctext x='50' y='62' font-size='40' text-anchor='middle' fill='%233ae20a' font-family='sans-serif' font-weight='700'%3ER%3C/text%3E%3C/svg%3E">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    colors: {
+      navy: { DEFAULT: '#172e55', deep: '#0d1d3a', darker: '#08142a', light: '#2a4880' },
+      accent: { green: '#3ae20a', blue: '#1ac6ff' },
+      ink: { soft: '#a3b1c7', mute: '#6b7d99' },
+    },
+    fontFamily: { sans: ['Ouma Latin VF', 'Inter', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'] },
+  }},
+};
+</script>
+<style>
+  body { font-feature-settings: "ss01"; background-color: #08142a; color: #ffffff; }
+  .stat-num { font-variant-numeric: tabular-nums; }
+  .scroll-fade { opacity: 0; transform: translateY(20px); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+  .scroll-fade.visible { opacity: 1; transform: translateY(0); }
+  .panel {
+    background: linear-gradient(180deg, rgba(22, 46, 85, 0.65) 0%, rgba(13, 29, 58, 0.85) 100%);
+    border: 1px solid rgba(58, 226, 10, 0.08);
+    border-radius: 16px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    position: relative;
+    overflow: hidden;
+  }
+  .panel::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(58, 226, 10, 0.3), transparent);
+  }
+  .panel-hero {
+    background: linear-gradient(135deg, rgba(22, 46, 85, 0.95) 0%, rgba(13, 29, 58, 0.95) 100%);
+    border: 1px solid rgba(58, 226, 10, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 8px 40px rgba(58, 226, 10, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+  .ai-prose { color: rgba(255, 255, 255, 0.92); }
+  .ai-prose h1, .ai-prose h2, .ai-prose h3, .ai-prose h4 { color: #ffffff; font-weight: 700; margin: 1.2em 0 0.5em; line-height: 1.25; }
+  .ai-prose h1 { font-size: 1.4rem; color: #3ae20a; }
+  .ai-prose h2 { font-size: 1.15rem; color: #3ae20a; padding-top: 0.6em; border-top: 1px solid rgba(58, 226, 10, 0.2); }
+  .ai-prose h2:first-child { border-top: none; padding-top: 0; }
+  .ai-prose h3 { font-size: 1rem; color: #1ac6ff; }
+  .ai-prose h4 { font-size: 0.85rem; color: #a3b1c7; text-transform: uppercase; letter-spacing: 0.05em; }
+  .ai-prose p { margin: 0.7em 0; line-height: 1.65; }
+  .ai-prose strong { color: #ffffff; font-weight: 700; }
+  .ai-prose em { color: #a3b1c7; }
+  .ai-prose a { color: #1ac6ff; border-bottom: 1px solid rgba(26, 198, 255, 0.4); }
+  .ai-prose a:hover { color: #ffffff; }
+  .ai-prose ul, .ai-prose ol { padding-left: 1.4em; margin: 0.6em 0; }
+  .ai-prose li { margin: 0.4em 0; line-height: 1.6; }
+  .ai-prose hr { border: none; border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 1.5em 0; }
+  .gradient-text { background: linear-gradient(135deg, #3ae20a 0%, #1ac6ff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+</style>
+</head>
+<body class="antialiased min-h-screen">
+
+<div class="fixed inset-0 pointer-events-none" style="background-image: radial-gradient(circle at 15% 0%, rgba(58, 226, 10, 0.06) 0%, transparent 40%), radial-gradient(circle at 85% 50%, rgba(26, 198, 255, 0.05) 0%, transparent 35%);"></div>
+
+<section class="relative z-10">
+  <div class="max-w-5xl mx-auto px-5 sm:px-8 pt-8 pb-10">
+    <div class="flex items-center justify-between mb-6 flex-wrap gap-4">
+      <a href="../../" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-accent-green hover:text-accent-blue transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        Back to dashboard
+      </a>
+      <img src="../../assets/logo.webp" alt="Raptor Roofing" class="h-10 w-auto" onerror="this.style.display='none'">
+    </div>
+    <div class="flex items-start justify-between flex-wrap gap-4 mb-4">
+      <div>
+        <div class="text-xs uppercase tracking-widest text-accent-green font-bold mb-1">Competitor Profile</div>
+        <h1 class="text-3xl sm:text-5xl font-bold tracking-tight text-white">White Oak Construction</h1>
+        <p class="text-ink-soft text-sm mt-2">10967 US Hwy 136, Indianapolis, IN 46234</p>
+      </div>
+      <div class="text-right">
+        <div class="text-xs uppercase tracking-widest text-ink-soft">Volume Rank</div>
+        <div class="text-3xl font-bold gradient-text">#6</div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8">
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-green">1,042</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Total Reviews</div>
+      </div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-green">4.2</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Star Rating</div>
+      </div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-blue">+3</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">This Week</div>
+      </div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-blue">+12</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Last 30 Days</div>
+      </div>
+      
+    </div>
+
+    <div class="mt-4 flex items-center gap-4 text-sm text-ink-soft flex-wrap">
+      <span><span class="text-white font-semibold">91%</span> response rate</span>
+      <span>+<span class="text-white font-semibold">28</span> in last 90 days</span>
+      <span class="text-ink-mute">Refreshed April 28, 2026</span>
+    </div>
+  </div>
+</section>
+
+<main class="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 py-8 space-y-6">
+
+  
+  <div class="scroll-fade panel-hero p-6 sm:p-8">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-base sm:text-lg font-bold text-white uppercase tracking-wider">Strategic Read</h2>
+      <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-white/5 border border-white/10 px-2 py-1 rounded-full">CMO Briefing</span>
+    </div>
+    <div class="ai-prose text-sm sm:text-base"><h1>Competitive Intelligence Brief: White Oak Construction</h1>
+<p><strong>Raptor Roofing | Cameron Blakely Dashboard | Updated: April 28, 2026</strong></p>
+<hr />
+<h2><strong>1. Who They Are</strong></h2>
+<p>White Oak Construction Corporation was founded October 1, 1982, incorporated in 1986, and is BBB-accredited since August 19, 1992.</p>
+<p>Leadership is James (Sam) Luppino (President) and David Wilson (Vice President), with April Roberts as Office Manager.</p>
+<p>They provide roofing services across Indianapolis, Lafayette, Sellersburg, and surrounding cities including Carmel, Fishers, Brownsburg, Noblesville, Zionsville, Terre Haute, Fort Wayne, and South Bend</p>
+<p>— a geographic footprint far wider than a typical residential roofer. Their differentiation play is longevity plus product breadth: </p>
+<p>they offer CAT4 wind-rated roofing systems with a 50-year warranty covering materials AND labor.</p>
+<hr />
+<h2><strong>2. Estimated Scale</strong></h2>
+<p>White Oak Construction's annual revenue was reported at $28.1 million in 2025</p>
+<p>across multiple data aggregators. <strong>Confidence: medium</strong> — Datanyze, RocketReach, and NeverBounce all converge on this figure but none are audited financials. </p>
+<p>Their LinkedIn self-description claims a team of 150+ trained employees</p>
+<p>, though </p>
+<p>Datanyze pegs the employee count at 89</p>
+<p>. <strong>Confidence: low</strong> — the 150+ figure appears to be aspirational marketing copy; 89 is more consistent with the revenue estimate. </p>
+<p>They operate four registered locations: Indianapolis HQ, Lafayette, Warsaw, and Sellersburg, IN.</p>
+<hr />
+<h2><strong>3. Recent Hiring Signals</strong></h2>
+<p>White Oak Construction currently has 5 open jobs on Indeed.</p>
+<p>Glassdoor lists 7 open positions in Indianapolis specifically.</p>
+<p>Specific role titles were not surfaced in public job listings at the time of this pull. The volume of simultaneous openings across Indiana locations is consistent with a sales-force-heavy model — typical for a company running in-home appointment canvassing. One internal Indeed review flags that </p>
+<p>leads are inside a 105-mile radius territory of Indianapolis, but management over three locations is described as creating a toxic work environment, with ownership looking the other way.</p>
+<p>That culture signal is a recruiting vulnerability Raptor can exploit.</p>
+<hr />
+<h2><strong>4. Off-Google Presence</strong></h2>
+<p>Yelp lists White Oak at 10967 E US Hwy 136, Indianapolis, with 75 reviews and 141 photos as of April 2026.</p>
+<p>Their Yelp star rating is not confirmed positive — the page exists but the rating is not surfaced prominently, suggesting it underperforms their Google number. Their Google profile sits at 4.2 stars on 1,042 reviews — a meaningful gap vs. Raptor's 5.0. On BBB, </p>
+<p>they hold an A+ accredited rating</p>
+<p>, which they actively trade on. The BBB complaint thread, however, contains multiple damaging signals: one reviewer alleged a </p>
+<p>$92K roof estimate that dropped to $65K on the spot when declined — a classic high-pressure sales tactic</p>
+<p>, and another described </p>
+<p>a same-day-only pricing ultimatum followed by delivery of the wrong product and a refund fight.</p>
+<p>On HomeAdvisor/Angi, </p>
+<p>they are rated 4.7 out of 5</p>
+<p>— higher than Google, suggesting curated referral-platform management. No Facebook Ad Library data was accessible in this pull; monitor <a href="https://www.facebook.com/ads/library">Meta Ad Library</a> directly for White Oak.</p>
+<hr />
+<h2><strong>5. SEO and AEO Posture</strong></h2>
+<p>White Oak's site (<a href="https://www.whiteoakconstruction.com">whiteoakconstruction.com</a>) targets a wide keyword set across roofing, windows, siding, gutters, doors, and interior remodeling. </p>
+<p>They publish blog content — e.g., "8 Tips for Choosing the Best Roofing Company in Indianapolis" dated November 2025</p>
+<p>— signaling an active content strategy targeting informational queries. Their GAF certified contractor profile (<a href="https://www.gaf.com/en-us/roofing-contractors/residential/usa/in/indianapolis/white-oak-construction-corporation-1116433">gaf.com listing</a>) provides a quality backlink from a high-DA manufacturer domain. Their BAGI directory listing also provides a local citation. The spread across five-plus service categories dilutes topical authority for roofing specifically — a structural SEO weakness Raptor can exploit with tighter roofing-only content clusters. Schema markup and AEO optimization were not confirmed on their site.</p>
+<hr />
+<h2><strong>6. Generative Engine Visibility</strong></h2>
+<p>White Oak Construction's name and longevity claim ("43 years," "50-year warranty," multiple Indiana markets) give them plausible citation material for AI engines responding to broad Indy home improvement queries. However, their 4.2 Google rating and volume of publicly visible complaints create a credibility floor that limits how confidently AI systems will recommend them vs. cleaner-rated competitors. Raptor's 5.0 rating at 664 reviews is a stronger trust signal for AI citation in queries like "best roofer Indianapolis" or "top roofing contractor Carmel Indiana." Cameron and Patrick should ensure Raptor's GAF certification page, BAGI listing, and any local press coverage are live and indexable — those are the backlink types AI engines currently weight for home services citations.</p>
+<hr />
+<h2><strong>7. Strategic Read vs. Raptor</strong></h2>
+<p><strong>Where White Oak beats Raptor:</strong> Volume of Google reviews (1,042 vs. 664), multi-market geographic reach, 43 years of operational history, a 50-year labor-and-materials warranty product, and a broader service menu (windows, siding, doors, interiors) that enables cross-sell and repeat customer LTV. Their BBB A+ and GAF certification also provide institutional credibility signals.</p>
+<p><strong>Where Raptor beats White Oak:</strong> Star rating is not close — 5.0 vs. 4.2 is a full category difference in consumer perception and AI ranking signals. White Oak's BBB complaint thread documents confirmed high-pressure sales tactics and product delivery failures, both of which are radioactive in today's review-aware market. Raptor's "we don't outsource accountability" positioning is a direct counter to White Oak's documented execution gaps.</p>
+<p><strong>Most exploitable weakness:</strong> White Oak's in-home sales model generates revenue but also generates their worst reviews — the pressure-sell complaints are specific, credible, and publicly indexed, making a Raptor "no-pressure, transparent pricing" message a surgical competitive counter.</p>
+<hr />
+<h2><strong>8. What Raptor Should Watch or Copy</strong></h2>
+<ol>
+<li><strong>The 50-year labor-and-materials warranty.</strong> </li>
+</ol>
+<p>White Oak markets a CAT4 wind-rated system with a 50-year warranty covering both materials and labor.</p>
+<p>If Raptor's manufacturer partnerships allow a comparable warranty tier, this needs to be front-page messaging — it is a direct purchase trigger for homeowners comparing quotes.</p>
+<ol start="2">
+<li>
+<p><strong>Multi-platform citation building.</strong> White Oak has active profiles on GAF, BBB, BAGI, Angi/HomeAdvisor, Houzz, and Yelp. The multi-platform citation density feeds both traditional SEO and generative engine visibility. Raptor should audit which of these directories have thin or missing profiles and fill them immediately.</p>
+</li>
+<li>
+<p><strong>Canvassing/lead-gen territory model.</strong> </p>
+</li>
+</ol>
+<p>Reviewers note it is reasonable to earn low six figures and that the company sells a superior product within a 105-mile Indianapolis radius territory.</p>
+<p>White Oak is running a structured canvassing operation. Raptor should track whether White Oak canvassers are working Raptor's core suburban zip codes (Carmel, Fishers, Zionsville, Greenwood) and be prepared with a rapid-response counter-offer strategy — a leave-behind piece, a door-hanger, or a "get a second opinion" campaign timed to storm events.</p></div>
+  </div>
+  
+
+  
+  <div class="scroll-fade panel p-6 sm:p-8">
+    <div class="flex items-center justify-between flex-wrap gap-2 mb-1">
+      <h2 class="text-base sm:text-lg font-bold text-white uppercase tracking-wider">Customer Voice</h2>
+      <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-white/5 border border-white/10 px-2 py-1 rounded-full">Theme cloud</span>
+    </div>
+    <p class="text-xs text-ink-soft mb-5">What customers actually say about this company. Pulled from their last 15 reviews.</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      
+      <div>
+        <div class="text-[10px] uppercase tracking-wider text-accent-green mb-3 flex items-center gap-2">
+          <span>What they love</span>
+          <span class="text-ink-mute font-normal normal-case tracking-normal">(8)</span>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 16px;">professional team</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 16px;">high quality products</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 15px;">quick installation</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 15px;">knowledgeable sales reps</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 14px;">thorough estimates</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 14px;">friendly staff</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 14px;">affordable pricing</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 14px;">exceeded expectations</span>
+          
+        </div>
+      </div>
+      
+      
+      <div>
+        <div class="text-[10px] uppercase tracking-wider text-amber-400 mb-3 flex items-center gap-2">
+          <span>Where they slip</span>
+          <span class="text-ink-mute font-normal normal-case tracking-normal">(5)</span>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-white" style="font-size: 16px;">missed appointments</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-white" style="font-size: 14px;">aggressive sales tactics</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-white" style="font-size: 14px;">no-show no-call</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-white" style="font-size: 12px;">disrespectful door-to-door</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-white" style="font-size: 11px;">data sharing concerns</span>
+          
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="scroll-fade panel p-6">
+      <h3 class="text-xs font-bold text-accent-green uppercase tracking-[0.15em] mb-4">Review Velocity</h3>
+      <div class="space-y-3 text-sm">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
+          <span class="text-ink-soft">Last 7 days</span>
+          <span class="font-bold text-white stat-num text-lg">+3</span>
+        </div>
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
+          <span class="text-ink-soft">Last 30 days</span>
+          <span class="font-bold text-white stat-num text-lg">+12</span>
+        </div>
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
+          <span class="text-ink-soft">Last 90 days</span>
+          <span class="font-bold text-white stat-num text-lg">+28</span>
+        </div>
+        <div class="flex justify-between items-baseline pt-2">
+          <span class="text-ink-soft">Annual pace (90d × 4)</span>
+          <span class="font-bold text-accent-blue stat-num text-lg">~112/yr</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-fade panel p-6">
+      <h3 class="text-xs font-bold text-accent-green uppercase tracking-[0.15em] mb-4">vs Raptor</h3>
+      <div class="space-y-3 text-sm">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
+          <span class="text-ink-soft">Total reviews</span>
+          <span class="font-bold text-red-400 stat-num text-lg">
+            +378
+          </span>
+        </div>
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
+          <span class="text-ink-soft">Star rating</span>
+          <span class="font-bold text-accent-green stat-num text-lg">
+            -0.8
+          </span>
+        </div>
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
+          <span class="text-ink-soft">7-day pace</span>
+          <span class="font-bold text-accent-green stat-num text-lg">
+            +0
+          </span>
+        </div>
+        <div class="flex justify-between items-baseline pt-2">
+          <span class="text-ink-soft">Response rate gap</span>
+          <span class="font-bold stat-num text-lg">
+            
+              <span class="text-accent-green">
+                -6pts
+              </span>
+            
+          </span>
+        </div>
+      </div>
+      <p class="text-xs text-ink-soft mt-4 pt-3 border-t border-white/5">Red = competitor leads, green = Raptor leads.</p>
+    </div>
+  </div>
+
+</main>
+
+<footer class="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 py-10 mt-8 border-t border-white/5 text-xs text-ink-soft">
+  <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <a href="../../" class="font-semibold text-white hover:text-accent-blue">Raptor Review Digest &rarr; Dashboard</a>
+    <div class="text-right">Profile last refreshed April 28, 2026</div>
+  </div>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+document.querySelectorAll('.scroll-fade').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
