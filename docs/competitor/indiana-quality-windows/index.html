@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indiana Quality Windows | Raptor Review Digest</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23172e55'/%3E%3Ctext x='50' y='62' font-size='40' text-anchor='middle' fill='%233ae20a' font-family='sans-serif' font-weight='700'%3ER%3C/text%3E%3C/svg%3E">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    colors: {
+      navy: { DEFAULT: '#172e55', deep: '#0d1d3a', darker: '#08142a', light: '#2a4880' },
+      accent: { green: '#3ae20a', blue: '#1ac6ff' },
+      ink: { soft: '#a3b1c7', mute: '#6b7d99' },
+    },
+    fontFamily: { sans: ['Ouma Latin VF', 'Inter', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'] },
+  }},
+};
+</script>
+<style>
+  body { font-feature-settings: "ss01"; background-color: #08142a; color: #ffffff; }
+  .stat-num { font-variant-numeric: tabular-nums; }
+  .scroll-fade { opacity: 0; transform: translateY(20px); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+  .scroll-fade.visible { opacity: 1; transform: translateY(0); }
+  .panel {
+    background: linear-gradient(180deg, rgba(22, 46, 85, 0.65) 0%, rgba(13, 29, 58, 0.85) 100%);
+    border: 1px solid rgba(58, 226, 10, 0.08);
+    border-radius: 16px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    position: relative;
+    overflow: hidden;
+  }
+  .panel::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(58, 226, 10, 0.3), transparent);
+  }
+  .panel-hero {
+    background: linear-gradient(135deg, rgba(22, 46, 85, 0.95) 0%, rgba(13, 29, 58, 0.95) 100%);
+    border: 1px solid rgba(58, 226, 10, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 8px 40px rgba(58, 226, 10, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+  .ai-prose { color: rgba(255, 255, 255, 0.92); }
+  .ai-prose h1, .ai-prose h2, .ai-prose h3, .ai-prose h4 { color: #ffffff; font-weight: 700; margin: 1.2em 0 0.5em; line-height: 1.25; }
+  .ai-prose h1 { font-size: 1.4rem; color: #3ae20a; }
+  .ai-prose h2 { font-size: 1.15rem; color: #3ae20a; padding-top: 0.6em; border-top: 1px solid rgba(58, 226, 10, 0.2); }
+  .ai-prose h2:first-child { border-top: none; padding-top: 0; }
+  .ai-prose h3 { font-size: 1rem; color: #1ac6ff; }
+  .ai-prose h4 { font-size: 0.85rem; color: #a3b1c7; text-transform: uppercase; letter-spacing: 0.05em; }
+  .ai-prose p { margin: 0.7em 0; line-height: 1.65; }
+  .ai-prose strong { color: #ffffff; font-weight: 700; }
+  .ai-prose em { color: #a3b1c7; }
+  .ai-prose a { color: #1ac6ff; border-bottom: 1px solid rgba(26, 198, 255, 0.4); }
+  .ai-prose a:hover { color: #ffffff; }
+  .ai-prose ul, .ai-prose ol { padding-left: 1.4em; margin: 0.6em 0; }
+  .ai-prose li { margin: 0.4em 0; line-height: 1.6; }
+  .ai-prose hr { border: none; border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 1.5em 0; }
+  .gradient-text { background: linear-gradient(135deg, #3ae20a 0%, #1ac6ff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+</style>
+</head>
+<body class="antialiased min-h-screen">
+
+<div class="fixed inset-0 pointer-events-none" style="background-image: radial-gradient(circle at 15% 0%, rgba(58, 226, 10, 0.06) 0%, transparent 40%), radial-gradient(circle at 85% 50%, rgba(26, 198, 255, 0.05) 0%, transparent 35%);"></div>
+
+<section class="relative z-10">
+  <div class="max-w-5xl mx-auto px-5 sm:px-8 pt-8 pb-10">
+    <div class="flex items-center justify-between mb-6 flex-wrap gap-4">
+      <a href="../../" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-accent-green hover:text-accent-blue transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        Back to dashboard
+      </a>
+      <img src="../../assets/logo.webp" alt="Raptor Roofing" class="h-10 w-auto" onerror="this.style.display='none'">
+    </div>
+    <div class="flex items-start justify-between flex-wrap gap-4 mb-4">
+      <div>
+        <div class="text-xs uppercase tracking-widest text-accent-green font-bold mb-1">Competitor Profile</div>
+        <h1 class="text-3xl sm:text-5xl font-bold tracking-tight text-white">Indiana Quality Windows</h1>
+        <p class="text-ink-soft text-sm mt-2">1262 S High School Rd, Indianapolis, IN 46241</p>
+      </div>
+      <div class="text-right">
+        <div class="text-xs uppercase tracking-widest text-ink-soft">Volume Rank</div>
+        <div class="text-3xl font-bold gradient-text">#16</div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8">
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-green">332</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Total Reviews</div>
+      </div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-green">4.8</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Star Rating</div>
+      </div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-blue">+1</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">This Week</div>
+      </div>
+      
+      <div class="panel p-4">
+        <div class="text-2xl sm:text-3xl font-bold stat-num text-accent-blue">+3</div>
+        <div class="text-[10px] tracking-widest uppercase text-ink-soft mt-1">Last 30 Days</div>
+      </div>
+      
+    </div>
+
+    <div class="mt-4 flex items-center gap-4 text-sm text-ink-soft flex-wrap">
+      <span><span class="text-white font-semibold">100%</span> response rate</span>
+      <span>+<span class="text-white font-semibold">3</span> in last 90 days</span>
+      <span class="text-ink-mute">Refreshed April 28, 2026</span>
+    </div>
+  </div>
+</section>
+
+<main class="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 py-8 space-y-6">
+
+  
+  <div class="scroll-fade panel-hero p-6 sm:p-8">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-base sm:text-lg font-bold text-white uppercase tracking-wider">Strategic Read</h2>
+      <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-white/5 border border-white/10 px-2 py-1 rounded-full">CMO Briefing</span>
+    </div>
+    <div class="ai-prose text-sm sm:text-base"><h2>Indiana Quality Windows (Indiana Quality Home Exteriors) — Competitive Intelligence Brief</h2>
+<p><strong>Updated: April 28, 2026 | Raptor Dashboard</strong></p>
+<hr />
+<h2><strong>1. Who They Are</strong></h2>
+<p>Indiana Quality Home Exteriors is a local small business serving Indianapolis and surrounding areas since 1987.</p>
+<p>They brand themselves as a family-owned business that handles all installations without subcontracting</p>
+<p>— a direct mirror of Raptor's own accountability positioning. </p>
+<p>Key principals on record: Christopher McCarty (Member/Owner) and Nita Kelso (Office Manager), per BBB.</p>
+<p>Their service area appears to be Marion County and immediate suburbs, with no evidence of consistent reach into Carmel, Fishers, or Noblesville the way Raptor does.</p>
+<hr />
+<h2><strong>2. Estimated Scale</strong></h2>
+<p>Indiana Quality Windows &amp; Doors holds a Renovation license and 2 other licenses according to the EPA license board.</p>
+<p>BuildZoom records show 95 permitted projects on file</p>
+<p>, though </p>
+<p>permit records indicate they have worked on at least 1 project over the past 3 years</p>
+<p>— a significant drop-off signal. No public employee count is available; LinkedIn profile (<a href="https://www.linkedin.com/company/indiana-quality-windows">linkedin.com/company/indiana-quality-windows</a>) returns no headcount data. Based on BBB filing, ZoomInfo profile, and permit volume, this reads like a 5-12 person operation doing roughly $1.5M–$3.5M annually across all trades. <strong>Confidence: low.</strong> Notably, </p>
+<p>according to the Indianapolis Department of Business and Neighborhood Services, the status of one license was at one point cancelled</p>
+<p>— worth monitoring.</p>
+<hr />
+<h2><strong>3. Recent Hiring Signals</strong></h2>
+<p>As of January 13, Indiana Quality posted a "Now Hiring: In-Store Product Promoter / Brand Ambassador" role on Facebook, looking for someone to promote their product inside a retail store and help generate customer leads.</p>
+<p>This is their only visible recent hiring activity and it's a lead-gen play, not an ops or management hire. No postings found on Indeed, LinkedIn Jobs, or ZipRecruiter in the last 30 days. The retail-store canvassing model (likely a big-box partnership) is the only growth signal visible right now — flag this, as it suggests they are hungry for top-of-funnel volume without investing in digital.</p>
+<hr />
+<h2><strong>4. Off-Google Presence</strong></h2>
+<p>The cross-platform picture is messy and works in Raptor's favor:</p>
+<ul>
+<li><strong>Google:</strong> 332 reviews at 4.8 stars — respectable volume but 0.2 stars below Raptor and 332 fewer reviews.</li>
+<li><strong>Yelp (<a href="https://www.yelp.com/biz/indiana-quality-windows-indianapolis">yelp.com/biz/indiana-quality-windows-indianapolis</a>):</strong> Listing exists with minimal review volume and no visible rating displayed in results — typical of businesses that do not actively funnel Yelp traffic.</li>
+<li><strong>HomeAdvisor/Angi:</strong> </li>
+</ul>
+<p>Indiana Quality Windows, Doors &amp; Siding, Inc. is currently rated 2.8 overall out of 5 on HomeAdvisor</p>
+<p>, with at least one reviewer alleging a defective sliding glass door installation with water intrusion. That is a 2.0-point gap vs. their Google score — a classic review-funneling pattern.<br />
+- <strong>Facebook (<a href="https://www.facebook.com/IndianaQualityWindows">facebook.com/IndianaQualityWindows</a>):</strong> </p>
+<p>Only 70% recommend based on 8 reviews</p>
+<p>— thin and underwhelming. No Facebook Ad Library activity surfaced.<br />
+- <strong>BBB:</strong> </p>
+<p>BBB Accredited with an A+ rating</p>
+<p>, which gives them credibility with older homeowner demos. Accredited since 2002.<br />
+- <strong>Nextdoor:</strong> </p>
+<p>22 Faves on Nextdoor from Indianapolis neighbors</p>
+<p>. </p>
+<p>Indiana Quality was a Neighborhood Favorite in 2021 and 2022</p>
+<p>— no evidence of repeating that designation since.<br />
+- <strong>BirdEye:</strong> Listed with ~380 reviews aggregated across platforms (<a href="https://reviews.birdeye.com/indiana-quality-home-exteriors-165890317088275">birdeye.com</a>), indicating they have a review aggregation tool in play.</p>
+<p>The HomeAdvisor 2.8 vs. Google 4.8 gap is the most exploitable discrepancy here.</p>
+<hr />
+<h2><strong>5. SEO and AEO Posture</strong></h2>
+<p>Indiana Quality's domain (<a href="https://www.indianaquality.com">indianaquality.com</a>) is a Wix-class site with thin content. No blog infrastructure visible, no schema markup evident from search snippets, and no local press backlinks found. Their page title tags do attempt keyword targeting ("Roofers Contractors Near Me, Windows, Doors, Siding, Gutters, Painting") but the execution is generic and unfocused across too many service lines to rank competitively for any single roofing query. </p>
+<p>Per their own Nextdoor presence, they self-describe as a company that does not advertise or promote in order to keep costs down</p>
+<p>— which is a growth ceiling, not a virtue. </p>
+<p>Their tech stack includes reCAPTCHA, PHP, Google Font API, and Microsoft 365</p>
+<p>— nothing that signals investment in SEO tooling or content infrastructure. No Google LSA badges, no Angi Top Pro badge visible. AEO posture is effectively zero.</p>
+<hr />
+<h2><strong>6. Generative Engine Visibility</strong></h2>
+<p>Indiana Quality does not appear in AI-generated recommendation lists for Indianapolis roofing. Tested query patterns — "best roofers Indianapolis," "roof replacement Carmel Indiana," "top roofing contractor Fishers Noblesville" — return regionally dominant brands with strong review velocity, citation-rich websites, and press mentions. Indiana Quality has none of those signals. Their 37-year history is their only potential AEO asset, but it is not surfaced in structured data or authored content anywhere. This is a clean gap for Raptor: Cameron should be publishing structured FAQ content and location-specific service pages to own the AI answer layer that Indiana Quality will never compete in.</p>
+<hr />
+<h2><strong>7. Strategic Read vs. Raptor</strong></h2>
+<p><strong>Where they beat Raptor:</strong> Longevity narrative (1987 vs. Raptor's founding) and multi-trade bundling (windows, doors, siding, gutters, roofing, painting under one roof) gives them an easier cross-sell conversation on full exterior remodels. BBB A+ accreditation since 2002 carries weight with the 55+ homeowner who distrusts newer companies. Their Lowe's installation partnership (<a href="https://reviews.birdeye.com/indiana-quality-home-exteriors-165890317088275">birdeye.com</a>) funnels manufacturer-referred leads Raptor currently does not capture.</p>
+<p><strong>Where Raptor beats them:</strong> Review velocity is not even close — 3 reviews in 90 days vs. Raptor's pace is near-stagnant. Raptor's 5.0 at 664 reviews vs. their 4.8 at 332 wins on both dimensions. Digital infrastructure, AEO presence, and paid media are entirely absent for Indiana Quality.</p>
+<p><strong>Most exploitable weakness:</strong> Their HomeAdvisor rating of 2.8 is publicly visible to price-comparison shoppers — Cameron should run comparison-style paid search or GBP posts that surface Raptor's cross-platform consistency as a trust signal.</p>
+<hr />
+<h2><strong>8. What Raptor Should Watch or Copy</strong></h2>
+<ol>
+<li><strong>Big-box retail partnership model.</strong> </li>
+</ol>
+<p>Indiana Quality serves as an installation provider for Lowe's window customers in their area.</p>
+<p>This is recurring, low-CAC lead flow. Cameron should investigate whether a similar preferred-installer relationship with Lowe's, Home Depot, or a local lumber yard is available on the roofing side — particularly for storm-damage referrals.</p>
+<ol start="2">
+<li>
+<p><strong>"No subcontracting" as a positioning anchor.</strong> Indiana Quality uses this message on every platform — Nextdoor, their website, BBB. Raptor already owns this message but should be more aggressive making it a direct-response hook in paid ads, especially targeting homeowners who have had bad contractor experiences. Indiana Quality's HomeAdvisor complaints about workmanship give Raptor a live opening to own this claim credibly.</p>
+</li>
+<li>
+<p><strong>Monitor their Nextdoor Neighborhood Favorite status.</strong> They held that badge in 2021 and 2022 and appear to have lost it. Cameron should ensure Raptor's team is actively generating Nextdoor recommendations in every ZIP they serve — this is an AEO-adjacent signal as Nextdoor data increasingly feeds into local AI recommendations.</p>
+</li>
+</ol></div>
+  </div>
+  
+
+  
+  <div class="scroll-fade panel p-6 sm:p-8">
+    <div class="flex items-center justify-between flex-wrap gap-2 mb-1">
+      <h2 class="text-base sm:text-lg font-bold text-white uppercase tracking-wider">Customer Voice</h2>
+      <span class="text-[10px] uppercase tracking-wider text-ink-soft bg-white/5 border border-white/10 px-2 py-1 rounded-full">Theme cloud</span>
+    </div>
+    <p class="text-xs text-ink-soft mb-5">What customers actually say about this company. Pulled from their last 15 reviews.</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      
+      <div>
+        <div class="text-[10px] uppercase tracking-wider text-accent-green mb-3 flex items-center gap-2">
+          <span>What they love</span>
+          <span class="text-ink-mute font-normal normal-case tracking-normal">(8)</span>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 17px;">professional crew</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 16px;">fast installation</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 16px;">clean cleanup</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 16px;">friendly communication</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 16px;">quality results</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 16px;">polite team members</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 14px;">good value</span>
+          
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-white" style="font-size: 15px;">punctual arrival</span>
+          
+        </div>
+      </div>
+      
+      
+    </div>
+  </div>
+  
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="scroll-fade panel p-6">
+      <h3 class="text-xs font-bold text-accent-green uppercase tracking-[0.15em] mb-4">Review Velocity</h3>
+      <div class="space-y-3 text-sm">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
+          <span class="text-ink-soft">Last 7 days</span>
+          <span class="font-bold text-white stat-num text-lg">+1</span>
+        </div>
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
+          <span class="text-ink-soft">Last 30 days</span>
+          <span class="font-bold text-white stat-num text-lg">+3</span>
+        </div>
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
+          <span class="text-ink-soft">Last 90 days</span>
+          <span class="font-bold text-white stat-num text-lg">+3</span>
+        </div>
+        <div class="flex justify-between items-baseline pt-2">
+          <span class="text-ink-soft">Annual pace (90d × 4)</span>
+          <span class="font-bold text-accent-blue stat-num text-lg">~12/yr</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-fade panel p-6">
+      <h3 class="text-xs font-bold text-accent-green uppercase tracking-[0.15em] mb-4">vs Raptor</h3>
+      <div class="space-y-3 text-sm">
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
+          <span class="text-ink-soft">Total reviews</span>
+          <span class="font-bold text-accent-green stat-num text-lg">
+            -332
+          </span>
+        </div>
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
+          <span class="text-ink-soft">Star rating</span>
+          <span class="font-bold text-accent-green stat-num text-lg">
+            -0.2
+          </span>
+        </div>
+        <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
+          <span class="text-ink-soft">7-day pace</span>
+          <span class="font-bold text-accent-green stat-num text-lg">
+            -2
+          </span>
+        </div>
+        <div class="flex justify-between items-baseline pt-2">
+          <span class="text-ink-soft">Response rate gap</span>
+          <span class="font-bold stat-num text-lg">
+            
+              <span class="text-red-400">
+                +3pts
+              </span>
+            
+          </span>
+        </div>
+      </div>
+      <p class="text-xs text-ink-soft mt-4 pt-3 border-t border-white/5">Red = competitor leads, green = Raptor leads.</p>
+    </div>
+  </div>
+
+</main>
+
+<footer class="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 py-10 mt-8 border-t border-white/5 text-xs text-ink-soft">
+  <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <a href="../../" class="font-semibold text-white hover:text-accent-blue">Raptor Review Digest &rarr; Dashboard</a>
+    <div class="text-right">Profile last refreshed April 28, 2026</div>
+  </div>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+document.querySelectorAll('.scroll-fade').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
