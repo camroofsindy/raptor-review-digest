@@ -2,14 +2,14 @@ name: Weekly Digest
 
 on:
   schedule:
-    # Daily run, target inbox by 8:00am Eastern.
+    # Tuesday and Thursday, target inbox by 8:00am Eastern.
     # GitHub Actions cron is best-effort and routinely runs 1-6 hours late at peak times,
-    # so we fire EARLY (4:00am ET) and add a backup at 5:00am ET. The job itself dedupes
-    # by checking whether today's run already committed history; if so it exits 0.
-    - cron: "0 8 * * *"   # 4:00am EDT (Mar-Nov) / 3:00am EST (Nov-Mar), primary
-    - cron: "0 9 * * *"   # 5:00am EDT (Mar-Nov) / 4:00am EST (Nov-Mar), primary EST window
-    - cron: "0 10 * * *"  # 6:00am EDT, backup if first two were skipped/delayed
-    - cron: "0 11 * * *"  # 7:00am EDT, last-chance backup
+    # so we fire EARLY (4:00am ET) with three backups. The job dedupes by checking
+    # whether today's run already committed history; if so it exits 0 (one email per day).
+    - cron: "0 8 * * 2,4"   # 4:00am EDT (Mar-Nov) / 3:00am EST (Nov-Mar), primary
+    - cron: "0 9 * * 2,4"   # 5:00am EDT (Mar-Nov) / 4:00am EST (Nov-Mar), primary EST window
+    - cron: "0 10 * * 2,4"  # 6:00am EDT, backup if first two were skipped/delayed
+    - cron: "0 11 * * 2,4"  # 7:00am EDT, last-chance backup
   workflow_dispatch:
 
 permissions:
