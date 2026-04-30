@@ -1846,7 +1846,14 @@ def main():
         and os.getenv("GITHUB_EVENT_NAME") == "schedule"
     )
     if is_lean:
-        print("AI scope: LEAN (skipping SEO/AEO + red-team to conserve credits)")
+        print("AI scope: LEAN (carrying forward last full-scope SEO/AEO + red-team)")
+        for snap in reversed(history.get("snapshots", [])):
+            if not seo_aeo_brief and snap.get("seo_aeo_brief"):
+                seo_aeo_brief = snap["seo_aeo_brief"]
+            if not red_team and snap.get("red_team"):
+                red_team = snap["red_team"]
+            if seo_aeo_brief and red_team:
+                break
     if not scrape_only:
         client = _anthropic_client()
         if client is None:
@@ -2029,6 +2036,8 @@ def main():
         send_email(html, subject)
         print(f"emailed: {subject}")
 
+    snapshot["seo_aeo_brief"] = seo_aeo_brief
+    snapshot["red_team"] = red_team
     history["snapshots"].append(snapshot)
     history["snapshots"] = history["snapshots"][-26:]
     save_history(history)

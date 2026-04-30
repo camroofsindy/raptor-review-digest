@@ -2,11 +2,14 @@ name: Weekly Digest
 
 on:
   schedule:
-    # Tuesday and Thursday at 7:30am Eastern (11:30 UTC during EDT, 12:30 UTC during EST).
-    # Single cron at 11:30 UTC: fires at 7:30am EDT (Mar-Nov), 6:30am EST (Nov-Mar).
-    # Dual cron handles both windows so the inbox-arrival time stays at 7:30am year round.
-    - cron: "30 11 * * 2,4"  # EDT window (Mar-Nov): 7:30am Eastern
-    - cron: "30 12 * * 2,4"  # EST window (Nov-Mar): 7:30am Eastern
+    # Daily run, target inbox by 8:00am Eastern.
+    # GitHub Actions cron is best-effort and routinely runs 1-6 hours late at peak times,
+    # so we fire EARLY (4:00am ET) and add a backup at 5:00am ET. The job itself dedupes
+    # by checking whether today's run already committed history; if so it exits 0.
+    - cron: "0 8 * * *"   # 4:00am EDT (Mar-Nov) / 3:00am EST (Nov-Mar), primary
+    - cron: "0 9 * * *"   # 5:00am EDT (Mar-Nov) / 4:00am EST (Nov-Mar), primary EST window
+    - cron: "0 10 * * *"  # 6:00am EDT, backup if first two were skipped/delayed
+    - cron: "0 11 * * *"  # 7:00am EDT, last-chance backup
   workflow_dispatch:
 
 permissions:
@@ -21,20 +24,45 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      skip: ${{ steps.dedupe.outputs.skip }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 10
+
+      - name: Skip if already ran today (scheduled only)
+        id: dedupe
+        run: |
+          if [ "${{ github.event_name }}" != "schedule" ]; then
+            echo "manual trigger; not deduping"
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          today=$(date -u +%Y-%m-%d)
+          # The auto-commit message is "Refresh digest YYYY-MM-DD [skip ci]"; search for today's.
+          if git log --since="${today} 00:00 UTC" --until="${today} 23:59 UTC" --grep="Refresh digest ${today}" --oneline | grep -q .; then
+            echo "already ran today; skipping"
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "no run yet today; proceeding"
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
 
       - uses: actions/setup-python@v5
+        if: steps.dedupe.outputs.skip != 'true'
         with:
           python-version: "3.11"
           cache: pip
 
       - name: Install deps
+        if: steps.dedupe.outputs.skip != 'true'
         run: |
           pip install -r requirements.txt
           playwright install --with-deps chromium
 
       - name: Run digest
+        if: steps.dedupe.outputs.skip != 'true'
         env:
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
@@ -44,6 +72,7 @@ jobs:
         run: python main.py
 
       - name: Commit updated history and dashboard
+        if: steps.dedupe.outputs.skip != 'true'
         continue-on-error: true
         run: |
           git config user.name "github-actions[bot]"
@@ -75,12 +104,14 @@ jobs:
           echo "push still failing after retries — deploy artifact will still upload"
 
       - name: Upload Pages artifact
+        if: steps.dedupe.outputs.skip != 'true'
         uses: actions/upload-pages-artifact@v3
         with:
           path: docs
 
   deploy:
     needs: build
+    if: needs.build.outputs.skip != 'true'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
