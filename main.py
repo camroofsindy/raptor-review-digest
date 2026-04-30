@@ -72,6 +72,9 @@ ANTHROPIC_MODEL_EXTRACTION = "claude-haiku-4-5-20251001"  # Cheaper for structur
 # Per Cameron's cost-reduction plan; pre-fetched Google CSE context (Phase 2) will
 # further reduce reliance on iterative search.
 WEB_SEARCH_TOOL = {"type": "web_search_20250305", "name": "web_search", "max_uses": 4}
+# Market news drives the "is there fresh insight this cycle" feeling, so it gets
+# more search budget than the per-competitor profiles (which are mostly cache hits).
+WEB_SEARCH_TOOL_NEWS = {"type": "web_search_20250305", "name": "web_search", "max_uses": 8}
 
 
 def _anthropic_client():
@@ -156,7 +159,7 @@ If you genuinely find nothing substantive this week, output "No significant news
     response = client.messages.create(
         model=ANTHROPIC_MODEL_RESEARCH,
         max_tokens=4000,
-        tools=[WEB_SEARCH_TOOL],
+        tools=[WEB_SEARCH_TOOL_NEWS],
         messages=[{"role": "user", "content": prompt}],
     )
     return _extract_text(response)
@@ -550,30 +553,52 @@ def render_competitor_pages(businesses, raptor, market_news, run_date_str):
         (page_dir / "index.html").write_text(html)
 
 
-def ai_raptor_actions(client, data_summary):
-    """Synthesize 3 specific actions for Raptor based on the week's data."""
-    prompt = f"""You are Cameron Blakely's Chief Marketing Officer at Raptor Roofing. Treat yourself as a $500K/year CMO who's seen everything in residential services marketing — direct response, brand, SEO, AEO, partnerships, the works. Cameron owns the business. Context:
-- 663 Google reviews at 5.0 stars (highest quality rating in Indy top 10 by volume)
+def ai_raptor_actions(client, data_summary, prior_moves_text=""):
+    """Synthesize 3 specific actions for Raptor based on the week's data.
+
+    prior_moves_text: bullet list of headlines from the last 2-3 cycles. The AI
+    is instructed to NOT repeat themes from these. Forces freshness."""
+    prior_block = ""
+    if prior_moves_text:
+        prior_block = f"""
+
+PRIOR CYCLES (do NOT repeat these themes or rephrase them; Cameron has already seen these):
+
+{prior_moves_text}
+
+If a topic appears in the prior cycles list above, find a DIFFERENT angle or skip it entirely. The whole point of this cycle is fresh thinking."""
+
+    prompt = f"""You are Cameron Blakely's Chief Marketing Officer at Raptor Roofing. Treat yourself as a $500K/year CMO who's seen everything in residential services marketing: direct response, brand, SEO, AEO, partnerships, the works. Cameron owns the business.
+
+Raptor context:
+- 664 Google reviews at 5.0 stars (highest quality rating in Indy top 10 by volume; the BIG moat)
 - 16 W-2 employees plus 3 sub crews, ~$1.097M Q1 2026 revenue
 - Targeting $10M for 2026, $50M long-term
-- Key team: Patrick Kinney (co-founder, ops), Curtis (sales), Dylan (CS), Taylor (PM), Lauryn (finance), Mike Kinney (top seller)
 - Positioning: premium, communication-obsessed, "we don't outsource accountability"
+- Sales process: RAPTOR WINS, 22-30% close rate target. Lead mix: LSAs + Google Ads + organic.
 
-This week's market data:
+CAMERON'S ACTUAL PHILOSOPHY (this is the lens, not a generic CMO playbook):
+- Homeowners do NOT care which shingle brand goes on their house. Manufacturer-preferred-installer plays (GAF Master Elite, Malarkey Pro, etc.) are a credentials checkbox at best. Multiple Indy roofers (SPG, Amos, Indy Roof) already have these. Do NOT propose "lock down a Malarkey/GAF/CertainTeed preferred-installer relationship" type moves; that's not a differentiator in this market.
+- The differentiators that actually win Greenwood/south-Indy homeowners: review count + 5.0 average, response speed (texts, not voicemails), local owner-led sales, on-site quality, post-install accountability, not having to chase warranty work.
+- Raptor wins on TRUST and EXECUTION, not on product. Lead recommendations from there.
 
-{data_summary}
+This cycle's market data:
 
-Write 3 specific actions Raptor should take THIS WEEK based on what you see. Each:
-- Starts with a verb
-- References a specific competitor event or data point
-- Is concrete and measurable this week, not a vague suggestion
-- 2-3 sentences
+{data_summary}{prior_block}
+
+Write 3 specific actions Raptor should take THIS WEEK. Each:
+- Starts with a verb.
+- References a specific competitor event or data point from THIS cycle (a name + a number).
+- Is concrete and measurable this week, not a vague suggestion.
+- Is grounded in Cameron's philosophy above (trust, execution, local ownership, response speed, review dominance), NOT in shingle-brand or manufacturer-credential plays.
+- Pulls from a DIFFERENT lever than the other two moves (e.g. don't have all three be "publish a landing page" or all three be "run an ad"). Mix levers: paid media, organic content, partnerships, sales-process, review-acquisition, distribution arbitrage, PR, AEO experiments, community plays.
 
 CRITICAL rules:
 - NEVER name specific Raptor team members (no "Patrick", "Dylan", "Curtis", "Cameron", "Mike", "Lauryn", etc.). Cameron assigns internally.
-- NO EMOJIS. No decorative symbols. No eagle imagery (Raptor is a velociraptor — a dinosaur — not an eagle). Plain text and markdown formatting only.
+- NO EMOJIS. No decorative symbols. No eagle imagery (Raptor is a velociraptor, not an eagle). Plain text and markdown formatting only.
 - Avoid clichés ("focus on reviews," "improve customer service") unless data demands it.
-- Bias toward NON-OBVIOUS, ahead-of-curve recommendations a top-tier CMO would surface — partnership plays, content gambits, AEO experiments, ad-creative angles, distribution arbitrage. Cameron has been in roofing for years; no 101-level advice.
+- Bias toward NON-OBVIOUS, ahead-of-curve recommendations a top-tier CMO would surface: partnership plays, content gambits, AEO experiments, ad-creative angles, distribution arbitrage. Cameron has been in roofing for years; no 101-level advice.
+- Forbidden recommendations: "become preferred installer for [shingle brand]", "position around [shingle brand or material]", "lock in a manufacturer relationship". These are non-differentiators in this market.
 - Format each action with: **Bold one-sentence headline.** Then 2-3 paragraphs of detail covering the why, the how, and the success metric. Cameron will read long if the idea is good.
 - If an action defends against a specific competitor move, say which competitor and what move directly."""
     response = client.messages.create(
@@ -708,9 +733,20 @@ def parse_news_blocks(text):
 
 def merge_identical_places(businesses):
     """Catch duplicates that escaped place_id dedup (different display names but
-    same physical place). If two entries have identical review_count AND rating
-    AND non-zero matching reviews_30d, merge them into the entry with the longer
-    name (which usually has richer label text)."""
+    same physical place). Two-pass merge:
+      Pass 1 (strict): same review_count + rating + reviews_30d + reviews_7d.
+      Pass 2 (loose): same review_count + rating AND normalized base name matches.
+        Merges cases where one scrape got the timeline (real velocity) and another
+        scrape of the same listing failed to scrape the timeline (zeros). Keeps
+        the entry with non-zero velocity data so the leaderboard shows real motion.
+    """
+    def _base_name(s):
+        # Strip trailing parenthetical labels like "(HQ)", "(Loc 2)", "(Greenwood)".
+        return _norm(re.sub(r"\s*\([^)]*\)\s*$", "", s))
+
+    def _has_velocity(b):
+        return any((b.get(k) or 0) for k in ("reviews_7d", "reviews_30d", "reviews_90d"))
+
     out = []
     used = set()
     for i, a in enumerate(businesses):
@@ -723,12 +759,17 @@ def merge_identical_places(businesses):
             b = businesses[j]
             same_count = a.get("review_count") and a["review_count"] == b.get("review_count")
             same_rating = a.get("rating") == b.get("rating")
+            if not (same_count and same_rating):
+                continue
             same_30d = (a.get("reviews_30d") or 0) == (b.get("reviews_30d") or 0)
             same_7d = (a.get("reviews_7d") or 0) == (b.get("reviews_7d") or 0)
-            if same_count and same_rating and same_30d and same_7d:
+            same_base_name = _base_name(a["name"]) == _base_name(b["name"])
+            if (same_30d and same_7d) or same_base_name:
                 used.add(j)
-                # Keep the entry with the SHORTER, cleaner name (typically the pinned one).
-                if len(b["name"]) < len(kept["name"]):
+                # Prefer the entry with real velocity data; tie-break to shorter name.
+                if _has_velocity(b) and not _has_velocity(kept):
+                    kept = b
+                elif _has_velocity(b) == _has_velocity(kept) and len(b["name"]) < len(kept["name"]):
                     kept = b
         out.append(kept)
     return out
@@ -1923,8 +1964,19 @@ def main():
             # Synthesis
             try:
                 summary = _compose_ai_context(businesses, market_news, rising_profiles)
+                # Pull headlines from the last 3 stored snapshots so the AI knows what
+                # it has already said and produces NEW recommendations this cycle.
+                prior_moves_lines = []
+                for snap in reversed(history.get("snapshots", [])[-3:]):
+                    snap_actions = snap.get("raptor_actions")
+                    if not snap_actions:
+                        continue
+                    snap_date = (snap.get("timestamp") or "")[:10]
+                    for hl in extract_action_headlines(snap_actions)[:3]:
+                        prior_moves_lines.append(f"- ({snap_date}) {hl}")
+                prior_moves_text = "\n".join(prior_moves_lines)
                 print("AI: synthesizing Raptor actions...")
-                raptor_actions = ai_raptor_actions(client, summary)
+                raptor_actions = ai_raptor_actions(client, summary, prior_moves_text)
             except Exception as e:
                 print(f"  actions synthesis failed: {e}", file=sys.stderr)
 
@@ -2038,6 +2090,7 @@ def main():
 
     snapshot["seo_aeo_brief"] = seo_aeo_brief
     snapshot["red_team"] = red_team
+    snapshot["raptor_actions"] = raptor_actions
     history["snapshots"].append(snapshot)
     history["snapshots"] = history["snapshots"][-26:]
     save_history(history)
